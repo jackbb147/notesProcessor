@@ -8,9 +8,10 @@ function App()
 
     return (
         <div className="App bg-grey w-full h-full flex flex-row">
-            <SidePanel
-            >
-                <div className={"App__main bg-white h-full grow"}> 2</div>
+            <SidePanel>
+                <div className={"App__main bg-white h-full grow"}>
+                    <SidePanel></SidePanel>
+                </div>
             </SidePanel>
         </div>
     );
