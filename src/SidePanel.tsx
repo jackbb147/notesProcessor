@@ -1,7 +1,8 @@
 import React, {useRef, useState} from 'react';
 import './App.css';
 export function SidePanel(
-    {children}:{
+    {panelChildren , children}:{
+        panelChildren?: React.ReactNode,
         children?: React.ReactNode
     }
 )
@@ -35,7 +36,7 @@ export function SidePanel(
     return (
         <div ref={containerRef} className={"sidePanelWrapper flex flex-row w-full h-full"} onMouseMove={onSidePanelResize} onMouseUp={onEndResize}>
             <div className={"sidePanel h-full flex relative"} style={{width : sidePanelWidth}}>
-                <div className={"sidePanel__left w-full h-full"}></div>
+                <div className={"sidePanel__left w-full h-full"}>{panelChildren}</div>
                 <div className={"sidePanel__resize bg-black cursor-ew-resize h-full absolute right-0 w-1"}
                      onMouseDown={onBeginResize}
                 ></div>
