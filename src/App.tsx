@@ -31,9 +31,19 @@ function App()
                                 <Button icon={"../icons/grid_view_FILL0_wght400_GRAD0_opsz48.svg"}></Button>
                                 <Button icon={"../icons/delete_FILL0_wght400_GRAD0_opsz48 (1).svg"} rootClassName={"ml-auto"}></Button>
                             </div>
+
+                            <div>
+                                {/*<ListItem text={}></ListItem>*/}
+                            </div>
+
                         </div>
                     }>
-                        <div></div>
+                        <div>
+                            <div className={"top-bar h-12 flex items-center"}>
+                                <Button icon={"../icons/edit_square_FILL0_wght400_GRAD0_opsz48.svg"}></Button>
+
+                            </div>
+                        </div>
                     </SidePanel>
                 </div>
             </SidePanel>
