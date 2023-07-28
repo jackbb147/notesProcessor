@@ -37,9 +37,11 @@ export function SidePanel(
         <div ref={containerRef} className={"sidePanelWrapper flex flex-row w-full h-full"} onMouseMove={onSidePanelResize} onMouseUp={onEndResize}>
             <div className={"sidePanel h-full flex relative"} style={{width : sidePanelWidth}}>
                 <div className={"sidePanel__left w-full h-full"}>{panelChildren}</div>
-                <div className={"sidePanel__resize bg-black cursor-ew-resize h-full absolute right-0 w-0.5"}
+                <div className={"sidePanel__resize bg-inherit cursor-ew-resize h-full absolute right-0 w-6 flex justify-center"}
                      onMouseDown={onBeginResize}
-                ></div>
+                >
+                    <div className={"h-full bg-grey w-px"}></div>
+                </div>
             </div>
             {children}
         </div>
