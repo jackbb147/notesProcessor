@@ -14,7 +14,10 @@ import {v4 as uuid} from 'uuid';
 function App()
 {
 
-    const [graph, graphDispatch] = useImmerReducer<GraphState, GraphAction>(graphReducer, {nodes: []});
+    const [graph, graphDispatch] = useImmerReducer<GraphState, GraphAction>(graphReducer, {
+        nodes: [],
+        deletedNodes: []
+    });
     const [state, dispatch] = useImmerReducer<AppState, AppAction>(AppStateReducer, {
         activeNodeID:undefined,
         LabelPanelClosed: false

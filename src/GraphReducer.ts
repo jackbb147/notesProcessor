@@ -21,7 +21,8 @@ interface Node
 
 export interface GraphState
 {
-    nodes: Node[]
+    nodes: Node[],
+    deletedNodes: Node[]
 }
 
 // const actions:{} = {
@@ -86,6 +87,7 @@ export function graphReducer(draft:GraphState, action:GraphAction):void
         {
             let index = draft.nodes.findIndex((node)=>node.id === action.id);
             if(index < 0) return;
+            draft.deletedNodes.push(draft.nodes[index]);
             draft.nodes.splice(index, 1);
             break;
         }
