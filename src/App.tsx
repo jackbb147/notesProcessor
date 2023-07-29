@@ -1,12 +1,18 @@
-import React, {useState} from 'react';
+import React, {useReducer, useState} from 'react';
 import logo from './logo.svg';
 import {SidePanel} from "./SidePanel";
 import './App.css';
 import {ListItem} from "./ListItem";
 import {Button} from "./Button";
+import {reducer, Action, State} from "./reducer";
+import {useImmerReducer} from "use-immer";
+import {produce} from "immer";
 
 function App()
 {
+
+    const [graph, dispatch] = useImmerReducer<State, Action>(reducer, {nodes: []});
+
 
     return (
         <div className="App bg-grey w-full h-full flex flex-row">
@@ -18,7 +24,7 @@ function App()
                     <div className={"foldersContainer grow flex flex-col"}>
                         <ListItem text={"All"} icon={"../icons/folder_FILL0_wght400_GRAD0_opsz48.svg"} active={true} rootClassName={"mb-2"}></ListItem>
                         <ListItem text={"Recently Deleted"} icon={"../icons/delete_FILL0_wght400_GRAD0_opsz48 (1).svg"} ></ListItem>
-                        <ListItem text={"New Folder"} icon={"../icons/add_circle_FILL0_wght400_GRAD0_opsz48.svg"} rootClassName={"mt-auto"}></ListItem>
+                        <ListItem text={"Create/Edit Labels"} icon={"../icons/edit_FILL0_wght400_GRAD0_opsz48.svg"} rootClassName={"mt-auto"}></ListItem>
                     </div>
                 </div>
             }>
