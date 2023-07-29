@@ -1,10 +1,16 @@
-import React, {useReducer, useState} from 'react';
+import React from 'react';
 import {SidePanel} from "./SidePanel";
 import './App.css';
 import {ListItem} from "./ListItem";
 import {Button} from "./Button";
-import {reducer, Action, State, ActionType} from "./reducer";
+import {Action, ActionType, reducer, State} from "./reducer";
 import {useImmerReducer} from "use-immer";
+
+import { v4 as uuid } from 'uuid';
+
+
+
+
 
 function App()
 {
@@ -39,14 +45,22 @@ function App()
                             </div>
 
                             <div>
-                                {/*<ListItem text={}></ListItem>*/}
+                                {graph.nodes.map((node)=><ListItem text={node.title}/>)}
                             </div>
 
                         </div>
                     }>
                         <div>
                             <div className={"top-bar h-12 flex items-center"}>
-                                <Button icon={"../icons/edit_square_FILL0_wght400_GRAD0_opsz48.svg"}></Button>
+                                <Button onClick={()=>dispatch({
+                                    type: ActionType.addNode,
+                                    node: {
+                                        id: uuid(),
+                                        title: "hello world!",
+                                        content:"no content",
+                                        tags: []
+                                    }
+                                })} icon={"../icons/edit_square_FILL0_wght400_GRAD0_opsz48.svg"}></Button>
 
                             </div>
                         </div>
