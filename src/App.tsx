@@ -97,7 +97,7 @@ function App()
                                     rootClassName={"ml-auto"}
                                     onClick={()=>{
                                         if(state.activeNodeID !== undefined) {
-
+                                            graphDispatch({type: GraphActionType.removeNode, id: state.activeNodeID})
                                         }
                                     }}
                                 ></Button>
