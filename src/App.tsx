@@ -5,6 +5,7 @@ import {ListItem} from "./ListItem";
 import {Button} from "./Button";
 import {Action, ActionType, reducer, State} from "./reducer";
 import {useImmerReducer} from "use-immer";
+import {CSSTransition, TransitionGroup} from "react-transition-group";
 
 import { v4 as uuid } from 'uuid';
 
@@ -45,7 +46,15 @@ function App()
                             </div>
 
                             <div>
-                                {graph.nodes.map((node)=><ListItem text={node.title}/>)}
+                                <TransitionGroup>
+                                    {graph.nodes.map((node)=><CSSTransition
+                                        timeout={1000}
+                                        classNames="fade"
+                                        key={node.id}
+                                    >
+                                        <ListItem text={node.title}/>
+                                    </CSSTransition>)}
+                                </TransitionGroup>
                             </div>
 
                         </div>
