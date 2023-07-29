@@ -16,7 +16,8 @@ function App()
 
     const [graph, graphDispatch] = useImmerReducer<GraphState, GraphAction>(graphReducer, {nodes: []});
     const [state, dispatch] = useImmerReducer<AppState, AppAction>(AppStateReducer, {
-        activeNodeID:undefined
+        activeNodeID:undefined,
+        LabelPanelClosed: false
     });
 
 
@@ -29,7 +30,11 @@ function App()
             <SidePanel panelChildren={
                 <div className={"w-full h-full  flex flex-col pl-4 pr-4"}>
                     <div className={"top-bar h-12 flex items-center"}>
-                        <Button icon={"../icons/thumbnail_bar_FILL0_wght400_GRAD0_opsz48.svg"}></Button>
+                        {/*TODO */}
+                        {/*<Button icon={"../icons/thumbnail_bar_FILL0_wght400_GRAD0_opsz48.svg"} onClick={()=>{*/}
+
+                        {/*    dispatch({type: AppActionType.toggleLabelPanel})*/}
+                        {/*}}></Button>*/}
                     </div>
                     <div className={"foldersContainer grow flex flex-col"}>
                         <ListItem text={"All"} icon={"../icons/folder_FILL0_wght400_GRAD0_opsz48.svg"} active={true} rootClassName={"mb-2"}></ListItem>
@@ -37,7 +42,9 @@ function App()
                         <ListItem text={"Create/Edit Labels"} icon={"../icons/edit_FILL0_wght400_GRAD0_opsz48.svg"} rootClassName={"mt-auto"}></ListItem>
                     </div>
                 </div>
-            }>
+            }
+                       isClosed={state.LabelPanelClosed}
+            >
                 <div className={"App__main bg-white h-full grow"}>
 
                     <SidePanel panelChildren={
@@ -48,7 +55,9 @@ function App()
                                 <Button
                                     icon={"../icons/delete_FILL0_wght400_GRAD0_opsz48 (1).svg"}
                                     rootClassName={"ml-auto"}
-                                    // onClick={()=>dispatch({type: GraphActionType.removeNode, id: })} //TODO
+                                    onClick={()=>{
+                                        if(state.activeNodeID !== undefined) graphDispatch({type: GraphActionType.removeNode, id: state.activeNodeID});
+                                    }} //TODO
                                 ></Button>
                             </div>
 
