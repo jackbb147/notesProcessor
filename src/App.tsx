@@ -1,17 +1,17 @@
 import React, {useReducer, useState} from 'react';
-import logo from './logo.svg';
 import {SidePanel} from "./SidePanel";
 import './App.css';
 import {ListItem} from "./ListItem";
 import {Button} from "./Button";
-import {reducer, Action, State} from "./reducer";
+import {reducer, Action, State, ActionType} from "./reducer";
 import {useImmerReducer} from "use-immer";
-import {produce} from "immer";
 
 function App()
 {
 
     const [graph, dispatch] = useImmerReducer<State, Action>(reducer, {nodes: []});
+
+
 
 
     return (

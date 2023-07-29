@@ -1,5 +1,5 @@
 import {ImmerReducer} from "use-immer";
-enum ActionType
+export enum ActionType
 {
     addNode,
     updateNode,
@@ -9,7 +9,7 @@ enum ActionType
 export type Action =
     | {type: ActionType.addNode, node: Node}
     | {type: ActionType.removeNode, id: string}
-    | {type: ActionType.updateNode, id: string, node: Node};
+    | {type: ActionType.updateNode,  node: Node};
 
 interface Node
 {
@@ -68,31 +68,36 @@ export interface State
 
 
 
-export function reducer(state:State, action:Action):State
+export function reducer(draft:State, action:Action):void
 {
 
-    // let f:(state:object,action:{type:string})=>object = actions[action.type];
-    // if(f === undefined) f = actions.default;
-    // return f(state, action);
     switch (action.type)
     {
         case ActionType.addNode:
+        {
             let newNode = action.node;
-
-            if(state.nodes.some((node) => node.id === newNode.id)) return state;
-
-            return {
-                ...state,
-                nodes: [...state.nodes, ]
-            }
+            if(draft.nodes.some((node) => node.id === newNode.id)) return;
+            draft.nodes.push(newNode);
+            break;
+        }
 
 
         case ActionType.removeNode:
+        {
+            let index = draft.nodes.findIndex((node)=>node.id === action.id);
+            if(index < 0) return;
+            draft.nodes.splice(index, 1);
+            break;
+        }
 
-            return state;
 
         case ActionType.updateNode:
-            return state;
+        {
+            let index = draft.nodes.findIndex((node)=>node.id === action.node.id);
+            if(index < 0) return;
+            draft.nodes.splice(index, 1, action.node)
+            break;
+        }
     }
 }
 
