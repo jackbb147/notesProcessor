@@ -11,7 +11,7 @@ export type GraphAction =
     | {type: GraphActionType.removeNode, id: string}
     | {type: GraphActionType.updateNode,  node: Node};
 
-interface Node
+export interface Node
 {
     id: string,
     title: string,

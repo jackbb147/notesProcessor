@@ -1,9 +1,11 @@
 export enum AppActionType
 {
     setActiveNodeID,
+    setActiveCollection,
     closeLabelPanel,
     openLabelPanel,
-    toggleLabelPanel
+    toggleLabelPanel,
+
 }
 
 
@@ -12,11 +14,21 @@ export type AppAction =
     | {type: AppActionType.closeLabelPanel}
     | {type:AppActionType.openLabelPanel}
     | {type: AppActionType.toggleLabelPanel}
+    | {type: AppActionType.setActiveCollection, activeCollection: Collections}
+
+export enum Collections
+{
+    All,
+    RecentlyDeleted,
+    Tag
+}
+
 
 export interface AppState
 {
     activeNodeID: string|undefined,
-    LabelPanelClosed: boolean
+    activeCollection: Collections,
+    LabelPanelClosed: boolean,
 }
 
 
@@ -42,6 +54,12 @@ export function AppStateReducer(draft: AppState, action: AppAction)
         case AppActionType.toggleLabelPanel:
         {
             draft.LabelPanelClosed = !draft.LabelPanelClosed;
+            break;
+        }
+
+        case AppActionType.setActiveCollection:
+        {
+            draft.activeCollection = action.activeCollection;
             break;
         }
     }

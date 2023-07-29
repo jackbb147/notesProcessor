@@ -3,11 +3,10 @@ import {SidePanel} from "./SidePanel";
 import './App.css';
 import {ListItem} from "./ListItem";
 import {Button} from "./Button";
-import {GraphAction, GraphActionType, graphReducer, GraphState} from "./GraphReducer";
-import {AppAction, AppActionType, AppState, AppStateReducer} from "./AppStateReducer";
+import {GraphAction, GraphActionType, graphReducer, GraphState, Node} from "./GraphReducer";
+import {AppAction, AppActionType, AppState, AppStateReducer, Collections} from "./AppStateReducer";
 import {useImmerReducer} from "use-immer";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
-
 import {v4 as uuid} from 'uuid';
 
 
@@ -20,9 +19,35 @@ function App()
     });
     const [state, dispatch] = useImmerReducer<AppState, AppAction>(AppStateReducer, {
         activeNodeID:undefined,
+        activeCollection: Collections.All,
         LabelPanelClosed: false
     });
 
+
+    function activeCollection()
+    {
+        var collection:Node[];
+        switch (state.activeCollection)
+        {
+            case Collections.All:
+            {
+                collection = graph.nodes
+                break;
+            }
+            case Collections.RecentlyDeleted:
+            {
+                collection = graph.deletedNodes
+                break;
+            }
+            case Collections.Tag:
+            {
+                collection = [] // TODO
+                break;
+            }
+        }
+
+        return collection;
+    }
 
 
 
@@ -40,9 +65,21 @@ function App()
                         {/*}}></Button>*/}
                     </div>
                     <div className={"foldersContainer grow flex flex-col"}>
-                        <ListItem text={"All"} icon={"../icons/folder_FILL0_wght400_GRAD0_opsz48.svg"} active={true} rootClassName={"mb-2"}></ListItem>
-                        <ListItem text={"Recently Deleted"} icon={"../icons/delete_FILL0_wght400_GRAD0_opsz48 (1).svg"} ></ListItem>
-                        <ListItem text={"Create/Edit Labels"} icon={"../icons/edit_FILL0_wght400_GRAD0_opsz48.svg"} rootClassName={"mt-auto"}></ListItem>
+                        <ListItem text={"All"}
+                                  icon={"../icons/folder_FILL0_wght400_GRAD0_opsz48.svg"}
+                                  active={state.activeCollection===Collections.All}
+                                  rootClassName={"mb-2"}
+                                  onClick={()=>dispatch({type: AppActionType.setActiveCollection, activeCollection: Collections.All})}
+                        ></ListItem>
+                        <ListItem text={"Recently Deleted"}
+                                  active={state.activeCollection===Collections.RecentlyDeleted}
+                                  icon={"../icons/delete_FILL0_wght400_GRAD0_opsz48 (1).svg"}
+                                  onClick={()=>dispatch({type: AppActionType.setActiveCollection, activeCollection: Collections.RecentlyDeleted})}
+                        ></ListItem>
+                        <ListItem text={"Create/Edit Labels"}
+                                  icon={"../icons/edit_FILL0_wght400_GRAD0_opsz48.svg"}
+                                  rootClassName={"mt-auto"}
+                        ></ListItem>
                     </div>
                 </div>
             }
@@ -59,14 +96,16 @@ function App()
                                     icon={"../icons/delete_FILL0_wght400_GRAD0_opsz48 (1).svg"}
                                     rootClassName={"ml-auto"}
                                     onClick={()=>{
-                                        if(state.activeNodeID !== undefined) graphDispatch({type: GraphActionType.removeNode, id: state.activeNodeID});
-                                    }} //TODO
+                                        if(state.activeNodeID !== undefined) {
+
+                                        }
+                                    }}
                                 ></Button>
                             </div>
 
                             <div>
                                 <TransitionGroup>
-                                    {graph.nodes.map((node)=><CSSTransition
+                                    {activeCollection().map((node)=><CSSTransition
                                         timeout={1000}
                                         classNames="fade"
                                         key={node.id}
