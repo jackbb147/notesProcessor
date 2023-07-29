@@ -3,20 +3,23 @@ import {SidePanel} from "./SidePanel";
 import './App.css';
 import {ListItem} from "./ListItem";
 import {Button} from "./Button";
-import {Action, ActionType, reducer, State} from "./reducer";
+import {GraphAction, GraphActionType, graphReducer, GraphState} from "./GraphReducer";
+import {AppAction, AppActionType, AppState, AppStateReducer} from "./AppStateReducer";
 import {useImmerReducer} from "use-immer";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 
-import { v4 as uuid } from 'uuid';
-
-
-
+import {v4 as uuid} from 'uuid';
 
 
 function App()
 {
 
-    const [graph, dispatch] = useImmerReducer<State, Action>(reducer, {nodes: []});
+    const [graph, graphDispatch] = useImmerReducer<GraphState, GraphAction>(graphReducer, {nodes: []});
+    const [state, dispatch] = useImmerReducer<AppState, AppAction>(AppStateReducer, {
+        activeNodeID:undefined
+    });
+
+
 
 
 
@@ -42,7 +45,11 @@ function App()
                             <div className={"top-bar h-12 flex items-center"}>
                                 <Button icon={"../icons/list_FILL0_wght400_GRAD0_opsz48.svg"}></Button>
                                 <Button icon={"../icons/grid_view_FILL0_wght400_GRAD0_opsz48.svg"}></Button>
-                                <Button icon={"../icons/delete_FILL0_wght400_GRAD0_opsz48 (1).svg"} rootClassName={"ml-auto"}></Button>
+                                <Button
+                                    icon={"../icons/delete_FILL0_wght400_GRAD0_opsz48 (1).svg"}
+                                    rootClassName={"ml-auto"}
+                                    // onClick={()=>dispatch({type: GraphActionType.removeNode, id: })} //TODO
+                                ></Button>
                             </div>
 
                             <div>
@@ -52,7 +59,7 @@ function App()
                                         classNames="fade"
                                         key={node.id}
                                     >
-                                        <ListItem text={node.title}/>
+                                        <ListItem active={node.id === state.activeNodeID} text={node.title} onClick={()=>dispatch({type: AppActionType.setActiveNodeID, id: node.id})}/>
                                     </CSSTransition>)}
                                 </TransitionGroup>
                             </div>
@@ -61,8 +68,8 @@ function App()
                     }>
                         <div>
                             <div className={"top-bar h-12 flex items-center"}>
-                                <Button onClick={()=>dispatch({
-                                    type: ActionType.addNode,
+                                <Button onClick={()=>graphDispatch({ //TODO refactor this somewhere else
+                                    type: GraphActionType.addNode,
                                     node: {
                                         id: uuid(),
                                         title: "hello world!",

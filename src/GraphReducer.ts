@@ -1,15 +1,15 @@
 import {ImmerReducer} from "use-immer";
-export enum ActionType
+export enum GraphActionType
 {
     addNode,
     updateNode,
     removeNode,
 }
 
-export type Action =
-    | {type: ActionType.addNode, node: Node}
-    | {type: ActionType.removeNode, id: string}
-    | {type: ActionType.updateNode,  node: Node};
+export type GraphAction =
+    | {type: GraphActionType.addNode, node: Node}
+    | {type: GraphActionType.removeNode, id: string}
+    | {type: GraphActionType.updateNode,  node: Node};
 
 interface Node
 {
@@ -19,7 +19,7 @@ interface Node
     tags: string[]
 }
 
-export interface State
+export interface GraphState
 {
     nodes: Node[]
 }
@@ -68,12 +68,12 @@ export interface State
 
 
 
-export function reducer(draft:State, action:Action):void
+export function graphReducer(draft:GraphState, action:GraphAction):void
 {
 
     switch (action.type)
     {
-        case ActionType.addNode:
+        case GraphActionType.addNode:
         {
             let newNode = action.node;
             if(draft.nodes.some((node) => node.id === newNode.id)) return;
@@ -82,7 +82,7 @@ export function reducer(draft:State, action:Action):void
         }
 
 
-        case ActionType.removeNode:
+        case GraphActionType.removeNode:
         {
             let index = draft.nodes.findIndex((node)=>node.id === action.id);
             if(index < 0) return;
@@ -91,7 +91,7 @@ export function reducer(draft:State, action:Action):void
         }
 
 
-        case ActionType.updateNode:
+        case GraphActionType.updateNode:
         {
             let index = draft.nodes.findIndex((node)=>node.id === action.node.id);
             if(index < 0) return;
