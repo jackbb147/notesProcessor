@@ -85,6 +85,7 @@ function App()
                         node: note
                     })
                 }}
+                locked={state.activeCollection === Collections.RecentlyDeleted}
             />
     }
 

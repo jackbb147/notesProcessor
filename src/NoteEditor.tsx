@@ -6,11 +6,12 @@ import "./Quill-MathJax/quill.snow.css"
 import {Node} from "./GraphReducer"
 import {RangeStatic} from "quill";
 
-function QuillBoxComponent({val, handleBlur, onFinishSetup, onTouchStart}:{
+function QuillBoxComponent({val, handleBlur, onFinishSetup, onTouchStart, isReadOnly = false}:{
     val: string,
     handleBlur: (s:string)=>any,
     onFinishSetup: ()=>any,
-    onTouchStart: ()=>any
+    onTouchStart: ()=>any,
+    isReadOnly?: boolean|undefined
 })
 {
     const wrapperRef = useRef<any>(null);
@@ -96,7 +97,8 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onTouchStart}:{
                 keyboard: {
                     bindings: MathEditorModule.getBindings()
                 }
-            }
+            },
+            readOnly: isReadOnly
         })
 
         setQuillNode(quillNode)
@@ -171,10 +173,12 @@ export function NoteEditor({
     note,
     onBlur = (note: Node) => {},
     onFinishSetUp = () => {},
+    locked = false,
 }:{
     note: Node
     onBlur?: (note:Node)=>any,
     onFinishSetUp?: ()=>any,
+    locked?: boolean |undefined
 })
 {
 
@@ -207,7 +211,7 @@ export function NoteEditor({
             <QuillBoxComponent val={note.content}
                                handleBlur={(s:string)=>{handleBlur(s,note)}}
                                onFinishSetup={onFinishSetUp}
-
+                                isReadOnly={locked}
                                onTouchStart={()=>{}}></QuillBoxComponent>
         </div>
     )
