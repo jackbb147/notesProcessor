@@ -98,6 +98,7 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onChange, onTouchSta
 
         // when user finishes editing this node.
         quillNode.root.addEventListener("blur", ()=>{
+
             handleBlur(quillNode.root.innerHTML)
             // var a = dataObjects[i]
             // a.content = quillNode.root.innerHTML;
@@ -161,7 +162,13 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onChange, onTouchSta
 
 
 
-export function NoteEditor()
+export function NoteEditor({
+    onBlur = (s:string) => {},
+    onFinishSetUp = () => {}
+                           }:{
+    onBlur?: (s:string)=>any,
+    onFinishSetUp?: ()=>any,
+})
 {
 
 
@@ -173,8 +180,8 @@ export function NoteEditor()
         }}>
 
             <QuillBoxComponent val={""}
-                               handleBlur={()=>{}}
-                               onFinishSetup={()=>{}}
+                               handleBlur={onBlur}
+                               onFinishSetup={onFinishSetUp}
                                onChange={()=>{}}
                                onTouchStart={()=>{}}></QuillBoxComponent>
 

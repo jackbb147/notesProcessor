@@ -137,7 +137,9 @@ function App()
                             <div className={"flex-grow"} style={{
 
                             }}>
-                                <NoteEditor></NoteEditor>
+                                <NoteEditor onBlur={(s:string)=> {
+                                    // debugger
+                                }}></NoteEditor>
                             </div>
                         </div>
                     </SidePanel>
