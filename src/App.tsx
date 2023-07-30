@@ -56,6 +56,40 @@ function App()
         return collection;
     }
 
+    function EditorSwitch()
+    {
+        // state.activeCollection === Collections.RecentlyDeleted ?
+        var note: Node;
+        if(state.activeNodeID === undefined) return <></>;
+
+
+        switch (state.activeCollection)
+        {
+            case Collections.RecentlyDeleted:
+            {
+                note = ensure(graph.deletedNodes.find(node=>node.id === state.activeNodeID));
+                break;
+            }
+            default:
+            {
+                note = ensure(graph.nodes.find(node=>node.id === state.activeNodeID))
+                break;
+            }
+        }
+
+        return <NoteEditor
+                note={note} //https://stackoverflow.com/a/54738437/21646295
+                onBlur={(note: Node)=> {
+                    graphDispatch({
+                        type: GraphActionType.updateNode,
+                        node: note
+                    })
+                }}
+            />
+    }
+
+
+
 
 
 
@@ -76,12 +110,35 @@ function App()
                                   icon={"../icons/folder_FILL0_wght400_GRAD0_opsz48.svg"}
                                   active={state.activeCollection===Collections.All}
                                   rootClassName={"mb-2"}
-                                  onClick={()=>dispatch({type: AppActionType.setActiveCollection, activeCollection: Collections.All})}
+                                  onClick={()=> {
+                                      dispatch({
+                                          type: AppActionType.setActiveCollection,
+                                          activeCollection: Collections.All
+                                      })
+
+                                      if(state.activeCollection !== Collections.All) {
+                                          dispatch({
+                                              type: AppActionType.setActiveNodeID,
+                                              id: undefined
+                                          })
+                                      }
+                                  }}
                         ></ListItem>
                         <ListItem text={"Recently Deleted"}
                                   active={state.activeCollection===Collections.RecentlyDeleted}
                                   icon={"../icons/delete_FILL0_wght400_GRAD0_opsz48 (1).svg"}
-                                  onClick={()=>dispatch({type: AppActionType.setActiveCollection, activeCollection: Collections.RecentlyDeleted})}
+                                  onClick={()=> {
+                                      dispatch({
+                                          type: AppActionType.setActiveCollection,
+                                          activeCollection: Collections.RecentlyDeleted
+                                      })
+                                      if(state.activeCollection !== Collections.RecentlyDeleted) {
+                                          dispatch({
+                                              type: AppActionType.setActiveNodeID,
+                                              id: undefined
+                                          })
+                                      }
+                                  }}
                         ></ListItem>
                         <ListItem text={"Create/Edit Labels"}
                                   icon={"../icons/edit_FILL0_wght400_GRAD0_opsz48.svg"}
@@ -145,19 +202,7 @@ function App()
                             <div className={"flex-grow"} style={{
 
                             }}>
-                                {
-                                    state.activeNodeID !== undefined &&
-                                    <NoteEditor
-                                        note={ensure(graph.nodes.find(node=>node.id === state.activeNodeID))} //https://stackoverflow.com/a/54738437/21646295
-                                        onBlur={(note: Node)=> {
-                                            graphDispatch({
-                                                type: GraphActionType.updateNode,
-                                                node: note
-                                            })
-                                        }}
-                                    />
-                                }
-
+                                {EditorSwitch()}
                             </div>
                         </div>
                     </SidePanel>
