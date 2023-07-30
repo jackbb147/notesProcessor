@@ -1,9 +1,10 @@
 import React, {LegacyRef, useEffect, useRef, useState} from "react";
-import {Quill} from "react-quill";
+import ReactQuill, {Quill} from "react-quill";
 import {MathEditorModule} from "./Quill-MathJax/MathEditorModule";
 import "./Quill-MathJax/quill.bubble.css"
 import "./Quill-MathJax/quill.snow.css"
 import {Node} from "./GraphReducer"
+import {RangeStatic} from "quill";
 
 function QuillBoxComponent({val, handleBlur, onFinishSetup, onChange, onTouchStart}:{
     val: string,
@@ -16,6 +17,9 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onChange, onTouchSta
     const wrapperRef = useRef<any>(null);
     const ref = useRef<any>(null);
     const [finishedSetup, setFinishedSetup] = useState(false)
+    const [quillNode, setQuillNode] = useState<any>(undefined)
+    const [selection, setSelection] = useState<RangeStatic|null>(null);
+
 
 
 
@@ -32,21 +36,33 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onChange, onTouchSta
         if(container.previousSibling)
             wrapperRef.current.removeChild(container.previousSibling)
 
-
         setUpQuill(container)
-        return ()=>{
-            // let c = ref.current;
-            // ;
-            if(ref.current)
-            {
-                // debugger;
-                ref.current.innerHTML = "";
-                ref.current.className = ""
-                // wrapperRef.current.className = ""
-                console.log(`-------- quill clean up finished ----------`)
-            }
-        }
+        return cleanUp
     }, [])
+
+    function cleanUp()
+    {
+        if(ref.current)
+        {
+            // debugger;
+            ref.current.innerHTML = "";
+            ref.current.className = ""
+            // wrapperRef.current.className = ""
+            console.log(`-------- quill clean up finished ----------`)
+        }
+    }
+
+    useEffect(()=>{
+        console.log("=============HEY VAL CHANGED: " + val)
+        let q = quillNode;
+        if(q !== undefined)
+        {
+            setVal(val, q);
+            setQuillSelection(selection);
+        }
+
+
+    }, [val])
 
     function setUpQuill(container:HTMLElement)
     {
@@ -86,27 +102,23 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onChange, onTouchSta
             }
         })
 
+        setQuillNode(quillNode)
+
+
         quillNode.on("text-change", ()=>{
             // debugger;
             let contentDelta = quillNode.getContents();
             console.log(`calling onChange with contentDelta: ${JSON.stringify(contentDelta)}`)
-            // debugger;
+            setSelection(prev=>quillNode.getSelection())
             onChange(quillNode.root.innerHTML)
         })
 
-        // ;
-
         // when user finishes editing this node.
-        quillNode.root.addEventListener("blur", ()=>{
-
+        quillNode.root.addEventListener("blur", ()=>
+        {
             handleBlur(quillNode.root.innerHTML)
-            // var a = dataObjects[i]
-            // a.content = quillNode.root.innerHTML;
-            // var d = dataObjects
-            // handleDataObjectsChange(dataObjects)
-            // ;
             //     TODO update the data objects.
-        } )
+        })
 
 
         quillNode.root.addEventListener("mousedown", e=>{
@@ -125,27 +137,23 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onChange, onTouchSta
             // quillNode.root.addEventListener("mousedown", onTouchStart)
         }
 
-        // var toolbarContainer = document.querySelector("#editorButtonGroup");
-        // var toolbar = document.querySelector(".ql-toolbar");
-        // if(toolbarContainer && toolbar)
-        // {
-        //     toolbarContainer.innerHTML = ""
-        //     toolbarContainer.appendChild(toolbar)
-        // }
+        setVal(val, quillNode);
+        setFinishedSetup(true)
+        onFinishSetup()
+    }
 
-        // debugger;
-
-
-
+    function setVal(val:string, quillNode:any)
+    {
         let value = val;
-        // debugger;
-        // quillNode.setText(String.raw `<p>hey</p>`)
-        // quillNode.setText(value)
+
         const delta = quillNode.clipboard.convert(value);
         // debugger;
         quillNode.setContents(delta, 'silent');
-        setFinishedSetup(true)
-        onFinishSetup()
+    }
+
+    function setQuillSelection(selection:RangeStatic|null)
+    {
+        quillNode.setSelection(selection);
     }
 
     return (
@@ -163,13 +171,18 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onChange, onTouchSta
 
 
 export function NoteEditor({
+    note,
     onBlur = (s:string) => {},
-    onFinishSetUp = () => {}
-                           }:{
+    onFinishSetUp = () => {},
+    onChange = (node:Node) => {}
+}:{
+    note: Node
     onBlur?: (s:string)=>any,
     onFinishSetUp?: ()=>any,
+    onChange?:(node:Node)=>any
 })
 {
+
 
 
     return (
@@ -179,12 +192,17 @@ export function NoteEditor({
 
         }}>
 
-            <QuillBoxComponent val={""}
+            <QuillBoxComponent val={note.content}
                                handleBlur={onBlur}
                                onFinishSetup={onFinishSetUp}
-                               onChange={()=>{}}
+                               onChange={(s:string)=>{{
+                                   // setText(s)
+                                   onChange({
+                                       ...note,
+                                       content: s
+                                   })
+                               }}}
                                onTouchStart={()=>{}}></QuillBoxComponent>
-
         </div>
     )
 }

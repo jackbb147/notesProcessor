@@ -72,6 +72,7 @@ export interface GraphState
 export function graphReducer(draft:GraphState, action:GraphAction):void
 {
 
+    console.log(`dispatched: ${JSON.stringify(action)}`)
     switch (action.type)
     {
         case GraphActionType.addNode:
@@ -97,6 +98,9 @@ export function graphReducer(draft:GraphState, action:GraphAction):void
         {
             let index = draft.nodes.findIndex((node)=>node.id === action.node.id);
             if(index < 0) return;
+            console.log(action.node)
+
+            // debugger;
             draft.nodes.splice(index, 1, action.node)
             break;
         }

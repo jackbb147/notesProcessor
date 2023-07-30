@@ -34,6 +34,7 @@ export interface AppState
 
 export function AppStateReducer(draft: AppState, action: AppAction)
 {
+    console.log(`dispatched: ${JSON.stringify(action)}`)
     switch (action.type)
     {
         case AppActionType.setActiveNodeID:

@@ -10,7 +10,13 @@ import {CSSTransition, TransitionGroup} from "react-transition-group";
 import {v4 as uuid} from 'uuid';
 import {NoteEditor} from "./NoteEditor";
 
+function ensure<T>(argument: T | undefined | null, message: string = 'This value was promised to be there.'): T {
+    if (argument === undefined || argument === null) {
+        throw new TypeError(message);
+    }
 
+    return argument;
+}
 function App()
 {
 
@@ -100,6 +106,8 @@ function App()
                                         if(state.activeNodeID !== undefined) {
                                             graphDispatch({type: GraphActionType.removeNode, id: state.activeNodeID})
                                             dispatch({type: AppActionType.setActiveNodeID, id: undefined})
+                                            console.log(graph.nodes)
+
                                         }
                                     }}
                                 ></Button>
@@ -137,9 +145,22 @@ function App()
                             <div className={"flex-grow"} style={{
 
                             }}>
-                                <NoteEditor onBlur={(s:string)=> {
-                                    // debugger
-                                }}></NoteEditor>
+                                {
+                                    state.activeNodeID !== undefined &&
+                                    <NoteEditor
+                                        note={ensure(graph.nodes.find(node=>node.id === state.activeNodeID))} //https://stackoverflow.com/a/54738437/21646295
+                                        onChange={(node:Node) => {
+                                            console.log(node);
+                                            // debugger;
+                                            graphDispatch({type: GraphActionType.updateNode, node: node })
+
+                                        }}
+                                        onBlur={(s:string)=> {
+                                            // debugger
+                                        }}
+                                    />
+                                }
+
                             </div>
                         </div>
                     </SidePanel>
