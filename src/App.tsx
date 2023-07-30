@@ -8,6 +8,7 @@ import {AppAction, AppActionType, AppState, AppStateReducer, Collections} from "
 import {useImmerReducer} from "use-immer";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import {v4 as uuid} from 'uuid';
+import {NoteEditor} from "./NoteEditor";
 
 
 function App()
@@ -98,6 +99,7 @@ function App()
                                     onClick={()=>{
                                         if(state.activeNodeID !== undefined) {
                                             graphDispatch({type: GraphActionType.removeNode, id: state.activeNodeID})
+                                            dispatch({type: AppActionType.setActiveNodeID, id: undefined})
                                         }
                                     }}
                                 ></Button>
@@ -130,6 +132,9 @@ function App()
                                 })} icon={"../icons/edit_square_FILL0_wght400_GRAD0_opsz48.svg"}></Button>
 
                             </div>
+                            <NoteEditor></NoteEditor>
+
+
                         </div>
                     </SidePanel>
                 </div>

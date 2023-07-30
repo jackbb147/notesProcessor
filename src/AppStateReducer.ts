@@ -10,7 +10,7 @@ export enum AppActionType
 
 
 export type AppAction =
-    | {type: AppActionType.setActiveNodeID, id: string}
+    | {type: AppActionType.setActiveNodeID, id: string|undefined}
     | {type: AppActionType.closeLabelPanel}
     | {type:AppActionType.openLabelPanel}
     | {type: AppActionType.toggleLabelPanel}

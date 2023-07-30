@@ -1,6 +1,9 @@
 import React, {LegacyRef, useEffect, useRef, useState} from "react";
 import {Quill} from "react-quill";
 import {MathEditorModule} from "./Quill-MathJax/MathEditorModule";
+import "./Quill-MathJax/quill.bubble.css"
+import "./Quill-MathJax/quill.snow.css"
+import {Node} from "./GraphReducer"
 
 function QuillBoxComponent({val, handleBlur, onFinishSetup, onChange, onTouchStart}:{
     val: string,
@@ -10,6 +13,7 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onChange, onTouchSta
     onTouchStart: ()=>any
 })
 {
+    const wrapperRef = useRef<any>(null);
     const ref = useRef<any>(null);
     const [finishedSetup, setFinishedSetup] = useState(false)
 
@@ -25,26 +29,30 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onChange, onTouchSta
 
         if(finishedSetup) return;
         var container = ref.current;
+        if(container.previousSibling)
+        // if(wrapperRef.current.children.length > 1)debugger;
+            wrapperRef.current.removeChild(container.previousSibling)
         // ;
+
+
         setUpQuill(container)
         return ()=>{
             // let c = ref.current;
             // ;
             if(ref.current)
             {
-
+                // debugger;
                 ref.current.innerHTML = "";
                 ref.current.className = ""
+                // wrapperRef.current.className = ""
                 console.log(`-------- quill clean up finished ----------`)
             }
-            // ;
-            //  this is the   clean up!
         }
     }, [])
 
     function setUpQuill(container:HTMLElement)
     {
-        // ;
+
 
         var quillNode = new Quill(container, {
             // theme: "snow",
@@ -108,5 +116,34 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onChange, onTouchSta
 
     }
 
-    return <div ref={ref} />
+    return (
+        <div ref={wrapperRef}>
+            <div  ref={ref}></div>
+        </div>
+    )
+
 }
+
+
+
+export function NoteEditor()
+{
+    return (
+        <div>
+            <QuillBoxComponent val={""}
+                               handleBlur={()=>{}}
+                               onFinishSetup={()=>{}}
+                               onChange={()=>{}}
+                               onTouchStart={()=>{}}></QuillBoxComponent>
+
+        </div>
+    )
+}
+
+
+
+
+
+
+
+
