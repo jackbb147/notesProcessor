@@ -131,7 +131,7 @@ function App()
                                     }
                                 })} icon={"../icons/edit_square_FILL0_wght400_GRAD0_opsz48.svg"}></Button>
 
-                                <div id={"editorButtonGroup"} className={"w-1/2 border-2 h-full"}>
+                                <div id={"editorButtonGroup"} className={"w-1/2  "}>
                                 </div>
                             </div>
                             <div className={"flex-grow border-2"} style={{

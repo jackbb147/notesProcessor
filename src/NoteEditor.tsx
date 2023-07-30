@@ -54,6 +54,7 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onChange, onTouchSta
 
         let toolbarContainer = document.querySelector("#editorButtonGroup")
         if(toolbarContainer)
+            // https://quilljs.com/docs/themes/#snow/
             toolbarContainer.innerHTML='<!-- Add font size dropdown -->\n' +
                 '  <select class="ql-size">\n' +
                 '    <option value="small"></option>\n' +
@@ -64,9 +65,9 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onChange, onTouchSta
                 '  </select>\n' +
                 '  <!-- Add a bold button -->\n' +
                 '  <button class="ql-bold"></button>\n' +
-                '  <!-- Add subscript and superscript buttons -->\n' +
-                '  <button class="ql-script" value="sub"></button>\n' +
-                '  <button class="ql-script" value="super"></button>';
+                '  <button class="ql-italic"></button>\n' +
+                '  <button class="ql-underline"></button>\n'+
+                '  <button class="ql-code-block"></button>\n'
 
 
 
