@@ -149,14 +149,11 @@ function App()
                                     state.activeNodeID !== undefined &&
                                     <NoteEditor
                                         note={ensure(graph.nodes.find(node=>node.id === state.activeNodeID))} //https://stackoverflow.com/a/54738437/21646295
-                                        onChange={(node:Node) => {
-                                            console.log(node);
-                                            // debugger;
-                                            graphDispatch({type: GraphActionType.updateNode, node: node })
-
-                                        }}
-                                        onBlur={(s:string)=> {
-                                            // debugger
+                                        onBlur={(note: Node)=> {
+                                            graphDispatch({
+                                                type: GraphActionType.updateNode,
+                                                node: note
+                                            })
                                         }}
                                     />
                                 }

@@ -6,11 +6,10 @@ import "./Quill-MathJax/quill.snow.css"
 import {Node} from "./GraphReducer"
 import {RangeStatic} from "quill";
 
-function QuillBoxComponent({val, handleBlur, onFinishSetup, onChange, onTouchStart}:{
+function QuillBoxComponent({val, handleBlur, onFinishSetup, onTouchStart}:{
     val: string,
     handleBlur: (s:string)=>any,
     onFinishSetup: ()=>any,
-    onChange: (s:string)=>any,
     onTouchStart: ()=>any
 })
 {
@@ -19,8 +18,6 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onChange, onTouchSta
     const [finishedSetup, setFinishedSetup] = useState(false)
     const [quillNode, setQuillNode] = useState<any>(undefined)
     const [selection, setSelection] = useState<RangeStatic|null>(null);
-
-
 
 
 
@@ -53,7 +50,7 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onChange, onTouchSta
     }
 
     useEffect(()=>{
-        console.log("=============HEY VAL CHANGED: " + val)
+        console.log("=============VAL CHANGED: " + val + " ==================")
         let q = quillNode;
         if(q !== undefined)
         {
@@ -105,13 +102,13 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onChange, onTouchSta
         setQuillNode(quillNode)
 
 
-        quillNode.on("text-change", ()=>{
-            // debugger;
-            let contentDelta = quillNode.getContents();
-            console.log(`calling onChange with contentDelta: ${JSON.stringify(contentDelta)}`)
-            setSelection(prev=>quillNode.getSelection())
-            onChange(quillNode.root.innerHTML)
-        })
+        // quillNode.on("text-change", ()=>{
+        //     // debugger;
+        //     let contentDelta = quillNode.getContents();
+        //     console.log(`calling onChange with contentDelta: ${JSON.stringify(contentDelta)}`)
+        //     setSelection(prev=>quillNode.getSelection())
+        //     onChange(quillNode.root.innerHTML)
+        // })
 
         // when user finishes editing this node.
         quillNode.root.addEventListener("blur", ()=>
@@ -172,16 +169,31 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onChange, onTouchSta
 
 export function NoteEditor({
     note,
-    onBlur = (s:string) => {},
+    onBlur = (note: Node) => {},
     onFinishSetUp = () => {},
-    onChange = (node:Node) => {}
 }:{
     note: Node
-    onBlur?: (s:string)=>any,
+    onBlur?: (note:Node)=>any,
     onFinishSetUp?: ()=>any,
-    onChange?:(node:Node)=>any
 })
 {
+
+    const noteRef = useRef<Node>(note) //https://stackoverflow.com/questions/57847594/react-hooks-accessing-up-to-date-state-from-within-a-callback
+    noteRef.current = note;
+
+    useEffect(()=>{
+        console.log(`note changed: ${JSON.stringify(note)}`)
+    }, [note])
+
+    function handleBlur(s:string, note:Node)
+    {
+        var newNode:Node = {
+            ...noteRef.current,
+            content: s
+        }
+        // debugger;
+        onBlur(newNode)
+    }
 
 
 
@@ -193,15 +205,9 @@ export function NoteEditor({
         }}>
 
             <QuillBoxComponent val={note.content}
-                               handleBlur={onBlur}
+                               handleBlur={(s:string)=>{handleBlur(s,note)}}
                                onFinishSetup={onFinishSetUp}
-                               onChange={(s:string)=>{{
-                                   // setText(s)
-                                   onChange({
-                                       ...note,
-                                       content: s
-                                   })
-                               }}}
+
                                onTouchStart={()=>{}}></QuillBoxComponent>
         </div>
     )
