@@ -55,7 +55,7 @@ function App()
 
 
     return (
-        <div className="App bg-grey w-full h-full flex flex-row">
+        <div className="App bg-grey w-full h-full flex flex-row overflow-hidden">
             <SidePanel panelChildren={
                 <div className={"w-full h-full  flex flex-col pl-4 pr-4"}>
                     <div className={"top-bar h-12 flex items-center"}>
@@ -86,7 +86,7 @@ function App()
             }
                        isClosed={state.LabelPanelClosed}
             >
-                <div className={"App__main bg-white h-full grow"}>
+                <div className={"App__main bg-white h-full grow border-2 w-full"}>
 
                     <SidePanel panelChildren={
                         <div className={"w-full h-full flex flex-col pl-4 pr-4"}>
@@ -119,8 +119,8 @@ function App()
 
                         </div>
                     }>
-                        <div>
-                            <div className={"top-bar h-12 flex items-center"}>
+                        <div className={" p-1 flex flex-col border-2 grow"}>
+                            <div className={"top-bar h-12 flex items-center justify-between"}>
                                 <Button onClick={()=>graphDispatch({ //TODO refactor this somewhere else
                                     type: GraphActionType.addNode,
                                     node: {
@@ -131,10 +131,14 @@ function App()
                                     }
                                 })} icon={"../icons/edit_square_FILL0_wght400_GRAD0_opsz48.svg"}></Button>
 
+                                <div id={"editorButtonGroup"} className={"w-1/2 border-2 h-full"}>
+                                </div>
                             </div>
-                            <NoteEditor></NoteEditor>
+                            <div className={"flex-grow border-2"} style={{
 
-
+                            }}>
+                                <NoteEditor></NoteEditor>
+                            </div>
                         </div>
                     </SidePanel>
                 </div>

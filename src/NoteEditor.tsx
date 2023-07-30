@@ -30,9 +30,7 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onChange, onTouchSta
         if(finishedSetup) return;
         var container = ref.current;
         if(container.previousSibling)
-        // if(wrapperRef.current.children.length > 1)debugger;
             wrapperRef.current.removeChild(container.previousSibling)
-        // ;
 
 
         setUpQuill(container)
@@ -54,10 +52,32 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onChange, onTouchSta
     {
 
 
+        let toolbarContainer = document.querySelector("#editorButtonGroup")
+        if(toolbarContainer)
+            toolbarContainer.innerHTML='<!-- Add font size dropdown -->\n' +
+                '  <select class="ql-size">\n' +
+                '    <option value="small"></option>\n' +
+                '    <!-- Note a missing, thus falsy value, is used to reset to default -->\n' +
+                '    <option selected></option>\n' +
+                '    <option value="large"></option>\n' +
+                '    <option value="huge"></option>\n' +
+                '  </select>\n' +
+                '  <!-- Add a bold button -->\n' +
+                '  <button class="ql-bold"></button>\n' +
+                '  <!-- Add subscript and superscript buttons -->\n' +
+                '  <button class="ql-script" value="sub"></button>\n' +
+                '  <button class="ql-script" value="super"></button>';
+
+
+
+        // debugger;
         var quillNode = new Quill(container, {
-            // theme: "snow",
+
             theme: "snow",
             modules:{
+                toolbar:{
+                  container: "#editorButtonGroup"
+                },
                 MathEditorModule: {},
                 keyboard: {
                     bindings: MathEditorModule.getBindings()
@@ -103,6 +123,17 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onChange, onTouchSta
             // quillNode.root.addEventListener("mousedown", onTouchStart)
         }
 
+        // var toolbarContainer = document.querySelector("#editorButtonGroup");
+        // var toolbar = document.querySelector(".ql-toolbar");
+        // if(toolbarContainer && toolbar)
+        // {
+        //     toolbarContainer.innerHTML = ""
+        //     toolbarContainer.appendChild(toolbar)
+        // }
+
+        // debugger;
+
+
 
         let value = val;
         // debugger;
@@ -113,11 +144,14 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onChange, onTouchSta
         quillNode.setContents(delta, 'silent');
         setFinishedSetup(true)
         onFinishSetup()
-
     }
 
     return (
-        <div ref={wrapperRef}>
+        <div ref={wrapperRef} style={{
+            width: "100%",
+            height:"100%",
+
+        }}>
             <div  ref={ref}></div>
         </div>
     )
@@ -128,8 +162,15 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onChange, onTouchSta
 
 export function NoteEditor()
 {
+
+
     return (
-        <div>
+        <div className={"border-amber-50"} style={{
+            width: "100%",
+            height: "100%",
+
+        }}>
+
             <QuillBoxComponent val={""}
                                handleBlur={()=>{}}
                                onFinishSetup={()=>{}}
