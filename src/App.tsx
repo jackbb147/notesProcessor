@@ -86,7 +86,7 @@ function App()
             }
                        isClosed={state.LabelPanelClosed}
             >
-                <div className={"App__main bg-white h-full grow border-2 w-full"}>
+                <div className={"App__main bg-white h-full grow w-full"}>
 
                     <SidePanel panelChildren={
                         <div className={"w-full h-full flex flex-col pl-4 pr-4"}>
@@ -119,7 +119,7 @@ function App()
 
                         </div>
                     }>
-                        <div className={" p-1 flex flex-col border-2 grow"}>
+                        <div className={" p-1 flex flex-col  grow"}>
                             <div className={"top-bar h-12 flex items-center justify-between"}>
                                 <Button onClick={()=>graphDispatch({ //TODO refactor this somewhere else
                                     type: GraphActionType.addNode,
@@ -134,7 +134,7 @@ function App()
                                 <div id={"editorButtonGroup"} className={"w-1/2  "}>
                                 </div>
                             </div>
-                            <div className={"flex-grow border-2"} style={{
+                            <div className={"flex-grow"} style={{
 
                             }}>
                                 <NoteEditor></NoteEditor>

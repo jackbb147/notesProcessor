@@ -166,7 +166,7 @@ export function NoteEditor()
 
 
     return (
-        <div className={"border-amber-50"} style={{
+        <div style={{
             width: "100%",
             height: "100%",
 
