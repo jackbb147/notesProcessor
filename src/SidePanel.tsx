@@ -1,5 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import './App.css';
+import {ListItem} from "./ListItem";
+import {AppActionType, Collections} from "./AppStateReducer";
 export function SidePanel(
     {panelChildren , children, isClosed=false}:{
         panelChildren?: React.ReactNode,
@@ -39,7 +41,14 @@ export function SidePanel(
     return (
         <div ref={containerRef} className={"sidePanelWrapper flex flex-row w-full h-full"} onMouseMove={onSidePanelResize} onMouseUp={onEndResize}>
             <div className={"sidePanel h-full flex relative"} style={{width : isClosed?"0px":sidePanelWidth}}>
-                <div className={"sidePanel__left w-full h-full"}>{panelChildren}</div>
+                <div className={"sidePanel__left w-full h-full"}>
+                    <div className={"w-full h-full  flex flex-col pl-4 pr-4"}>
+                            <div className={"grow flex flex-col"}>
+                                {panelChildren}
+                            </div>
+                        </div>
+
+                </div>
                 <div className={"sidePanel__resize bg-inherit cursor-ew-resize h-full absolute right-0 w-6 flex justify-center"}
                      onMouseDown={onBeginResize}
                 >

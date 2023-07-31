@@ -107,55 +107,53 @@ function App() {
                                     dispatch({type: AppActionType.setActiveNodeID, id: undefined})
                               }}/>
             <SidePanel panelChildren={
-                <div className={"w-full h-full  flex flex-col pl-4 pr-4"}>
+                <>
                     <div className={"top-bar h-12 flex items-center"}>
                         {/*TODO */}
-                        {/*<Button icon={"../icons/thumbnail_bar_FILL0_wght400_GRAD0_opsz48.svg"} onClick={()=>{*/}
+                        <Button icon={"../icons/thumbnail_bar_FILL0_wght400_GRAD0_opsz48.svg"} onClick={()=>{
 
-                        {/*    dispatch({type: AppActionType.toggleLabelPanel})*/}
-                        {/*}}></Button>*/}
+                            // dispatch({type: AppActionType.toggleLabelPanel}) //TODO
+                        }}></Button>
                     </div>
-                    <div className={"foldersContainer grow flex flex-col"}>
-                        <ListItem text={"All"}
-                                  icon={"../icons/folder_FILL0_wght400_GRAD0_opsz48.svg"}
-                                  active={state.activeCollection === Collections.All}
-                                  rootClassName={"mb-2"}
-                                  onClick={() => {
-                                      dispatch({
-                                          type: AppActionType.setActiveCollection,
-                                          activeCollection: Collections.All
-                                      })
+                    <ListItem text={"All"}
+                              icon={"../icons/folder_FILL0_wght400_GRAD0_opsz48.svg"}
+                              active={state.activeCollection === Collections.All}
+                              rootClassName={"mb-2"}
+                              onClick={() => {
+                                  dispatch({
+                                      type: AppActionType.setActiveCollection,
+                                      activeCollection: Collections.All
+                                  })
 
-                                      if (state.activeCollection !== Collections.All) {
-                                          dispatch({
-                                              type: AppActionType.setActiveNodeID,
-                                              id: undefined
-                                          })
-                                      }
-                                  }}
-                        ></ListItem>
-                        <ListItem text={"Recently Deleted"}
-                                  active={state.activeCollection === Collections.RecentlyDeleted}
-                                  icon={"../icons/delete_FILL0_wght400_GRAD0_opsz48 (1).svg"}
-                                  onClick={() => {
+                                  if (state.activeCollection !== Collections.All) {
                                       dispatch({
-                                          type: AppActionType.setActiveCollection,
-                                          activeCollection: Collections.RecentlyDeleted
+                                          type: AppActionType.setActiveNodeID,
+                                          id: undefined
                                       })
-                                      if (state.activeCollection !== Collections.RecentlyDeleted) {
-                                          dispatch({
-                                              type: AppActionType.setActiveNodeID,
-                                              id: undefined
-                                          })
-                                      }
-                                  }}
-                        ></ListItem>
-                        <ListItem text={"Create/Edit Labels"}
-                                  icon={"../icons/edit_FILL0_wght400_GRAD0_opsz48.svg"}
-                                  rootClassName={"mt-auto"}
-                        ></ListItem>
-                    </div>
-                </div>
+                                  }
+                              }}
+                    ></ListItem>
+                    <ListItem text={"Recently Deleted"}
+                              active={state.activeCollection === Collections.RecentlyDeleted}
+                              icon={"../icons/delete_FILL0_wght400_GRAD0_opsz48 (1).svg"}
+                              onClick={() => {
+                                  dispatch({
+                                      type: AppActionType.setActiveCollection,
+                                      activeCollection: Collections.RecentlyDeleted
+                                  })
+                                  if (state.activeCollection !== Collections.RecentlyDeleted) {
+                                      dispatch({
+                                          type: AppActionType.setActiveNodeID,
+                                          id: undefined
+                                      })
+                                  }
+                              }}
+                    ></ListItem>
+                    <ListItem text={"Create/Edit Labels"}
+                              icon={"../icons/edit_FILL0_wght400_GRAD0_opsz48.svg"}
+                              rootClassName={"mt-auto"}
+                    ></ListItem>
+                </>
             }
                        isClosed={state.LabelPanelClosed}
             >
