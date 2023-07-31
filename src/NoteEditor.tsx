@@ -1,5 +1,7 @@
 import React, {LegacyRef, useEffect, useRef, useState} from "react";
 import ReactQuill, {Quill} from "react-quill";
+
+//@ts-ignore
 import {MathEditorModule} from "./Quill-MathJax/MathEditorModule";
 import "./Quill-MathJax/quill.bubble.css"
 import "./Quill-MathJax/quill.snow.css"
