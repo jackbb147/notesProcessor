@@ -4,12 +4,14 @@ export enum GraphActionType
     addNode,
     updateNode,
     removeNode,
+    recoverNode
 }
 
 export type GraphAction =
     | {type: GraphActionType.addNode, node: Node}
     | {type: GraphActionType.removeNode, id: string}
-    | {type: GraphActionType.updateNode,  node: Node};
+    | {type: GraphActionType.updateNode,  node: Node}
+    | {type: GraphActionType.recoverNode, id: string}
 
 export interface Node
 {
@@ -104,6 +106,16 @@ export function graphReducer(draft:GraphState, action:GraphAction):void
                 ...draft.nodes[index],
                 ...action.node
             }
+            break;
+        }
+
+        case GraphActionType.recoverNode:
+        {
+            console.log(`trying to recover: ${action.id}`)
+            let index = draft.deletedNodes.findIndex(node=>node.id === action.id);
+            if(index < 0) return;
+            draft.nodes.push(draft.deletedNodes[index]);
+            draft.deletedNodes.splice(index, 1);
             break;
         }
     }

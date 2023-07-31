@@ -5,6 +5,7 @@ export enum AppActionType
     closeLabelPanel,
     openLabelPanel,
     toggleLabelPanel,
+    setShowRecoverNodePopup
 
 }
 
@@ -15,6 +16,8 @@ export type AppAction =
     | {type:AppActionType.openLabelPanel}
     | {type: AppActionType.toggleLabelPanel}
     | {type: AppActionType.setActiveCollection, activeCollection: Collections}
+    | {type: AppActionType.setShowRecoverNodePopup, show: boolean}
+
 
 export enum Collections
 {
@@ -29,6 +32,7 @@ export interface AppState
     activeNodeID: string|undefined,
     activeCollection: Collections,
     LabelPanelClosed: boolean,
+    showRecoverNodePopup: boolean
 }
 
 
@@ -61,6 +65,12 @@ export function AppStateReducer(draft: AppState, action: AppAction)
         case AppActionType.setActiveCollection:
         {
             draft.activeCollection = action.activeCollection;
+            break;
+        }
+
+        case AppActionType.setShowRecoverNodePopup:
+        {
+            draft.showRecoverNodePopup = action.show;
             break;
         }
     }

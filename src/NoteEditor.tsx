@@ -8,12 +8,13 @@ import "./Quill-MathJax/quill.snow.css"
 import {Node} from "./GraphReducer"
 import {RangeStatic} from "quill";
 
-function QuillBoxComponent({val, handleBlur, onFinishSetup, onTouchStart, isReadOnly = false}:{
+function QuillBoxComponent({val, handleBlur, onFinishSetup, onTouchStart, isReadOnly = false, onEditAttempt=()=>{}}:{
     val: string,
     handleBlur: (s:string)=>any,
     onFinishSetup: ()=>any,
     onTouchStart: ()=>any,
-    isReadOnly?: boolean|undefined
+    isReadOnly?: boolean|undefined,
+    onEditAttempt?: ()=>any
 })
 {
     const wrapperRef = useRef<any>(null);
@@ -122,13 +123,18 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onTouchStart, isRead
         })
 
 
-        quillNode.root.addEventListener("mousedown", e=>{
-            e.stopPropagation() // this is to prevent dragging when user is editing.
-        })
+        if(isReadOnly)
+        {
+            quillNode.root.addEventListener("mousedown", e=>{
+                e.stopPropagation() // this is to prevent dragging when user is editing.
+                onEditAttempt()
+            })
 
-        quillNode.root.addEventListener("touchstart", e=>{
-            e.stopPropagation()
-        })
+            // quillNode.root.addEventListener("touchstart", e=>{
+            //     e.stopPropagation()
+            // })
+        }
+
 
         if(onTouchStart){
             quillNode.root.addEventListener("touchstart", e=>{
@@ -170,17 +176,27 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onTouchStart, isRead
 }
 
 
-
+/**
+ *
+ * @param note
+ * @param onBlur
+ * @param onFinishSetUp
+ * @param locked
+ * @param onEditAttempt callback for when user attempts to edit a locked node.
+ * @constructor
+ */
 export function NoteEditor({
     note,
     onBlur = (note: Node) => {},
     onFinishSetUp = () => {},
     locked = false,
+    onEditAttempt = ()=>{console.log("Edit attempted")}
 }:{
     note: Node
     onBlur?: (note:Node)=>any,
     onFinishSetUp?: ()=>any,
-    locked?: boolean |undefined
+    locked?: boolean |undefined,
+    onEditAttempt?: () => any
 })
 {
 
@@ -214,6 +230,7 @@ export function NoteEditor({
                                handleBlur={(s:string)=>{handleBlur(s,note)}}
                                onFinishSetup={onFinishSetUp}
                                 isReadOnly={locked}
+                               onEditAttempt={onEditAttempt}
                                onTouchStart={()=>{}}></QuillBoxComponent>
         </div>
     )

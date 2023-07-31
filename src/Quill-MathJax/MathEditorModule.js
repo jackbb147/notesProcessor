@@ -6,7 +6,7 @@ import {MATHJAXCOMMANDS} from "./mathjaxCommands";
 const EDITOR_CONTAINER_FONTSIZE = "15px" // QUILL'S EDITOR_CONTAINER FONT SIZE MUST BE KEPT IN SYNC WITH ACE'S EDITOR FONT SIZE, OTHERWISE TOOLTIP POSITIONING WILL BE OFF
 
 
-function getACEEditorInstance(domNode:any) {
+function getACEEditorInstance(domNode) {
 //     TODO
 //
     var x = domNode
