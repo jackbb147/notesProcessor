@@ -1,6 +1,6 @@
-import {Button} from "./Button";
+import {Button} from "./ui/Button";
 import {ListItem} from "./ListItem";
-import {AppActionType, Collections} from "./AppStateReducer";
+import {AppActionType, Collections} from "../reducers/AppStateReducer";
 import React, {useContext} from "react";
 import {AppStateContext} from "./AppStateContext";
 import {AppStateDispatchContext} from "./AppStateContext";

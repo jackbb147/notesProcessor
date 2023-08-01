@@ -1,6 +1,6 @@
-import {GraphActionType} from "./GraphReducer";
+import {GraphActionType} from "../reducers/GraphReducer";
 import {v4 as uuid} from "uuid";
-import {Button} from "./Button";
+import {Button} from "./ui/Button";
 import React, {useContext} from "react";
 import {GraphContext, GraphDispatchContext} from "./GraphContext";
 

@@ -1,5 +1,5 @@
 import {useImmerReducer} from "use-immer";
-import {GraphAction, graphReducer, GraphState} from "./GraphReducer";
+import {GraphAction, graphReducer, GraphState} from "../reducers/GraphReducer";
 import React,{createContext} from "react";
 
 

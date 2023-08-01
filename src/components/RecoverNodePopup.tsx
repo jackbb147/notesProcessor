@@ -1,9 +1,9 @@
-import {PopUpWindow} from "./PopUpWindow";
+
 import * as AlertDialog from '@radix-ui/react-alert-dialog';
 import {useContext} from "react";
 import {AppStateContext, AppStateDispatchContext} from "./AppStateContext";
-import {AppActionType} from "./AppStateReducer";
-import {GraphActionType} from "./GraphReducer";
+import {AppActionType} from "../reducers/AppStateReducer";
+import {GraphActionType} from "../reducers/GraphReducer";
 import {GraphContext, GraphDispatchContext} from "./GraphContext";
 
 

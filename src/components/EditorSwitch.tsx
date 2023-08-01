@@ -1,8 +1,8 @@
 import React, {useContext} from "react";
 import {GraphContext, GraphDispatchContext} from "./GraphContext";
 import {AppStateContext, AppStateDispatchContext} from "./AppStateContext";
-import {GraphActionType, Node} from "./GraphReducer";
-import {AppActionType, Collections} from "./AppStateReducer";
+import {GraphActionType, Node} from "../reducers/GraphReducer";
+import {AppActionType, Collections} from "../reducers/AppStateReducer";
 import {NoteEditor} from "./NoteEditor";
 import {ensure} from "./App";
 

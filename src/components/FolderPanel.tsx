@@ -1,7 +1,7 @@
 
 import React, {useContext} from "react";
 import {FolderPanelContent} from "./FolderPanelContent";
-import {SidePanel} from "./SidePanel";
+import {SidePanel} from "./ui/SidePanel";
 import {NotesPanelContent} from "./NotesPanelContent";
 import {AddNodeButton} from "./AddNodeButton";
 import {EditorSwitch} from "./EditorSwitch";

@@ -1,8 +1,8 @@
 import React, {useContext} from 'react';
-import {SidePanel} from "./SidePanel";
-import './App.css';
-import {GraphAction, GraphActionType, graphReducer, GraphState, Node} from "./GraphReducer";
-import {AppAction, AppActionType, AppState, AppStateReducer, Collections} from "./AppStateReducer";
+import {SidePanel} from "./ui/SidePanel";
+import '../App.css';
+import {GraphAction, GraphActionType, graphReducer, GraphState, Node} from "../reducers/GraphReducer";
+import {AppAction, AppActionType, AppState, AppStateReducer, Collections} from "../reducers/AppStateReducer";
 import {useImmerReducer} from "use-immer";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import {v4 as uuid} from 'uuid';
@@ -16,7 +16,7 @@ import {EditorSwitch} from "./EditorSwitch";
 import {AddNodeButton} from "./AddNodeButton";
 import {FolderPanel} from "./FolderPanel";
 import {NotesPanel} from "./NotesPanel";
-import {TopBar} from "./TopBar";
+import {TopBar} from "./ui/TopBar";
 
 export function ensure<T>(argument: T | undefined | null, message: string = 'This value was promised to be there.'): T {
     if (argument === undefined || argument === null) {
