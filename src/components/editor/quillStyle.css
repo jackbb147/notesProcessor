@@ -27,3 +27,48 @@
 {
     color: white!important;
 }
+
+
+/** All toolbar buttons are inside of .ql-formats */
+.ql-formats button {
+    position: relative
+}
+
+    /** Set a tooltip with css pseudo-elements, when buttons are hover, active or focus  */
+.ql-formats button:hover:after,
+.ql-formats button:active:after,
+.ql-formats button:focus:after {
+    position: absolute;
+    background: black;
+    color: white;
+    padding: .5em;
+    border-radius: .5em;
+    left: -50%;
+    top: 100%;
+    width: max-content;
+    z-index: 1;
+}
+
+    /** Set tooltip content for bold button **/
+.ql-bold:hover:after,
+.ql-bold:active:after,
+.ql-bold:focus:after {
+    content: 'Bold';
+}
+
+    /** Set tooltip content for Italic button **/
+.ql-italic:hover:after,
+.ql-italic:active:after,
+.ql-italic:focus:after {
+    content: 'Italic';
+}
+
+
+.ql-underline:hover:after,
+.ql-underline:active:after,
+.ql-underline:focus:after {
+    content: 'underline';
+}
+
+/*TODO */
+/** repeat foreach button in toolbar */
