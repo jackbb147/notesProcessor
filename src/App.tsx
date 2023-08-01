@@ -14,8 +14,9 @@ import {AppStateContext, AppStateDispatchContext, AppStateProvider} from "./AppS
 import {FolderPanelContent} from "./FolderPanelContent";
 import {NotesPanelContent} from "./NotesPanelContent";
 import {GraphContext, GraphDispatchContext, GraphProvider} from "./GraphContext";
+import {EditorSwitch} from "./EditorSwitch";
 
-function ensure<T>(argument: T | undefined | null, message: string = 'This value was promised to be there.'): T {
+export function ensure<T>(argument: T | undefined | null, message: string = 'This value was promised to be there.'): T {
     if (argument === undefined || argument === null) {
         throw new TypeError(message);
     }
@@ -32,46 +33,9 @@ function AppWithoutContext() {
     if(state===null || dispatch === null) throw Error("state or dispatch is null. ");
     if(graph===null || graphDispatch === null) throw Error("graph or graphDispatch is null. ");
 
-    /**
-     * call back for when user attempts to make edit on a locked node
-     * @constructor
-     */
-    function EditAttemptOnLocked() {
-        if(dispatch === null) throw Error("state is null.")
-        dispatch({type: AppActionType.setShowRecoverNodePopup, show: true})
-    }
-
-    function EditorSwitch() {
-        if(state === null) throw Error("state is null.")
-        if(graph===null || graphDispatch === null) throw Error("graph or graphDispatch is null. ");
-        var note: Node;
-        if (state.activeNodeID === undefined) return <></>;
 
 
-        switch (state.activeCollection) {
-            case Collections.RecentlyDeleted: {
-                note = ensure(graph.deletedNodes.find(node => node.id === state.activeNodeID));
-                break;
-            }
-            default: {
-                note = ensure(graph.nodes.find(node => node.id === state.activeNodeID))
-                break;
-            }
-        }
 
-        return <NoteEditor
-            note={note} //https://stackoverflow.com/a/54738437/21646295
-            onBlur={(note: Node) => {
-                graphDispatch({
-                    type: GraphActionType.updateNode,
-                    node: note
-                })
-            }}
-            onEditAttempt={state.activeCollection === Collections.RecentlyDeleted ? EditAttemptOnLocked : () => {
-            }}
-            locked={state.activeCollection === Collections.RecentlyDeleted}
-        />
-    }
 
 
     return (
@@ -114,7 +78,7 @@ function AppWithoutContext() {
                                     </div>
                                 </div>
                                 <div className={"flex-grow"} style={{}}>
-                                    {EditorSwitch()}
+                                    <EditorSwitch/>
                                 </div>
                             </div>
                         </SidePanel>
