@@ -21,5 +21,7 @@ export function AddNodeButton()
             content: "no content",
             tags: []
         }
-    })} icon={"../icons/edit_square_FILL0_wght400_GRAD0_opsz48.svg"}></Button>
+    })} icon={<span className="material-symbols-outlined">
+edit_square
+</span>}></Button>
 }

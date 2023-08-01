@@ -43,10 +43,16 @@ export function NotesPanelContent()
     return <>
         <div className={"w-full h-full flex flex-col pl-4 pr-4"}>
             <div className={"top-bar h-12 flex items-center"}>
-                <Button icon={"../icons/list_FILL0_wght400_GRAD0_opsz48.svg"}></Button>
-                <Button icon={"../icons/grid_view_FILL0_wght400_GRAD0_opsz48.svg"}></Button>
+                <Button icon={<span className="material-symbols-outlined">
+list
+</span>}></Button>
+                <Button icon={<span className="material-symbols-outlined">
+grid_view
+</span>}></Button>
                 <Button
-                    icon={"../icons/delete_FILL0_wght400_GRAD0_opsz48 (1).svg"}
+                    icon={<span className="material-symbols-outlined">
+delete
+</span>}
                     rootClassName={"ml-auto"}
                     onClick={() => {
                         if (state.activeNodeID !== undefined) {

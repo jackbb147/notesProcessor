@@ -16,13 +16,17 @@ export function FolderPanelContent()
     return <>
             <div className={"top-bar h-12 flex items-center"}>
                 {/*TODO */}
-                <Button icon={"../icons/thumbnail_bar_FILL0_wght400_GRAD0_opsz48.svg"} onClick={()=>{
+                <Button icon={<span className="material-symbols-outlined">
+thumbnail_bar
+</span>} onClick={()=>{
 
                     // dispatch({type: AppActionType.toggleLabelPanel}) //TODO
                 }}></Button>
             </div>
             <ListItem text={"All"}
-                      icon={"../icons/folder_FILL0_wght400_GRAD0_opsz48.svg"}
+                      icon={<span className="material-symbols-outlined">
+folder
+</span>}
                       active={state.activeCollection === Collections.All}
                       rootClassName={"mb-2"}
                       onClick={() => {
@@ -41,7 +45,9 @@ export function FolderPanelContent()
             ></ListItem>
             <ListItem text={"Recently Deleted"}
                       active={state.activeCollection === Collections.RecentlyDeleted}
-                      icon={"../icons/delete_FILL0_wght400_GRAD0_opsz48 (1).svg"}
+                      icon={<span className="material-symbols-outlined">
+delete
+</span>}
                       onClick={() => {
                           dispatch({
                               type: AppActionType.setActiveCollection,
@@ -56,7 +62,9 @@ export function FolderPanelContent()
                       }}
             ></ListItem>
             <ListItem text={"Create/Edit Labels"}
-                      icon={"../icons/edit_FILL0_wght400_GRAD0_opsz48.svg"}
+                      icon={<span className="material-symbols-outlined">
+add_circle
+</span>}
                       rootClassName={"mt-auto"}
             ></ListItem>
         </>
