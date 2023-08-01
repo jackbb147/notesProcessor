@@ -52,7 +52,7 @@ export function SidePanel(
                 <div className={"sidePanel__resize bg-inherit cursor-ew-resize h-full absolute right-0 w-6 flex justify-center"}
                      onMouseDown={onBeginResize}
                 >
-                    <div className={"h-full bg-grey w-px"}></div>
+                    <div className={"h-full bg-grey  dark:bg-inherit w-px"}></div>
                 </div>
             </div>
             {children}
