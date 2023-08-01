@@ -32,6 +32,7 @@ export function EditorSwitch()
     }
 
     return <NoteEditor
+        darkModeOn={state.darkModeOn}
         note={note} //https://stackoverflow.com/a/54738437/21646295
         onBlur={(note: Node) => {
             graphDispatch({

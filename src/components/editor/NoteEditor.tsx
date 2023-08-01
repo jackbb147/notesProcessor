@@ -1,5 +1,6 @@
 import React, {LegacyRef, useEffect, useRef, useState} from "react";
 import ReactQuill, {Quill} from "react-quill";
+import "./quillStyle.css"
 
 //@ts-ignore
 import {MathEditorModule} from "./Quill-MathJax/MathEditorModule";
@@ -175,13 +176,15 @@ export function NoteEditor({
     onBlur = (note: Node) => {},
     onFinishSetUp = () => {},
     locked = false,
-    onEditAttempt = ()=>{console.log("Edit attempted")}
+    onEditAttempt = ()=>{console.log("Edit attempted")},
+    darkModeOn = true
 }:{
     note: Node
     onBlur?: (note:Node)=>any,
     onFinishSetUp?: ()=>any,
     locked?: boolean |undefined,
-    onEditAttempt?: () => any
+    onEditAttempt?: () => any,
+    darkModeOn?: boolean
 })
 {
 
@@ -191,6 +194,46 @@ export function NoteEditor({
     useEffect(()=>{
         console.log(`note changed: ${JSON.stringify(note)}`)
     }, [note])
+
+    useEffect(()=>{
+        console.log("HEY! CHANGING COLOR")
+        if(darkModeOn)
+        {
+            document.querySelectorAll(".ql-toolbar .ql-stroke").forEach((val:Element)=>{
+                val.classList.add("fill-none", "stroke-fff");
+            })
+
+            document.querySelectorAll(".ql-toolbar .ql-fill").forEach((val:Element)=>{
+                val.classList.add("fill-fff", "stroke-none");
+            })
+
+            document.querySelectorAll(".ql-toolbar .ql-picker").forEach((val:Element)=>{
+                // val.classList.add("color-fff");
+            })
+
+            document.querySelectorAll(".ql-picker-label").forEach(val=>{
+                val.classList.add("color-white")
+            })
+
+
+        }else{
+            document.querySelectorAll(".ql-toolbar .ql-stroke").forEach((val:Element)=>{
+                val.classList.remove("fill-none", "stroke-fff");
+            })
+
+            document.querySelectorAll(".ql-toolbar .ql-fill").forEach((val:Element)=>{
+                val.classList.remove("fill-fff", "stroke-none");
+            })
+
+            document.querySelectorAll(".ql-toolbar .ql-picker").forEach((val:Element)=>{
+                // val.classList.remove("color-fff");
+            })
+
+            document.querySelectorAll(".ql-picker-label").forEach(val=>{
+                val.classList.remove("color-white")
+            })
+        }
+    }, [darkModeOn])
 
     function handleBlur(s:string, note:Node)
     {

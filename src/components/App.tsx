@@ -52,7 +52,7 @@ function App() {
                         <FolderPanel>
                             <div className={"App__main bg-white h-full grow w-full"}>
                                 <NotesPanel>
-                                    <div className={" p-1 pt-0 flex flex-col  grow "}>
+                                    <div className={" p-1 pt-0 flex flex-col  grow h-full pb-1"}>
                                         <TopBar>
                                             <AddNodeButton/>
                                             <div id={"editorButtonGroup"} className={"w-1/2  "}/>

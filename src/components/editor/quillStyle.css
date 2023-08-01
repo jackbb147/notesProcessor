@@ -1,0 +1,29 @@
+.fill-none
+{
+    fill: none!important;
+}
+
+.fill-fff
+{
+    fill: #fff !important;;
+}
+
+.stroke-none
+{
+    stroke: none!important;
+}
+
+.stroke-fff
+{
+    stroke: #fff!important;
+}
+
+.color-fff
+{
+    color: #fff!important;
+}
+
+.color-white
+{
+    color: white!important;
+}
