@@ -59,20 +59,32 @@ export function NotesPanelContent()
                 ></Button>
             </div>
 
-            <div>
-                <TransitionGroup>
-                    {activeCollection().map((node) => <CSSTransition
-                        timeout={1000}
-                        classNames="fade"
-                        key={node.id}
-                    >
-                        <ListItem active={node.id === state.activeNodeID} text={node.title}
-                                  onClick={() => dispatch({
-                                      type: AppActionType.setActiveNodeID,
-                                      id: node.id
-                                  })}/>
-                    </CSSTransition>)}
-                </TransitionGroup>
+            <div className={"w-full h-full"}>
+                {
+                    activeCollection().length === 0 ?
+                    (
+                        <div className={"flex flex-col items-center justify-center w-full h-full"}>
+                            No Notes
+                        </div>
+                    ):
+                    (
+                        <TransitionGroup>
+                            {activeCollection().map((node) => <CSSTransition
+                                timeout={1000}
+                                classNames="fade"
+                                key={node.id}
+                            >
+                                <ListItem active={node.id === state.activeNodeID} text={node.title}
+                                          onClick={() => dispatch({
+                                              type: AppActionType.setActiveNodeID,
+                                              id: node.id
+                                          })}/>
+                            </CSSTransition>)}
+                        </TransitionGroup>
+                    )
+
+                }
+
             </div>
 
         </div>
