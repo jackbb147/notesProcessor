@@ -43,7 +43,7 @@ export function SidePanel(
         <div ref={containerRef} className={"sidePanelWrapper flex flex-row w-full h-full"} onMouseMove={onSidePanelResize} onMouseUp={onEndResize}>
             <div className={"sidePanel h-full flex relative"} style={{
                 width : isClosed?"0px":sidePanelWidth,
-                minWidth: "25%"
+                minWidth: isClosed ? "0px" : "25%"
             }}>
                 <div className={"sidePanel__left w-full h-full overflow-hidden"}>
                     <div className={"w-full h-full  flex flex-col pl-3 pr-4"}>

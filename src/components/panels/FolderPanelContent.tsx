@@ -25,7 +25,7 @@ export function FolderPanelContent()
 thumbnail_bar
 </span>} onClick={()=>{
 
-                    // dispatch({type: AppActionType.toggleLabelPanel}) //TODO
+                    dispatch({type: AppActionType.toggleLabelPanel}) //TODO
                 }}></Button>
             </div>
             <ListItem text={"All"}
