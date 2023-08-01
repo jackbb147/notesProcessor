@@ -1,9 +1,9 @@
-import {Button} from "./ui/Button";
+import {Button} from "../ui/Button";
 import {ListItem} from "./ListItem";
-import {AppActionType, Collections} from "../reducers/AppStateReducer";
+import {AppActionType, Collections} from "../../reducers/AppStateReducer";
 import React, {useContext} from "react";
-import {AppStateContext} from "./AppStateContext";
-import {AppStateDispatchContext} from "./AppStateContext";
+import {AppStateContext} from "../AppStateContext";
+import {AppStateDispatchContext} from "../AppStateContext";
 
 export function FolderPanelContent()
 {

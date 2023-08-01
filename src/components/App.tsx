@@ -6,16 +6,16 @@ import {AppAction, AppActionType, AppState, AppStateReducer, Collections} from "
 import {useImmerReducer} from "use-immer";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import {v4 as uuid} from 'uuid';
-import {NoteEditor} from "./NoteEditor";
+import {NoteEditor} from "./editor/NoteEditor";
 import {RecoverNodePopup} from "./RecoverNodePopup";
 import {AppStateContext, AppStateDispatchContext, AppStateProvider} from "./AppStateContext";
-import {FolderPanelContent} from "./FolderPanelContent";
-import {NotesPanelContent} from "./NotesPanelContent";
+import {FolderPanelContent} from "./panels/FolderPanelContent";
+import {NotesPanelContent} from "./panels/NotesPanelContent";
 import {GraphContext, GraphDispatchContext, GraphProvider} from "./GraphContext";
-import {EditorSwitch} from "./EditorSwitch";
+import {EditorSwitch} from "./editor/EditorSwitch";
 import {AddNodeButton} from "./AddNodeButton";
-import {FolderPanel} from "./FolderPanel";
-import {NotesPanel} from "./NotesPanel";
+import {FolderPanel} from "./panels/FolderPanel";
+import {NotesPanel} from "./panels/NotesPanel";
 import {TopBar} from "./ui/TopBar";
 
 export function ensure<T>(argument: T | undefined | null, message: string = 'This value was promised to be there.'): T {

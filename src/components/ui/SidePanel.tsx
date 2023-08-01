@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import '../../App.css';
-import {ListItem} from "../ListItem";
+import {ListItem} from "../panels/ListItem";
 import {AppActionType, Collections} from "../../reducers/AppStateReducer";
 export function SidePanel(
     {panelChildren , children, isClosed=false}:{

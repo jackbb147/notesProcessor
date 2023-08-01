@@ -1,11 +1,11 @@
 import React, {useContext} from "react";
-import {AppStateContext, AppStateDispatchContext} from "./AppStateContext";
-import {Button} from "./ui/Button";
-import {GraphActionType, Node} from "../reducers/GraphReducer";
-import {AppActionType, Collections} from "../reducers/AppStateReducer";
+import {AppStateContext, AppStateDispatchContext} from "../AppStateContext";
+import {Button} from "../ui/Button";
+import {GraphActionType, Node} from "../../reducers/GraphReducer";
+import {AppActionType, Collections} from "../../reducers/AppStateReducer";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import {ListItem} from "./ListItem";
-import {GraphContext, GraphDispatchContext} from "./GraphContext";
+import {GraphContext, GraphDispatchContext} from "../GraphContext";
 
 
 export function NotesPanelContent()

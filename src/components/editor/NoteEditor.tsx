@@ -2,10 +2,10 @@ import React, {LegacyRef, useEffect, useRef, useState} from "react";
 import ReactQuill, {Quill} from "react-quill";
 
 //@ts-ignore
-import {MathEditorModule} from "../Quill-MathJax/MathEditorModule";
-import "../Quill-MathJax/quill.bubble.css"
-import "../Quill-MathJax/quill.snow.css"
-import {Node} from "../reducers/GraphReducer"
+import {MathEditorModule} from "./Quill-MathJax/MathEditorModule";
+import "./Quill-MathJax/quill.bubble.css"
+import "./Quill-MathJax/quill.snow.css"
+import {Node} from "../../reducers/GraphReducer"
 import {RangeStatic} from "quill";
 
 function QuillBoxComponent({val, handleBlur, onFinishSetup, onTouchStart, isReadOnly = false, onEditAttempt=()=>{}}:{

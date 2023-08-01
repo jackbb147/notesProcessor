@@ -1,10 +1,10 @@
 import React, {useContext} from "react";
-import {GraphContext, GraphDispatchContext} from "./GraphContext";
-import {AppStateContext, AppStateDispatchContext} from "./AppStateContext";
-import {GraphActionType, Node} from "../reducers/GraphReducer";
-import {AppActionType, Collections} from "../reducers/AppStateReducer";
+import {GraphContext, GraphDispatchContext} from "../GraphContext";
+import {AppStateContext, AppStateDispatchContext} from "../AppStateContext";
+import {GraphActionType, Node} from "../../reducers/GraphReducer";
+import {AppActionType, Collections} from "../../reducers/AppStateReducer";
 import {NoteEditor} from "./NoteEditor";
-import {ensure} from "./App";
+import {ensure} from "../App";
 
 export function EditorSwitch()
 {
