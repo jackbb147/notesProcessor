@@ -35,33 +35,14 @@ function AppWithoutContext() {
 
 
 
-
-
-
     return (
-        <AppStateProvider>
             <div className="App bg-grey w-full h-full flex flex-row overflow-hidden">
-
-                <RecoverNodePopup open={state.showRecoverNodePopup}
-                                  cancelCB={() => {
-                                      dispatch({type: AppActionType.setShowRecoverNodePopup, show: false})
-                                  }}
-                                  recoverCB={() => {
-                                      dispatch({type: AppActionType.setShowRecoverNodePopup, show: false})
-                                      if(!state.activeNodeID) throw Error("No active node id.");
-                                      graphDispatch(({type: GraphActionType.recoverNode, id: state.activeNodeID}))
-                                      dispatch({type: AppActionType.setActiveNodeID, id: undefined})
-                                  }}/>
-                <SidePanel panelChildren={
-                    <FolderPanelContent/>
-                }
-                           isClosed={state.LabelPanelClosed}
-                >
+                <RecoverNodePopup/>
+                <SidePanel
+                    panelChildren={<FolderPanelContent/>}
+                    isClosed={state.LabelPanelClosed}>
                     <div className={"App__main bg-white h-full grow w-full"}>
-
-                        <SidePanel panelChildren={
-                            <NotesPanelContent/>
-                        }>
+                        <SidePanel panelChildren={<NotesPanelContent/>}>
                             <div className={" p-1 flex flex-col  grow"}>
                                 <div className={"top-bar h-12 flex items-center justify-between"}>
                                     <Button onClick={() => graphDispatch({ //TODO refactor this somewhere else
@@ -85,7 +66,6 @@ function AppWithoutContext() {
                     </div>
                 </SidePanel>
             </div>
-        </AppStateProvider>
     );
 }
 

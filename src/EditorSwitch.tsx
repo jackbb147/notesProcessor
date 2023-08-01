@@ -16,17 +16,6 @@ export function EditorSwitch()
     if(graph===null || graphDispatch === null) throw Error("graph or graphDispatch is null. ");
 
 
-
-    /**
-     * call back for when user attempts to make edit on a locked node
-     * @constructor
-     */
-    function EditAttemptOnLocked() {
-        if(dispatch === null) throw Error("state is null.")
-        dispatch({type: AppActionType.setShowRecoverNodePopup, show: true})
-    }
-
-
     var note: Node;
     if (state.activeNodeID === undefined) return <></>;
 
@@ -50,7 +39,10 @@ export function EditorSwitch()
                 node: note
             })
         }}
-        onEditAttempt={state.activeCollection === Collections.RecentlyDeleted ? EditAttemptOnLocked : () => {
+        onEditAttempt={state.activeCollection === Collections.RecentlyDeleted ? ()=>{
+            // alert("hey! locked!")
+            dispatch({type: AppActionType.setShowRecoverNodePopup, show: true})
+        } : () => {
         }}
         locked={state.activeCollection === Collections.RecentlyDeleted}
     />

@@ -1,16 +1,25 @@
 import {PopUpWindow} from "./PopUpWindow";
 import * as AlertDialog from '@radix-ui/react-alert-dialog';
+import {useContext} from "react";
+import {AppStateContext, AppStateDispatchContext} from "./AppStateContext";
+import {AppActionType} from "./AppStateReducer";
+import {GraphActionType} from "./GraphReducer";
+import {GraphContext, GraphDispatchContext} from "./GraphContext";
 
 
-
-
-export function RecoverNodePopup({open, recoverCB, cancelCB}:{
-    open: boolean,
-    recoverCB: ()=>any,
-    cancelCB: ()=>any
-})
+export function RecoverNodePopup()
 {
-    return <AlertDialog.Root open={open} onOpenChange={(open:boolean)=>{cancelCB()}}>
+
+    const state = useContext(AppStateContext);
+    const dispatch = useContext(AppStateDispatchContext);
+    if(state===null || dispatch === null) throw Error("state or dispatch is null. ");
+    const graph = useContext(GraphContext);
+    const graphDispatch = useContext(GraphDispatchContext);
+    if(graph===null || graphDispatch === null) throw Error("graph or graphDispatch is null. ");
+
+    return <AlertDialog.Root open={state.showRecoverNodePopup} onOpenChange={(open:boolean)=>{
+        dispatch({type: AppActionType.setShowRecoverNodePopup, show: false})
+    }}>
         {/*<AlertDialog.Trigger asChild>*/}
         {/*    <button className="text-violet11 hover:bg-mauve3 shadow-blackA7 inline-flex h-[35px] items-center justify-center rounded-[4px] bg-white px-[15px] font-medium leading-none shadow-[0_2px_10px] outline-none focus:shadow-[0_0_0_2px] focus:shadow-black">*/}
         {/*        Delete account*/}
@@ -30,7 +39,9 @@ export function RecoverNodePopup({open, recoverCB, cancelCB}:{
                 <div className="flex justify-end gap-[25px]">
                     <AlertDialog.Cancel asChild>
                         <button
-                            onClick={cancelCB}
+                            onClick={()=>{
+                                dispatch({type: AppActionType.setShowRecoverNodePopup, show: false})
+                            }}
                             className="text-mauve11 bg-mauve4 hover:bg-mauve5 focus:shadow-mauve7 inline-flex h-[35px] items-center justify-center rounded-[4px] px-[15px] font-medium leading-none outline-none focus:shadow-[0_0_0_2px] w-fit">
                             Cancel
                         </button>
@@ -39,7 +50,10 @@ export function RecoverNodePopup({open, recoverCB, cancelCB}:{
                         <button
                             onClick={(event)=>{
                                 event.preventDefault();
-                                recoverCB()
+                                dispatch({type: AppActionType.setShowRecoverNodePopup, show: false})
+                                if(!state.activeNodeID) throw Error("No active node id.");
+                                graphDispatch(({type: GraphActionType.recoverNode, id: state.activeNodeID}))
+                                dispatch({type: AppActionType.setActiveNodeID, id: undefined})
                             }}
                             className="text-white bg-green-500 hover:bg-green-600 focus:shadow-green-600 inline-flex h-[35px] items-center justify-center rounded-[4px] px-[15px] font-medium leading-none outline-none focus:shadow-[0_0_0_2px] w-fit">
                             Recover
