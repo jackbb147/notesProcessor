@@ -36,7 +36,7 @@ function App() {
                         <FolderPanel>
                             <div className={"App__main bg-white h-full grow w-full"}>
                                 <NotesPanel>
-                                    <div className={" p-1 flex flex-col  grow "}>
+                                    <div className={" p-1 pt-0 flex flex-col  grow "}>
                                         <TopBar>
                                             <AddNodeButton/>
                                             <div id={"editorButtonGroup"} className={"w-1/2  "}/>
