@@ -69,7 +69,7 @@ delete
 
 
             <div className={"mt-auto"}>
-                <ListItem text={`Light Mode`}
+                <ListItem text={`${state.darkModeOn ? "Light" : "Dark"} Mode`}
                           onClick={handleDarkModeTogglerClick}
                           icon={<span className="material-symbols-outlined">
     light_mode
