@@ -41,7 +41,7 @@ export function NotesPanelContent()
     }
 
     return <>
-        <div className={"w-full h-full flex flex-col pl-4 pr-4"}>
+        <div className={"w-full h-full flex flex-col "}>
             <div className={"top-bar h-12 flex items-center"}>
                 <Button icon={<span className="material-symbols-outlined">
 list

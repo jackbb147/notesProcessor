@@ -13,7 +13,7 @@ export function SidePanel(
     const containerRef = useRef<any>(null)
     const [dragging, setDragging] = useState(false)
 
-    const [sidePanelWidth, setSidePanelWidth] = useState("25%");
+    const [sidePanelWidth, setSidePanelWidth] = useState("fit-content");
 
 
 
@@ -41,9 +41,12 @@ export function SidePanel(
 
     return (
         <div ref={containerRef} className={"sidePanelWrapper flex flex-row w-full h-full"} onMouseMove={onSidePanelResize} onMouseUp={onEndResize}>
-            <div className={"sidePanel h-full flex relative"} style={{width : isClosed?"0px":sidePanelWidth}}>
-                <div className={"sidePanel__left w-full h-full"}>
-                    <div className={"w-full h-full  flex flex-col pl-4 pr-4"}>
+            <div className={"sidePanel h-full flex relative"} style={{
+                width : isClosed?"0px":sidePanelWidth,
+                minWidth: "25%"
+            }}>
+                <div className={"sidePanel__left w-full h-full overflow-hidden"}>
+                    <div className={"w-full h-full  flex flex-col pl-3 pr-4"}>
                             <div className={"grow flex flex-col"}>
                                 {panelChildren}
                             </div>
@@ -51,7 +54,7 @@ export function SidePanel(
 
                 </div>
 
-                <div className={"sidePanel__resize h-full bg-red-500 dark:bg-inherit w-1 cursor-col-resize"}
+                <div className={"sidePanel__resize h-full bg-grey dark:bg-inherit w-px cursor-col-resize absolute right-0"}
                      onMouseDown={onBeginResize}/>
             </div>
             {children}
