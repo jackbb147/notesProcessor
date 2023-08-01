@@ -68,34 +68,11 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onTouchStart, isRead
     function setUpQuill(container:HTMLElement)
     {
 
-
-        let toolbarContainer = document.querySelector("#editorButtonGroup")
-        if(toolbarContainer)
-            // https://quilljs.com/docs/themes/#snow/
-            toolbarContainer.innerHTML='<!-- Add font size dropdown -->\n' +
-                '  <select class="ql-size">\n' +
-                '    <option value="small"></option>\n' +
-                '    <!-- Note a missing, thus falsy value, is used to reset to default -->\n' +
-                '    <option selected></option>\n' +
-                '    <option value="large"></option>\n' +
-                '    <option value="huge"></option>\n' +
-                '  </select>\n' +
-                '  <!-- Add a bold button -->\n' +
-                '  <button class="ql-bold"></button>\n' +
-                '  <button class="ql-italic"></button>\n' +
-                '  <button class="ql-underline"></button>\n'+
-                '  <button class="ql-code-block"></button>\n'
-
-
-
-        // debugger;
         var quillNode = new Quill(container, {
 
             theme: "snow",
             modules:{
-                toolbar:{
-                  container: "#editorButtonGroup"
-                },
+                toolbar:true,
                 MathEditorModule: {},
                 keyboard: {
                     bindings: MathEditorModule.getBindings()
@@ -116,10 +93,19 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onTouchStart, isRead
         // })
 
         // when user finishes editing this node.
-        quillNode.root.addEventListener("blur", ()=>
+
+        var wrapper = wrapperRef.current;
+        wrapper.addEventListener("blur", ()=>
         {
-            handleBlur(quillNode.root.innerHTML)
-            //     TODO update the data objects.
+            console.log("hey")
+        })
+
+        quillNode.root.addEventListener("blur", (e:FocusEvent)=>{
+            if(!wrapper.contains(e.relatedTarget))
+            {
+
+                handleBlur(quillNode.root.innerHTML) //TODO
+            }
         })
 
 
@@ -164,10 +150,9 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onTouchStart, isRead
     }
 
     return (
-        <div ref={wrapperRef} style={{
+        <div ref={wrapperRef}  tabIndex={0} style={{
             width: "100%",
             height:"100%",
-
         }}>
             <div  ref={ref}></div>
         </div>
