@@ -17,11 +17,11 @@ export function FolderPanel({children}:{children: React.ReactNode})
     if(graph===null || graphDispatch === null) throw Error("graph or graphDispatch is null. ");
 
 
-    return <>
+    return <div className={"dark:bg-dark_secondary w-full h-full"}>
         <SidePanel
             panelChildren={<FolderPanelContent/>}
             isClosed={state.LabelPanelClosed}>
             {children}
         </SidePanel>
-    </>
+    </div>
 }

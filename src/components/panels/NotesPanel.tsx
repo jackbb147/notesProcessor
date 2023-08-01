@@ -7,8 +7,11 @@ import React from "react";
 export function NotesPanel({children}:{children: React.ReactNode})
 {
     return <>
-        <SidePanel panelChildren={<NotesPanelContent/>}>
-            {children}
-        </SidePanel>
+        <div className={"dark:bg-dark_primary w-full h-full"}>
+            <SidePanel panelChildren={<NotesPanelContent/>}>
+                {children}
+            </SidePanel>
+        </div>
+
     </>
 }

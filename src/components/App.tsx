@@ -30,26 +30,28 @@ function App() {
     return <>
         <AppStateProvider>
             <GraphProvider>
-                <div className="App bg-grey w-full h-full flex flex-row overflow-hidden">
-                    <RecoverNodePopup/>
-                    <FolderPanel>
-                        <div className={"App__main bg-white h-full grow w-full"}>
-                            <NotesPanel>
-                                <div className={" p-1 flex flex-col  grow"}>
+                <div className={"App w-full h-full dark "}>
+                    <div className="bg-grey dark:bg-dark_secondary w-full h-full flex flex-row overflow-hidden dark:text-white">
+                        <RecoverNodePopup/>
+                        <FolderPanel>
+                            <div className={"App__main bg-white h-full grow w-full"}>
+                                <NotesPanel>
+                                    <div className={" p-1 flex flex-col  grow "}>
+                                        <TopBar>
+                                            <AddNodeButton/>
+                                            <div id={"editorButtonGroup"} className={"w-1/2  "}/>
+                                        </TopBar>
 
-                                    <TopBar>
-                                        <AddNodeButton/>
-                                        <div id={"editorButtonGroup"} className={"w-1/2  "}/>
-                                    </TopBar>
-
-                                    <div className={"flex-grow"} style={{}}>
-                                        <EditorSwitch/>
+                                        <div className={"flex-grow"} style={{}}>
+                                            <EditorSwitch/>
+                                        </div>
                                     </div>
-                                </div>
-                            </NotesPanel>
-                        </div>
-                    </FolderPanel>
+                                </NotesPanel>
+                            </div>
+                        </FolderPanel>
+                    </div>
                 </div>
+
             </GraphProvider>
         </AppStateProvider>
     </>
