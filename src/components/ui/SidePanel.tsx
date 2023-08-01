@@ -54,10 +54,13 @@ export function SidePanel(
 
                 </div>
 
-                <div className={"sidePanel__resize h-full bg-grey dark:bg-inherit w-px cursor-col-resize absolute right-0"}
+                <div className={"sidePanel__resize h-full bg-red-500 dark:bg-inherit w-px cursor-col-resize absolute right-0"}
                      onMouseDown={onBeginResize}/>
             </div>
-            {children}
+            <div className={"border-amber-500 h-full grow bg-amber-300"}>
+                {children}
+            </div>
+
         </div>
 
     )
