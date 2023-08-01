@@ -1,8 +1,6 @@
 import React, {useContext} from 'react';
 import {SidePanel} from "./SidePanel";
 import './App.css';
-import {ListItem} from "./ListItem";
-import {Button} from "./Button";
 import {GraphAction, GraphActionType, graphReducer, GraphState, Node} from "./GraphReducer";
 import {AppAction, AppActionType, AppState, AppStateReducer, Collections} from "./AppStateReducer";
 import {useImmerReducer} from "use-immer";
@@ -15,6 +13,10 @@ import {FolderPanelContent} from "./FolderPanelContent";
 import {NotesPanelContent} from "./NotesPanelContent";
 import {GraphContext, GraphDispatchContext, GraphProvider} from "./GraphContext";
 import {EditorSwitch} from "./EditorSwitch";
+import {AddNodeButton} from "./AddNodeButton";
+import {FolderPanel} from "./FolderPanel";
+import {NotesPanel} from "./NotesPanel";
+import {TopBar} from "./TopBar";
 
 export function ensure<T>(argument: T | undefined | null, message: string = 'This value was promised to be there.'): T {
     if (argument === undefined || argument === null) {
@@ -24,58 +26,33 @@ export function ensure<T>(argument: T | undefined | null, message: string = 'Thi
     return argument;
 }
 
-function AppWithoutContext() {
+function App() {
+    return <>
+        <AppStateProvider>
+            <GraphProvider>
+                <div className="App bg-grey w-full h-full flex flex-row overflow-hidden">
+                    <RecoverNodePopup/>
+                    <FolderPanel>
+                        <div className={"App__main bg-white h-full grow w-full"}>
+                            <NotesPanel>
+                                <div className={" p-1 flex flex-col  grow"}>
 
-    const graph = useContext(GraphContext);
-    const graphDispatch = useContext(GraphDispatchContext);
-    const state = useContext(AppStateContext);
-    const dispatch = useContext(AppStateDispatchContext);
-    if(state===null || dispatch === null) throw Error("state or dispatch is null. ");
-    if(graph===null || graphDispatch === null) throw Error("graph or graphDispatch is null. ");
+                                    <TopBar>
+                                        <AddNodeButton/>
+                                        <div id={"editorButtonGroup"} className={"w-1/2  "}/>
+                                    </TopBar>
 
-
-
-    return (
-            <div className="App bg-grey w-full h-full flex flex-row overflow-hidden">
-                <RecoverNodePopup/>
-                <SidePanel
-                    panelChildren={<FolderPanelContent/>}
-                    isClosed={state.LabelPanelClosed}>
-                    <div className={"App__main bg-white h-full grow w-full"}>
-                        <SidePanel panelChildren={<NotesPanelContent/>}>
-                            <div className={" p-1 flex flex-col  grow"}>
-                                <div className={"top-bar h-12 flex items-center justify-between"}>
-                                    <Button onClick={() => graphDispatch({ //TODO refactor this somewhere else
-                                        type: GraphActionType.addNode,
-                                        node: {
-                                            id: uuid(),
-                                            title: "hello world!",
-                                            content: "no content",
-                                            tags: []
-                                        }
-                                    })} icon={"../icons/edit_square_FILL0_wght400_GRAD0_opsz48.svg"}></Button>
-
-                                    <div id={"editorButtonGroup"} className={"w-1/2  "}>
+                                    <div className={"flex-grow"} style={{}}>
+                                        <EditorSwitch/>
                                     </div>
                                 </div>
-                                <div className={"flex-grow"} style={{}}>
-                                    <EditorSwitch/>
-                                </div>
-                            </div>
-                        </SidePanel>
-                    </div>
-                </SidePanel>
-            </div>
-    );
-}
-
-function App()
-{
-    return <AppStateProvider>
-                <GraphProvider>
-                    <AppWithoutContext/>
-                </GraphProvider>
-    </AppStateProvider>
+                            </NotesPanel>
+                        </div>
+                    </FolderPanel>
+                </div>
+            </GraphProvider>
+        </AppStateProvider>
+    </>
 }
 
 export default App;
