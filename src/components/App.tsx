@@ -26,11 +26,27 @@ export function ensure<T>(argument: T | undefined | null, message: string = 'Thi
     return argument;
 }
 
+function Container({children}: {children: React.ReactNode})
+{
+    const state = useContext(AppStateContext);
+    const dispatch = useContext(AppStateDispatchContext);
+    if(dispatch === null || state === null) throw Error("state or dispatch is null. ")
+
+    return (
+        <div className={`App w-full h-full ${state.darkModeOn && "dark"}`}>
+            {children}
+        </div>
+    )
+}
+
 function App() {
+
+
+
     return <>
         <AppStateProvider>
             <GraphProvider>
-                <div className={"App w-full h-full dark "}>
+                <Container>
                     <div className="bg-grey dark:bg-dark_secondary w-full h-full flex flex-row overflow-hidden dark:text-white">
                         <RecoverNodePopup/>
                         <FolderPanel>
@@ -50,8 +66,7 @@ function App() {
                             </div>
                         </FolderPanel>
                     </div>
-                </div>
-
+                </Container>
             </GraphProvider>
         </AppStateProvider>
     </>

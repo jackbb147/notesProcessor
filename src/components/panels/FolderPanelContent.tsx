@@ -2,14 +2,19 @@ import {Button} from "../ui/Button";
 import {ListItem} from "./ListItem";
 import {AppActionType, Collections} from "../../reducers/AppStateReducer";
 import React, {useContext} from "react";
-import {AppStateContext} from "../AppStateContext";
-import {AppStateDispatchContext} from "../AppStateContext";
+import {AppStateContext, AppStateDispatchContext} from "../AppStateContext";
 
 export function FolderPanelContent()
 {
     const state = useContext(AppStateContext);
     const dispatch = useContext(AppStateDispatchContext);
     if(dispatch === null || state === null) throw Error("state or dispatch is null. ")
+
+    function handleDarkModeTogglerClick()
+    {
+        if(dispatch === null) throw Error("dispatch is null")
+        dispatch({type: AppActionType.toggleDarkMode})
+    }
 
 
 
@@ -61,11 +66,25 @@ delete
                           }
                       }}
             ></ListItem>
-            <ListItem text={"Create/Edit Labels"}
-                      icon={<span className="material-symbols-outlined">
+
+
+            <div className={"mt-auto"}>
+                <ListItem text={`Light Mode`}
+                          onClick={handleDarkModeTogglerClick}
+                          icon={<span className="material-symbols-outlined">
+    light_mode
+    </span>}
+
+                ></ListItem>
+
+
+                <ListItem text={"Create/Edit Labels"}
+                          icon={<span className="material-symbols-outlined">
 add_circle
 </span>}
-                      rootClassName={"mt-auto"}
-            ></ListItem>
+
+                ></ListItem>
+            </div>
+
         </>
 }
