@@ -24,6 +24,7 @@ export function SidePanel(
         let mouseX:number = e.clientX;
         console.log(mouseX)
         var offsetLeft = containerRef.current.offsetLeft;
+        console.log(`offsetLeft: ${offsetLeft}`)
         setSidePanelWidth(width=>`${mouseX - offsetLeft}px`)
     }
 
@@ -49,11 +50,9 @@ export function SidePanel(
                         </div>
 
                 </div>
-                <div className={"sidePanel__resize bg-inherit cursor-ew-resize h-full absolute right-0 w-6 flex justify-center"}
-                     onMouseDown={onBeginResize}
-                >
-                    <div className={"h-full bg-grey  dark:bg-inherit w-px"}></div>
-                </div>
+
+                <div className={"sidePanel__resize h-full bg-red-500 dark:bg-inherit w-1 cursor-col-resize"}
+                     onMouseDown={onBeginResize}/>
             </div>
             {children}
         </div>
