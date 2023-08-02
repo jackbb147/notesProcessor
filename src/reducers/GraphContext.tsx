@@ -13,6 +13,7 @@ export function GraphProvider({children}:{children: React.ReactNode})
 
     const [graph, graphDispatch] = useImmerReducer<GraphState, GraphAction>(graphReducer, {
         nodes: [
+            // TODO delete this
             {
                 id: "test",
                 title: "Just a test",

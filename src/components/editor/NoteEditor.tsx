@@ -8,6 +8,8 @@ import "./Quill-MathJax/quill.bubble.css"
 import "./Quill-MathJax/quill.snow.css"
 import {Node} from "../../reducers/GraphReducer"
 import {RangeStatic} from "quill";
+import {LabelSelector} from "./LabelSelector";
+import {LastEditedWhen} from "./LastEditedWhen";
 
 function QuillBoxComponent({val, handleBlur, onFinishSetup, onTouchStart, isReadOnly = false, onEditAttempt=()=>{}}:{
     val: string,
@@ -287,7 +289,8 @@ export function NoteEditor({
             // width: "100%",
             flexGrow: "1",
             height: "100%",
-
+            display: "flex",
+            flexDirection: "column"
         }}>
 
             <QuillBoxComponent val={note.content}
@@ -295,7 +298,25 @@ export function NoteEditor({
                                onFinishSetup={onFinishSetUp}
                                 isReadOnly={locked}
                                onEditAttempt={onEditAttempt}
-                               onTouchStart={()=>{}}></QuillBoxComponent>
+                               onTouchStart={()=>{}}/>
+            <div style={{
+                display: "flex",
+                flexDirection:"row",
+                width: "100%"
+            }}>
+                <div style={{
+                    width: "65%"
+                }}>
+                    <LabelSelector/>
+                </div>
+
+                <div style={{
+                    flexGrow: "1"
+                }}>
+                    <LastEditedWhen/>
+                </div>
+            </div>
+
         </div>
     )
 }

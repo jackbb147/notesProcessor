@@ -10,7 +10,7 @@ export const AppStateDispatchContext = createContext<React.Dispatch<AppAction>|n
 
 export function AppStateProvider({ children}:{children: React.ReactNode}) {
     const [state, dispatch] = useImmerReducer<AppState, AppAction>(AppStateReducer, {
-        activeNodeID: undefined,
+        activeNodeID: "test",
         activeCollection: Collections.All,
         LabelPanelClosed: false,
         showRecoverNodePopup: false,
