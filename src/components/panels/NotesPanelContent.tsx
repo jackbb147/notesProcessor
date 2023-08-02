@@ -1,11 +1,11 @@
 import React, {useContext} from "react";
-import {AppStateContext, AppStateDispatchContext} from "../AppStateContext";
+import {AppStateContext, AppStateDispatchContext} from "../../reducers/AppStateContext";
 import {Button} from "../ui/Button";
 import {GraphActionType, Node} from "../../reducers/GraphReducer";
 import {AppActionType, Collections} from "../../reducers/AppStateReducer";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import {ListItem} from "./ListItem";
-import {GraphContext, GraphDispatchContext} from "../GraphContext";
+import {GraphContext, GraphDispatchContext} from "../../reducers/GraphContext";
 
 
 export function NotesPanelContent()
@@ -32,7 +32,7 @@ export function NotesPanelContent()
                 break;
             }
             case Collections.Label: {
-                collection = [] // TODO
+                collection = graph.nodes.filter(node => state.activeLabel && node.tags.includes(state.activeLabel))
                 break;
             }
         }

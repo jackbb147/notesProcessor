@@ -2,8 +2,8 @@ import {Button} from "../ui/Button";
 import {ListItem} from "./ListItem";
 import {AppActionType, Collections} from "../../reducers/AppStateReducer";
 import React, {useContext} from "react";
-import {AppStateContext, AppStateDispatchContext} from "../AppStateContext";
-import {GraphContext, GraphDispatchContext} from "../GraphContext";
+import {AppStateContext, AppStateDispatchContext} from "../../reducers/AppStateContext";
+import {GraphContext, GraphDispatchContext} from "../../reducers/GraphContext";
 
 export function FolderPanelContent()
 {
@@ -59,6 +59,12 @@ folder
             {graph.labels.map((s:string)=><ListItem
                 text={s}
                 active={state.activeCollection === Collections.Label && state.activeLabel === s}
+                onClick={()=>{
+                    dispatch({
+                        type: AppActionType.setActiveLabel,
+                        label: s
+                    })
+                }}
                 icon={<span className="material-symbols-outlined">
                     label
                 </span>}

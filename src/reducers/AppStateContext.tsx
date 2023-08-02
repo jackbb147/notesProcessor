@@ -1,6 +1,6 @@
 import React,{ createContext, useReducer,  } from 'react';
 import {useImmerReducer} from "use-immer";
-import {AppAction, AppState, AppStateReducer, Collections} from "../reducers/AppStateReducer";
+import {AppAction, AppState, AppStateReducer, Collections} from "./AppStateReducer";
 
 
 export const AppStateContext = createContext<AppState|null>(null);

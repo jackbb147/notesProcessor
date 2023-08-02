@@ -1,10 +1,10 @@
 
 import * as AlertDialog from '@radix-ui/react-alert-dialog';
 import {useContext} from "react";
-import {AppStateContext, AppStateDispatchContext} from "./AppStateContext";
+import {AppStateContext, AppStateDispatchContext} from "../reducers/AppStateContext";
 import {AppActionType} from "../reducers/AppStateReducer";
 import {GraphActionType} from "../reducers/GraphReducer";
-import {GraphContext, GraphDispatchContext} from "./GraphContext";
+import {GraphContext, GraphDispatchContext} from "../reducers/GraphContext";
 
 
 export function RecoverNodePopup()

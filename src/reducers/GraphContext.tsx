@@ -1,5 +1,5 @@
 import {useImmerReducer} from "use-immer";
-import {GraphAction, graphReducer, GraphState} from "../reducers/GraphReducer";
+import {GraphAction, graphReducer, GraphState} from "./GraphReducer";
 import React,{createContext} from "react";
 
 
@@ -12,9 +12,22 @@ export function GraphProvider({children}:{children: React.ReactNode})
 {
 
     const [graph, graphDispatch] = useImmerReducer<GraphState, GraphAction>(graphReducer, {
-        nodes: [],
+        nodes: [
+            {
+                id: "test",
+                title: "Just a test",
+                content: "something",
+                tags: ["Test"]
+            },
+            {
+                id: "test",
+                title: "",
+                content: "",
+                tags: []
+            }
+        ],
         deletedNodes: [],
-        labels: []
+        labels: ["Test"]
     });
 
     return <GraphContext.Provider value={graph}>

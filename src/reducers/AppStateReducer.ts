@@ -7,6 +7,7 @@ export enum AppActionType
     toggleLabelPanel,
     setShowRecoverNodePopup,
     toggleDarkMode,
+    setActiveLabel
 
 }
 
@@ -19,6 +20,7 @@ export type AppAction =
     | {type: AppActionType.setActiveCollection, activeCollection: Collections}
     | {type: AppActionType.setShowRecoverNodePopup, show: boolean}
     | {type: AppActionType.toggleDarkMode}
+    | {type: AppActionType.setActiveLabel, label:string}
 
 
 export enum Collections
@@ -83,5 +85,13 @@ export function AppStateReducer(draft: AppState, action: AppAction)
             draft.darkModeOn = !draft.darkModeOn;
             break;
         }
+
+        case AppActionType.setActiveLabel:
+        {
+            draft.activeCollection = Collections.Label;
+            draft.activeLabel = action.label;
+            break;
+        }
+
     }
 }

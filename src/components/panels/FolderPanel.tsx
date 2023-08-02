@@ -5,8 +5,8 @@ import {SidePanel} from "../ui/SidePanel";
 import {NotesPanelContent} from "./NotesPanelContent";
 import {AddNodeButton} from "../AddNodeButton";
 import {EditorSwitch} from "../editor/EditorSwitch";
-import {GraphContext, GraphDispatchContext} from "../GraphContext";
-import {AppStateContext, AppStateDispatchContext} from "../AppStateContext";
+import {GraphContext, GraphDispatchContext} from "../../reducers/GraphContext";
+import {AppStateContext, AppStateDispatchContext} from "../../reducers/AppStateContext";
 export function FolderPanel({children}:{children: React.ReactNode})
 {
     const graph = useContext(GraphContext);
