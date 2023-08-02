@@ -64,6 +64,11 @@ folder
                         type: AppActionType.setActiveLabel,
                         label: s
                     })
+
+                    dispatch({
+                        type: AppActionType.setActiveNodeID,
+                        id: undefined
+                    })
                 }}
                 icon={<span className="material-symbols-outlined">
                     label
