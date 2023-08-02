@@ -20,9 +20,9 @@ export function GraphProvider({children}:{children: React.ReactNode})
                 tags: ["Test"]
             },
             {
-                id: "test",
-                title: "",
-                content: "",
+                id: "test2",
+                title: "Not a test. ",
+                content: "Not a test! ",
                 tags: []
             }
         ],

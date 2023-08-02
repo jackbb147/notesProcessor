@@ -25,6 +25,7 @@ export function NotesPanelContent()
         switch (state.activeCollection) {
             case Collections.All: {
                 collection = graph.nodes
+                console.log("collection: ", JSON.stringify(collection))
                 break;
             }
             case Collections.RecentlyDeleted: {
