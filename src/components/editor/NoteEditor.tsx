@@ -180,6 +180,7 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onTouchStart, isRead
             // width: "100%",
             flexGrow:"1",
             height:"100%",
+            overflow: "scroll"
         }}>
             <div  ref={ref}></div>
         </div>
@@ -293,16 +294,27 @@ export function NoteEditor({
             flexDirection: "column"
         }}>
 
-            <QuillBoxComponent val={note.content}
-                               handleBlur={(s:string, firstLine?:string)=>{handleBlur(s,firstLine)}}
-                               onFinishSetup={onFinishSetUp}
-                                isReadOnly={locked}
-                               onEditAttempt={onEditAttempt}
-                               onTouchStart={()=>{}}/>
+
+            <div style={{
+                height: "95%",
+                border: "1px solid yellow",
+            }}>
+                <QuillBoxComponent val={note.content}
+                                   handleBlur={(s:string, firstLine?:string)=>{handleBlur(s,firstLine)}}
+                                   onFinishSetup={onFinishSetUp}
+                                   isReadOnly={locked}
+                                   onEditAttempt={onEditAttempt}
+                                   onTouchStart={()=>{}}/>
+            </div>
+
+
             <div style={{
                 display: "flex",
                 flexDirection:"row",
-                width: "100%"
+                justifyContent: "center",
+                alignItems: "center",
+                width: "100%",
+                flexGrow: "1"
             }}>
                 <div style={{
                     width: "65%"
