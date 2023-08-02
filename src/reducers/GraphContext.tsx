@@ -28,7 +28,7 @@ export function GraphProvider({children}:{children: React.ReactNode})
             }
         ],
         deletedNodes: [],
-        labels: ["Test"]
+        labels: ["Test", "not a test"]
     });
 
     return <GraphContext.Provider value={graph}>

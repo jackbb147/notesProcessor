@@ -10,11 +10,12 @@ export function LabelSelector()
 
     const appState = useState();
 
-    const options = [
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' }
-    ]
+
+    // const options = [
+    //     { value: 'chocolate', label: 'Chocolate' },
+    //     { value: 'strawberry', label: 'Strawberry' },
+    //     { value: 'vanilla', label: 'Vanilla' }
+    // ]
 
     return (
         <div style={{color: "black"}}>
@@ -54,7 +55,12 @@ export function LabelSelector()
                 menuPlacement={"top"}
                 isMulti
                 isClearable
-                options={options} />
+                options={graph.labels.map(s=>{
+                    return {
+                        value: s,
+                        label: s
+                    }
+                })} />
         </div>
     )
 
