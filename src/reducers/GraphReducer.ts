@@ -18,7 +18,9 @@ export interface Node
     id: string,
     title: string,
     content: string,
-    tags: string[]
+    tags: string[],
+    dateCreated?: Date,
+    dateLastModified?:Date
 }
 
 export interface GraphState

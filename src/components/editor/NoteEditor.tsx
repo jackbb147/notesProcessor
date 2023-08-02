@@ -273,7 +273,8 @@ export function NoteEditor({
         var newNode:Node = {
             ...noteRef.current,
             content: s,
-            title: firstLine
+            title: firstLine,
+            dateLastModified: new Date()
         }
         // debugger;
         onBlur(newNode)

@@ -19,7 +19,8 @@ export function AddNodeButton()
             id: uuid(),
             title: "New Note",
             content: "",
-            tags: []
+            tags: [],
+            dateCreated: new Date()
         }
     })} icon={<span className="material-symbols-outlined">
 edit_square
