@@ -92,6 +92,7 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onTouchStart, isRead
         var quillNode = new Quill(container, {
 
             theme: "snow",
+            placeholder: "Type something...",
             modules:{
                 toolbar:toolbarOptions,
                 MathEditorModule: {},
@@ -125,7 +126,9 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onTouchStart, isRead
             if(!wrapper.contains(e.relatedTarget))
             {
                 let lengthOfFirstLine = quillNode.getLine(0)[0].cache.length-1;
-                handleBlur(quillNode.root.innerHTML, quillNode.getText(0, lengthOfFirstLine)) //TODO
+                handleBlur(
+                    quillNode.getLength() > 1 ? quillNode.root.innerHTML : "",
+                    quillNode.getText(0, lengthOfFirstLine)) //TODO
             }
         })
 
@@ -236,6 +239,10 @@ export function NoteEditor({
                 val.classList.add("color-white")
             })
 
+            document.querySelectorAll(".ql-editor.ql-blank").forEach(val=>{
+                val.classList.add("placeholderWhite")
+            })
+
 
         }else{
             document.querySelectorAll(".ql-toolbar .ql-stroke").forEach((val:Element)=>{
@@ -252,6 +259,10 @@ export function NoteEditor({
 
             document.querySelectorAll(".ql-picker-label").forEach(val=>{
                 val.classList.remove("color-white")
+            })
+
+            document.querySelectorAll(".ql-editor.ql-blank").forEach(val=>{
+                val.classList.remove("placeholderWhite")
             })
         }
     }, [darkModeOn])

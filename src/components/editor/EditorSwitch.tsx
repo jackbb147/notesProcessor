@@ -35,10 +35,28 @@ export function EditorSwitch()
         darkModeOn={state.darkModeOn}
         note={note} //https://stackoverflow.com/a/54738437/21646295
         onBlur={(note: Node) => {
-            graphDispatch({
-                type: GraphActionType.updateNode,
-                node: note
-            })
+
+            // debugger;
+            if(note.content.length !== 0)
+            {
+                graphDispatch({
+                    type: GraphActionType.updateNode,
+                    node: note
+                })
+            }else{
+
+                dispatch({
+                    type:AppActionType.setActiveNodeID,
+                    id: undefined
+                })
+                graphDispatch({
+                    type: GraphActionType.removeNode,
+                    id: note.id
+                })
+
+
+            }
+
         }}
         onEditAttempt={state.activeCollection === Collections.RecentlyDeleted ? ()=>{
             // alert("hey! locked!")

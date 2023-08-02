@@ -17,8 +17,8 @@ export function AddNodeButton()
         type: GraphActionType.addNode,
         node: {
             id: uuid(),
-            title: "hello world!",
-            content: "no content",
+            title: "New Note",
+            content: "",
             tags: []
         }
     })} icon={<span className="material-symbols-outlined">

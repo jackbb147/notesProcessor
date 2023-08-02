@@ -28,6 +28,11 @@
     color: white!important;
 }
 
+.placeholderWhite:before
+{
+    color:white!important;
+}
+
 
 /** All toolbar buttons are inside of .ql-formats */
 .ql-formats button {
