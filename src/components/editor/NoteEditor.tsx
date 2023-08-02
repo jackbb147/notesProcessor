@@ -404,7 +404,10 @@ export function NoteEditor({
                 <div style={{
                     width: "65%"
                 }}>
-                    <LabelSelector handleChange={handleChange}/>
+                    <LabelSelector
+                        handleChange={handleChange}
+                        labels={note.labels}
+                    />
                 </div>
 
                 <div style={{

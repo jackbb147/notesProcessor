@@ -4,7 +4,10 @@ import {ActionMeta, CSSObjectWithLabel, Options} from "react-select";
 import {GraphActionType} from "../../reducers/GraphReducer";
 import {ValueType} from "tailwindcss/types/config";
 
-export function LabelSelector({handleChange}:{handleChange: (value:Options<any>, action: ActionMeta<any>)=>any})
+export function LabelSelector({handleChange, labels=[]}:{
+    handleChange: (value:Options<any>, action: ActionMeta<any>)=>any,
+    labels: string[]
+})
 {
     const graph = useGraph();
     const graphDispatch = useGraphDispatch();
@@ -38,6 +41,8 @@ export function LabelSelector({handleChange}:{handleChange: (value:Options<any>,
                        color: appState.darkModeOn ? "white" : "black",
                     }),
 
+
+
                     option: (base, state)=>({
                         ...base,
                         backgroundColor: appState.darkModeOn ? (
@@ -52,6 +57,11 @@ export function LabelSelector({handleChange}:{handleChange: (value:Options<any>,
                         )
                     }),
                 }}
+
+
+                value={labels.map((s:string)=>{
+                    return {label: s, value: s}
+                })}
                 menuPlacement={"top"}
                 isMulti
                 isClearable
