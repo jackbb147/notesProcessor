@@ -17,7 +17,7 @@ export function FolderPanel({children}:{children: React.ReactNode})
     if(graph===null || graphDispatch === null) throw Error("graph or graphDispatch is null. ");
 
 
-    return <div className={"dark:bg-dark_secondary w-full h-full"}>
+    return <div className={"dark:bg-dark_secondary  dark:border-dark_secondary w-full h-full "}>
         <SidePanel
             panelChildren={<FolderPanelContent/>}
             isClosed={state.LabelPanelClosed}>
