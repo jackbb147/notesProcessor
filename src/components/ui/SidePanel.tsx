@@ -43,6 +43,7 @@ export function SidePanel(
 
     return (
         <div ref={containerRef} className={"sidePanelWrapper flex flex-row w-full h-full dark:border-inherit"} onMouseMove={onSidePanelResize} onMouseUp={onEndResize}>
+
             <div className={"sidePanel h-full flex relative dark:border-inherit"} style={{
                 width : isClosed?"0px":sidePanelWidth,
                 minWidth: isClosed ? "0px" : "25%",
@@ -57,10 +58,12 @@ export function SidePanel(
 
                 </div>
 
-                <div className={"sidePanel__resize h-full bg-grey dark:border-inherit border-4 w-px cursor-col-resize absolute right-0"}
+                <div className={"sidePanel__resize h-full border-grey border-r-2  dark:border-inherit dark:border-4 w-px cursor-col-resize absolute right-0"}
                      onMouseDown={onBeginResize}/>
             </div>
-            <div className={"border-amber-500 h-full grow"}>
+
+
+            <div className={"  h-full grow"}>
                 {children}
             </div>
 

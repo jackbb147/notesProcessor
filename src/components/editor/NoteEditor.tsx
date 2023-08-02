@@ -172,7 +172,8 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onTouchStart, isRead
 
     return (
         <div ref={wrapperRef}  tabIndex={0} style={{
-            width: "100%",
+            // width: "100%",
+            flexGrow:"1",
             height:"100%",
         }}>
             <div  ref={ref}></div>
@@ -269,7 +270,8 @@ export function NoteEditor({
 
     return (
         <div style={{
-            width: "100%",
+            // width: "100%",
+            flexGrow: "1",
             height: "100%",
 
         }}>
