@@ -11,7 +11,7 @@ import {RangeStatic} from "quill";
 
 function QuillBoxComponent({val, handleBlur, onFinishSetup, onTouchStart, isReadOnly = false, onEditAttempt=()=>{}}:{
     val: string,
-    handleBlur: (s:string)=>any,
+    handleBlur: (s:string, firstLine?:string)=>any,
     onFinishSetup: ()=>any,
     onTouchStart: ()=>any,
     isReadOnly?: boolean|undefined,
@@ -124,8 +124,8 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onTouchStart, isRead
         quillNode.root.addEventListener("blur", (e:FocusEvent)=>{
             if(!wrapper.contains(e.relatedTarget))
             {
-
-                handleBlur(quillNode.root.innerHTML) //TODO
+                let lengthOfFirstLine = quillNode.getLine(0)[0].cache.length-1;
+                handleBlur(quillNode.root.innerHTML, quillNode.getText(0, lengthOfFirstLine)) //TODO
             }
         })
 
@@ -256,11 +256,13 @@ export function NoteEditor({
         }
     }, [darkModeOn])
 
-    function handleBlur(s:string, note:Node)
+    function handleBlur(s:string, firstLine:string="")
     {
+        // debugger;
         var newNode:Node = {
             ...noteRef.current,
-            content: s
+            content: s,
+            title: firstLine
         }
         // debugger;
         onBlur(newNode)
@@ -277,7 +279,7 @@ export function NoteEditor({
         }}>
 
             <QuillBoxComponent val={note.content}
-                               handleBlur={(s:string)=>{handleBlur(s,note)}}
+                               handleBlur={(s:string, firstLine?:string)=>{handleBlur(s,firstLine)}}
                                onFinishSetup={onFinishSetUp}
                                 isReadOnly={locked}
                                onEditAttempt={onEditAttempt}
