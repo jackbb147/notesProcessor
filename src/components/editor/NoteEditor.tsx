@@ -46,19 +46,16 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onTouchStart, isRead
     }, [])
 
     useEffect(()=>{
+        document.querySelectorAll(".ql-container.ql-snow").forEach(val=>{
+            val.classList.add("noBorder")
+        })
+
         if(darkModeOn)
         {
-            document.querySelectorAll(".ql-container.ql-snow").forEach(val=>{
-                val.classList.add("noBorder")
-            })
-
             document.querySelectorAll(".ql-toolbar").forEach(val=>{
-                val.classList.add("noBorder")
+                val.classList.add("onlyBorderBottom")
             })
         }else{
-            document.querySelectorAll(".ql-container.ql-snow").forEach(val=>{
-                val.classList.remove("noBorder")
-            })
             document.querySelectorAll(".ql-toolbar").forEach(val=>{
                 val.classList.remove("noBorder")
             })
@@ -318,7 +315,8 @@ export function NoteEditor({
 
             <div style={{
                 height: "95%",
-                border: darkModeOn ?  "1px solid white" :  "none",
+                border: darkModeOn ?  "1px solid white" :  "1px solid #ccc",
+                marginBottom: ".2rem"
             }}>
                 <QuillBoxComponent val={note.content}
                                    handleBlur={(s:string, firstLine?:string)=>{handleBlur(s,firstLine)}}
