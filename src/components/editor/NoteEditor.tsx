@@ -11,13 +11,14 @@ import {RangeStatic} from "quill";
 import {LabelSelector} from "./LabelSelector";
 import {LastEditedWhen} from "./LastEditedWhen";
 
-function QuillBoxComponent({val, handleBlur, onFinishSetup, onTouchStart, isReadOnly = false, onEditAttempt=()=>{}}:{
+function QuillBoxComponent({val, handleBlur, onFinishSetup, onTouchStart, isReadOnly = false, onEditAttempt=()=>{}, darkModeOn=false}:{
     val: string,
     handleBlur: (s:string, firstLine?:string)=>any,
     onFinishSetup: ()=>any,
     onTouchStart: ()=>any,
     isReadOnly?: boolean|undefined,
-    onEditAttempt?: ()=>any
+    onEditAttempt?: ()=>any,
+    darkModeOn?: boolean
 })
 {
     const wrapperRef = useRef<any>(null);
@@ -43,6 +44,26 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onTouchStart, isRead
         setUpQuill(container)
         return cleanUp
     }, [])
+
+    useEffect(()=>{
+        if(darkModeOn)
+        {
+            document.querySelectorAll(".ql-container.ql-snow").forEach(val=>{
+                val.classList.add("noBorder")
+            })
+
+            document.querySelectorAll(".ql-toolbar").forEach(val=>{
+                val.classList.add("noBorder")
+            })
+        }else{
+            document.querySelectorAll(".ql-container.ql-snow").forEach(val=>{
+                val.classList.remove("noBorder")
+            })
+            document.querySelectorAll(".ql-toolbar").forEach(val=>{
+                val.classList.remove("noBorder")
+            })
+        }
+    }, [darkModeOn])
 
     function cleanUp()
     {
@@ -297,13 +318,14 @@ export function NoteEditor({
 
             <div style={{
                 height: "95%",
-                border: "1px solid yellow",
+                border: darkModeOn ?  "1px solid white" :  "none",
             }}>
                 <QuillBoxComponent val={note.content}
                                    handleBlur={(s:string, firstLine?:string)=>{handleBlur(s,firstLine)}}
                                    onFinishSetup={onFinishSetUp}
                                    isReadOnly={locked}
                                    onEditAttempt={onEditAttempt}
+                                   darkModeOn={darkModeOn}
                                    onTouchStart={()=>{}}/>
             </div>
 

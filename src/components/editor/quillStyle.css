@@ -33,6 +33,13 @@
     color:white!important;
 }
 
+.noBorder
+{
+    border: none !important;
+}
+
+/*.ql-container.ql-snow, .ql-toolbar{ border: none !important;}*/
+
 
 /** All toolbar buttons are inside of .ql-formats */
 .ql-formats button {
