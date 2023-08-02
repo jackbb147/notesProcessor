@@ -40,6 +40,30 @@ export function NotesPanelContent()
         return collection;
     }
 
+    function handleKeyDown(e:React.KeyboardEvent)
+    {
+        if(graph === null) return;
+        if(dispatch === null) return;
+        if(state === null) return;
+        if(graph.nodes.length < 2) return;
+
+        if(e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+
+
+        let index = graph.nodes.findIndex(node=>node.id === state.activeNodeID);
+
+        let nextID ;
+        if(e.key === "ArrowDown") nextID = graph.nodes[(index+1) % graph.nodes.length].id;
+        else nextID = index-1>=0?
+            graph.nodes[(index-1) % graph.nodes.length].id :
+            graph.nodes[graph.nodes.length-1].id;
+
+        dispatch({
+            type:AppActionType.setActiveNodeID,
+            id: nextID
+        })
+    }
+
     return <>
         <div className={"w-full h-full flex flex-col "}>
             <div className={"top-bar h-12 flex items-center"}>
@@ -65,7 +89,7 @@ delete
                 ></Button>
             </div>
 
-            <div className={"w-full h-full"}>
+            <div className={"w-full h-full"}  tabIndex={0} onKeyDown={handleKeyDown}>
                 {
                     activeCollection().length === 0 ?
                     (
