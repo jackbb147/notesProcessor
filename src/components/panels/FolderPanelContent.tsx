@@ -3,12 +3,19 @@ import {ListItem} from "./ListItem";
 import {AppActionType, Collections} from "../../reducers/AppStateReducer";
 import React, {useContext} from "react";
 import {AppStateContext, AppStateDispatchContext} from "../AppStateContext";
+import {GraphContext, GraphDispatchContext} from "../GraphContext";
 
 export function FolderPanelContent()
 {
     const state = useContext(AppStateContext);
     const dispatch = useContext(AppStateDispatchContext);
-    if(dispatch === null || state === null) throw Error("state or dispatch is null. ")
+
+    const graph = useContext(GraphContext);
+    const graphDispatch = useContext(GraphDispatchContext);
+
+
+    if(dispatch === null || state === null) throw Error("state or dispatch is null. ");
+    if(graph === null || graphDispatch === null) throw Error("graph or graphDispatch is null. ");
 
     function handleDarkModeTogglerClick()
     {
@@ -48,6 +55,16 @@ folder
                           }
                       }}
             ></ListItem>
+
+            {graph.labels.map((s:string)=><ListItem
+                text={s}
+                active={state.activeCollection === Collections.Label && state.activeLabel === s}
+                icon={<span className="material-symbols-outlined">
+                    label
+                </span>}
+            />)}
+
+
             <ListItem text={"Recently Deleted"}
                       active={state.activeCollection === Collections.RecentlyDeleted}
                       icon={<span className="material-symbols-outlined">

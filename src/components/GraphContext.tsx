@@ -10,10 +10,13 @@ export const GraphDispatchContext = createContext<React.Dispatch<GraphAction> | 
 
 export function GraphProvider({children}:{children: React.ReactNode})
 {
+
     const [graph, graphDispatch] = useImmerReducer<GraphState, GraphAction>(graphReducer, {
         nodes: [],
-        deletedNodes: []
+        deletedNodes: [],
+        labels: []
     });
+
     return <GraphContext.Provider value={graph}>
         <GraphDispatchContext.Provider value={graphDispatch}>
             {children}

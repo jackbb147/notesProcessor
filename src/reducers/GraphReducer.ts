@@ -26,7 +26,8 @@ export interface Node
 export interface GraphState
 {
     nodes: Node[],
-    deletedNodes: Node[]
+    deletedNodes: Node[],
+    labels:string[]
 }
 
 // const actions:{} = {

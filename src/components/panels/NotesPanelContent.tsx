@@ -31,7 +31,7 @@ export function NotesPanelContent()
                 collection = graph.deletedNodes
                 break;
             }
-            case Collections.Tag: {
+            case Collections.Label: {
                 collection = [] // TODO
                 break;
             }

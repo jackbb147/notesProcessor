@@ -25,7 +25,7 @@ export enum Collections
 {
     All,
     RecentlyDeleted,
-    Tag
+    Label
 }
 
 
@@ -33,6 +33,7 @@ export interface AppState
 {
     activeNodeID: string|undefined,
     activeCollection: Collections,
+    activeLabel:string|undefined,
     LabelPanelClosed: boolean,
     showRecoverNodePopup: boolean,
     darkModeOn: boolean
