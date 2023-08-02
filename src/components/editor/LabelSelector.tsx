@@ -4,39 +4,14 @@ import {ActionMeta, CSSObjectWithLabel, Options} from "react-select";
 import {GraphActionType} from "../../reducers/GraphReducer";
 import {ValueType} from "tailwindcss/types/config";
 
-export function LabelSelector()
+export function LabelSelector({handleChange}:{handleChange: (value:Options<any>, action: ActionMeta<any>)=>any})
 {
     const graph = useGraph();
     const graphDispatch = useGraphDispatch();
 
     const appState = useState();
 
-    function handleChange(value:Options<any>,action:ActionMeta<any>)
-    {
-        // debugger
-        switch (action.action)
-        {
-            case "create-option":
-            {
-                // debugger;
-                graphDispatch({
-                    type: GraphActionType.addLabel,
-                    label: action.option.label
-                })
-                break;
-            }
 
-            case "remove-value":
-            {
-                // debugger;
-                graphDispatch({
-                    type: GraphActionType.removeLabel,
-                    label: action.removedValue.label
-                })
-                break;
-            }
-        }
-    }
 
     return (
         <div style={{color: "black"}}>

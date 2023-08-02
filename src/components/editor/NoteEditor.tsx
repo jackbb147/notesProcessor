@@ -6,10 +6,12 @@ import "./quillStyle.css"
 import {MathEditorModule} from "./Quill-MathJax/MathEditorModule";
 import "./Quill-MathJax/quill.bubble.css"
 import "./Quill-MathJax/quill.snow.css"
-import {Node} from "../../reducers/GraphReducer"
+import {GraphActionType, Node} from "../../reducers/GraphReducer"
 import {RangeStatic} from "quill";
 import {LabelSelector} from "./LabelSelector";
 import {LastEditedWhen} from "./LastEditedWhen";
+import {ActionMeta, Options} from "react-select";
+import {useGraph, useGraphDispatch} from "../../reducers/hooks";
 
 function QuillBoxComponent({val, handleBlur, onFinishSetup, onTouchStart, isReadOnly = false, onEditAttempt=()=>{}, darkModeOn=false}:{
     val: string,
@@ -232,6 +234,11 @@ export function NoteEditor({
     darkModeOn?: boolean
 })
 {
+    const graph = useGraph();
+    const graphDispatch = useGraphDispatch();
+
+    const appState = useState();
+
 
     const noteRef = useRef<Node>(note) //https://stackoverflow.com/questions/57847594/react-hooks-accessing-up-to-date-state-from-within-a-callback
     noteRef.current = note;
@@ -301,6 +308,33 @@ export function NoteEditor({
         onBlur(newNode)
     }
 
+    function handleChange(value:Options<any>,action:ActionMeta<any>)
+    {
+        // debugger
+        switch (action.action)
+        {
+            case "create-option":
+            {
+                // debugger;
+                graphDispatch({
+                    type: GraphActionType.addLabel,
+                    label: action.option.label
+                })
+                break;
+            }
+
+            case "remove-value":
+            {
+                // debugger;
+                graphDispatch({
+                    type: GraphActionType.removeLabel,
+                    label: action.removedValue.label
+                })
+                break;
+            }
+        }
+    }
+
 
 
     return (
@@ -339,7 +373,7 @@ export function NoteEditor({
                 <div style={{
                     width: "65%"
                 }}>
-                    <LabelSelector/>
+                    <LabelSelector handleChange={handleChange}/>
                 </div>
 
                 <div style={{
