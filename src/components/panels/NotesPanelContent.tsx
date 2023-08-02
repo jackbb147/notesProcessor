@@ -66,12 +66,12 @@ export function NotesPanelContent()
 
     function buildOptionalText(node:Node):string
     {
-        if(!node.dateCreated)
+        if(!node.dateLastModified)
         {
             return ""
         }
-        let hour = node.dateCreated.getHours();
-        let minute = node.dateCreated.getMinutes();
+        let hour = node.dateLastModified.getHours();
+        let minute = node.dateLastModified.getMinutes();
         let PM = false;
         var res = '';
 
