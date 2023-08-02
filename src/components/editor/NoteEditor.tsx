@@ -1,5 +1,5 @@
-import React, {LegacyRef, useEffect, useRef, useState} from "react";
-import ReactQuill, {Quill} from "react-quill";
+import React, {useEffect, useRef, useState} from "react";
+import {Quill} from "react-quill";
 import "./quillStyle.css"
 
 //@ts-ignore
@@ -323,12 +323,43 @@ export function NoteEditor({
                 break;
             }
 
+            case "select-option":
+            {
+                graphDispatch({
+                    type: GraphActionType.updateNode,
+                    node: {
+                        ...note,
+                        labels: [...note.labels, action.option.label]
+                    }
+                })
+                break;
+            }
+
+            case "deselect-option":
+            {
+                console.log("Deselect option fired")
+                // debugger;
+                // graphDispatch({
+                //     type: GraphActionType.updateNode,
+                //     node: {
+                //         ...note,
+                //         labels: note.labels.filter((s:string)=>s !== action.option.label)
+                //     }
+                // })
+                break;
+            }
+
             case "remove-value":
             {
                 // debugger;
+                console.log("remove value fired")
+                // debugger;
                 graphDispatch({
-                    type: GraphActionType.removeLabel,
-                    label: action.removedValue.label
+                    type: GraphActionType.updateNode,
+                    node: {
+                        ...note,
+                        labels: note.labels.filter((s:string)=>s !== action.removedValue.label)
+                    }
                 })
                 break;
             }

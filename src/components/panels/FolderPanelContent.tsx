@@ -47,12 +47,10 @@ folder
                               activeCollection: Collections.All
                           })
 
-                          if (state.activeCollection !== Collections.All) {
-                              dispatch({
-                                  type: AppActionType.setActiveNodeID,
-                                  id: undefined
-                              })
-                          }
+                          dispatch({
+                              type: AppActionType.setActiveNodeID,
+                              id: undefined
+                          })
                       }}
             ></ListItem>
 

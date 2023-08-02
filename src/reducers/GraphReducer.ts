@@ -6,7 +6,8 @@ export enum GraphActionType
     removeNode,
     recoverNode,
     addLabel,
-    removeLabel
+    removeLabel,
+
 }
 
 export type GraphAction =
