@@ -18,13 +18,13 @@ export function GraphProvider({children}:{children: React.ReactNode})
                 id: "test",
                 title: "Just a test",
                 content: "something",
-                tags: ["Test"]
+                labels: ["Test"]
             },
             {
                 id: "test2",
                 title: "Not a test. ",
                 content: "Not a test! ",
-                tags: []
+                labels: []
             }
         ],
         deletedNodes: [],

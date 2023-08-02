@@ -1,8 +1,9 @@
 import {useGraph, useGraphDispatch, useState} from "../../reducers/hooks";
 import CreatableSelect from "react-select/creatable";
-import Select from "react-select/base";
-import {stat} from "fs";
-import {CSSObjectWithLabel} from "react-select";
+import {ActionMeta, CSSObjectWithLabel, Options} from "react-select";
+import {GraphActionType} from "../../reducers/GraphReducer";
+import {ValueType} from "tailwindcss/types/config";
+
 export function LabelSelector()
 {
     const graph = useGraph();
@@ -10,17 +11,36 @@ export function LabelSelector()
 
     const appState = useState();
 
+    function handleChange(value:Options<any>,action:ActionMeta<any>)
+    {
+        // debugger
+        switch (action.action)
+        {
+            case "create-option":
+            {
+                // debugger;
+                graphDispatch({
+                    type: GraphActionType.addLabel,
+                    label: action.option.label
+                })
+                break;
+            }
 
-    // const options = [
-    //     { value: 'chocolate', label: 'Chocolate' },
-    //     { value: 'strawberry', label: 'Strawberry' },
-    //     { value: 'vanilla', label: 'Vanilla' }
-    // ]
+            case "remove-value":
+            {
+                // debugger;
+                graphDispatch({
+                    type: GraphActionType.removeLabel,
+                    label: action.removedValue.label
+                })
+                break;
+            }
+        }
+    }
 
     return (
         <div style={{color: "black"}}>
             <CreatableSelect
-
                 styles={{
                     control: (base, state):CSSObjectWithLabel=>({
                         ...base,
@@ -36,6 +56,11 @@ export function LabelSelector()
                         ...base,
                         // color: appState.darkModeOn ?
 
+                    }),
+
+                    input: (base, state)=>({
+                       ...base,
+                       color: appState.darkModeOn ? "white" : "black",
                     }),
 
                     option: (base, state)=>({
@@ -55,6 +80,9 @@ export function LabelSelector()
                 menuPlacement={"top"}
                 isMulti
                 isClearable
+                // onCreateOption={handleCreateOption}
+                onChange={handleChange}
+
                 options={graph.labels.map(s=>{
                     return {
                         value: s,

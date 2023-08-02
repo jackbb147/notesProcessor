@@ -34,7 +34,7 @@ export function AddNodeButton()
                 id: uuid(),
                 title: "New Note",
                 content: "",
-                tags: tags,
+                labels: tags,
                 dateCreated: new Date()
             }
         })

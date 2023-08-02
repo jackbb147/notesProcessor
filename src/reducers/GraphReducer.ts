@@ -4,7 +4,9 @@ export enum GraphActionType
     addNode,
     updateNode,
     removeNode,
-    recoverNode
+    recoverNode,
+    addLabel,
+    removeLabel
 }
 
 export type GraphAction =
@@ -12,13 +14,15 @@ export type GraphAction =
     | {type: GraphActionType.removeNode, id: string}
     | {type: GraphActionType.updateNode,  node: Node}
     | {type: GraphActionType.recoverNode, id: string}
+    | {type: GraphActionType.addLabel, label:string}
+    | {type: GraphActionType.removeLabel, label:string}
 
 export interface Node
 {
     id: string,
     title: string,
     content: string,
-    tags: string[],
+    labels: string[],
     dateCreated?: Date,
     dateLastModified?:Date
 }
@@ -29,50 +33,6 @@ export interface GraphState
     deletedNodes: Node[],
     labels:string[]
 }
-
-// const actions:{} = {
-//     "addNode": (state:object, action)=>{
-//
-//     },
-//
-//     "updateNode": (state, action)=>{
-//
-//     },
-//
-//     "removeNode": (state, action)=>{
-//
-//     },
-//
-//     "addLink": (state, action)=>{
-//
-//     },
-//
-//     "removeLink": (state, action)=>{
-//
-//     },
-//
-//     "hideNode": (state, action)=>{
-//
-//     },
-//
-//     "addKey": (state, action)=>{
-//
-//     },
-//
-//     "removeKey": (state, action)=>{
-//
-//     },
-//
-//     "renameKey": (state, action)=>{
-//
-//     },
-//
-//     default: ()=>{
-//
-//     }
-// }
-
-
 
 export function graphReducer(draft:GraphState, action:GraphAction):void
 {
@@ -119,6 +79,24 @@ export function graphReducer(draft:GraphState, action:GraphAction):void
             if(index < 0) return;
             draft.nodes.push(draft.deletedNodes[index]);
             draft.deletedNodes.splice(index, 1);
+            break;
+        }
+
+        case GraphActionType.addLabel:
+        {
+            console.log(`addLabel fired with ${action.label}`)
+            if(draft.labels.includes(action.label)) return;
+            draft.labels.push(action.label);
+            break;
+        }
+
+        case GraphActionType.removeLabel:
+        {
+
+            let index = draft.labels.indexOf(action.label);
+            if(index < 0) return;
+
+            draft.labels.splice(index,1);
             break;
         }
     }

@@ -33,7 +33,7 @@ export function NotesPanelContent()
                 break;
             }
             case Collections.Label: {
-                collection = graph.nodes.filter(node => state.activeLabel && node.tags.includes(state.activeLabel))
+                collection = graph.nodes.filter(node => state.activeLabel && node.labels.includes(state.activeLabel))
                 break;
             }
         }
