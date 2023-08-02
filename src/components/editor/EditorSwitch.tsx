@@ -36,7 +36,7 @@ export function EditorSwitch()
         note={note} //https://stackoverflow.com/a/54738437/21646295
         onBlur={(note: Node) => {
 
-            debugger;
+            // debugger;
             if(note.content.length !== 0)
             {
                 graphDispatch({

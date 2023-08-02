@@ -64,6 +64,31 @@ export function NotesPanelContent()
         })
     }
 
+    function buildOptionalText(node:Node):string
+    {
+        if(!node.dateCreated)
+        {
+            return ""
+        }
+        let hour = node.dateCreated.getHours();
+        let minute = node.dateCreated.getMinutes();
+        let PM = false;
+        var res = '';
+
+
+        if(hour >= 12){
+            PM = true;
+            hour %= 12;
+        }
+
+        res += hour.toString();
+        res += ":";
+        if(minute < 10) res += "0";
+        res += minute.toString();
+        if(PM) res += "PM";
+        return res;
+    }
+
     return <>
         <div className={"w-full h-full flex flex-col "}>
             <div className={"top-bar h-12 flex items-center"}>
@@ -104,7 +129,9 @@ delete
                                 classNames="fade"
                                 key={node.id}
                             >
-                                <ListItem active={node.id === state.activeNodeID} text={node.title}
+                                <ListItem active={node.id === state.activeNodeID}
+                                          text={node.title}
+                                          optionalText={buildOptionalText(node)}
                                           onClick={() => dispatch({
                                               type: AppActionType.setActiveNodeID,
                                               id: node.id
