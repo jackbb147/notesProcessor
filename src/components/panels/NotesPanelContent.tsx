@@ -6,64 +6,21 @@ import {AppActionType, Collections} from "../../reducers/AppStateReducer";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import {ListItem} from "./ListItem";
 import {GraphContext, GraphDispatchContext} from "../../reducers/GraphContext";
+import { animated ,useTransition} from '@react-spring/web'
+import {AnimatedListItem} from "./AnimatedListItem";
+import {useSpring} from "@react-spring/web";
+import {useDispatch, useState} from "../../reducers/hooks";
 
+function AnimatedList({ data}:{data:Node[]}) {
 
-export function NotesPanelContent()
-{
-    const state = useContext(AppStateContext);
-    const dispatch = useContext(AppStateDispatchContext);
-    const graph = useContext(GraphContext);
-    const graphDispatch = useContext(GraphDispatchContext);
-    if(state===null || dispatch === null) throw Error("state or dispatch is null. ");
-    if(graph===null || graphDispatch === null) throw Error("graph or graphDispatch is null. ");
-
-
-    function activeCollection() {
-        if(graph===null || graphDispatch === null) throw Error("graph or graphDispatch is null. ");
-        if(state === null) throw Error("state is null.")
-        var collection: Node[];
-        switch (state.activeCollection) {
-            case Collections.All: {
-                collection = graph.nodes
-                console.log("collection: ", JSON.stringify(collection))
-                break;
-            }
-            case Collections.RecentlyDeleted: {
-                collection = graph.deletedNodes
-                break;
-            }
-            case Collections.Label: {
-                collection = graph.nodes.filter(node => state.activeLabel && node.labels.includes(state.activeLabel))
-                break;
-            }
-        }
-
-        return collection;
-    }
-
-    function handleKeyDown(e:React.KeyboardEvent)
-    {
-        if(graph === null) return;
-        if(dispatch === null) return;
-        if(state === null) return;
-        if(graph.nodes.length < 2) return;
-
-        if(e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
-
-
-        let index = graph.nodes.findIndex(node=>node.id === state.activeNodeID);
-
-        let nextID ;
-        if(e.key === "ArrowDown") nextID = graph.nodes[(index+1) % graph.nodes.length].id;
-        else nextID = index-1>=0?
-            graph.nodes[(index-1) % graph.nodes.length].id :
-            graph.nodes[graph.nodes.length-1].id;
-
-        dispatch({
-            type:AppActionType.setActiveNodeID,
-            id: nextID
-        })
-    }
+    const state =useState()
+    const dispatch = useDispatch();
+    const transitions = useTransition(data, {
+        from: { opacity: 0 },
+        enter: { opacity: 1,  },
+        leave: { opacity: 0, },
+        keys: item => item.id
+    })
 
     function buildOptionalText(node:Node):string
     {
@@ -90,6 +47,67 @@ export function NotesPanelContent()
         return res;
     }
 
+    return transitions((style, node) => (
+        <animated.div style={style}>{
+            <ListItem
+                text={node.title}
+                active={node.id === state.activeNodeID}
+                optionalText={buildOptionalText(node)}
+                onClick={() => dispatch({
+                    type: AppActionType.setActiveNodeID,
+                    id: node.id
+                })}
+            />
+        }</animated.div>
+    ))
+}
+
+
+
+export function NotesPanelContent({collection}:{collection:Node[]})
+{
+    const state = useContext(AppStateContext);
+    const dispatch = useContext(AppStateDispatchContext);
+    const graph = useContext(GraphContext);
+    const graphDispatch = useContext(GraphDispatchContext);
+    if(state===null || dispatch === null) throw Error("state or dispatch is null. ");
+    if(graph===null || graphDispatch === null) throw Error("graph or graphDispatch is null. ");
+
+
+
+
+    function handleKeyDown(e:React.KeyboardEvent)
+    {
+        if(graph === null) return;
+        if(dispatch === null) return;
+        if(state === null) return;
+        if(graph.nodes.length < 2) return;
+
+        if(e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+
+
+        let index = graph.nodes.findIndex(node=>node.id === state.activeNodeID);
+
+        let nextID ;
+        if(e.key === "ArrowDown") nextID = graph.nodes[(index+1) % graph.nodes.length].id;
+        else nextID = index-1>=0?
+            graph.nodes[(index-1) % graph.nodes.length].id :
+            graph.nodes[graph.nodes.length-1].id;
+
+        dispatch({
+            type:AppActionType.setActiveNodeID,
+            id: nextID
+        })
+    }
+
+
+
+    const [transitions, api] = useTransition([1,2,3], () => ({
+        from: { color: "white"},
+        enter: { color:"yellow" },
+        leave: { color: "blue" },
+    }))
+
     return <>
         <div className={"w-full h-full flex flex-col "}>
             <div className={"top-bar h-12 flex items-center"}>
@@ -115,35 +133,51 @@ delete
                 ></Button>
             </div>
 
-            <div className={"w-full h-full"}  tabIndex={0} onKeyDown={handleKeyDown}>
-                {
-                    activeCollection().length === 0 ?
-                    (
-                        <div className={"flex flex-col items-center justify-center w-full h-full"}>
-                            No Notes
-                        </div>
-                    ):
-                    (
-                        <TransitionGroup>
-                            {activeCollection().map((node) => <CSSTransition
-                                timeout={1000}
-                                classNames="fade"
-                                key={node.id}
-                            >
-                                <ListItem active={node.id === state.activeNodeID}
-                                          text={node.title}
-                                          optionalText={buildOptionalText(node)}
-                                          onClick={() => dispatch({
-                                              type: AppActionType.setActiveNodeID,
-                                              id: node.id
-                                          })}/>
-                            </CSSTransition>)}
-                        </TransitionGroup>
-                    )
 
-                }
+
+
+
+            <div className={"w-full h-full"}  tabIndex={0} onKeyDown={handleKeyDown}>
+
+                <AnimatedList data={collection}/>
+
+                {/*{*/}
+                {/*    collection.length === 0 ?*/}
+                {/*        (*/}
+                {/*            // <div className={"flex flex-col items-center justify-center w-full h-full"}>*/}
+                {/*            //     No Notes*/}
+                {/*            // </div>*/}
+                {/*            <animated.div style={{*/}
+                {/*                display: "flex",*/}
+                {/*                flexDirection: "column",*/}
+                {/*                alignItems: "center",*/}
+                {/*                justifyContent: "center",*/}
+                {/*                width: "100%",*/}
+                {/*                height: "100%"*/}
+                {/*            }}>*/}
+                {/*                No Notes*/}
+                {/*            </animated.div>*/}
+                {/*        ):*/}
+                {/*        (*/}
+                {/*            */}
+                {/*            // collection.map((node) => <animated.div style={{*/}
+                {/*            //     width: "100%",*/}
+                {/*            //     height:"50px",*/}
+                {/*            //     backgroundColor: "black",*/}
+                {/*            //     marginBottom: "10px",*/}
+                {/*            //     ...styles*/}
+                {/*            // }}></animated.div>)*/}
+                {/*        )*/}
+                {/*                // <AnimatedListItem*/}
+                {/*                    style={styles}*/}
+                {/*                    */}
+                {/*                />)*/}
+
+
+                {/*}*/}
 
             </div>
+
 
         </div>
     </>
