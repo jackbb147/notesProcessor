@@ -11,7 +11,7 @@ import {AnimatedListItem} from "./AnimatedListItem";
 import {useSpring, Transition} from "@react-spring/web";
 import {useDispatch, useState} from "../../reducers/hooks";
 
-
+const NoNotesDisplayID = "none"
 const MyComponent = (styles:any) => <div style={styles}>hello</div>
 
 
@@ -28,19 +28,21 @@ function AnimatedList({data}:{data:ReactNodeWithID[] }) {
 
 
     const transitions = useTransition(data, {
-        from: { opacity: 0, transform: "scale(0)", },
-        enter: { opacity: 1, transform: "scale(1)", maxHeight: "500px"  },
-        leave: { opacity: 0, transform: "scale(0)", maxHeight: "0" },
+        from: item => ({ opacity: 0, transform: "scale(0)", }),
+        enter: item=>  item.id === NoNotesDisplayID ? ({opacity: 1, transform:"scale(1)", position: "absolute", top: "0", maxHeight: "100%", height: "100%", width: "100%"}) :({ opacity: 1, transform: "scale(1)", maxHeight: "500px"  }),
+        leave: item => ({ opacity: 0, transform: "scale(0)", maxHeight: "0" }),
         keys: item => item.id
     })
 
 
     return  (
+
         transitions((style, node) => (
                 <animated.div style={style}>{
                     node.node
                 }</animated.div>
         )))
+
 
 }
 
@@ -138,7 +140,7 @@ delete
 
 
 
-            <div className={"w-full h-full overflow-scroll"}  tabIndex={0} onKeyDown={handleKeyDown}>
+            <div className={"w-full h-full overflow-scroll "  }  tabIndex={0} onKeyDown={handleKeyDown}>
 
                 <AnimatedList
 
@@ -161,8 +163,10 @@ delete
                         })
                     ) : (
                         [{
-                            node: <div>Nothing to see here! </div>,
-                            id: "none"
+                            node: <div className={"flex flex-col items-center justify-center w-full h-full"}>
+                                                 No Notes
+                                    </div>,
+                            id: NoNotesDisplayID
                         }]
                     )} />
 
