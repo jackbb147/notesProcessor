@@ -16,9 +16,9 @@ function AnimatedList({ data}:{data:Node[]}) {
     const state =useState()
     const dispatch = useDispatch();
     const transitions = useTransition(data, {
-        from: { opacity: 0 },
-        enter: { opacity: 1,  },
-        leave: { opacity: 0, transform: "scale(0.5)" },
+        from: { opacity: 0, transform: "scale(0)", },
+        enter: { opacity: 1, transform: "scale(1)",},
+        leave: { opacity: 0, transform: "scale(0)" },
         keys: item => item.id
     })
 
