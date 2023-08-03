@@ -8,13 +8,25 @@ import {ListItem} from "./ListItem";
 import {GraphContext, GraphDispatchContext} from "../../reducers/GraphContext";
 import { animated ,useTransition} from '@react-spring/web'
 import {AnimatedListItem} from "./AnimatedListItem";
-import {useSpring} from "@react-spring/web";
+import {useSpring, Transition} from "@react-spring/web";
 import {useDispatch, useState} from "../../reducers/hooks";
 
-function AnimatedList({ data}:{data:Node[]}) {
+
+const MyComponent = (styles:any) => <div style={styles}>hello</div>
+
+
+interface ReactNodeWithID
+{
+    node: React.ReactNode,
+    id: string
+}
+
+function AnimatedList({data}:{data:ReactNodeWithID[] }) {
 
     const state =useState()
     const dispatch = useDispatch();
+
+
     const transitions = useTransition(data, {
         from: { opacity: 0, transform: "scale(0)", },
         enter: { opacity: 1, transform: "scale(1)", maxHeight: "500px"  },
@@ -22,44 +34,14 @@ function AnimatedList({ data}:{data:Node[]}) {
         keys: item => item.id
     })
 
-    function buildOptionalText(node:Node):string
-    {
-        if(!node.dateLastModified)
-        {
-            return ""
-        }
-        let hour = node.dateLastModified.getHours();
-        let minute = node.dateLastModified.getMinutes();
-        let PM = false;
-        var res = '';
 
+    return  (
+        transitions((style, node) => (
+                <animated.div style={style}>{
+                    node.node
+                }</animated.div>
+        )))
 
-        if(hour >= 12){
-            PM = true;
-            hour %= 12;
-        }
-
-        res += hour.toString();
-        res += ":";
-        if(minute < 10) res += "0";
-        res += minute.toString();
-        if(PM) res += "PM";
-        return res;
-    }
-
-    return transitions((style, node) => (
-        <animated.div style={style}>{
-            <ListItem
-                text={node.title}
-                active={node.id === state.activeNodeID}
-                optionalText={buildOptionalText(node)}
-                onClick={() => dispatch({
-                    type: AppActionType.setActiveNodeID,
-                    id: node.id
-                })}
-            />
-        }</animated.div>
-    ))
 }
 
 
@@ -100,13 +82,32 @@ export function NotesPanelContent({collection}:{collection:Node[]})
         })
     }
 
+    function buildOptionalText(node:Node):string
+    {
+        if(!node.dateLastModified)
+        {
+            return ""
+        }
+        let hour = node.dateLastModified.getHours();
+        let minute = node.dateLastModified.getMinutes();
+        let PM = false;
+        var res = '';
 
 
-    const [transitions, api] = useTransition([1,2,3], () => ({
-        from: { color: "white"},
-        enter: { color:"yellow" },
-        leave: { color: "blue" },
-    }))
+        if(hour >= 12){
+            PM = true;
+            hour %= 12;
+        }
+
+        res += hour.toString();
+        res += ":";
+        if(minute < 10) res += "0";
+        res += minute.toString();
+        if(PM) res += "PM";
+        return res;
+    }
+
+
 
     return <>
         <div className={"w-full h-full flex flex-col "}>
@@ -139,42 +140,34 @@ delete
 
             <div className={"w-full h-full overflow-scroll"}  tabIndex={0} onKeyDown={handleKeyDown}>
 
-                <AnimatedList data={collection}/>
+                <AnimatedList
 
-                {/*{*/}
-                {/*    collection.length === 0 ?*/}
-                {/*        (*/}
-                {/*            // <div className={"flex flex-col items-center justify-center w-full h-full"}>*/}
-                {/*            //     No Notes*/}
-                {/*            // </div>*/}
-                {/*            <animated.div style={{*/}
-                {/*                display: "flex",*/}
-                {/*                flexDirection: "column",*/}
-                {/*                alignItems: "center",*/}
-                {/*                justifyContent: "center",*/}
-                {/*                width: "100%",*/}
-                {/*                height: "100%"*/}
-                {/*            }}>*/}
-                {/*                No Notes*/}
-                {/*            </animated.div>*/}
-                {/*        ):*/}
-                {/*        (*/}
-                {/*            */}
-                {/*            // collection.map((node) => <animated.div style={{*/}
-                {/*            //     width: "100%",*/}
-                {/*            //     height:"50px",*/}
-                {/*            //     backgroundColor: "black",*/}
-                {/*            //     marginBottom: "10px",*/}
-                {/*            //     ...styles*/}
-                {/*            // }}></animated.div>)*/}
-                {/*        )*/}
-                {/*                // <AnimatedListItem*/}
-                {/*                    style={styles}*/}
-                {/*                    */}
-                {/*                />)*/}
+                    data={collection.length > 0 ? (
+                        collection.map(node=>{
+                            return (
+                                {
+                                    node: <ListItem
+                                        text={node.title}
+                                        active={node.id === state.activeNodeID}
+                                        optionalText={buildOptionalText(node)}
+                                        onClick={() => dispatch({
+                                            type: AppActionType.setActiveNodeID,
+                                            id: node.id
+                                        })}
+                                    />,
+                                    id: node.id
+                                }
+                            )
+                        })
+                    ) : (
+                        [{
+                            node: <div>Nothing to see here! </div>,
+                            id: "none"
+                        }]
+                    )} />
 
 
-                {/*}*/}
+
 
             </div>
 
