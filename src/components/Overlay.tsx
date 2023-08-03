@@ -23,14 +23,21 @@ export function Overlay({children, handleClick=()=>{}}:{
 
             <div className={`
                 absolute
-                w-full
-                h-full
+                border-red-400
+                border-2
+                top-0
+                left-0
+                right-0
+                bottom-0
+                m-auto
+                w-fit
+                h-fit
                 flex
                 flex-col
                 justify-center
                 z-20
-                pointer-events-none
             `}>
+                {/*https://stackoverflow.com/a/9998303/21646295*/}
                 {children}
             </div>
 

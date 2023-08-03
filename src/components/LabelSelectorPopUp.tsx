@@ -3,6 +3,7 @@ import {Overlay} from "./Overlay";
 import {useDispatch, useGraph, useGraphDispatch, useState} from "../reducers/hooks";
 import {ActionMeta, Options} from "react-select";
 import {AppActionType} from "../reducers/AppStateReducer";
+import {GraphActionType} from "../reducers/GraphReducer";
 
 export function LabelSelectorPopUp()
 {
@@ -19,6 +20,10 @@ export function LabelSelectorPopUp()
             // TODO
             case "create-option":
             {
+                graphDispatch({
+                    type: GraphActionType.addLabel,
+                    label: action.option.label
+                })
                 break;
             }
 
@@ -45,7 +50,6 @@ export function LabelSelectorPopUp()
     return !state.showLabelSelectorPopup ? <></> : (
         <Overlay handleClick={handleOverlayClick}>
             <div className={`
-                w-1/2
                 m-auto
             `}>
                 <LabelSelector handleChange={handleChange} labels={graph.labels}/>
