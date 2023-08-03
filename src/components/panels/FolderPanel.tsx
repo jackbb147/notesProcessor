@@ -7,6 +7,7 @@ import {AddNodeButton} from "../AddNodeButton";
 import {EditorSwitch} from "../editor/EditorSwitch";
 import {GraphContext, GraphDispatchContext} from "../../reducers/GraphContext";
 import {AppStateContext, AppStateDispatchContext} from "../../reducers/AppStateContext";
+
 export function FolderPanel({children}:{children: React.ReactNode})
 {
     const graph = useContext(GraphContext);

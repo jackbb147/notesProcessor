@@ -31,14 +31,14 @@ export function FolderPanelContent()
                 <Button icon={<span className="material-symbols-outlined">
 thumbnail_bar
 </span>} onClick={()=>{
-
                     dispatch({type: AppActionType.toggleLabelPanel}) //TODO
                 }}></Button>
             </div>
             <ListItem text={"All"}
+                      iconOnly={state.LabelPanelClosed}
                       icon={<span className="material-symbols-outlined">
-folder
-</span>}
+                        folder
+                        </span>}
                       active={state.activeCollection === Collections.All}
                       rootClassName={"mb-2"}
                       onClick={() => {
@@ -56,6 +56,7 @@ folder
 
             {graph.labels.map((s:string)=><ListItem
                 text={s}
+                iconOnly={state.LabelPanelClosed}
                 active={state.activeCollection === Collections.Label && state.activeLabel === s}
                 onClick={()=>{
                     dispatch({
@@ -75,6 +76,7 @@ folder
 
 
             <ListItem text={"Recently Deleted"}
+                      iconOnly={state.LabelPanelClosed}
                       active={state.activeCollection === Collections.RecentlyDeleted}
                       icon={<span className="material-symbols-outlined">
 delete
@@ -97,6 +99,7 @@ delete
             <div className={"mt-auto"}>
                 <ListItem text={`${state.darkModeOn ? "Light" : "Dark"} Mode`}
                           onClick={handleDarkModeTogglerClick}
+                          iconOnly={state.LabelPanelClosed}
                           icon={<span className="material-symbols-outlined">
     light_mode
     </span>}
@@ -105,6 +108,7 @@ delete
 
 
                 <ListItem text={"Create/Edit Labels"}
+                          iconOnly={state.LabelPanelClosed}
                           icon={<span className="material-symbols-outlined">
 add_circle
 </span>}
