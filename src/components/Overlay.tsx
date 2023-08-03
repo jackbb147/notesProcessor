@@ -23,8 +23,7 @@ export function Overlay({children, handleClick=()=>{}}:{
 
             <div className={`
                 absolute
-                border-red-400
-                border-2
+               
                 top-0
                 left-0
                 right-0
