@@ -17,7 +17,7 @@ export function Overlay({children, handleClick=()=>{}}:{
                 opacity-60
                 z-10
             `)}
-
+                onClick={handleClick}
             >
             </div>
 
@@ -29,9 +29,8 @@ export function Overlay({children, handleClick=()=>{}}:{
                 flex-col
                 justify-center
                 z-20
-            `}
-                 onClick={handleClick}
-            >
+                pointer-events-none
+            `}>
                 {children}
             </div>
 
