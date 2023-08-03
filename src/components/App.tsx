@@ -17,6 +17,7 @@ import {AddNodeButton} from "./AddNodeButton";
 import {FolderPanel} from "./panels/FolderPanel";
 import {NotesPanel} from "./panels/NotesPanel";
 import {TopBar} from "./ui/TopBar";
+import {LabelSelectorPopUp} from "./LabelSelectorPopUp";
 
 export function ensure<T>(argument: T | undefined | null, message: string = 'This value was promised to be there.'): T {
     if (argument === undefined || argument === null) {
@@ -49,6 +50,7 @@ function App() {
                 <Container>
                     <div className="bg-grey dark:bg-dark_secondary w-full h-full flex flex-row overflow-hidden dark:text-white">
                         <RecoverNodePopup/>
+                        <LabelSelectorPopUp/>
                         <FolderPanel>
                             <div className={"App__main bg-white h-full grow w-full"}>
                                 <NotesPanel>
