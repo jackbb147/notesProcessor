@@ -137,7 +137,7 @@ delete
 
 
 
-            <div className={"w-full h-full"}  tabIndex={0} onKeyDown={handleKeyDown}>
+            <div className={"w-full h-full overflow-scroll"}  tabIndex={0} onKeyDown={handleKeyDown}>
 
                 <AnimatedList data={collection}/>
 
