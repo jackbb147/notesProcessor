@@ -3,10 +3,13 @@ import CreatableSelect from "react-select/creatable";
 import {ActionMeta, CSSObjectWithLabel, Options} from "react-select";
 import {GraphActionType} from "../../reducers/GraphReducer";
 import {ValueType} from "tailwindcss/types/config";
+import {ComponentProps} from "react";
+import {DropdownIndicator} from "react-select/dist/declarations/src/components/indicators";
 
-export function LabelSelector({handleChange, labels=[]}:{
+export function LabelSelector({handleChange, labels=[], showDropDown=true}:{
     handleChange: (value:Options<any>, action: ActionMeta<any>)=>any,
-    labels: string[]
+    labels: string[],
+    showDropDown? :boolean
 })
 {
     const graph = useGraph();
@@ -14,11 +17,26 @@ export function LabelSelector({handleChange, labels=[]}:{
 
     const appState = useState();
 
+    function getComponents()
+    {
+        let res:any = {}
+        if(!showDropDown)
+        {
+            res.DropdownIndicator = ()=>null;
+            res.ClearIndicator = ()=>null;
+            res.IndicatorSeparator = ()=>null;
+        }
+        return res;
+    }
+
+
+
 
 
     return (
         <div style={{color: "black"}}>
             <CreatableSelect
+
                 styles={{
                     control: (base, state):CSSObjectWithLabel=>({
                         ...base,
@@ -58,6 +76,8 @@ export function LabelSelector({handleChange, labels=[]}:{
                     }),
                 }}
 
+
+                components={getComponents()}
 
                 value={labels.map((s:string)=>{
                     return {label: s, value: s}

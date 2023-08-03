@@ -54,8 +54,15 @@ export function LabelSelectorPopUp()
         <Overlay handleClick={handleOverlayClick}>
             <div className={`
                 m-auto
+               
+                w-full
+                
             `}>
-                <LabelSelector handleChange={handleChange} labels={graph.labels}/>
+                <LabelSelector
+                    handleChange={handleChange}
+                    labels={graph.labels}
+                    showDropDown={false}
+                />
             </div>
         </Overlay>
     )

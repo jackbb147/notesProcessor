@@ -35,6 +35,8 @@ export function Overlay({children, handleClick=()=>{}}:{
                 flex-col
                 justify-center
                 z-20
+                
+                min-w-[50%]
             `}>
                 {/*https://stackoverflow.com/a/9998303/21646295*/}
                 {children}
