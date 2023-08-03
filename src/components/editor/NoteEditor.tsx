@@ -92,7 +92,8 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onTouchStart, isRead
     {
 
         const toolbarOptions:any  = [
-        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+        ['bold', 'italic'],
+        [ 'underline', 'strike'],        // toggled buttons
         ['blockquote', 'code-block'],
 
         [{ 'header': 1 }, { 'header': 2 }],               // custom button values

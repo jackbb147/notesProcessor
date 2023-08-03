@@ -13,10 +13,18 @@ export function SidePanel(
     const containerRef = useRef<any>(null)
     const [dragging, setDragging] = useState(false)
 
-    const [sidePanelWidth, setSidePanelWidth] = useState("fit-content");
+    const [sidePanelWidth, setSidePanelWidth] = useState("25%");
 
 
 
+    useEffect(()=>{
+        if(isClosed)
+        {
+            setSidePanelWidth("fit-content")
+        }else{
+            setSidePanelWidth("25%")
+        }
+    }, [isClosed])
     function onSidePanelResize(e:React.MouseEvent):void
     {
 
@@ -29,6 +37,8 @@ export function SidePanel(
         console.log(`offsetLeft: ${offsetLeft}`)
         setSidePanelWidth(width=>`${mouseX - offsetLeft}px`)
     }
+
+
 
     function onBeginResize()
     {
@@ -61,7 +71,9 @@ export function SidePanel(
             </div>
 
 
-            <div className={"  h-full grow"}>
+            <div className={"  h-full grow"} style={{
+                width: `calc(100% - ${sidePanelWidth})`
+            }}>
                 {children}
             </div>
 
