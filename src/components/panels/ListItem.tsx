@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {CSSObjectWithLabel} from "react-select";
 
 export function ListItem({text, icon, rootClassName, active, onClick, optionalText, style}:{
@@ -11,6 +11,11 @@ export function ListItem({text, icon, rootClassName, active, onClick, optionalTe
     style?:Object
 })
 {
+    useEffect(()=>{
+       return ()=>{
+           console.log("unmount")
+       }
+    },[])
     return (
         <div  onClick={onClick}
               style={style}

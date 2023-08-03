@@ -18,7 +18,7 @@ function AnimatedList({ data}:{data:Node[]}) {
     const transitions = useTransition(data, {
         from: { opacity: 0 },
         enter: { opacity: 1,  },
-        leave: { opacity: 0, },
+        leave: { opacity: 0, transform: "scale(0.5)" },
         keys: item => item.id
     })
 

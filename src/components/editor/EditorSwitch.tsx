@@ -16,58 +16,56 @@ export function EditorSwitch()
     if(graph===null || graphDispatch === null) throw Error("graph or graphDispatch is null. ");
 
 
-    var note: Node;
+    var note: Node|undefined;
     if (state.activeNodeID === undefined) return <></>;
 
 
     switch (state.activeCollection) {
         case Collections.RecentlyDeleted: {
-            note = ensure(graph.deletedNodes.find(node => node.id === state.activeNodeID));
+            note = graph.deletedNodes.find(node => node.id === state.activeNodeID);
             break;
         }
         default: {
-            note = ensure(graph.nodes.find(node => node.id === state.activeNodeID))
+            note = graph.nodes.find(node => node.id === state.activeNodeID)
             break;
         }
     }
 
-    return <NoteEditor
-        darkModeOn={state.darkModeOn}
-        note={note} //https://stackoverflow.com/a/54738437/21646295
-        onBlur={(note: Node) => {
+    return note ? (
+        <NoteEditor
+            darkModeOn={state.darkModeOn}
+            note={note} //https://stackoverflow.com/a/54738437/21646295
+            onBlur={(note: Node) => {
 
-            // debugger;
-            if(note.content.length !== 0)
-            {
-                graphDispatch({
-                    type: GraphActionType.updateNode,
-                    node: note
-                })
-            }else{
+                // debugger;
+                if(note.content.length !== 0)
+                {
+                    graphDispatch({
+                        type: GraphActionType.updateNode,
+                        node: note
+                    })
+                }else{
 
-                dispatch({
-                    type:AppActionType.setActiveNodeID,
-                    id: undefined
-                })
-                graphDispatch({
-                    type: GraphActionType.removeNode,
-                    id: note.id
-                })
-
-
-            }
-
-        }}
-        onEditAttempt={state.activeCollection === Collections.RecentlyDeleted ? ()=>{
-            // alert("hey! locked!")
-            dispatch({type: AppActionType.setShowRecoverNodePopup, show: true})
-        } : () => {
-        }}
-        locked={state.activeCollection === Collections.RecentlyDeleted}
-    />
+                    dispatch({
+                        type:AppActionType.setActiveNodeID,
+                        id: undefined
+                    })
+                    graphDispatch({
+                        type: GraphActionType.removeNode,
+                        id: note.id
+                    })
 
 
+                }
 
-
+            }}
+            onEditAttempt={state.activeCollection === Collections.RecentlyDeleted ? ()=>{
+                // alert("hey! locked!")
+                dispatch({type: AppActionType.setShowRecoverNodePopup, show: true})
+            } : () => {
+            }}
+            locked={state.activeCollection === Collections.RecentlyDeleted}
+        />
+    ) : <></>
 
 }
