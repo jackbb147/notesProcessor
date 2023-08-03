@@ -5,22 +5,37 @@ export function Overlay({children, handleClick=()=>{}}:{
     handleClick?: (e: React.MouseEvent)=> any
 }) {
     return (
-        <div
-            className={(`
+        <>
+            <div
+                className={(`
                 w-full
                 h-full
                 absolute
                 left-0
                 top-0
-                bg-selectedItem-2
+                bg-dark_overlay
+                opacity-60
+                z-10
+            `)}
+
+            >
+            </div>
+
+            <div className={`
+                absolute
+                w-full
+                h-full
                 flex
                 flex-col
                 justify-center
-                z-10
-            `)}
-            onClick={handleClick}
-        >
-            {children}
-        </div>
+                z-20
+            `}
+                 onClick={handleClick}
+            >
+                {children}
+            </div>
+
+        </>
+
     )
 }
