@@ -29,7 +29,10 @@ export function LabelSelectorPopUp()
 
             case "remove-value":
             {
-
+                graphDispatch({
+                    type: GraphActionType.removeLabel,
+                    label: action.removedValue.label
+                })
                 break;
             }
         }

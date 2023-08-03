@@ -99,6 +99,11 @@ export function graphReducer(draft:GraphState, action:GraphAction):void
             if(index < 0) return;
 
             draft.labels.splice(index,1);
+            draft.nodes.forEach(node=>{
+                let index = node.labels.indexOf(action.label);
+                if(index < 0) return;
+                node.labels.splice(index, 1);
+            })
             break;
         }
 
