@@ -1,5 +1,6 @@
 import {Button} from "../ui/Button";
 import {ListItem} from "./ListItem";
+import {useDispatch, useState} from "../../reducers/hooks";
 import {AppActionType, Collections} from "../../reducers/AppStateReducer";
 import React, {useContext} from "react";
 import {AppStateContext, AppStateDispatchContext} from "../../reducers/AppStateContext";
@@ -7,8 +8,8 @@ import {GraphContext, GraphDispatchContext} from "../../reducers/GraphContext";
 
 export function FolderPanelContent()
 {
-    const state = useContext(AppStateContext);
-    const dispatch = useContext(AppStateDispatchContext);
+    const state = useState();
+    const dispatch = useDispatch();
 
     const graph = useContext(GraphContext);
     const graphDispatch = useContext(GraphDispatchContext);
@@ -19,8 +20,15 @@ export function FolderPanelContent()
 
     function handleDarkModeTogglerClick()
     {
-        if(dispatch === null) throw Error("dispatch is null")
         dispatch({type: AppActionType.toggleDarkMode})
+    }
+
+    function handleCreateEditLabelClick()
+    {
+        dispatch({
+            type: AppActionType.setShowLabelSelectorPopup,
+            show: true
+        })
     }
 
 
@@ -109,6 +117,7 @@ delete
 
                 <ListItem text={"Create/Edit Labels"}
                           iconOnly={state.LabelPanelClosed}
+                          onClick={handleCreateEditLabelClick}
                           icon={<span className="material-symbols-outlined">
 add_circle
 </span>}
