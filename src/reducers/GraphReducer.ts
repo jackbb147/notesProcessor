@@ -7,7 +7,7 @@ export enum GraphActionType
     recoverNode,
     addLabel,
     removeLabel,
-
+    addLabelToNode,
 }
 
 export type GraphAction =
@@ -17,6 +17,7 @@ export type GraphAction =
     | {type: GraphActionType.recoverNode, id: string}
     | {type: GraphActionType.addLabel, label:string}
     | {type: GraphActionType.removeLabel, label:string}
+    | {type: GraphActionType.addLabelToNode, label: string, id: string}
 
 export interface Node
 {
@@ -98,6 +99,17 @@ export function graphReducer(draft:GraphState, action:GraphAction):void
             if(index < 0) return;
 
             draft.labels.splice(index,1);
+            break;
+        }
+
+        case GraphActionType.addLabelToNode:
+        {
+            // TODO
+            let index = draft.nodes.findIndex(node=>node.id === action.id);
+            if(index < 0) return;
+            if(draft.nodes[index].labels.includes(action.label)) return;
+            if(!draft.labels.includes(action.label)) return;
+            draft.nodes[index].labels.push(action.label);
             break;
         }
     }

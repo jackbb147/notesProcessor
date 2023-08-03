@@ -13,6 +13,7 @@ import {LastEditedWhen} from "./LastEditedWhen";
 import {ActionMeta, Options} from "react-select";
 import {useGraph, useGraphDispatch} from "../../reducers/hooks";
 
+
 function QuillBoxComponent({val, handleBlur, onFinishSetup, onTouchStart, isReadOnly = false, onEditAttempt=()=>{}, darkModeOn=false}:{
     val: string,
     handleBlur: (s:string, firstLine?:string)=>any,
@@ -321,6 +322,14 @@ export function NoteEditor({
                     type: GraphActionType.addLabel,
                     label: action.option.label
                 })
+
+                graphDispatch({
+                    type: GraphActionType.addLabelToNode,
+                    label: action.option.label,
+                    id: note.id
+                })
+
+
                 break;
             }
 
