@@ -113,7 +113,7 @@ delete
                 <EditLabelsButton/>
                 {/*<UploadButton/>*/}
                 {/*<DownloadButton/>*/}
-                <AccountButton/>
+                {/*<AccountButton/>*/}
                 <SettingsButton ref={settingsButtonRef}/>
                 <OutsideAlerter
                     condition={SettingPanelOutsideClickCondition}
