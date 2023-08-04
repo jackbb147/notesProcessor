@@ -86,7 +86,7 @@ export function NotesPanelContent({collection}:{collection:Node[]})
 
     function buildOptionalText(node:Node):string
     {
-        if(!node.dateLastModified)
+        if(!node.dateLastModified || !node.dateLastModified.getHours || !node.dateLastModified.getMinutes)
         {
             return ""
         }
