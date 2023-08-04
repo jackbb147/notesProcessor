@@ -86,8 +86,13 @@ export function graphReducer(draft:GraphState, action:GraphAction):void
             console.log(`trying to recover: ${action.id}`)
             let index = draft.deletedNodes.findIndex(node=>node.id === action.id);
             if(index < 0) return;
-            draft.nodes.push(draft.deletedNodes[index]);
-            draft.deletedNodes.splice(index, 1);
+            if(draft.nodes.findIndex(node=>node.id ===action.id) < 0) {
+                draft.nodes.push(draft.deletedNodes[index])
+                draft.deletedNodes.splice(index, 1);
+            }else
+            {
+                alert("Node with specified ID already exists. ");
+            }
             break;
         }
 
