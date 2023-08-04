@@ -7,6 +7,7 @@ import {AppStateContext, AppStateDispatchContext} from "../../reducers/AppStateC
 import {GraphContext, GraphDispatchContext} from "../../reducers/GraphContext";
 import {LightModeButton} from "./Buttons/LightModeButton";
 import {EditLabelsButton} from "./Buttons/EditLabelsButton";
+import {UploadButton} from "./Buttons/UploadButton";
 
 export function FolderPanelContent()
 {
@@ -19,20 +20,6 @@ export function FolderPanelContent()
 
     if(dispatch === null || state === null) throw Error("state or dispatch is null. ");
     if(graph === null || graphDispatch === null) throw Error("graph or graphDispatch is null. ");
-
-    function handleDarkModeTogglerClick()
-    {
-        dispatch({type: AppActionType.toggleDarkMode})
-    }
-
-    function handleCreateEditLabelClick()
-    {
-        dispatch({
-            type: AppActionType.setShowLabelSelectorPopup,
-            show: true
-        })
-    }
-
 
 
     return <>
@@ -108,9 +95,8 @@ delete
 
             <div className={"mt-auto"}>
                 <LightModeButton/>
-
-
                 <EditLabelsButton/>
+                <UploadButton/>
             </div>
 
         </>
