@@ -11,6 +11,8 @@ import {AnimatedListItem} from "./AnimatedListItem";
 import {useSpring, Transition} from "@react-spring/web";
 import {useDispatch, useAppState} from "../../reducers/hooks";
 import {DeleteButton} from "./Buttons/DeleteButton";
+import {ListViewButton} from "./Buttons/ListViewButton";
+import {GridViewButton} from "./Buttons/GridViewButton";
 
 const NoNotesDisplayID = "none"
 const MyComponent = (styles:any) => <div style={styles}>hello</div>
@@ -115,12 +117,8 @@ export function NotesPanelContent({collection}:{collection:Node[]})
     return <>
         <div className={"w-full h-full flex flex-col "}>
             <div className={"top-bar h-12 flex items-center"}>
-                <Button icon={<span className="material-symbols-outlined">
-list
-</span>}></Button>
-                <Button icon={<span className="material-symbols-outlined">
-grid_view
-</span>}></Button>
+                <ListViewButton/>
+                <GridViewButton/>
                 <DeleteButton/>
             </div>
 
