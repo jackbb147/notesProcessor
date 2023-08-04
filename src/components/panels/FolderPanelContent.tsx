@@ -8,6 +8,7 @@ import {GraphContext, GraphDispatchContext} from "../../reducers/GraphContext";
 import {LightModeButton} from "./Buttons/LightModeButton";
 import {EditLabelsButton} from "./Buttons/EditLabelsButton";
 import {UploadButton} from "./Buttons/UploadButton";
+import {DownloadButton} from "./Buttons/DownloadButton";
 
 export function FolderPanelContent()
 {
@@ -97,6 +98,7 @@ delete
                 <LightModeButton/>
                 <EditLabelsButton/>
                 <UploadButton/>
+                <DownloadButton/>
             </div>
 
         </>
