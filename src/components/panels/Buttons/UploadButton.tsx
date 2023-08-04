@@ -1,20 +1,45 @@
 import {useDispatch, useAppState} from "../../../reducers/hooks";
 import {ListItem} from "../ListItem";
-import React from "react";
+import React, {useEffect, useRef} from "react";
+import {useUpload} from "../../../useUpload";
 
 export function UploadButton()
 {
     const state =useAppState()
     const dispatch = useDispatch()
+    const ref = useRef<any>(null)
+    const inputRef = useRef<any>(null)
 
+
+
+    function handleClick()
+    {
+        if(!inputRef || !inputRef.current)
+        {
+            console.error("input not ready.")
+            return;
+        }
+        inputRef.current.click();
+
+    }
 
     return (
-        <ListItem text={"Upload Notes"}
-                  iconOnly={state.LabelPanelClosed}
-                  // onClick={handleCreateEditLabelClick}
-                  icon={<span className="material-symbols-outlined">
+            <>
+                <ListItem
+                    ref={ref}
+                    text={"Upload Notes"}
+                    iconOnly={state.LabelPanelClosed}
+                    onClick={handleClick}
+                    icon={<span className="material-symbols-outlined">
 upload
 </span>}
-        ></ListItem>
+                ></ListItem>
+                <input style={{
+                    display: "none"
+                }}
+                       ref={inputRef}
+                       type={"file"}/>
+            </>
+
     )
 }

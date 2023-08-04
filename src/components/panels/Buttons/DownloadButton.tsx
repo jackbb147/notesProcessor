@@ -12,7 +12,6 @@ export function DownloadButton()
 
 
     function handleClick (){
-
         download("my notes" ,JSON.stringify(graph,null, "\t"));
     }
 
