@@ -9,6 +9,7 @@ import {LightModeButton} from "./Buttons/LightModeButton";
 import {EditLabelsButton} from "./Buttons/EditLabelsButton";
 import {UploadButton} from "./Buttons/UploadButton";
 import {DownloadButton} from "./Buttons/DownloadButton";
+import {SettingsButton} from "./Buttons/SettingsButton";
 
 export function FolderPanelContent()
 {
@@ -99,6 +100,7 @@ delete
                 <EditLabelsButton/>
                 <UploadButton/>
                 <DownloadButton/>
+                <SettingsButton/>
             </div>
 
         </>
