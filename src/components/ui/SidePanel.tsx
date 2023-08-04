@@ -56,8 +56,8 @@ export function SidePanel(
 
             <div className={"sidePanel h-full flex relative dark:border-inherit"} style={{
                 width : sidePanelWidth,
-                minWidth: ".5rem",
-                maxWidth: "50%"
+                minWidth: "fit-content",
+                maxWidth: "50%",
             }}>
                 <div className={"sidePanel__left w-full h-full"}>
                     <div className={"w-full h-full  flex flex-col pl-3 pr-4 relative"}>

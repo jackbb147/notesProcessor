@@ -12,6 +12,11 @@ export function LightModeButton()
     function handleDarkModeTogglerClick()
     {
         dispatch({type: AppActionType.toggleDarkMode})
+
+        // { // @ts-ignore
+        //     document.querySelector('meta[name="theme-color"]').setAttribute('content', 'transparent');
+        // }
+
     }
 
 
