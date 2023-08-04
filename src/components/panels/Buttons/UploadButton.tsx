@@ -15,6 +15,7 @@ export function UploadButton()
     async function handleClick()
     {
         let obj = await upload() as GraphState;
+        console.log(`got this object: ${obj}`)
         debugger;
         graphDispatch({
             type: GraphActionType.merge,
