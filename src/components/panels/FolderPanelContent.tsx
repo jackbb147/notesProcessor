@@ -6,6 +6,7 @@ import React, {useContext} from "react";
 import {AppStateContext, AppStateDispatchContext} from "../../reducers/AppStateContext";
 import {GraphContext, GraphDispatchContext} from "../../reducers/GraphContext";
 import {LightModeButton} from "./Buttons/LightModeButton";
+import {EditLabelsButton} from "./Buttons/EditLabelsButton";
 
 export function FolderPanelContent()
 {
@@ -109,14 +110,7 @@ delete
                 <LightModeButton/>
 
 
-                <ListItem text={"Create/Edit Labels"}
-                          iconOnly={state.LabelPanelClosed}
-                          onClick={handleCreateEditLabelClick}
-                          icon={<span className="material-symbols-outlined">
-add_circle
-</span>}
-
-                ></ListItem>
+                <EditLabelsButton/>
             </div>
 
         </>
