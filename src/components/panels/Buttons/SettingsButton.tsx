@@ -1,12 +1,13 @@
 import {useDispatch, useState} from "../../../reducers/hooks";
 import {ListItem} from "../ListItem";
-import React from "react";
+import React, {forwardRef} from "react";
 import {AppActionType} from "../../../reducers/AppStateReducer";
 
-export function SettingsButton()
+export const SettingsButton= forwardRef((props, ref) =>
 {
     const state =useState()
     const dispatch = useDispatch()
+
 
 
     function handleClick()
@@ -17,7 +18,9 @@ export function SettingsButton()
         })
     }
     return (
-        <ListItem text={`Settings`}
+        <ListItem
+                ref={ref}
+                    text={`Settings`}
                   onClick={handleClick}
                   iconOnly={state.LabelPanelClosed}
                   icon={<span className="material-symbols-outlined">
@@ -25,5 +28,4 @@ export function SettingsButton()
                     </span>}
         />
     )
-
-}
+})

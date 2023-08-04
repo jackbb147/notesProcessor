@@ -1,29 +1,39 @@
 import {Button} from "../ui/Button";
 import {ListItem} from "./ListItem";
-import {useDispatch, useState} from "../../reducers/hooks";
+import {useDispatch, useGraph, useGraphDispatch, useState} from "../../reducers/hooks";
 import {AppActionType, Collections} from "../../reducers/AppStateReducer";
-import React, {useContext} from "react";
-import {AppStateContext, AppStateDispatchContext} from "../../reducers/AppStateContext";
+import React, {useContext, useRef} from "react";
 import {GraphContext, GraphDispatchContext} from "../../reducers/GraphContext";
-import {LightModeButton} from "./Buttons/LightModeButton";
 import {EditLabelsButton} from "./Buttons/EditLabelsButton";
-import {UploadButton} from "./Buttons/UploadButton";
-import {DownloadButton} from "./Buttons/DownloadButton";
 import {SettingsButton} from "./Buttons/SettingsButton";
 import {AccountButton} from "./Buttons/AccountButton";
 import {SettingsPanel} from "./SettingsPanel";
+import OutsideAlerter from "../ui/OutsideAlerter";
 
 export function FolderPanelContent()
 {
     const state = useState();
     const dispatch = useDispatch();
 
-    const graph = useContext(GraphContext);
-    const graphDispatch = useContext(GraphDispatchContext);
+    const graph = useGraph();
+    const graphDispatch = useGraphDispatch();
 
+    const settingsButtonRef = useRef(null);
+    function handleSettingPanelOutsideClick()
+    {
+        dispatch({
+            type: AppActionType.setShowSettingsPanel,
+            show: false
+        })
+    }
 
-    if(dispatch === null || state === null) throw Error("state or dispatch is null. ");
-    if(graph === null || graphDispatch === null) throw Error("graph or graphDispatch is null. ");
+    function SettingPanelOutsideClickCondition(me: Element, target: EventTarget | null)
+    {
+        if(target === null) return;
+        let settingButton = settingsButtonRef;
+        debugger;
+
+    }
 
 
     return <>
@@ -103,16 +113,20 @@ delete
                 {/*<UploadButton/>*/}
                 {/*<DownloadButton/>*/}
                 <AccountButton/>
-                <SettingsButton/>
-                <div
-                    className={`
+                <SettingsButton ref={settingsButtonRef}/>
+                <OutsideAlerter
+                    condition={SettingPanelOutsideClickCondition}
+                    callback={handleSettingPanelOutsideClick}>
+                    <div
+                        className={`
                     absolute
                     left-full
                     bottom-0
                     z-10
                 `}>
-                    <SettingsPanel/>
-                </div>
+                        <SettingsPanel/>
+                    </div>
+                </OutsideAlerter>
 
             </div>
 
