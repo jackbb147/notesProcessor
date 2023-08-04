@@ -104,10 +104,12 @@ delete
                 {/*<DownloadButton/>*/}
                 <AccountButton/>
                 <SettingsButton/>
-                <div className={`
+                <div
+                    className={`
                     absolute
                     left-full
                     bottom-0
+                    z-10
                 `}>
                     <SettingsPanel/>
                 </div>

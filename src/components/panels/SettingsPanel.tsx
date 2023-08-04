@@ -11,8 +11,9 @@ export function SettingsPanel()
         return (
             <div className={`
                 border-2
-                ${state.darkModeOn ? 'bg-dark_secondary' : 'bg-selectedItem-2'}
-            `}>
+                ${state.darkModeOn ? 'bg-dark_secondary' : 'bg-grey'}
+            `}
+            >
                 <LightModeButton/>
                 <UploadButton/>
                 <DownloadButton/>
