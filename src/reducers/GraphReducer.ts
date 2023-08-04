@@ -1,4 +1,7 @@
 import {ImmerReducer} from "use-immer";
+
+const  _ = require('lodash');
+
 export enum GraphActionType
 {
     addNode,
@@ -124,7 +127,7 @@ export function graphReducer(draft:GraphState, action:GraphAction):void
         {
             //     TODO
             console.log(`merge fired with: ${JSON.stringify(action.other, null, 4)}`);
-
+            _.merge(draft, action.other)
         }
     }
 }

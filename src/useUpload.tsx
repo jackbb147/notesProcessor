@@ -40,8 +40,6 @@ async function getParsedObject()
                 return;
             }
 
-            debugger;
-
             try
             {
                 reader.readAsText(input.files[0]);
