@@ -1,6 +1,6 @@
 import {Button} from "../ui/Button";
 import {ListItem} from "./ListItem";
-import {useDispatch, useGraph, useGraphDispatch, useState} from "../../reducers/hooks";
+import {useDispatch, useGraph, useGraphDispatch, useAppState} from "../../reducers/hooks";
 import {AppActionType, Collections} from "../../reducers/AppStateReducer";
 import React, {useContext, useRef} from "react";
 import {GraphContext, GraphDispatchContext} from "../../reducers/GraphContext";
@@ -12,7 +12,7 @@ import OutsideAlerter from "../ui/OutsideAlerter";
 
 export function FolderPanelContent()
 {
-    const state = useState();
+    const state = useAppState();
     const dispatch = useDispatch();
 
     const graph = useGraph();

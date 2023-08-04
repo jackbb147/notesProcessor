@@ -3,7 +3,7 @@ import {AppStateContext, AppStateDispatchContext} from "./AppStateContext";
 import {GraphContext, GraphDispatchContext} from "./GraphContext";
 
 
-export function useState()
+export function useAppState()
 {
     var state = useContext(AppStateContext);
 

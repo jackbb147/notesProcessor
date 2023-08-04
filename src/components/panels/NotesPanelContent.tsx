@@ -9,7 +9,7 @@ import {GraphContext, GraphDispatchContext} from "../../reducers/GraphContext";
 import { animated ,useTransition} from '@react-spring/web'
 import {AnimatedListItem} from "./AnimatedListItem";
 import {useSpring, Transition} from "@react-spring/web";
-import {useDispatch, useState} from "../../reducers/hooks";
+import {useDispatch, useAppState} from "../../reducers/hooks";
 
 const NoNotesDisplayID = "none"
 const MyComponent = (styles:any) => <div style={styles}>hello</div>
@@ -23,7 +23,7 @@ interface ReactNodeWithID
 
 function AnimatedList({data}:{data:ReactNodeWithID[] }) {
 
-    const state =useState()
+    const state =useAppState()
     const dispatch = useDispatch();
 
 

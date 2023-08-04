@@ -1,4 +1,4 @@
-import {useGraph, useGraphDispatch, useState} from "../../reducers/hooks";
+import {useGraph, useGraphDispatch, useAppState} from "../../reducers/hooks";
 import CreatableSelect from "react-select/creatable";
 import {ActionMeta, CSSObjectWithLabel, Options} from "react-select";
 import {GraphActionType} from "../../reducers/GraphReducer";
@@ -15,7 +15,7 @@ export function LabelSelector({handleChange, labels=[], showDropDown=true}:{
     const graph = useGraph();
     const graphDispatch = useGraphDispatch();
 
-    const appState = useState();
+    const appState = useAppState();
 
     function getComponents()
     {

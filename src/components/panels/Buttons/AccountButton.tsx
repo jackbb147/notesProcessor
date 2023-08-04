@@ -1,12 +1,12 @@
 import React from "react";
 import {ListItem} from "../ListItem";
-import {useState, useDispatch} from "../../../reducers/hooks";
+import {useAppState, useDispatch} from "../../../reducers/hooks";
 import {AppActionType} from "../../../reducers/AppStateReducer";
 
 
 export function AccountButton()
 {
-    const state = useState();
+    const state = useAppState();
     const dispatch = useDispatch();
 
     function handleDarkModeTogglerClick()

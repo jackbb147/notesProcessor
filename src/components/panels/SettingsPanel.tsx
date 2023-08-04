@@ -1,11 +1,11 @@
-import {useState} from "../../reducers/hooks";
+import {useAppState} from "../../reducers/hooks";
 import {LightModeButton} from "./Buttons/LightModeButton";
 import {UploadButton} from "./Buttons/UploadButton";
 import {DownloadButton} from "./Buttons/DownloadButton";
 
 export function SettingsPanel()
 {
-    const state = useState();
+    const state = useAppState();
     if(state.showSettingsPanel)
     {
         return (

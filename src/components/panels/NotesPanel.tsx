@@ -5,14 +5,14 @@ import {SidePanel} from "../ui/SidePanel";
 import React from "react";
 import {Node} from "../../reducers/GraphReducer";
 import {Collections} from "../../reducers/AppStateReducer";
-import {useDispatch, useGraph, useGraphDispatch, useState} from "../../reducers/hooks";
+import {useDispatch, useGraph, useGraphDispatch, useAppState} from "../../reducers/hooks";
 
 export function NotesPanel({children}:{children: React.ReactNode})
 {
 
     const graph = useGraph();
     const graphDispatch = useGraphDispatch();
-    const state = useState();
+    const state = useAppState();
     const dispatch = useDispatch();
     function activeCollection() {
         if(graph===null || graphDispatch === null) throw Error("graph or graphDispatch is null. ");

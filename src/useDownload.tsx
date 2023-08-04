@@ -10,7 +10,9 @@ async function download(data:string=JSON.stringify({name: "test"}) )
         // Feature detection. The API needs to be supported
     // and the app not run in an iframe.
     const array = [data]; // an array consisting of a single string
-    const blob = new Blob(array, { type: "text/html" }); // the blob
+    const blob = new Blob(array, { type: "text/json" }); // the blob
+
+    const suggestedName = "my notes.txt"
     const supportsFileSystemAccess =
         'showSaveFilePicker' in window &&
         (() => {
@@ -25,7 +27,7 @@ async function download(data:string=JSON.stringify({name: "test"}) )
         try {
             // Show the file save dialog.
             const handle = await window.showSaveFilePicker({
-                suggestedName: "my notes"
+                suggestedName: suggestedName
             });
             // Write the blob to the file.
             const writable = await handle.createWritable();
@@ -46,7 +48,7 @@ async function download(data:string=JSON.stringify({name: "test"}) )
     // Create the `<a download>` element and append it invisibly.
     const a = document.createElement('a');
     a.href = blobURL;
-    a.download = "test";
+    a.download = suggestedName;
     a.style.display = 'none';
     document.body.append(a);
     // Programmatically click the element.

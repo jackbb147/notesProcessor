@@ -1,11 +1,11 @@
 import {ListItem} from "../ListItem";
 import React from "react";
-import {useState, useDispatch} from "../../../reducers/hooks";
+import {useAppState, useDispatch} from "../../../reducers/hooks";
 import {AppActionType} from "../../../reducers/AppStateReducer";
 
 export function EditLabelsButton()
 {
-    const state =useState()
+    const state =useAppState()
     const dispatch = useDispatch()
 
 

@@ -1,6 +1,6 @@
 import {LabelSelector} from "./editor/LabelSelector";
 import {Overlay} from "./Overlay";
-import {useDispatch, useGraph, useGraphDispatch, useState} from "../reducers/hooks";
+import {useDispatch, useGraph, useGraphDispatch, useAppState} from "../reducers/hooks";
 import {ActionMeta, Options} from "react-select";
 import {AppActionType} from "../reducers/AppStateReducer";
 import {GraphActionType} from "../reducers/GraphReducer";
@@ -8,7 +8,7 @@ import {GraphActionType} from "../reducers/GraphReducer";
 export function LabelSelectorPopUp()
 {
 
-    const state = useState();
+    const state = useAppState();
     const dispatch = useDispatch();
 
     const graph = useGraph();
