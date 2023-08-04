@@ -5,6 +5,7 @@ import {AppActionType, Collections} from "../../reducers/AppStateReducer";
 import React, {useContext} from "react";
 import {AppStateContext, AppStateDispatchContext} from "../../reducers/AppStateContext";
 import {GraphContext, GraphDispatchContext} from "../../reducers/GraphContext";
+import {LightModeButton} from "./Buttons/LightModeButton";
 
 export function FolderPanelContent()
 {
@@ -105,14 +106,7 @@ delete
 
 
             <div className={"mt-auto"}>
-                <ListItem text={`${state.darkModeOn ? "Light" : "Dark"} Mode`}
-                          onClick={handleDarkModeTogglerClick}
-                          iconOnly={state.LabelPanelClosed}
-                          icon={<span className="material-symbols-outlined">
-    light_mode
-    </span>}
-
-                ></ListItem>
+                <LightModeButton/>
 
 
                 <ListItem text={"Create/Edit Labels"}
