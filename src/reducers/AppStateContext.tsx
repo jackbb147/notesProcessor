@@ -1,4 +1,4 @@
-import React,{ createContext, useReducer,  } from 'react';
+import React,{ createContext } from 'react';
 import {useImmerReducer} from "use-immer";
 import {AppAction, AppState, AppStateReducer, Collections} from "./AppStateReducer";
 
@@ -17,7 +17,7 @@ export function AppStateProvider({ children}:{children: React.ReactNode}) {
         darkModeOn: true,
         activeLabel: undefined,
         showLabelSelectorPopup: false,
-        showSettingsPanel: true
+        showSettingsPanel: false
     });
 
     return (
