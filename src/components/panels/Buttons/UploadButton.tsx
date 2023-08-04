@@ -10,13 +10,19 @@ export function UploadButton()
     const ref = useRef<any>(null)
     const upload = useUpload()
 
+    async function handleClick()
+    {
+        let obj = await upload();
+        debugger;
+    }
+
     return (
             <>
                 <ListItem
                     ref={ref}
                     text={"Upload Notes"}
                     iconOnly={state.LabelPanelClosed}
-                    onClick={upload}
+                    onClick={handleClick}
                     icon={<span className="material-symbols-outlined">
                         upload
                     </span>}

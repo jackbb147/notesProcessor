@@ -1,36 +1,35 @@
 
-
-async function read(input: HTMLElement)
+/**
+ * inspired by:
+ * https://stackoverflow.com/questions/38252194/how-can-i-convert-an-onload-promise-into-async-await
+ */
+async function getGraph(input: HTMLInputElement)
 {
-    //     TODO
-
-    input.click();
-
-}
-
-function handleInputChange(this: any)
-{
-
-    if(!this || !this.files)
-    {
-        console.error("input element corrupted. ")
-        return;
-    }
 
     const reader = new FileReader();
-    reader.onload = (e)=>{
+    input.onchange = function( me:any)
+    {
 
-        if (typeof reader.result !== "string") {
-            alert(" There's something wrong with the file you uploaded :( ")
+        if(!input.files)
+        {
+            console.error(" 'files' property does not exist on input element ")
             return;
         }
-
-        const obj = JSON.parse(reader.result);
-        debugger;
-
+        reader.readAsText(input.files[0]);
     }
 
-    reader.readAsText(this.files[0]);
+    return new Promise<object>((resolve, reject)=>{
+        input.click();
+        reader.onload = (e)=>{
+            if (typeof reader.result !== "string") {
+                alert(" There's something wrong with the file you uploaded :( ")
+                return;
+            }
+
+            const obj = JSON.parse(reader.result);
+            resolve(obj);
+        }
+    })
 }
 
 
@@ -40,10 +39,10 @@ export function useUpload()
     const input = document.createElement("input");
     input.type = "file";
     input.style.display = "none";
-    input.onchange = handleInputChange;
     document.body.append(input);
+
     return ()=>{
-        read(input)
+        return getGraph(input);
     }
 }
 
