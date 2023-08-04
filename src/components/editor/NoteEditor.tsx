@@ -119,10 +119,10 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onTouchStart, isRead
             placeholder: "Type something...",
             modules:{
                 toolbar:toolbarOptions,
-                MathEditorModule: {},
-                keyboard: {
-                    bindings: MathEditorModule.getBindings()
-                }
+                // MathEditorModule: {},
+                // keyboard: {
+                //     bindings: MathEditorModule.getBindings()
+                // }
             },
             readOnly: isReadOnly
         })
