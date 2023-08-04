@@ -108,7 +108,6 @@ delete
                     absolute
                     left-full
                     bottom-0
-                    border-2
                 `}>
                     <SettingsPanel/>
                 </div>

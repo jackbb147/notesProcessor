@@ -16,7 +16,8 @@ export function AppStateProvider({ children}:{children: React.ReactNode}) {
         showRecoverNodePopup: false,
         darkModeOn: true,
         activeLabel: undefined,
-        showLabelSelectorPopup: false
+        showLabelSelectorPopup: false,
+        showSettingsPanel: true
     });
 
     return (
