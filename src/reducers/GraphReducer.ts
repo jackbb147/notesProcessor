@@ -12,6 +12,7 @@ export enum GraphActionType
     removeLabel,
     addLabelToNode,
     merge,
+    permanentRemoveNode,
 }
 
 export type GraphAction =
@@ -23,6 +24,7 @@ export type GraphAction =
     | {type: GraphActionType.removeLabel, label:string}
     | {type: GraphActionType.addLabelToNode, label: string, id: string}
     | {type: GraphActionType.merge, other: GraphState}
+    | {type: GraphActionType.permanentRemoveNode, id: string}
 
 export interface Node
 {
@@ -120,6 +122,20 @@ export function graphReducer(draft:GraphState, action:GraphAction):void
             if(draft.nodes[index].labels.includes(action.label)) return;
             if(!draft.labels.includes(action.label)) return;
             draft.nodes[index].labels.push(action.label);
+            break;
+        }
+
+        case GraphActionType.permanentRemoveNode:
+        {
+            const index1 = draft.nodes.findIndex(node=>node.id === action.id)
+            const index2 = draft.deletedNodes.findIndex(node=>node.id === action.id)
+            if(index1 >= 0)
+            {
+                draft.nodes.splice(index1, 1);
+            }else if(index2 >= 0)
+            {
+             draft.nodes.splice(index2, 1);
+            }
             break;
         }
 
