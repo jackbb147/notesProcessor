@@ -8,6 +8,7 @@ export enum GraphActionType
     addLabel,
     removeLabel,
     addLabelToNode,
+    merge,
 }
 
 export type GraphAction =
@@ -18,6 +19,7 @@ export type GraphAction =
     | {type: GraphActionType.addLabel, label:string}
     | {type: GraphActionType.removeLabel, label:string}
     | {type: GraphActionType.addLabelToNode, label: string, id: string}
+    | {type: GraphActionType.merge, other: GraphState}
 
 export interface Node
 {
@@ -116,6 +118,13 @@ export function graphReducer(draft:GraphState, action:GraphAction):void
             if(!draft.labels.includes(action.label)) return;
             draft.nodes[index].labels.push(action.label);
             break;
+        }
+
+        case GraphActionType.merge:
+        {
+            //     TODO
+            console.log(`merge fired with: ${JSON.stringify(action.other, null, 4)}`);
+
         }
     }
 }

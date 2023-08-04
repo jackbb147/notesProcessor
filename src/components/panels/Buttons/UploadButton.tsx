@@ -1,19 +1,25 @@
-import {useDispatch, useAppState} from "../../../reducers/hooks";
+import {useAppState, useDispatch, useGraphDispatch} from "../../../reducers/hooks";
 import {ListItem} from "../ListItem";
-import React, {useEffect, useRef} from "react";
+import React, {useRef} from "react";
 import {useUpload} from "../../../useUpload";
+import {GraphActionType, GraphState} from "../../../reducers/GraphReducer";
 
 export function UploadButton()
 {
     const state =useAppState()
     const dispatch = useDispatch()
+    const graphDispatch = useGraphDispatch();
     const ref = useRef<any>(null)
     const upload = useUpload()
 
     async function handleClick()
     {
-        let obj = await upload();
+        let obj = await upload() as GraphState;
         debugger;
+        graphDispatch({
+            type: GraphActionType.merge,
+            other: obj
+        })
     }
 
     return (
