@@ -18,7 +18,7 @@ export function FolderPanelContent()
     const graph = useGraph();
     const graphDispatch = useGraphDispatch();
 
-    const settingsButtonRef = useRef(null);
+    const settingsButtonRef = useRef<any>(null);
     function handleSettingPanelOutsideClick()
     {
         dispatch({
@@ -30,9 +30,10 @@ export function FolderPanelContent()
     function SettingPanelOutsideClickCondition(me: Element, target: EventTarget | null)
     {
         if(target === null) return;
-        let settingButton = settingsButtonRef;
-        debugger;
+        let settingsButton = settingsButtonRef.current;
 
+        if( settingsButton !== null && settingsButton.contains(target)) return false;
+        return true;
     }
 
 
