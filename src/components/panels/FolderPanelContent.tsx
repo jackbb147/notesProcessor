@@ -97,7 +97,7 @@ delete
             ></ListItem>
 
 
-            <div className={"mt-auto relative"}>
+            <div className={"mt-auto"}>
                 {/*<LightModeButton/>*/}
                 <EditLabelsButton/>
                 {/*<UploadButton/>*/}

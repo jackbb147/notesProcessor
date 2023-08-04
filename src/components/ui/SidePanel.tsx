@@ -60,7 +60,7 @@ export function SidePanel(
                 maxWidth: "50%"
             }}>
                 <div className={"sidePanel__left w-full h-full overflow-hidden"}>
-                    <div className={"w-full h-full  flex flex-col pl-3 pr-4"}>
+                    <div className={"w-full h-full  flex flex-col pl-3 pr-4 relative"}>
                         {panelChildren}
                     </div>
 
