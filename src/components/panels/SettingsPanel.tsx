@@ -10,8 +10,14 @@ export function SettingsPanel()
     {
         return (
             <div className={`
-                border-2
                 ${state.darkModeOn ? 'bg-dark_secondary' : 'bg-grey'}
+                p-1
+                pb-0
+                pl-1.5
+                pr-1.5
+                border 
+                border-neutral-100
+                border-opacity-25
             `}
             >
                 <LightModeButton/>
