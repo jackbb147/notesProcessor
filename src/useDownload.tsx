@@ -10,7 +10,7 @@ async function download(suggestedName="my notes",data:string )
         // Feature detection. The API needs to be supported
     // and the app not run in an iframe.
     const array = [data]; // an array consisting of a single string
-    const blob = new Blob(array, { type: "text/json" }); // the blob
+    const blob = new Blob(array, { type: "application/json" }); // the blob
 
     suggestedName += ".txt";
     const supportsFileSystemAccess =

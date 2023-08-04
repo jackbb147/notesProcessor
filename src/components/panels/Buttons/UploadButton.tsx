@@ -20,7 +20,30 @@ export function UploadButton()
             return;
         }
         inputRef.current.click();
+    }
 
+    function handleInputChange(this: any)
+    {
+        let that:React.ReactNode = this;
+        if(!inputRef ||  !inputRef.current || !inputRef.current.files)
+        {
+            console.error("input ref not ready, or no file property. ")
+        }
+
+        const reader = new FileReader();
+        reader.onload = (e)=>{
+
+            if (typeof reader.result !== "string") {
+                alert(" There's something wrong with the file you uploaded :( ")
+                return;
+            }
+
+            const obj = JSON.parse(reader.result);
+            debugger;
+
+        }
+
+        reader.readAsText(inputRef.current.files[0]);
     }
 
     return (
@@ -38,6 +61,7 @@ upload
                     display: "none"
                 }}
                        ref={inputRef}
+                       onChange={handleInputChange}
                        type={"file"}/>
             </>
 

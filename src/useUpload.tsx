@@ -9,7 +9,9 @@ function read(fileContent: string)
 
 
 
+
 export function useUpload()
 {
+
     return read;
 }
