@@ -10,6 +10,8 @@ import {EditLabelsButton} from "./Buttons/EditLabelsButton";
 import {UploadButton} from "./Buttons/UploadButton";
 import {DownloadButton} from "./Buttons/DownloadButton";
 import {SettingsButton} from "./Buttons/SettingsButton";
+import {AccountButton} from "./Buttons/AccountButton";
+import {SettingsPanel} from "./SettingsPanel";
 
 export function FolderPanelContent()
 {
@@ -95,13 +97,24 @@ delete
             ></ListItem>
 
 
-            <div className={"mt-auto"}>
-                <LightModeButton/>
+            <div className={"mt-auto relative"}>
+                {/*<LightModeButton/>*/}
                 <EditLabelsButton/>
-                <UploadButton/>
-                <DownloadButton/>
+                {/*<UploadButton/>*/}
+                {/*<DownloadButton/>*/}
+                <AccountButton/>
                 <SettingsButton/>
+                <div className={`
+                    absolute
+                    left-full
+                    bottom-0
+                    border-2
+                `}>
+                    <SettingsPanel/>
+                </div>
+
             </div>
+
 
         </>
 }
