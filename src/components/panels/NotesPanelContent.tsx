@@ -10,6 +10,7 @@ import { animated ,useTransition} from '@react-spring/web'
 import {AnimatedListItem} from "./AnimatedListItem";
 import {useSpring, Transition} from "@react-spring/web";
 import {useDispatch, useAppState} from "../../reducers/hooks";
+import {DeleteButton} from "./Buttons/DeleteButton";
 
 const NoNotesDisplayID = "none"
 const MyComponent = (styles:any) => <div style={styles}>hello</div>
@@ -120,20 +121,7 @@ list
                 <Button icon={<span className="material-symbols-outlined">
 grid_view
 </span>}></Button>
-                <Button
-                    icon={<span className="material-symbols-outlined">
-delete
-</span>}
-                    rootClassName={"ml-auto"}
-                    onClick={() => {
-                        if (state.activeNodeID !== undefined) {
-                            graphDispatch({type: GraphActionType.removeNode, id: state.activeNodeID})
-                            dispatch({type: AppActionType.setActiveNodeID, id: undefined})
-                            console.log(graph.nodes)
-
-                        }
-                    }}
-                ></Button>
+                <DeleteButton/>
             </div>
 
 

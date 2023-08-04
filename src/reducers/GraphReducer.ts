@@ -148,7 +148,17 @@ export function graphReducer(draft:GraphState, action:GraphAction):void
         {
             //     TODO
             console.log(`merge fired with: ${JSON.stringify(action.other, null, 4)}`);
-            _.merge(draft, action.other)
+            let d = draft;
+            const customizer = (oV:any, sV:any) =>
+            {
+
+                debugger;
+            }
+
+            // let newDraft = _.mergeWith(draft, action.other, customizer)
+            draft.nodes = _.unionBy(action.other.nodes, draft.nodes, "id");
+            draft.labels = _.union(action.other.labels, draft.labels);
+            draft.deletedNodes = _.unionBy(draft.deletedNodes, action.other.deletedNodes, "id");
         }
     }
 }
