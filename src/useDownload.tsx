@@ -1,5 +1,5 @@
 
-async function download(data:string=JSON.stringify({name: "test"}) )
+async function download(suggestedName="my notes",data:string )
 {
 
     /**
@@ -12,7 +12,7 @@ async function download(data:string=JSON.stringify({name: "test"}) )
     const array = [data]; // an array consisting of a single string
     const blob = new Blob(array, { type: "text/json" }); // the blob
 
-    const suggestedName = "my notes.txt"
+    suggestedName += ".txt";
     const supportsFileSystemAccess =
         'showSaveFilePicker' in window &&
         (() => {

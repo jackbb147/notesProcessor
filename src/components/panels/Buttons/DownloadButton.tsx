@@ -13,7 +13,7 @@ export function DownloadButton()
 
     function handleClick (){
 
-        download(JSON.stringify(graph,null, "\t"));
+        download("my notes" ,JSON.stringify(graph,null, "\t"));
     }
 
     return (
