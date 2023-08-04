@@ -20,9 +20,11 @@ export function LightModeButton()
         <ListItem text={`${state.darkModeOn ? "Light" : "Dark"} Mode`}
                   onClick={handleDarkModeTogglerClick}
                   iconOnly={state.LabelPanelClosed}
-                  icon={<span className="material-symbols-outlined">
+                  icon={state.darkModeOn ? <span className="material-symbols-outlined">
                         light_mode
-                    </span>}
+                    </span> : <span className="material-symbols-outlined">
+dark_mode
+</span>}
         />
     )
 }
