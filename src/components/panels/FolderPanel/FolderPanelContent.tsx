@@ -1,14 +1,14 @@
-import {Button} from "../ui/Button";
-import {ListItem} from "./ListItem";
-import {useDispatch, useGraph, useGraphDispatch, useAppState} from "../../reducers/hooks";
-import {AppActionType, Collections} from "../../reducers/AppStateReducer";
+import {Button} from "../../ui/Button";
+import {ListItem} from "../ListItem";
+import {useDispatch, useGraph, useGraphDispatch, useAppState} from "../../../reducers/hooks";
+import {AppActionType, Collections} from "../../../reducers/AppStateReducer";
 import React, {useContext, useRef} from "react";
-import {GraphContext, GraphDispatchContext} from "../../reducers/GraphContext";
-import {EditLabelsButton} from "./Buttons/EditLabelsButton";
-import {SettingsButton} from "./Buttons/SettingsButton";
-import {AccountButton} from "./Buttons/AccountButton";
-import {SettingsPanel} from "./SettingsPanel";
-import OutsideAlerter from "../ui/OutsideAlerter";
+import {GraphContext, GraphDispatchContext} from "../../../reducers/GraphContext";
+import {EditLabelsButton} from "../Buttons/EditLabelsButton";
+import {SettingsButton} from "../Buttons/SettingsButton";
+import {AccountButton} from "../Buttons/AccountButton";
+import {SettingsPanel} from "../SettingsPanel";
+import OutsideAlerter from "../../ui/OutsideAlerter";
 
 export function FolderPanelContent()
 {

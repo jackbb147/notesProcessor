@@ -1,16 +1,16 @@
 import React, {useContext} from "react";
-import {AppStateContext, AppStateDispatchContext} from "../../reducers/AppStateContext";
-import {Button} from "../ui/Button";
-import {GraphActionType, Node} from "../../reducers/GraphReducer";
-import {AppActionType, Collections} from "../../reducers/AppStateReducer";
+import {AppStateContext, AppStateDispatchContext} from "../../../reducers/AppStateContext";
+import {Button} from "../../ui/Button";
+import {GraphActionType, Node} from "../../../reducers/GraphReducer";
+import {AppActionType, Collections} from "../../../reducers/AppStateReducer";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
-import {ListItem} from "./ListItem";
-import {GraphContext, GraphDispatchContext} from "../../reducers/GraphContext";
+import {ListItem} from "../ListItem";
+import {GraphContext, GraphDispatchContext} from "../../../reducers/GraphContext";
 import { animated ,useTransition} from '@react-spring/web'
-import {AnimatedListItem} from "./AnimatedListItem";
+import {AnimatedListItem} from "../AnimatedListItem";
 import {useSpring, Transition} from "@react-spring/web";
-import {useDispatch, useAppState} from "../../reducers/hooks";
-import {DeleteButton} from "./Buttons/DeleteButton";
+import {useDispatch, useAppState} from "../../../reducers/hooks";
+import {DeleteButton} from "../Buttons/DeleteButton";
 
 const NoNotesDisplayID = "none"
 const MyComponent = (styles:any) => <div style={styles}>hello</div>

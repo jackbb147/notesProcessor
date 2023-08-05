@@ -16,11 +16,11 @@ function SideBar({width, children, handleResize}:{
             flex 
             relative 
             dark:border-inherit
+            w-full
             `} style={{
-                width: width,
-            // width : sidePanelWidth,
+            // width: width,
             minWidth: "fit-content",
-            maxWidth: "50%",
+            // maxWidth: "50%",
         }}>
             <div className={"sidePanel__left w-full h-full"}>
                 <div className={"w-full h-full  flex flex-col pl-3 pr-4 relative"}>
@@ -43,7 +43,7 @@ function Main({width, children}:{width: string, children: React.ReactNode})
 {
     return (
         <div className={"  h-full grow"} style={{
-            width: width
+            width: "0px"
             // width: `calc(100% - ${sidePanelWidth})`
         }}>
             {children}
@@ -57,21 +57,19 @@ export function SidePanel(
         children,
         sideBarMinimized=false,
         sideBarClosed=false,
-
-
-
+        defaultSideBarWidth=`25%`
     }:{
         panelChildren?: React.ReactNode,
         children?: React.ReactNode,
         sideBarMinimized?:boolean,
         sideBarClosed?:boolean,
+        defaultSideBarWidth?: string
     }
-)
-{
+){
     const containerRef = useRef<any>(null)
     const [dragging, setDragging] = useState(false)
 
-    const [sidePanelWidth, setSidePanelWidth] = useState(sideBarClosed ? "0px" : (sideBarMinimized ? "fit-content" : "25%"));
+    const [sidePanelWidth, setSidePanelWidth] = useState(sideBarClosed ? "0px" : (sideBarMinimized ? "fit-content" : defaultSideBarWidth));
 
 
 

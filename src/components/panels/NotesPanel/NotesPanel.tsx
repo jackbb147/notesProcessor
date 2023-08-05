@@ -1,11 +1,11 @@
 import {NotesPanelContent} from "./NotesPanelContent";
-import {AddNodeButton} from "../AddNodeButton";
-import {EditorSwitch} from "../editor/EditorSwitch";
-import {SidePanel} from "../ui/SidePanel";
+import {AddNodeButton} from "../../AddNodeButton";
+import {EditorSwitch} from "../../editor/EditorSwitch";
+import {SidePanel} from "../../ui/SidePanel";
 import React from "react";
-import {Node} from "../../reducers/GraphReducer";
-import {Collections} from "../../reducers/AppStateReducer";
-import {useDispatch, useGraph, useGraphDispatch, useAppState} from "../../reducers/hooks";
+import {Node} from "../../../reducers/GraphReducer";
+import {Collections} from "../../../reducers/AppStateReducer";
+import {useDispatch, useGraph, useGraphDispatch, useAppState} from "../../../reducers/hooks";
 
 export function NotesPanel({children}:{children: React.ReactNode})
 {

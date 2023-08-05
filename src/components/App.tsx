@@ -9,13 +9,13 @@ import {v4 as uuid} from 'uuid';
 import {NoteEditor} from "./editor/NoteEditor";
 import {RecoverNodePopup} from "./RecoverNodePopup";
 import {AppStateContext, AppStateDispatchContext, AppStateProvider} from "../reducers/AppStateContext";
-import {FolderPanelContent} from "./panels/FolderPanelContent";
-import {NotesPanelContent} from "./panels/NotesPanelContent";
+import {FolderPanelContent} from "./panels/FolderPanel/FolderPanelContent";
+import {NotesPanelContent} from "./panels/NotesPanel/NotesPanelContent";
 import {GraphContext, GraphDispatchContext, GraphProvider} from "../reducers/GraphContext";
 import {EditorSwitch} from "./editor/EditorSwitch";
 import {AddNodeButton} from "./AddNodeButton";
-import {FolderPanel} from "./panels/FolderPanel";
-import {NotesPanel} from "./panels/NotesPanel";
+import {FolderPanel} from "./panels/FolderPanel/FolderPanel";
+import {NotesPanel} from "./panels/NotesPanel/NotesPanel";
 import {TopBar} from "./ui/TopBar";
 import {LabelSelectorPopUp} from "./LabelSelectorPopUp";
 
