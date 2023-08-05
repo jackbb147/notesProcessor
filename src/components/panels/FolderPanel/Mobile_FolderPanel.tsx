@@ -5,7 +5,7 @@ import {FolderPanelContent} from "./FolderPanelContent";
 import {Mobile_SidePanel} from "../../ui/SidePanel/Mobile/Mobile_SidePanel";
 import {NotesPanelContent} from "../NotesPanel/NotesPanelContent";
 import {AddNodeButton} from "../Buttons/AddNodeButton";
-import {EditorSwitch} from "../../editor/EditorSwitch";
+import {EditorSwitch} from "../../EditorView/EditorSwitch";
 import {GraphContext, GraphDispatchContext} from "../../../reducers/GraphContext";
 import {AppStateContext, AppStateDispatchContext} from "../../../reducers/AppStateContext";
 import {Mobile} from "../../../useMediaQuery";

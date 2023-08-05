@@ -5,13 +5,13 @@ import {AppAction, AppActionType, AppState, AppStateReducer, Collections} from "
 import {useImmerReducer} from "use-immer";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import {v4 as uuid} from 'uuid';
-import {NoteEditor} from "./editor/NoteEditor";
+import {NoteEditor} from "./EditorView/NoteEditor";
 import {RecoverNodePopup} from "./RecoverNodePopup";
 import {AppStateContext, AppStateDispatchContext, AppStateProvider} from "../reducers/AppStateContext";
 import {FolderPanelContent} from "./panels/FolderPanel/FolderPanelContent";
 import {NotesPanelContent} from "./panels/NotesPanel/NotesPanelContent";
 import {GraphContext, GraphDispatchContext, GraphProvider} from "../reducers/GraphContext";
-import {EditorSwitch} from "./editor/EditorSwitch";
+import {EditorSwitch} from "./EditorView/EditorSwitch";
 import {AddNodeButton} from "./panels/Buttons/AddNodeButton";
 import {FolderPanel} from "./panels/FolderPanel/FolderPanel";
 import {NotesPanel} from "./panels/NotesPanel/NotesPanel";

@@ -1,4 +1,4 @@
-import {LabelSelector} from "./editor/LabelSelector";
+import {LabelSelector} from "./EditorView/LabelSelector";
 import {Overlay} from "./Overlay";
 import {useDispatch, useGraph, useGraphDispatch, useAppState} from "../reducers/hooks";
 import {ActionMeta, Options} from "react-select";

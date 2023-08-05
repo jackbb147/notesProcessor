@@ -83,7 +83,7 @@ class MathEditorModule {
         this.tooltip = new MyToolTip(quill);
         this.options = options;
         this.clicked = null; // a dom node
-        this.clickedInlineTexEditor = false // whether the domNode is an inline tex editor
+        this.clickedInlineTexEditor = false // whether the domNode is an inline tex quillModules
         this.clickedBlockTexEditor = false
         this.lastClickedIndex = null;  //index of the last clicked item
 
@@ -103,7 +103,7 @@ class MathEditorModule {
             let isInlineTexEditor = isInlineTexEditBlot(clicked);
             let isBlockTexEditor = isBlockTexEditBlot(clicked) //todo
             if (!isInlineTexEditor && this.clickedInlineTexEditor) {
-                // User is clicking away from an inline tex editor...
+                // User is clicking away from an inline tex quillModules...
                 //  ;
                 let editor = getACEEditorInstance(lastClicked)
                 let formula = editor.getValue()
@@ -115,7 +115,7 @@ class MathEditorModule {
                 quill.insertEmbed(begin, 'mathbox-inline', formula, Quill.sources.USER);
                 this.tooltip.hide()
             } else if (!isBlockTexEditor && this.clickedBlockTexEditor) {
-                // User is clicking away from a block tex editor...
+                // User is clicking away from a block tex quillModules...
                 let editor = getACEEditorInstance(lastClicked)
                 let formula = editor.getValue()
                 //  ;
@@ -138,11 +138,11 @@ class MathEditorModule {
 
 
     setFontSize(){
-        // document.getElementById("editor-container").style.fontSize = EDITOR_CONTAINER_FONTSIZE
+        // document.getElementById("quillModules-container").style.fontSize = EDITOR_CONTAINER_FONTSIZE
     }
 
 
-    // for inline ace editor auto resizing
+    // for inline ace quillModules auto resizing
     // numChars: number of characters. If undefined, use renderer.characterWidth
     updateSize(e, renderer, numChars) {
         //
@@ -156,21 +156,21 @@ class MathEditorModule {
 
         // update container size
         renderer.container.style.width = width + "px";
-        // update computed size stored by the editor
+        // update computed size stored by the quillModules
         renderer.onResize(false, 0, width, renderer.$size.height);
     }
 
 
     /**
-     * insert an ACE editor at the specified index of the quill instance.
+     * insert an ACE quillModules at the specified index of the quill instance.
      * @param index
-     * @param latex the default text input to feed into the editor
+     * @param latex the default text input to feed into the quillModules
      */
     insertBlockTexEditor(index, latex) {
         let _ = this,
             quill = _.quill;
         let res = quill.insertEmbed(index, BLOCK_TEX_EDITOR_CLASSNAME, true, Quill.sources.USER);
-        // =========== editor stuff
+        // =========== quillModules stuff
         let editor = this.configureACEEditor(document.getElementsByClassName(BLOCK_TEX_EDITOR_CLASSNAME)[0], latex)
         setTimeout(function () {
             //  ;
@@ -240,7 +240,7 @@ class MathEditorModule {
         editor.setFontSize(EDITOR_CONTAINER_FONTSIZE) // todo refactor this
         editor.setTheme("ace/theme/monokai");
         editor.session.setMode("ace/mode/latex");
-        editor.focus() // Bug here. calling editor.focus resets quill selection index to 0.
+        editor.focus() // Bug here. calling quillModules.focus resets quill selection index to 0.
         if(quill.getSelection().index === 0) console.trace()
         editor.setOptions({
             showGutter: !isInline,
@@ -336,7 +336,7 @@ class MathEditorModule {
             name: 'myCommand',
             bindKey: {win: 'Ctrl-enter', mac: 'Command-enter'},
             // TODO modify this for inline
-            exec: this.getConvertEditorToMathHandler(isInline), //TODO refactor this to make sure this quill instance is the right one... especially when there is more than one quill editor in the page ...
+            exec: this.getConvertEditorToMathHandler(isInline), //TODO refactor this to make sure this quill instance is the right one... especially when there is more than one quill quillModules in the page ...
             readOnly: true, // false if this command should not apply in readOnly mode
             // multiSelectAction: "forEach", optional way to control behavior with multiple cursors
             // scrollIntoView: "cursor", control how cursor is scolled into view after the command
@@ -353,7 +353,7 @@ class MathEditorModule {
                 let value = editor.getValue()
                 console.log(value)
                 if(value.length === 0){
-                    // user wants to delete the editor box ...
+                    // user wants to delete the quillModules box ...
                     let index = quill.getSelection().index;
                     quill.deleteText(index, 1)
                     tooltip.hide()
@@ -492,7 +492,7 @@ class MathEditorModule {
          * @param editor
          */
         /**
-         * replace an editor block with a typesetted math displayer block by
+         * replace an quillModules block with a typesetted math displayer block by
          * deleting and then inserting. Also hides the tooltip.
          * @param editor
          * @param direction right, left, up, down
@@ -575,7 +575,7 @@ class MathEditorModule {
                     // alert("hey!")
                     let quill = this.quill;
                     let math_editor_module = this.quill.getModule("MathEditorModule");
-                    if (!math_editor_module) throw new Error("No math editor module instance found. ")
+                    if (!math_editor_module) throw new Error("No math quillModules module instance found. ")
                     //
                     let prefix = context.prefix;
                     let lastTwo = prefix.slice(-2);
@@ -610,7 +610,7 @@ class MathEditorModule {
                     //
                     let quill = this.quill;
                     let math_editor_module = this.quill.getModule("MathEditorModule");
-                    if (!math_editor_module) throw new Error("No math editor module instance found. ")
+                    if (!math_editor_module) throw new Error("No math quillModules module instance found. ")
                     let index = quill.getSelection().index;
                     quill.insertText(index, '$$')
                     quill.setSelection(index + 1)

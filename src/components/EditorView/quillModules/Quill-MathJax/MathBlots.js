@@ -21,7 +21,7 @@ const Scroll = Quill.import("blots/scroll")
  * Quill.register(InlineMathDisplay);
  * Quill.register('modules/MathEditorModule', MathEditorModule)
  * let enterHandler = new EnterHandlerClass();
- * let quill = new Quill('#editor-container', {
+ * let quill = new Quill('#quillModules-container', {
  *     theme: "bubble",
  *     modules:{
  *         MathEditorModule: {
@@ -103,7 +103,7 @@ class BlockMathDisplay extends MathDisplayBlot(BlockEmbed) {
      * @constructor
      */
     static MouseUpHandler(node, attr) {
-        // TODO find the math editor module instance
+        // TODO find the math quillModules module instance
         return (e) => {
             let math_editor_module = findQuill(node).getModule("MathEditorModule")
             //     ;
@@ -124,7 +124,7 @@ class InlineMathDisplay extends MathDisplayBlot(InlineEmbed) { // supposed to be
         mathNode.removeAttribute("display")
         mathNode.style["math-style"] = "normal"
         node.addEventListener('mouseup',
-            // TODO find the math editor module instance
+            // TODO find the math quillModules module instance
             () => {
                 let math_editor_module = findQuill(node).getModule("MathEditorModule")
                 math_editor_module.replaceInlineMathWithInlineEdit(node, window.quill)
@@ -170,7 +170,7 @@ class InlineTexEditor extends InlineEmbed {
         let node = super.create();
         var node_wrappernode = document.createElement("div")
 
-        node_wrappernode.classList.add("inline-editor-wrapper")
+        node_wrappernode.classList.add("inline-quillModules-wrapper")
         node.appendChild(node_wrappernode)
 
 

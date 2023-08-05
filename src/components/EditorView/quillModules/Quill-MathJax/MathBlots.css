@@ -25,7 +25,7 @@
 }
 
 /* ;*/
-/*let completer_dom_node = editor.container.getElementsByClassName("ace_autocomplete")[0] //TODO refactor this*/
+/*let completer_dom_node = quillModules.container.getElementsByClassName("ace_autocomplete")[0] //TODO refactor this*/
 
 /*
 

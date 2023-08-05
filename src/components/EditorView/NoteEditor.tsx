@@ -1,11 +1,11 @@
 import React, {useEffect, useRef, useState} from "react";
 import {Quill} from "react-quill";
-import "./quillStyle.css"
+import "./quillModules/quillStyle.css"
 
 //@ts-ignore
-import {MathEditorModule} from "./Quill-MathJax/MathEditorModule";
-import "./Quill-MathJax/quill.bubble.css"
-import "./Quill-MathJax/quill.snow.css"
+import {MathEditorModule} from "./quillModules/Quill-MathJax/MathEditorModule";
+import "./quillModules/Quill-MathJax/quill.bubble.css"
+import "./quillModules/Quill-MathJax/quill.snow.css"
 import {GraphActionType, Node} from "../../reducers/GraphReducer"
 import {RangeStatic} from "quill";
 import {LabelSelector} from "./LabelSelector";
@@ -269,7 +269,7 @@ export function NoteEditor({
                 val.classList.add("color-white")
             })
 
-            document.querySelectorAll(".ql-editor.ql-blank").forEach(val=>{
+            document.querySelectorAll(".ql-quillModules.ql-blank").forEach(val=>{
                 val.classList.add("placeholderWhite")
             })
 
@@ -291,7 +291,7 @@ export function NoteEditor({
                 val.classList.remove("color-white")
             })
 
-            document.querySelectorAll(".ql-editor.ql-blank").forEach(val=>{
+            document.querySelectorAll(".ql-quillModules.ql-blank").forEach(val=>{
                 val.classList.remove("placeholderWhite")
             })
         }
