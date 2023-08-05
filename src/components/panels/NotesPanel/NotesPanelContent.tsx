@@ -4,7 +4,7 @@ import {Button} from "../../ui/Button";
 import {GraphActionType, Node} from "../../../reducers/GraphReducer";
 import {AppActionType, Collections} from "../../../reducers/AppStateReducer";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
-import {ListItem} from "../ListItem";
+import {ListItem} from "../../Buttons/ListItem";
 import {GraphContext, GraphDispatchContext} from "../../../reducers/GraphContext";
 import { animated ,useTransition} from '@react-spring/web'
 import {AnimatedListItem} from "../AnimatedListItem";

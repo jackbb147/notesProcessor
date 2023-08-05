@@ -1,5 +1,5 @@
 import React from "react";
-import {ListItem} from "../panels/ListItem";
+import {ListItem} from "./ListItem";
 import {useAppState, useDispatch} from "../../reducers/hooks";
 import {AppActionType} from "../../reducers/AppStateReducer";
 

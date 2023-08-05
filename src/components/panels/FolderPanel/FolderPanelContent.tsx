@@ -1,5 +1,5 @@
 import {Button} from "../../ui/Button";
-import {ListItem} from "../ListItem";
+import {ListItem} from "../../Buttons/ListItem";
 import {useDispatch, useGraph, useGraphDispatch, useAppState} from "../../../reducers/hooks";
 import {AppActionType, Collections} from "../../../reducers/AppStateReducer";
 import React, {useContext, useRef} from "react";
@@ -10,6 +10,8 @@ import {AccountButton} from "../../Buttons/AccountButton";
 import {SettingsPanel} from "../SettingsPanel";
 import OutsideAlerter from "../../ui/OutsideAlerter";
 import {ToggleLabelPanelButton} from "../../Buttons/ToggleLabelPanelButton";
+import { useMediaQuery } from 'react-responsive'
+
 
 export function FolderPanelContent()
 {
@@ -20,6 +22,8 @@ export function FolderPanelContent()
     const graphDispatch = useGraphDispatch();
 
     const settingsButtonRef = useRef<any>(null);
+    const isMobile = useMediaQuery({ maxWidth: 767 })
+
     function handleSettingPanelOutsideClick()
     {
         dispatch({
@@ -35,6 +39,32 @@ export function FolderPanelContent()
 
         if( settingsButton !== null && settingsButton.contains(target)) return false;
         return true;
+    }
+
+    function handleLabelClick(label: string)
+    {
+
+        dispatch({
+            type: AppActionType.setActiveLabel,
+            label: label
+        })
+
+        dispatch({
+            type: AppActionType.setActiveNodeID,
+            id: undefined
+        })
+
+        if(isMobile)
+        {
+
+            dispatch({
+                type: AppActionType.closeLabelPanel
+            })
+        }
+
+
+
+
     }
 
 
@@ -60,6 +90,14 @@ export function FolderPanelContent()
                               type: AppActionType.setActiveNodeID,
                               id: undefined
                           })
+
+                          if(isMobile)
+                          {
+
+                              dispatch({
+                                  type: AppActionType.closeLabelPanel
+                              })
+                          }
                       }}
             ></ListItem>
 
@@ -67,17 +105,7 @@ export function FolderPanelContent()
                 text={s}
                 iconOnly={state.LabelPanelClosed}
                 active={state.activeCollection === Collections.Label && state.activeLabel === s}
-                onClick={()=>{
-                    dispatch({
-                        type: AppActionType.setActiveLabel,
-                        label: s
-                    })
-
-                    dispatch({
-                        type: AppActionType.setActiveNodeID,
-                        id: undefined
-                    })
-                }}
+                onClick={()=>handleLabelClick(s)}
                 icon={<span className="material-symbols-outlined">
                     label
                 </span>}
@@ -99,6 +127,14 @@ delete
                               dispatch({
                                   type: AppActionType.setActiveNodeID,
                                   id: undefined
+                              })
+                          }
+
+                          if(isMobile)
+                          {
+
+                              dispatch({
+                                  type: AppActionType.closeLabelPanel
                               })
                           }
                       }}

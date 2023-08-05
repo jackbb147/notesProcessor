@@ -1,4 +1,4 @@
-import {ListItem} from "../panels/ListItem";
+import {ListItem} from "./ListItem";
 import React from "react";
 import {useAppState, useDispatch} from "../../reducers/hooks";
 import {AppActionType} from "../../reducers/AppStateReducer";
