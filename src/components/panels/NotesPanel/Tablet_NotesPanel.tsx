@@ -1,5 +1,4 @@
 
-
 import {NotesPanelContent} from "./NotesPanelContent";
 
 import {Desktop_SidePanel} from "../../ui/SidePanel/Desktop/Desktop_SidePanel";
