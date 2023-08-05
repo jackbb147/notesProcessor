@@ -49,7 +49,14 @@ function AnimatedList({data}:{data:ReactNodeWithID[] }) {
 
 
 
-export function NotesPanelContent({collection}:{collection:Node[]})
+export function NotesPanelContent(
+    {   collection,
+        topBarButtons
+    }:{
+        collection:Node[],
+        topBarButtons?: React.ReactNode[]
+    }
+)
 {
     const state = useContext(AppStateContext);
     const dispatch = useContext(AppStateDispatchContext);
@@ -115,13 +122,15 @@ export function NotesPanelContent({collection}:{collection:Node[]})
     return <>
         <div className={"w-full h-full flex flex-col "}>
             <div className={"top-bar h-12 flex items-center"}>
-                <Button icon={<span className="material-symbols-outlined">
-list
-</span>}></Button>
-                <Button icon={<span className="material-symbols-outlined">
-grid_view
-</span>}></Button>
-                <DeleteButton/>
+                {topBarButtons || <>
+                    <Button icon={<span className="material-symbols-outlined">
+                        list
+                        </span>}></Button>
+                    <Button icon={<span className="material-symbols-outlined">
+                        grid_view
+                        </span>}></Button>
+                    <DeleteButton/>
+                </>}
             </div>
 
 

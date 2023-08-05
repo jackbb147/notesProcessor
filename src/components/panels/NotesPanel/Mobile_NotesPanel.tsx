@@ -10,6 +10,20 @@ import {Collections} from "../../../reducers/AppStateReducer";
 import {useDispatch, useGraph, useGraphDispatch, useAppState} from "../../../reducers/hooks";
 import {Mobile_SidePanel} from "../../ui/SidePanel/Mobile/Mobile_SidePanel";
 import {Mobile} from "../../../useMediaQuery";
+import {useActiveCollection} from "./useActiveCollection";
+import {ToggleLabelPanelButton} from "../Buttons/ToggleLabelPanelButton";
+
+
+function PanelContent()
+{
+    const activeCollection = useActiveCollection();
+    return <NotesPanelContent
+        collection={activeCollection}
+        topBarButtons={[
+            <ToggleLabelPanelButton/>
+        ]}
+    />
+}
 
 export function Mobile_NotesPanel({children}:{children: React.ReactNode})
 {
@@ -18,33 +32,12 @@ export function Mobile_NotesPanel({children}:{children: React.ReactNode})
     const graphDispatch = useGraphDispatch();
     const state = useAppState();
     const dispatch = useDispatch();
-    function activeCollection() {
-        if(graph===null || graphDispatch === null) throw Error("graph or graphDispatch is null. ");
-        if(state === null) throw Error("state is null.")
-        var collection: Node[];
-        switch (state.activeCollection) {
-            case Collections.All: {
-                collection = graph.nodes
-                console.log("collection: ", JSON.stringify(collection))
-                break;
-            }
-            case Collections.RecentlyDeleted: {
-                collection = graph.deletedNodes
-                break;
-            }
-            case Collections.Label: {
-                collection = graph.nodes.filter(node => state.activeLabel && node.labels.includes(state.activeLabel))
-                break;
-            }
-        }
 
-        return collection;
-    }
     return <>
         <div className={"dark:bg-dark_primary  dark:border-dark_primary w-full h-full "}>
 
             <Mobile_SidePanel
-                panelChildren={<NotesPanelContent collection={activeCollection()}/>}>
+                panelChildren={<PanelContent/>}>
                 {children}
             </Mobile_SidePanel>
         </div>

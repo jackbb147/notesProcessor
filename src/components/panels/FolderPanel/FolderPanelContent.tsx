@@ -9,6 +9,7 @@ import {SettingsButton} from "../Buttons/SettingsButton";
 import {AccountButton} from "../Buttons/AccountButton";
 import {SettingsPanel} from "../SettingsPanel";
 import OutsideAlerter from "../../ui/OutsideAlerter";
+import {ToggleLabelPanelButton} from "../Buttons/ToggleLabelPanelButton";
 
 export function FolderPanelContent()
 {
@@ -40,11 +41,7 @@ export function FolderPanelContent()
     return <>
             <div className={"top-bar h-12 flex items-center"}>
                 {/*TODO */}
-                <Button icon={<span className="material-symbols-outlined">
-thumbnail_bar
-</span>} onClick={()=>{
-                    dispatch({type: AppActionType.toggleLabelPanel}) //TODO
-                }}></Button>
+                <ToggleLabelPanelButton/>
             </div>
             <ListItem text={"All"}
                       iconOnly={state.LabelPanelClosed}
