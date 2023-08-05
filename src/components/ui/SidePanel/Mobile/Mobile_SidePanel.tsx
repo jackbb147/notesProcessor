@@ -39,7 +39,7 @@ export function Mobile_SidePanel(
         <div ref={containerRef} className={"sidePanelWrapper flex flex-row w-full h-full dark:border-inherit"} >
 
             <SideBar
-                width={sideBarClosed ? "0px" : "100%"}
+                width={sideBarClosed ? "0px" : "85%"}
                 minWidth={"0px"}
                 rootClassNames={`overflow-hidden`}
             >
