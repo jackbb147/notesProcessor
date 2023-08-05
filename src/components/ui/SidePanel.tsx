@@ -2,29 +2,91 @@ import React, {useEffect, useRef, useState} from 'react';
 import '../../App.css';
 import {ListItem} from "../panels/ListItem";
 import {AppActionType, Collections} from "../../reducers/AppStateReducer";
+
+
+function SideBar({width, children, handleResize}:{
+    width: string,
+    children: React.ReactNode,
+    handleResize: (e:React.MouseEvent)=>any
+})
+{
+    return (
+        <div className={`sidePanel 
+            h-full 
+            flex 
+            relative 
+            dark:border-inherit
+            `} style={{
+                width: width,
+            // width : sidePanelWidth,
+            minWidth: "fit-content",
+            maxWidth: "50%",
+        }}>
+            <div className={"sidePanel__left w-full h-full"}>
+                <div className={"w-full h-full  flex flex-col pl-3 pr-4 relative"}>
+                    {children}
+                    {/*{panelChildren}*/}
+                </div>
+
+            </div>
+
+            <div className={"sidePanel__resize h-full border-grey border-r-2  dark:border-dark_secondary w-px cursor-col-resize absolute right-0"}
+                 // onMouseDown={onBeginResize}
+                onMouseDown={handleResize}
+            />
+        </div>
+    )
+}
+
+
+function Main({width, children}:{width: string, children: React.ReactNode})
+{
+    return (
+        <div className={"  h-full grow"} style={{
+            width: width
+            // width: `calc(100% - ${sidePanelWidth})`
+        }}>
+            {children}
+        </div>
+    )
+}
+
 export function SidePanel(
-    {panelChildren , children, isClosed=false}:{
+    {
+        panelChildren,
+        children,
+        sideBarMinimized=false,
+        sideBarClosed=false,
+
+
+
+    }:{
         panelChildren?: React.ReactNode,
         children?: React.ReactNode,
-        isClosed?:boolean
+        sideBarMinimized?:boolean,
+        sideBarClosed?:boolean,
     }
 )
 {
     const containerRef = useRef<any>(null)
     const [dragging, setDragging] = useState(false)
 
-    const [sidePanelWidth, setSidePanelWidth] = useState("25%");
+    const [sidePanelWidth, setSidePanelWidth] = useState(sideBarClosed ? "0px" : (sideBarMinimized ? "fit-content" : "25%"));
 
 
 
     useEffect(()=>{
-        if(isClosed)
+        if(sideBarClosed)
+        {
+            setSidePanelWidth("0px");
+        }
+        else if(sideBarMinimized)
         {
             setSidePanelWidth("fit-content")
         }else{
             setSidePanelWidth("25%")
         }
-    }, [isClosed])
+    }, [sideBarMinimized, sideBarClosed])
     function onSidePanelResize(e:React.MouseEvent):void
     {
 
@@ -54,28 +116,14 @@ export function SidePanel(
     return (
         <div ref={containerRef} className={"sidePanelWrapper flex flex-row w-full h-full dark:border-inherit"} onMouseMove={onSidePanelResize} onMouseUp={onEndResize}>
 
-            <div className={"sidePanel h-full flex relative dark:border-inherit"} style={{
-                width : sidePanelWidth,
-                minWidth: "fit-content",
-                maxWidth: "50%",
-            }}>
-                <div className={"sidePanel__left w-full h-full"}>
-                    <div className={"w-full h-full  flex flex-col pl-3 pr-4 relative"}>
-                        {panelChildren}
-                    </div>
-
-                </div>
-
-                <div className={"sidePanel__resize h-full border-grey border-r-2  dark:border-dark_secondary w-px cursor-col-resize absolute right-0"}
-                     onMouseDown={onBeginResize}/>
-            </div>
+            <SideBar width={sidePanelWidth} handleResize={onBeginResize}>
+                {panelChildren}
+            </SideBar>
 
 
-            <div className={"  h-full grow"} style={{
-                width: `calc(100% - ${sidePanelWidth})`
-            }}>
+            <Main width={`calc(100% - ${sidePanelWidth})`}>
                 {children}
-            </div>
+            </Main>
 
         </div>
 

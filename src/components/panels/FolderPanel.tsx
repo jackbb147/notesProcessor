@@ -21,7 +21,8 @@ export function FolderPanel({children}:{children: React.ReactNode})
     return <div className={"dark:bg-dark_secondary  dark:border-dark_secondary w-full h-full "}>
         <SidePanel
             panelChildren={<FolderPanelContent/>}
-            isClosed={state.LabelPanelClosed}>
+            sideBarMinimized={state.LabelPanelClosed}
+        >
             {children}
         </SidePanel>
     </div>
