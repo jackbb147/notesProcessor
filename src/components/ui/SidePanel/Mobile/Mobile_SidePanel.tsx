@@ -20,13 +20,12 @@ export function Mobile_SidePanel(
     {
         panelChildren,
         children,
-        sideBarMinimized=false,
+
         sideBarClosed=false,
         defaultSideBarWidth=`100%`
     }:{
         panelChildren?: React.ReactNode,
         children?: React.ReactNode,
-        sideBarMinimized?:boolean,
         sideBarClosed?:boolean,
         defaultSideBarWidth?: string
     }

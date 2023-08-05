@@ -4,16 +4,14 @@ import {Button} from "../../ui/Button";
 import React, {useContext} from "react";
 import {GraphContext, GraphDispatchContext} from "../../../reducers/GraphContext";
 import {AppStateContext, AppStateDispatchContext} from "../../../reducers/AppStateContext";
-import {Collections} from "../../../reducers/AppStateReducer";
-
+import {AppActionType, Collections} from "../../../reducers/AppStateReducer";
+import {useAppState, useDispatch} from "../../../reducers/hooks";
 
 
 export function AddNodeButton({rootClassName=""}:{rootClassName?: string})
 {
-    const state = useContext(AppStateContext);
-    const dispatch = useContext(AppStateDispatchContext);
-    if(state===null || dispatch === null) throw Error("state or dispatch is null. ");
-
+    const state =useAppState()
+    const dispatch = useDispatch()
 
     const graph = useContext(GraphContext);
     const graphDispatch = useContext(GraphDispatchContext);
@@ -28,15 +26,22 @@ export function AddNodeButton({rootClassName=""}:{rootClassName?: string})
             tags.push(state.activeLabel);
         }
 
+        let newID = uuid()
+
         graphDispatch({
             type: GraphActionType.addNode,
             node: {
-                id: uuid(),
+                id: newID,
                 title: "New Note",
                 content: "",
                 labels: tags,
                 dateCreated: new Date()
             }
+        })
+
+        dispatch({
+            type: AppActionType.setActiveNodeID,
+            id: newID
         })
     }
 

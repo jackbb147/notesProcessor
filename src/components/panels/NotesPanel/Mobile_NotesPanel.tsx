@@ -39,7 +39,9 @@ export function Mobile_NotesPanel({children}:{children: React.ReactNode})
         <div className={"dark:bg-dark_primary  dark:border-dark_primary w-full h-full "}>
 
             <Mobile_SidePanel
-                panelChildren={<PanelContent/>}>
+                panelChildren={<PanelContent/>}
+                sideBarClosed={state.activeNodeID !== undefined}
+            >
                 {children}
             </Mobile_SidePanel>
         </div>

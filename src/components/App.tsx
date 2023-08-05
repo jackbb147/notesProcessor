@@ -17,6 +17,7 @@ import {FolderPanel} from "./panels/FolderPanel/FolderPanel";
 import {NotesPanel} from "./panels/NotesPanel/NotesPanel";
 import {TopBar} from "./ui/TopBar";
 import {LabelSelectorPopUp} from "./LabelSelectorPopUp";
+import {EditorPage} from "./EditorView/EditorPage";
 
 export function ensure<T>(argument: T | undefined | null, message: string = 'This value was promised to be there.'): T {
     if (argument === undefined || argument === null) {
@@ -53,16 +54,7 @@ function App() {
                         <FolderPanel>
                             <div className={"App__main bg-white h-full grow w-full"}>
                                 <NotesPanel>
-                                    <div className={" p-1 pt-0 flex flex-col  grow h-full pb-1"}>
-                                        <TopBar>
-                                            <AddNodeButton/>
-                                            <div id={"editorButtonGroup"} className={"w-1/2  "}/>
-                                        </TopBar>
-
-                                        <div className={"flex-grow"} style={{}}>
-                                            <EditorSwitch/>
-                                        </div>
-                                    </div>
+                                    <EditorPage/>
                                 </NotesPanel>
                             </div>
                         </FolderPanel>

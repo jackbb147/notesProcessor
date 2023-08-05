@@ -25,7 +25,6 @@ export function Mobile_FolderPanel({children}:{children: React.ReactNode})
     return <div className={"dark:bg-dark_secondary  dark:border-dark_secondary w-full h-full "}>
         <Mobile_SidePanel
             panelChildren={<FolderPanelContent/>}
-            sideBarMinimized={false}
             sideBarClosed={state.LabelPanelClosed}
         >
             {children}
