@@ -55,16 +55,20 @@ async function getParsedObject()
         input.click();
 
         reader.onload = (e)=>{
+            // debugger;
             if (typeof reader.result !== "string") {
                 alert(" There's something wrong with the file you uploaded :( ")
                 return;
             }
 
             console.log(`reader loaded ! `)
-            const obj = JSON.parse(reader.result);
-
-            unmountInput();
-            resolve(obj);
+            try {
+                const obj = JSON.parse(reader.result);
+                unmountInput();
+                resolve(obj);
+            }catch (e:any) {
+                console.error(e.message)
+            }
         }
     })
 }

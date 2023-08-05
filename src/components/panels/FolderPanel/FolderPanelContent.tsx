@@ -117,7 +117,7 @@ export function FolderPanelContent()
                 <ToggleLabelPanelButton/>
             </div>
             <All/>
-            <RecentlyDeleted/>
+
 
             {graph.labels.map((s:string)=><ListItem
                 text={s}
@@ -128,6 +128,7 @@ export function FolderPanelContent()
                     label
                 </span>}
             />)}
+        <RecentlyDeleted/>
 
             <div className={"mt-auto"}>
 
