@@ -1,7 +1,7 @@
 
 
 import {NotesPanelContent} from "./NotesPanelContent";
-import {AddNodeButton} from "../Buttons/AddNodeButton";
+import {AddNodeButton} from "../../Buttons/AddNodeButton";
 import {EditorSwitch} from "../../EditorView/EditorSwitch";
 import {Desktop_SidePanel} from "../../ui/SidePanel/Desktop/Desktop_SidePanel";
 import React from "react";
@@ -11,7 +11,7 @@ import {useDispatch, useGraph, useGraphDispatch, useAppState} from "../../../red
 import {Mobile_SidePanel} from "../../ui/SidePanel/Mobile/Mobile_SidePanel";
 import {Mobile} from "../../../useMediaQuery";
 import {useActiveCollection} from "./useActiveCollection";
-import {ToggleLabelPanelButton} from "../Buttons/ToggleLabelPanelButton";
+import {ToggleLabelPanelButton} from "../../Buttons/ToggleLabelPanelButton";
 
 
 function PanelContent()

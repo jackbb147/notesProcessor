@@ -10,7 +10,7 @@ import { animated ,useTransition} from '@react-spring/web'
 import {AnimatedListItem} from "../AnimatedListItem";
 import {useSpring, Transition} from "@react-spring/web";
 import {useDispatch, useAppState} from "../../../reducers/hooks";
-import {DeleteButton} from "../Buttons/DeleteButton";
+import {DeleteButton} from "../../Buttons/DeleteButton";
 
 const NoNotesDisplayID = "none"
 const MyComponent = (styles:any) => <div style={styles}>hello</div>

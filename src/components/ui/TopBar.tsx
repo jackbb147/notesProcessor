@@ -1,4 +1,4 @@
-import {AddNodeButton} from "../panels/Buttons/AddNodeButton";
+import {AddNodeButton} from "../Buttons/AddNodeButton";
 import React from "react";
 
 export function TopBar({children}:{children: React.ReactNode})

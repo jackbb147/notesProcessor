@@ -1,7 +1,7 @@
-import {ListItem} from "../ListItem";
+import {ListItem} from "../panels/ListItem";
 import React from "react";
-import {useAppState, useDispatch} from "../../../reducers/hooks";
-import {AppActionType} from "../../../reducers/AppStateReducer";
+import {useAppState, useDispatch} from "../../reducers/hooks";
+import {AppActionType} from "../../reducers/AppStateReducer";
 
 export function EditLabelsButton()
 {

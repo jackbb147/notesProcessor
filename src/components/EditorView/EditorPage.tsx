@@ -1,20 +1,27 @@
 import {TopBar} from "../ui/TopBar";
-import {AddNodeButton} from "../panels/Buttons/AddNodeButton";
+import {AddNodeButton} from "../Buttons/AddNodeButton";
 import {EditorSwitch} from "./EditorSwitch";
 import React from "react";
+import {Desktop, Mobile, Tablet} from "../../useMediaQuery";
+import {DesktopEditorPage} from "./DesktopEditorPage";
+import {Tablet_EditorPage} from "./Tablet_EditorPage";
+import {Mobile_EditorPage} from "./Mobile_EditorPage";
 
 export function EditorPage()
 {
     return (
-        <div className={" p-1 pt-0 flex flex-col  grow h-full pb-1"}>
-            <TopBar>
-                <AddNodeButton/>
-                <div id={"editorButtonGroup"} className={"w-1/2  "}/>
-            </TopBar>
+        <>
+            <Desktop>
+                <DesktopEditorPage/>
+            </Desktop>
 
-            <div className={"flex-grow"} style={{}}>
-                <EditorSwitch/>
-            </div>
-        </div>
+            <Tablet>
+                <Tablet_EditorPage/>
+            </Tablet>
+
+            <Mobile>
+                <Mobile_EditorPage/>
+            </Mobile>
+        </>
     )
 }

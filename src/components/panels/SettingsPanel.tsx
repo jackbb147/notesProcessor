@@ -1,7 +1,7 @@
 import {useAppState} from "../../reducers/hooks";
-import {LightModeButton} from "./Buttons/LightModeButton";
-import {UploadButton} from "./Buttons/UploadButton";
-import {DownloadButton} from "./Buttons/DownloadButton";
+import {LightModeButton} from "../Buttons/LightModeButton";
+import {UploadButton} from "../Buttons/UploadButton";
+import {DownloadButton} from "../Buttons/DownloadButton";
 
 export function SettingsPanel()
 {

@@ -1,11 +1,11 @@
-import {GraphActionType} from "../../../reducers/GraphReducer";
+import {GraphActionType} from "../../reducers/GraphReducer";
 import {v4 as uuid} from "uuid";
-import {Button} from "../../ui/Button";
+import {Button} from "../ui/Button";
 import React, {useContext} from "react";
-import {GraphContext, GraphDispatchContext} from "../../../reducers/GraphContext";
-import {AppStateContext, AppStateDispatchContext} from "../../../reducers/AppStateContext";
-import {AppActionType, Collections} from "../../../reducers/AppStateReducer";
-import {useAppState, useDispatch} from "../../../reducers/hooks";
+import {GraphContext, GraphDispatchContext} from "../../reducers/GraphContext";
+import {AppStateContext, AppStateDispatchContext} from "../../reducers/AppStateContext";
+import {AppActionType, Collections} from "../../reducers/AppStateReducer";
+import {useAppState, useDispatch} from "../../reducers/hooks";
 
 
 export function AddNodeButton({rootClassName=""}:{rootClassName?: string})

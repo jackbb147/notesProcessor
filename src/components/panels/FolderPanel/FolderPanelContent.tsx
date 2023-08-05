@@ -4,12 +4,12 @@ import {useDispatch, useGraph, useGraphDispatch, useAppState} from "../../../red
 import {AppActionType, Collections} from "../../../reducers/AppStateReducer";
 import React, {useContext, useRef} from "react";
 import {GraphContext, GraphDispatchContext} from "../../../reducers/GraphContext";
-import {EditLabelsButton} from "../Buttons/EditLabelsButton";
-import {SettingsButton} from "../Buttons/SettingsButton";
-import {AccountButton} from "../Buttons/AccountButton";
+import {EditLabelsButton} from "../../Buttons/EditLabelsButton";
+import {SettingsButton} from "../../Buttons/SettingsButton";
+import {AccountButton} from "../../Buttons/AccountButton";
 import {SettingsPanel} from "../SettingsPanel";
 import OutsideAlerter from "../../ui/OutsideAlerter";
-import {ToggleLabelPanelButton} from "../Buttons/ToggleLabelPanelButton";
+import {ToggleLabelPanelButton} from "../../Buttons/ToggleLabelPanelButton";
 
 export function FolderPanelContent()
 {

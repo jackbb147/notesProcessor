@@ -12,7 +12,7 @@ import {FolderPanelContent} from "./panels/FolderPanel/FolderPanelContent";
 import {NotesPanelContent} from "./panels/NotesPanel/NotesPanelContent";
 import {GraphContext, GraphDispatchContext, GraphProvider} from "../reducers/GraphContext";
 import {EditorSwitch} from "./EditorView/EditorSwitch";
-import {AddNodeButton} from "./panels/Buttons/AddNodeButton";
+import {AddNodeButton} from "./Buttons/AddNodeButton";
 import {FolderPanel} from "./panels/FolderPanel/FolderPanel";
 import {NotesPanel} from "./panels/NotesPanel/NotesPanel";
 import {TopBar} from "./ui/TopBar";

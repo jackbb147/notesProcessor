@@ -1,7 +1,7 @@
 import React from "react";
-import {ListItem} from "../ListItem";
-import {useAppState, useDispatch} from "../../../reducers/hooks";
-import {AppActionType} from "../../../reducers/AppStateReducer";
+import {ListItem} from "../panels/ListItem";
+import {useAppState, useDispatch} from "../../reducers/hooks";
+import {AppActionType} from "../../reducers/AppStateReducer";
 
 
 export function LightModeButton()

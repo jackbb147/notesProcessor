@@ -1,8 +1,8 @@
-import {AppActionType, Collections} from "../../../reducers/AppStateReducer";
+import {AppActionType, Collections} from "../../reducers/AppStateReducer";
 import React from "react";
-import {useAppState, useDispatch, useGraph, useGraphDispatch} from "../../../reducers/hooks";
-import {Button} from "../../ui/Button";
-import {GraphActionType} from "../../../reducers/GraphReducer";
+import {useAppState, useDispatch, useGraph, useGraphDispatch} from "../../reducers/hooks";
+import {Button} from "../ui/Button";
+import {GraphActionType} from "../../reducers/GraphReducer";
 
 
 export function DeleteButton()

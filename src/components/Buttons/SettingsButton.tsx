@@ -1,7 +1,7 @@
-import {useDispatch, useAppState} from "../../../reducers/hooks";
-import {ListItem} from "../ListItem";
+import {useDispatch, useAppState} from "../../reducers/hooks";
+import {ListItem} from "../panels/ListItem";
 import React, {forwardRef} from "react";
-import {AppActionType} from "../../../reducers/AppStateReducer";
+import {AppActionType} from "../../reducers/AppStateReducer";
 
 export const SettingsButton= forwardRef((props, ref) =>
 {
