@@ -39,7 +39,25 @@ export function useActiveCollection() {
 
     useEffect(()=>{
         setActiveCollection(getActiveCollection(state, graph));
-    }, [state.activeCollection])
+    }, [state.activeCollection, graph.nodes.length])
 
     return activeCollection;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

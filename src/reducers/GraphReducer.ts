@@ -51,6 +51,7 @@ export function graphReducer(draft:GraphState, action:GraphAction):void
     {
         case GraphActionType.addNode:
         {
+            console.log(`Graph is adding a new node. `)
             let newNode = action.node;
             if(draft.nodes.some((node) => node.id === newNode.id)) return;
             draft.nodes.push(newNode);

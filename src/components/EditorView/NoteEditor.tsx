@@ -141,15 +141,14 @@ function QuillBoxComponent({val, handleBlur, onFinishSetup, onTouchStart, isRead
         // when user finishes editing this node.
 
         var wrapper = wrapperRef.current;
-        wrapper.addEventListener("blur", ()=>
-        {
-            console.log("hey")
-        })
+
 
         quillNode.root.addEventListener("blur", (e:FocusEvent)=>{
+
             if(!wrapper.contains(e.relatedTarget))
             {
                 let lengthOfFirstLine = quillNode.getLine(0)[0].cache.length-1;
+                console.log(`quill node is handling blur!! `)
                 handleBlur(
                     quillNode.getLength() > 1 ? quillNode.root.innerHTML : "",
                     quillNode.getText(0, lengthOfFirstLine)) //TODO
