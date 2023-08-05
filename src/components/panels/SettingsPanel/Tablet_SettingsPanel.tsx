@@ -1,9 +1,11 @@
-import {useAppState} from "../../reducers/hooks";
-import {LightModeButton} from "../Buttons/LightModeButton";
-import {UploadButton} from "../Buttons/UploadButton";
-import {DownloadButton} from "../Buttons/DownloadButton";
 
-export function SettingsPanel()
+
+import {useAppState} from "../../../reducers/hooks";
+import {LightModeButton} from "../../Buttons/LightModeButton";
+import {UploadButton} from "../../Buttons/UploadButton";
+import {DownloadButton} from "../../Buttons/DownloadButton";
+
+export function Tablet_SettingsPanel()
 {
     const state = useAppState();
     if(state.showSettingsPanel)

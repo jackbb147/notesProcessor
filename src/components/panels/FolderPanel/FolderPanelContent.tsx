@@ -7,11 +7,52 @@ import {GraphContext, GraphDispatchContext} from "../../../reducers/GraphContext
 import {EditLabelsButton} from "../../Buttons/EditLabelsButton";
 import {SettingsButton} from "../../Buttons/SettingsButton";
 import {AccountButton} from "../../Buttons/AccountButton";
-import {SettingsPanel} from "../SettingsPanel";
+import {SettingsPanel} from "../SettingsPanel/SettingsPanel";
 import OutsideAlerter from "../../ui/OutsideAlerter";
 import {ToggleLabelPanelButton} from "../../Buttons/ToggleLabelPanelButton";
 import { useMediaQuery } from 'react-responsive'
+import {Desktop, Mobile, Tablet} from "../../../useMediaQuery";
 
+
+
+function SettingsPanelWrapper({children}:{
+    children: React.ReactNode
+})
+{
+    return (
+        <>
+            <Desktop>
+                <div
+                    className={`
+                absolute
+                left-full
+                bottom-0
+                z-10
+            `}>
+                    {children}
+                </div>
+            </Desktop>
+
+            <Tablet>
+                <div
+                    className={`
+                absolute
+                left-full
+                bottom-0
+                z-10
+            `}>
+                    {children}
+                </div>
+            </Tablet>
+
+            <Mobile>
+
+                    {children}
+
+            </Mobile>
+        </>
+    )
+}
 
 export function FolderPanelContent()
 {
@@ -151,19 +192,12 @@ delete
                 <OutsideAlerter
                     condition={SettingPanelOutsideClickCondition}
                     callback={handleSettingPanelOutsideClick}>
-                    <div
-                        className={`
-                    absolute
-                    left-full
-                    bottom-0
-                    z-10
-                `}>
+                    <SettingsPanelWrapper>
                         <SettingsPanel/>
-                    </div>
+                    </SettingsPanelWrapper>
                 </OutsideAlerter>
 
             </div>
+</>
 
-
-        </>
 }
