@@ -39,7 +39,7 @@ export function useActiveCollection() {
 
     useEffect(()=>{
         setActiveCollection(getActiveCollection(state, graph));
-    }, [state.activeCollection, graph.nodes.length])
+    }, [state.activeCollection, graph.nodes])
 
     return activeCollection;
 }
