@@ -2,7 +2,8 @@
 
 import React, {useContext} from "react";
 import {FolderPanelContent} from "./FolderPanelContent";
-import {SidePanel} from "../../ui/SidePanel";
+import {Tablet_SidePanel} from "../../ui/SidePanel/Tablet/Tablet_SidePanel";
+
 import {NotesPanelContent} from "../NotesPanel/NotesPanelContent";
 import {AddNodeButton} from "../../AddNodeButton";
 import {EditorSwitch} from "../../editor/EditorSwitch";
@@ -22,11 +23,11 @@ export function Tablet_FolderPanel({children}:{children: React.ReactNode})
 
 
     return <div className={"dark:bg-dark_secondary  dark:border-dark_secondary w-full h-full "}>
-        <SidePanel
+        <Tablet_SidePanel
             panelChildren={<FolderPanelContent/>}
             sideBarMinimized={state.LabelPanelClosed}
         >
             {children}
-        </SidePanel>
+        </Tablet_SidePanel>
     </div>
 }

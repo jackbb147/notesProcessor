@@ -1,7 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import '../../App.css';
-import {ListItem} from "../panels/ListItem";
-import {AppActionType, Collections} from "../../reducers/AppStateReducer";
+import "../../../../App.css"
 
 
 function SideBar({width, children, handleResize}:{
@@ -16,9 +14,9 @@ function SideBar({width, children, handleResize}:{
             flex 
             relative 
             dark:border-inherit
-            w-full
+            
             `} style={{
-            // width: width,
+            width: width,
             minWidth: "fit-content",
             // maxWidth: "50%",
         }}>
@@ -31,8 +29,8 @@ function SideBar({width, children, handleResize}:{
             </div>
 
             <div className={"sidePanel__resize h-full border-grey border-r-2  dark:border-dark_secondary w-px cursor-col-resize absolute right-0"}
-                 // onMouseDown={onBeginResize}
-                onMouseDown={handleResize}
+                // onMouseDown={onBeginResize}
+                 onMouseDown={handleResize}
             />
         </div>
     )
@@ -43,15 +41,14 @@ function Main({width, children}:{width: string, children: React.ReactNode})
 {
     return (
         <div className={"  h-full grow"} style={{
-            width: "0px"
-            // width: `calc(100% - ${sidePanelWidth})`
+            width
         }}>
             {children}
         </div>
     )
 }
 
-export function SidePanel(
+export function Tablet_SidePanel(
     {
         panelChildren,
         children,
@@ -124,6 +121,5 @@ export function SidePanel(
             </Main>
 
         </div>
-
     )
 }

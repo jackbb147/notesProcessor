@@ -1,5 +1,4 @@
 import React, {useContext} from 'react';
-import {SidePanel} from "./ui/SidePanel";
 import '../App.css';
 import {GraphAction, GraphActionType, graphReducer, GraphState, Node} from "../reducers/GraphReducer";
 import {AppAction, AppActionType, AppState, AppStateReducer, Collections} from "../reducers/AppStateReducer";

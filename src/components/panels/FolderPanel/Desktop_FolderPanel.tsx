@@ -1,12 +1,12 @@
 
 import React, {useContext} from "react";
 import {FolderPanelContent} from "./FolderPanelContent";
-import {SidePanel} from "../../ui/SidePanel";
 import {NotesPanelContent} from "../NotesPanel/NotesPanelContent";
 import {AddNodeButton} from "../../AddNodeButton";
 import {EditorSwitch} from "../../editor/EditorSwitch";
 import {GraphContext, GraphDispatchContext} from "../../../reducers/GraphContext";
 import {AppStateContext, AppStateDispatchContext} from "../../../reducers/AppStateContext";
+import {Desktop_SidePanel} from "../../ui/SidePanel/Desktop/Desktop_SidePanel";
 
 export function Desktop_FolderPanel({children}:{children: React.ReactNode})
 {
@@ -21,11 +21,9 @@ export function Desktop_FolderPanel({children}:{children: React.ReactNode})
 
 
     return <div className={"dark:bg-dark_secondary  dark:border-dark_secondary w-full h-full "}>
-        <SidePanel
-            panelChildren={<FolderPanelContent/>}
-            sideBarMinimized={state.LabelPanelClosed}
-        >
-            {children}
-        </SidePanel>
+
+        <Desktop_SidePanel panelChildren={<FolderPanelContent/>}
+                           sideBarMinimized={state.LabelPanelClosed}>{children}
+        </Desktop_SidePanel>
     </div>
 }

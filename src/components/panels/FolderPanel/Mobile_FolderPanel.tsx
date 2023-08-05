@@ -2,12 +2,13 @@
 
 import React, {useContext} from "react";
 import {FolderPanelContent} from "./FolderPanelContent";
-import {SidePanel} from "../../ui/SidePanel";
+import {Mobile_SidePanel} from "../../ui/SidePanel/Mobile/Mobile_SidePanel";
 import {NotesPanelContent} from "../NotesPanel/NotesPanelContent";
 import {AddNodeButton} from "../../AddNodeButton";
 import {EditorSwitch} from "../../editor/EditorSwitch";
 import {GraphContext, GraphDispatchContext} from "../../../reducers/GraphContext";
 import {AppStateContext, AppStateDispatchContext} from "../../../reducers/AppStateContext";
+import {Mobile} from "../../../useMediaQuery";
 
 export function Mobile_FolderPanel({children}:{children: React.ReactNode})
 {
@@ -22,11 +23,12 @@ export function Mobile_FolderPanel({children}:{children: React.ReactNode})
 
 
     return <div className={"dark:bg-dark_secondary  dark:border-dark_secondary w-full h-full "}>
-        <SidePanel
+        <Mobile_SidePanel
             panelChildren={<FolderPanelContent/>}
             sideBarMinimized={state.LabelPanelClosed}
+            defaultSideBarWidth={"0px"}
         >
             {children}
-        </SidePanel>
+        </Mobile_SidePanel>
     </div>
 }
