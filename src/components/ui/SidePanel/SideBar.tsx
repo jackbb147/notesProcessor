@@ -19,6 +19,8 @@ export function SideBar({width, minWidth="fit-content", children, handleResize, 
             ${rootClassNames}
             `} style={{
             width: width,
+            transition: "all 200ms",
+            transitionTimingFunction: "ease-out",
             minWidth: minWidth,
             // maxWidth: "50%",
         }}>
