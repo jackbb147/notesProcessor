@@ -20,6 +20,7 @@ function PanelContent()
     return <NotesPanelContent
         collection={activeCollection}
         topBarButtons={[
+
             <ToggleLabelPanelButton/>,
             <AddNodeButton rootClassName={`ml-auto`}/>
         ]}

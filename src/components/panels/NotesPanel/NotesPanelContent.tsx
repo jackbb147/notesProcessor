@@ -137,7 +137,7 @@ export function NotesPanelContent(
 
 
 
-            <div className={"w-full h-full overflow-scroll "  }  tabIndex={0} onKeyDown={handleKeyDown}>
+            <div className={"w-full h-full overflow-scroll relative "  }  tabIndex={0} onKeyDown={handleKeyDown}>
 
                 <AnimatedList
 

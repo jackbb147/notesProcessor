@@ -7,6 +7,7 @@ import {useDispatch} from "../../../reducers/hooks";
 export function ToggleLabelPanelButton()
 {
     const dispatch = useDispatch();
+    console.log("toggle label panel clicked")
     return (
         <Button icon={<span className="material-symbols-outlined">
 thumbnail_bar
