@@ -14,9 +14,8 @@ export function Mobile_SettingsPanel()
             <div className={`
                 ${state.darkModeOn ? 'bg-dark_secondary' : 'bg-grey'}
                 absolute
-                left-0
-                pointer-events-none
-                z-10 
+                left-0 
+                z-40 
                 dark:bg-dark_secondary
                 top-0
                 w-full
@@ -32,8 +31,8 @@ export function Mobile_SettingsPanel()
                 z-30
             `}
             >
-                <LightModeButton/>
                 <CloseSettingsPanelButton/>
+                <LightModeButton/>
                 <UploadButton/>
                 <DownloadButton/>
             </div>

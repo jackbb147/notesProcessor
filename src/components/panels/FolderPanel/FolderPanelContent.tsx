@@ -12,6 +12,8 @@ import OutsideAlerter from "../../ui/OutsideAlerter";
 import {ToggleLabelPanelButton} from "../../Buttons/ToggleLabelPanelButton";
 import { useMediaQuery } from 'react-responsive'
 import {Desktop, Mobile, Tablet} from "../../../useMediaQuery";
+import {All} from "../../Buttons/All";
+import {RecentlyDeleted} from "../../Buttons/RecentlyDeleted";
 
 
 
@@ -67,10 +69,14 @@ export function FolderPanelContent()
 
     function handleSettingPanelOutsideClick()
     {
-        dispatch({
-            type: AppActionType.setShowSettingsPanel,
-            show: false
-        })
+        if(!isMobile)
+        {
+            dispatch({
+                type: AppActionType.setShowSettingsPanel,
+                show: false
+            })
+        }
+
     }
 
     function SettingPanelOutsideClickCondition(me: Element, target: EventTarget | null)
@@ -102,10 +108,6 @@ export function FolderPanelContent()
                 type: AppActionType.closeLabelPanel
             })
         }
-
-
-
-
     }
 
 
@@ -114,33 +116,8 @@ export function FolderPanelContent()
                 {/*TODO */}
                 <ToggleLabelPanelButton/>
             </div>
-            <ListItem text={"All"}
-                      iconOnly={state.LabelPanelClosed}
-                      icon={<span className="material-symbols-outlined">
-                        folder
-                        </span>}
-                      active={state.activeCollection === Collections.All}
-                      rootClassName={"mb-2"}
-                      onClick={() => {
-                          dispatch({
-                              type: AppActionType.setActiveCollection,
-                              activeCollection: Collections.All
-                          })
-
-                          dispatch({
-                              type: AppActionType.setActiveNodeID,
-                              id: undefined
-                          })
-
-                          if(isMobile)
-                          {
-
-                              dispatch({
-                                  type: AppActionType.closeLabelPanel
-                              })
-                          }
-                      }}
-            ></ListItem>
+            <All/>
+            <RecentlyDeleted/>
 
             {graph.labels.map((s:string)=><ListItem
                 text={s}
@@ -152,42 +129,9 @@ export function FolderPanelContent()
                 </span>}
             />)}
 
-
-            <ListItem text={"Recently Deleted"}
-                      iconOnly={state.LabelPanelClosed}
-                      active={state.activeCollection === Collections.RecentlyDeleted}
-                      icon={<span className="material-symbols-outlined">
-delete
-</span>}
-                      onClick={() => {
-                          dispatch({
-                              type: AppActionType.setActiveCollection,
-                              activeCollection: Collections.RecentlyDeleted
-                          })
-                          if (state.activeCollection !== Collections.RecentlyDeleted) {
-                              dispatch({
-                                  type: AppActionType.setActiveNodeID,
-                                  id: undefined
-                              })
-                          }
-
-                          if(isMobile)
-                          {
-
-                              dispatch({
-                                  type: AppActionType.closeLabelPanel
-                              })
-                          }
-                      }}
-            ></ListItem>
-
-
             <div className={"mt-auto"}>
-                {/*<LightModeButton/>*/}
+
                 <EditLabelsButton/>
-                {/*<UploadButton/>*/}
-                {/*<DownloadButton/>*/}
-                {/*<AccountButton/>*/}
                 <SettingsButton ref={settingsButtonRef}/>
                 <OutsideAlerter
                     condition={SettingPanelOutsideClickCondition}
