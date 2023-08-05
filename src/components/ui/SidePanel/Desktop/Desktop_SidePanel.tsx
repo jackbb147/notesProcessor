@@ -1,40 +1,40 @@
 import React, {useEffect, useRef, useState} from 'react';
 import "../../../../App.css"
+import {SideBar} from "../SideBar";
 
-
-function SideBar({width, children, handleResize}:{
-    width: string,
-    children: React.ReactNode,
-    handleResize: (e:React.MouseEvent)=>any
-})
-{
-    return (
-        <div className={`sidePanel 
-            h-full 
-            flex 
-            relative 
-            dark:border-inherit
-            
-            `} style={{
-            width: width,
-            minWidth: "fit-content",
-            // maxWidth: "50%",
-        }}>
-            <div className={"sidePanel__left w-full h-full"}>
-                <div className={"w-full h-full  flex flex-col pl-3 pr-4 relative"}>
-                    {children}
-                    {/*{panelChildren}*/}
-                </div>
-
-            </div>
-
-            <div className={"sidePanel__resize h-full border-grey border-r-2  dark:border-dark_secondary w-px cursor-col-resize absolute right-0"}
-                // onMouseDown={onBeginResize}
-                 onMouseDown={handleResize}
-            />
-        </div>
-    )
-}
+// function SideBar({width, children, handleResize}:{
+//     width: string,
+//     children: React.ReactNode,
+//     handleResize: (e:React.MouseEvent)=>any
+// })
+// {
+//     return (
+//         <div className={`sidePanel
+//             h-full
+//             flex
+//             relative
+//             dark:border-inherit
+//
+//             `} style={{
+//             width: width,
+//             minWidth: "fit-content",
+//             // maxWidth: "50%",
+//         }}>
+//             <div className={"sidePanel__left w-full h-full"}>
+//                 <div className={"w-full h-full  flex flex-col pl-3 pr-4 relative"}>
+//                     {children}
+//                     {/*{panelChildren}*/}
+//                 </div>
+//
+//             </div>
+//
+//             <div className={"sidePanel__resize h-full border-grey border-r-2  dark:border-dark_secondary w-px cursor-col-resize absolute right-0"}
+//                 // onMouseDown={onBeginResize}
+//                  onMouseDown={handleResize}
+//             />
+//         </div>
+//     )
+// }
 
 
 function Main({width, children}:{width: string, children: React.ReactNode})
@@ -111,7 +111,7 @@ export function Desktop_SidePanel(
     return (
         <div ref={containerRef} className={"sidePanelWrapper flex flex-row w-full h-full dark:border-inherit"} onMouseMove={onSidePanelResize} onMouseUp={onEndResize}>
 
-            <SideBar width={sidePanelWidth} handleResize={onBeginResize}>
+            <SideBar width={sidePanelWidth} widthTransition={false} handleResize={onBeginResize}>
                 {panelChildren}
             </SideBar>
 

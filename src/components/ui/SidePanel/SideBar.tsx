@@ -1,7 +1,11 @@
 import React from "react";
 
-export function SideBar({width, minWidth="fit-content", children, handleResize, rootClassNames}:{
+export function SideBar({
+                            width,
+                            widthTransition=true,
+                            minWidth="fit-content", children, handleResize, rootClassNames}:{
     width: string,
+    widthTransition?:boolean
     minWidth? :  string,
     children: React.ReactNode,
     handleResize?: (e:React.MouseEvent)=>any,
@@ -19,7 +23,7 @@ export function SideBar({width, minWidth="fit-content", children, handleResize, 
             ${rootClassNames}
             `} style={{
             width: width,
-            transition: "all 200ms",
+            transition: widthTransition?`all 200ms`:"none",
             transitionTimingFunction: "ease-out",
             minWidth: minWidth,
             // maxWidth: "50%",
