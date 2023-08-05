@@ -2,7 +2,7 @@
 import React, {useContext} from "react";
 import {FolderPanelContent} from "./FolderPanelContent";
 import {NotesPanelContent} from "../NotesPanel/NotesPanelContent";
-import {AddNodeButton} from "../../AddNodeButton";
+import {AddNodeButton} from "../Buttons/AddNodeButton";
 import {EditorSwitch} from "../../editor/EditorSwitch";
 import {GraphContext, GraphDispatchContext} from "../../../reducers/GraphContext";
 import {AppStateContext, AppStateDispatchContext} from "../../../reducers/AppStateContext";

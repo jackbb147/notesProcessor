@@ -1,5 +1,5 @@
 import {NotesPanelContent} from "./NotesPanelContent";
-import {AddNodeButton} from "../../AddNodeButton";
+import {AddNodeButton} from "../Buttons/AddNodeButton";
 import {EditorSwitch} from "../../editor/EditorSwitch";
 import {Desktop_SidePanel} from "../../ui/SidePanel/Desktop/Desktop_SidePanel";
 import React from "react";

@@ -1,7 +1,7 @@
 
 
 import {NotesPanelContent} from "./NotesPanelContent";
-import {AddNodeButton} from "../../AddNodeButton";
+import {AddNodeButton} from "../Buttons/AddNodeButton";
 import {EditorSwitch} from "../../editor/EditorSwitch";
 import {Desktop_SidePanel} from "../../ui/SidePanel/Desktop/Desktop_SidePanel";
 import React from "react";
@@ -20,7 +20,8 @@ function PanelContent()
     return <NotesPanelContent
         collection={activeCollection}
         topBarButtons={[
-            <ToggleLabelPanelButton/>
+            <ToggleLabelPanelButton/>,
+            <AddNodeButton rootClassName={`ml-auto`}/>
         ]}
     />
 }
@@ -44,3 +45,12 @@ export function Mobile_NotesPanel({children}:{children: React.ReactNode})
 
     </>
 }
+
+
+
+
+
+
+
+
+

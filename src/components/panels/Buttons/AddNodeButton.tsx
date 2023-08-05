@@ -1,14 +1,14 @@
-import {GraphActionType} from "../reducers/GraphReducer";
+import {GraphActionType} from "../../../reducers/GraphReducer";
 import {v4 as uuid} from "uuid";
-import {Button} from "./ui/Button";
+import {Button} from "../../ui/Button";
 import React, {useContext} from "react";
-import {GraphContext, GraphDispatchContext} from "../reducers/GraphContext";
-import {AppStateContext, AppStateDispatchContext} from "../reducers/AppStateContext";
-import {Collections} from "../reducers/AppStateReducer";
+import {GraphContext, GraphDispatchContext} from "../../../reducers/GraphContext";
+import {AppStateContext, AppStateDispatchContext} from "../../../reducers/AppStateContext";
+import {Collections} from "../../../reducers/AppStateReducer";
 
 
 
-export function AddNodeButton()
+export function AddNodeButton({rootClassName=""}:{rootClassName?: string})
 {
     const state = useContext(AppStateContext);
     const dispatch = useContext(AppStateDispatchContext);
@@ -41,7 +41,9 @@ export function AddNodeButton()
     }
 
 
-    return <Button onClick={handleClick} icon={<span className="material-symbols-outlined">
+    return <Button
+        rootClassName={rootClassName}
+        onClick={handleClick} icon={<span className="material-symbols-outlined">
 edit_square
 </span>}></Button>
 }
