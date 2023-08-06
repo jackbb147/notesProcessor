@@ -1,7 +1,7 @@
 import {ListItem} from "./ListItem";
 import React from "react";
-import {useDispatch, useAppState, useGraph} from "../../reducers/hooks";
-import {useDownload} from "../../useDownload";
+import {useDispatch, useAppState, useGraph} from "../../hooks/AppStateAndGraphhooks";
+import {useDownload} from "../../hooks/useDownload";
 
 
 export function DownloadButton()

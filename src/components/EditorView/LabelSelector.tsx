@@ -1,4 +1,4 @@
-import {useGraph, useGraphDispatch, useAppState} from "../../reducers/hooks";
+import {useGraph, useGraphDispatch, useAppState} from "../../hooks/AppStateAndGraphhooks";
 import CreatableSelect from "react-select/creatable";
 import {ActionMeta, CSSObjectWithLabel, Options} from "react-select";
 import {GraphActionType} from "../../reducers/GraphReducer";

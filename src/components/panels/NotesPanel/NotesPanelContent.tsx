@@ -9,7 +9,7 @@ import {GraphContext, GraphDispatchContext} from "../../../reducers/GraphContext
 import { animated ,useTransition} from '@react-spring/web'
 import {AnimatedListItem} from "../../Buttons/AnimatedListItem";
 import {useSpring, Transition} from "@react-spring/web";
-import {useDispatch, useAppState} from "../../../reducers/hooks";
+import {useDispatch, useAppState} from "../../../hooks/AppStateAndGraphhooks";
 import {DeleteButton} from "../../Buttons/DeleteButton";
 
 const NoNotesDisplayID = "none"

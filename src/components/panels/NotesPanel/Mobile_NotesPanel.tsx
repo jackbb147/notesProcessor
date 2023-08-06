@@ -7,9 +7,9 @@ import {Desktop_SidePanel} from "../../ui/SidePanel/Desktop/Desktop_SidePanel";
 import React from "react";
 import {Node} from "../../../reducers/GraphReducer";
 import {Collections} from "../../../reducers/AppStateReducer";
-import {useDispatch, useGraph, useGraphDispatch, useAppState} from "../../../reducers/hooks";
+import {useDispatch, useGraph, useGraphDispatch, useAppState} from "../../../hooks/AppStateAndGraphhooks";
 import {Mobile_SidePanel} from "../../ui/SidePanel/Mobile/Mobile_SidePanel";
-import {Mobile} from "../../../useMediaQuery";
+import {Mobile} from "../../../hooks/useMediaQuery";
 import {useActiveCollection} from "./useActiveCollection";
 import {ToggleLabelPanelButton} from "../../Buttons/ToggleLabelPanelButton";
 

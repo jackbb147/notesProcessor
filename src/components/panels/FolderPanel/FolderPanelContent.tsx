@@ -1,6 +1,6 @@
 import {Button} from "../../ui/Button";
 import {ListItem} from "../../Buttons/ListItem";
-import {useDispatch, useGraph, useGraphDispatch, useAppState} from "../../../reducers/hooks";
+import {useDispatch, useGraph, useGraphDispatch, useAppState} from "../../../hooks/AppStateAndGraphhooks";
 import {AppActionType, Collections} from "../../../reducers/AppStateReducer";
 import React, {useContext, useRef} from "react";
 import {GraphContext, GraphDispatchContext} from "../../../reducers/GraphContext";
@@ -11,7 +11,7 @@ import {SettingsPanel} from "../SettingsPanel/SettingsPanel";
 import OutsideAlerter from "../../ui/OutsideAlerter";
 import {ToggleLabelPanelButton} from "../../Buttons/ToggleLabelPanelButton";
 import { useMediaQuery } from 'react-responsive'
-import {Desktop, Mobile, Tablet} from "../../../useMediaQuery";
+import {Desktop, Mobile, Tablet} from "../../../hooks/useMediaQuery";
 import {All} from "../../Buttons/All";
 import {RecentlyDeleted} from "../../Buttons/RecentlyDeleted";
 

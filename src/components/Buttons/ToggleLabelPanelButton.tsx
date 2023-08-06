@@ -1,7 +1,7 @@
 import {AppActionType} from "../../reducers/AppStateReducer";
 import {Button} from "../ui/Button";
 import React from "react";
-import {useDispatch} from "../../reducers/hooks";
+import {useDispatch} from "../../hooks/AppStateAndGraphhooks";
 
 
 export function ToggleLabelPanelButton()

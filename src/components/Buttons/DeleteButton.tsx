@@ -1,6 +1,6 @@
 import {AppActionType, Collections} from "../../reducers/AppStateReducer";
 import React from "react";
-import {useAppState, useDispatch, useGraph, useGraphDispatch} from "../../reducers/hooks";
+import {useAppState, useDispatch, useGraph, useGraphDispatch} from "../../hooks/AppStateAndGraphhooks";
 import {Button} from "../ui/Button";
 import {GraphActionType} from "../../reducers/GraphReducer";
 

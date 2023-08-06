@@ -1,6 +1,6 @@
 
 
-import {useAppState} from "../../../reducers/hooks";
+import {useAppState} from "../../../hooks/AppStateAndGraphhooks";
 import {LightModeButton} from "../../Buttons/LightModeButton";
 import {UploadButton} from "../../Buttons/UploadButton";
 import {DownloadButton} from "../../Buttons/DownloadButton";

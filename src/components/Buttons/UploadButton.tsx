@@ -1,7 +1,7 @@
-import {useAppState, useDispatch, useGraphDispatch} from "../../reducers/hooks";
+import {useAppState, useDispatch, useGraphDispatch} from "../../hooks/AppStateAndGraphhooks";
 import {ListItem} from "./ListItem";
 import React, {useRef} from "react";
-import {useUpload} from "../../useUpload";
+import {useUpload} from "../../hooks/useUpload";
 import {GraphActionType, GraphState} from "../../reducers/GraphReducer";
 
 export function UploadButton()
