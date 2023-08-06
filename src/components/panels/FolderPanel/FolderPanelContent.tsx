@@ -103,7 +103,6 @@ export function FolderPanelContent()
 
         if(isMobile)
         {
-
             dispatch({
                 type: AppActionType.closeLabelPanel
             })
