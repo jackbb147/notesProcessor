@@ -1,6 +1,6 @@
 import {useContext} from "react";
-import {AppStateContext, AppStateDispatchContext} from "./AppStateContext";
-import {GraphContext, GraphDispatchContext} from "./GraphContext";
+import {AppStateContext, AppStateDispatchContext} from "../reducers/AppStateContext";
+import {GraphContext, GraphDispatchContext} from "../reducers/GraphContext";
 
 
 export function useAppState()

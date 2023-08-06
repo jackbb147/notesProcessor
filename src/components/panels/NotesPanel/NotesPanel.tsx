@@ -1,4 +1,4 @@
-import {Desktop, Tablet, Mobile} from "../../../useMediaQuery";
+import {Desktop, Tablet, Mobile} from "../../../hooks/useMediaQuery";
 import {Desktop_NotesPanel, } from "./Desktop_NotesPanel";
 import {Tablet_NotesPanel} from "./Tablet_NotesPanel";
 import {Mobile_NotesPanel} from "./Mobile_NotesPanel";

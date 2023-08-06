@@ -5,7 +5,7 @@ import {Desktop_SidePanel} from "../../ui/SidePanel/Desktop/Desktop_SidePanel";
 import React from "react";
 import {Node} from "../../../reducers/GraphReducer";
 import {Collections} from "../../../reducers/AppStateReducer";
-import {useDispatch, useGraph, useGraphDispatch, useAppState} from "../../../reducers/hooks";
+import {useDispatch, useGraph, useGraphDispatch, useAppState} from "../../../hooks/AppStateAndGraphhooks";
 
 export function Desktop_NotesPanel({children}:{children: React.ReactNode})
 {

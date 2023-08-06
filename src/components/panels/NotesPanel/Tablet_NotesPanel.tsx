@@ -1,13 +1,11 @@
 
-
 import {NotesPanelContent} from "./NotesPanelContent";
-import {AddNodeButton} from "../../Buttons/AddNodeButton";
-import {EditorSwitch} from "../../EditorView/EditorSwitch";
+
 import {Desktop_SidePanel} from "../../ui/SidePanel/Desktop/Desktop_SidePanel";
 import React from "react";
 import {Node} from "../../../reducers/GraphReducer";
 import {Collections} from "../../../reducers/AppStateReducer";
-import {useDispatch, useGraph, useGraphDispatch, useAppState} from "../../../reducers/hooks";
+import {useDispatch, useGraph, useGraphDispatch, useAppState} from "../../../hooks/AppStateAndGraphhooks";
 
 export function Tablet_NotesPanel({children}:{children: React.ReactNode})
 {

@@ -8,7 +8,7 @@ import {AddNodeButton} from "../../Buttons/AddNodeButton";
 import {EditorSwitch} from "../../EditorView/EditorSwitch";
 import {GraphContext, GraphDispatchContext} from "../../../reducers/GraphContext";
 import {AppStateContext, AppStateDispatchContext} from "../../../reducers/AppStateContext";
-import {Mobile} from "../../../useMediaQuery";
+import {Mobile} from "../../../hooks/useMediaQuery";
 
 export function Mobile_FolderPanel({children}:{children: React.ReactNode})
 {

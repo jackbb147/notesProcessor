@@ -1,6 +1,6 @@
 import {GraphState, Node} from "../../../reducers/GraphReducer";
 import {AppState, Collections} from "../../../reducers/AppStateReducer";
-import {useAppState, useDispatch, useGraph, useGraphDispatch} from "../../../reducers/hooks";
+import {useAppState, useDispatch, useGraph, useGraphDispatch} from "../../../hooks/AppStateAndGraphhooks";
 import {useEffect, useState} from "react";
 
 function getActiveCollection(state:AppState, graph:GraphState):Node[]

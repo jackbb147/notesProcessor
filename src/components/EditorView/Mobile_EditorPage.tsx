@@ -2,7 +2,7 @@ import {TopBar} from "../ui/TopBar";
 import {AddNodeButton} from "../Buttons/AddNodeButton";
 import {EditorSwitch} from "./EditorSwitch";
 import React from "react";
-import {Desktop} from "../../useMediaQuery";
+import {Desktop} from "../../hooks/useMediaQuery";
 import {DesktopEditorPage} from "./DesktopEditorPage";
 import {BackButton} from "../Buttons/BackButton";
 

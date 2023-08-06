@@ -1,7 +1,7 @@
 import {useImmerReducer} from "use-immer";
 import {GraphAction, graphReducer, GraphState} from "./GraphReducer";
-import React,{createContext} from "react";
-
+import React, {createContext, useEffect} from "react";
+import {useLocalStorage} from "usehooks-ts";
 
 export const GraphContext = createContext<GraphState | null>(null);
 export const GraphDispatchContext = createContext<React.Dispatch<GraphAction> | null>(null);
@@ -10,8 +10,7 @@ export const GraphDispatchContext = createContext<React.Dispatch<GraphAction> | 
 
 export function GraphProvider({children}:{children: React.ReactNode})
 {
-
-    const [graph, graphDispatch] = useImmerReducer<GraphState, GraphAction>(graphReducer, {
+    const [locallyStoredGraph, setLocallyStoredGraph] = useLocalStorage<GraphState>("graph", {
         nodes: [
             // TODO delete this
             // {
@@ -32,6 +31,14 @@ export function GraphProvider({children}:{children: React.ReactNode})
             // "Test", "not a test"
         ]
     });
+    const [graph, graphDispatch] = useImmerReducer<GraphState, GraphAction>(graphReducer, locallyStoredGraph);
+
+
+
+    useEffect(()=>{
+        console.log("---- updating local storage ---- ")
+        setLocallyStoredGraph(graph);
+    }, [graph])
 
     return <GraphContext.Provider value={graph}>
         <GraphDispatchContext.Provider value={graphDispatch}>
