@@ -1,6 +1,6 @@
 import {Button} from "../ui/Button";
 import React from "react";
-import {useAppState, useDispatch} from "../../reducers/hooks";
+import {useAppState, useDispatch} from "../../hooks/AppStateAndGraphhooks";
 import {AppActionType} from "../../reducers/AppStateReducer";
 
 export function BackButton()

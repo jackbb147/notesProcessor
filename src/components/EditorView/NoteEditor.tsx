@@ -11,7 +11,7 @@ import {RangeStatic} from "quill";
 import {LabelSelector} from "./LabelSelector";
 import {LastEditedWhen} from "./LastEditedWhen";
 import {ActionMeta, Options} from "react-select";
-import {useGraph, useGraphDispatch} from "../../reducers/hooks";
+import {useGraph, useGraphDispatch} from "../../hooks/AppStateAndGraphhooks";
 
 
 function QuillBoxComponent({val, handleBlur, onFinishSetup, onTouchStart, isReadOnly = false, onEditAttempt=()=>{}, darkModeOn=false}:{

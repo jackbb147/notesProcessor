@@ -1,6 +1,6 @@
 import {LabelSelector} from "./EditorView/LabelSelector";
 import {Overlay} from "./Overlay";
-import {useDispatch, useGraph, useGraphDispatch, useAppState} from "../reducers/hooks";
+import {useDispatch, useGraph, useGraphDispatch, useAppState} from "../hooks/AppStateAndGraphhooks";
 import {ActionMeta, Options} from "react-select";
 import {AppActionType} from "../reducers/AppStateReducer";
 import {GraphActionType} from "../reducers/GraphReducer";

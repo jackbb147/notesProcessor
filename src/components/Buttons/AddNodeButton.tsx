@@ -5,7 +5,7 @@ import React, {useContext} from "react";
 import {GraphContext, GraphDispatchContext} from "../../reducers/GraphContext";
 import {AppStateContext, AppStateDispatchContext} from "../../reducers/AppStateContext";
 import {AppActionType, Collections} from "../../reducers/AppStateReducer";
-import {useAppState, useDispatch} from "../../reducers/hooks";
+import {useAppState, useDispatch} from "../../hooks/AppStateAndGraphhooks";
 
 
 export function AddNodeButton({rootClassName=""}:{rootClassName?: string})
