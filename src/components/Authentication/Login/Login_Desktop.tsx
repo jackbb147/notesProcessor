@@ -3,6 +3,7 @@ import {Cross2Icon} from "@radix-ui/react-icons";
 import {useAppState, useDispatch} from "../../../hooks/AppStateAndGraphhooks";
 import {AppActionType} from "../../../reducers/AppStateReducer";
 import {LoginForm} from "./LoginForm";
+import React from "react";
 
 
 export function Login_Desktop()
@@ -17,6 +18,13 @@ export function Login_Desktop()
                show: openStatus
            })
     }
+
+
+    const handleCreateAccountBtnClick = (e: React.MouseEvent)=>
+    {
+        //     TODO
+    }
+
     return (
         <Dialog.Root open={AppState.showLoginPage} onOpenChange={handleOpenChange}>
             <Dialog.Portal>
@@ -41,6 +49,9 @@ export function Login_Desktop()
                 >
                     <span className={"font-bold"}>Login</span>
                     <LoginForm/>
+                    <div className={"text-center mt-10"}>
+                        Looking to <span onClick={handleCreateAccountBtnClick}>create an account</span> ?
+                    </div>
 
 
                     <Dialog.Close asChild>

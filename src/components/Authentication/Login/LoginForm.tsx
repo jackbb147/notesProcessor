@@ -81,7 +81,6 @@ export function LoginForm()
     return (
         <Form.Root className="w-full">
             <EmailFormField/>
-            <UsernameFormField/>
             <PasswordFormField/>
 
             <Form.Submit asChild>
