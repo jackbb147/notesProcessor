@@ -11,7 +11,8 @@ export enum AppActionType
     setShowLabelSelectorPopup,
     setShowSettingsPanel,
     setShowRegisterPage,
-    setShowLoginPage
+    setShowLoginPage,
+    setIsLoggedIn
 }
 
 
@@ -28,6 +29,7 @@ export type AppAction =
     | {type: AppActionType.setShowSettingsPanel, show: boolean}
     | {type: AppActionType.setShowRegisterPage, show: boolean}
     | {type: AppActionType.setShowLoginPage, show: boolean}
+    | {type: AppActionType.setIsLoggedIn, isLoggedIn: boolean}
 
 
 export enum Collections
@@ -49,7 +51,8 @@ export interface AppState
     showLabelSelectorPopup: boolean,
     showSettingsPanel: boolean,
     showRegisterPage: boolean,
-    showLoginPage: boolean
+    showLoginPage: boolean,
+    isLoggedIn: boolean
 }
 
 
@@ -125,6 +128,12 @@ export function AppStateReducer(draft: AppState, action: AppAction)
         case AppActionType.setShowRegisterPage:
         {
             draft.showRegisterPage = action.show;
+            break;
+        }
+
+        case AppActionType.setIsLoggedIn:
+        {
+            draft.isLoggedIn = action.isLoggedIn;
             break;
         }
 
