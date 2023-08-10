@@ -1,4 +1,4 @@
-import {Desktop, Tablet, Mobile} from "../../hooks/useMediaQuery";
+import {Desktop, Tablet, Mobile} from "../../../hooks/useMediaQuery";
 import {Register_Desktop} from "./Register_Desktop";
 import {Register_Tablet} from "./Register_Tablet";
 import {Register_Mobile} from "./Register_Mobile";
