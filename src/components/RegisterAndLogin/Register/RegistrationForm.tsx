@@ -1,4 +1,5 @@
 import * as Form from "@radix-ui/react-form";
+import {InputComponent} from "../Forms/InputComponent";
 
 function EmailFormField()
 {
@@ -19,6 +20,7 @@ function EmailFormField()
                     type="email"
                     required
                 />
+
             </Form.Control>
         </Form.Field>
     )
