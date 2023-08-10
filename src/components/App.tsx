@@ -18,9 +18,9 @@ import {NotesPanel} from "./panels/NotesPanel/NotesPanel";
 import {TopBar} from "./ui/TopBar";
 import {LabelSelectorPopUp} from "./LabelSelectorPopUp";
 import {EditorPage} from "./EditorView/EditorPage";
-import {Register} from "./Authentication/Register/Register";
+import {Register} from "./RegisterAndLogin/Register/Register";
 import {useAppState} from "../hooks/AppStateAndGraphhooks";
-import {Login} from "./Authentication/Login/Login";
+import {Login} from "./RegisterAndLogin/Login/Login";
 
 export function ensure<T>(argument: T | undefined | null, message: string = 'This value was promised to be there.'): T {
     if (argument === undefined || argument === null) {

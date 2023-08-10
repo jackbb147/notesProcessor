@@ -1,11 +1,13 @@
 import {useAppState, useDispatch} from "../../../hooks/AppStateAndGraphhooks";
 import React from "react";
 import {AppActionType} from "../../../reducers/AppStateReducer";
-export function ToLogin()
+
+
+
+function ToLoginBtn()
 {
-    const AppState = useAppState()
     const dispatch = useDispatch();
-    const handleCreateAccountBtnClick = (e: React.MouseEvent)=>
+    const handleClick = (e: React.MouseEvent)=>
     {
         //     TODO
         dispatch({
@@ -19,42 +21,61 @@ export function ToLogin()
         })
     }
     return (
+        <span
+            className={`
+                            text-button
+                            cursor-pointer
+                            `}
+            onClick={handleClick}> Log in</span>
+    )
+}
+
+function ToRegisterBtn()
+{
+
+    const dispatch = useDispatch();
+    const handleClick = (e: React.MouseEvent)=>
+    {
+        //     TODO
+        dispatch({
+            type: AppActionType.setShowLoginPage,
+            show: false
+        })
+
+        dispatch({
+            type: AppActionType.setShowRegisterPage,
+            show: true
+        })
+    }
+
+    return (
+        <span
+            className={`
+                            text-button
+                            cursor-pointer
+                            
+                            `}
+            onClick={handleClick}> create an account</span>
+    )
+}
+
+export function ToLogin()
+{
+    return (
         <div className={"text-center mt-10 font-bold"}>
             Already have an account?
-            <span
-                className={`
-                            text-button
-                            `}
-                onClick={handleCreateAccountBtnClick}> Log in</span>
+            <ToLoginBtn/>
         </div>
     )
 }
 
 export function ToRegister()
 {
-    const AppState = useAppState()
-    const dispatch = useDispatch();
-    const handleCreateAccountBtnClick = (e: React.MouseEvent)=>
-    {
-        //     TODO
-        dispatch({
-            type: AppActionType.setShowLoginPage,
-            show: false
-        })
 
-        dispatch({
-            type: AppActionType.setShowRegisterPage,
-            show: true
-        })
-    }
     return (
         <div className={"text-center mt-10 font-bold"}>
             Looking to
-            <span
-                className={`
-                            text-button
-                            `}
-                onClick={handleCreateAccountBtnClick}> create an account</span> ?
+            <ToRegisterBtn/> ?
         </div>
     )
 }
