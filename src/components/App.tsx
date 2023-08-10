@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import '../App.css';
 import {GraphAction, GraphActionType, graphReducer, GraphState, Node} from "../reducers/GraphReducer";
 import {AppAction, AppActionType, AppState, AppStateReducer, Collections} from "../reducers/AppStateReducer";
@@ -19,6 +19,7 @@ import {TopBar} from "./ui/TopBar";
 import {LabelSelectorPopUp} from "./LabelSelectorPopUp";
 import {EditorPage} from "./EditorView/EditorPage";
 import {Register} from "./Register/Register";
+import {useAppState} from "../hooks/AppStateAndGraphhooks";
 
 export function ensure<T>(argument: T | undefined | null, message: string = 'This value was promised to be there.'): T {
     if (argument === undefined || argument === null) {
@@ -30,12 +31,29 @@ export function ensure<T>(argument: T | undefined | null, message: string = 'Thi
 
 function Container({children}: {children: React.ReactNode})
 {
+
+    const AppState = useAppState();
+    useEffect(()=>{
+
+        const html = document.querySelector("html")
+        if(html == null) return;
+        if(AppState.darkModeOn)
+        {
+            if(!(html.classList.contains("dark")))
+                html.classList.add("dark");
+        }else
+        {
+            html.classList.remove("dark");
+        }
+
+    }, [AppState.darkModeOn])
+
     const state = useContext(AppStateContext);
     const dispatch = useContext(AppStateDispatchContext);
     if(dispatch === null || state === null) throw Error("state or dispatch is null. ")
 
     return (
-        <div className={`App w-full h-full ${state.darkModeOn && "dark"}`}>
+        <div className={`App w-full h-full` }>
             {children}
         </div>
     )

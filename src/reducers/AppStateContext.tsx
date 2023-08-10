@@ -19,7 +19,7 @@ export function AppStateProvider({ children}:{children: React.ReactNode}) {
         showLabelSelectorPopup: false,
         showSettingsPanel: false,
         showLoginPage: false,
-        showRegisterPage: true 
+        showRegisterPage: true
     });
 
     return (
