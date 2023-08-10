@@ -76,7 +76,7 @@ function UsernameFormField()
 
 
 
-export function RegistrationForm()
+export function LoginForm()
 {
     return (
         <Form.Root className="w-full">

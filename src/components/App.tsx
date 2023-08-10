@@ -20,6 +20,7 @@ import {LabelSelectorPopUp} from "./LabelSelectorPopUp";
 import {EditorPage} from "./EditorView/EditorPage";
 import {Register} from "./Authentication/Register/Register";
 import {useAppState} from "../hooks/AppStateAndGraphhooks";
+import {Login} from "./Authentication/Login/Login";
 
 export function ensure<T>(argument: T | undefined | null, message: string = 'This value was promised to be there.'): T {
     if (argument === undefined || argument === null) {
@@ -71,6 +72,7 @@ function App() {
                         <RecoverNodePopup/>
                         <LabelSelectorPopUp/>
                         <Register/>
+                        <Login/>
                         <FolderPanel>
                             <div className={"App__main bg-white h-full grow w-full"}>
                                 <NotesPanel>
