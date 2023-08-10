@@ -49,8 +49,13 @@ export function Login_Desktop()
                 >
                     <span className={"font-bold"}>Login</span>
                     <LoginForm/>
-                    <div className={"text-center mt-10"}>
-                        Looking to <span onClick={handleCreateAccountBtnClick}>create an account</span> ?
+                    <div className={"text-center mt-10 font-bold"}>
+                        Looking to
+                        <span
+                            className={`
+                            text-button
+                            `}
+                            onClick={handleCreateAccountBtnClick}> create an account</span> ?
                     </div>
 
 

@@ -1,4 +1,5 @@
 import * as Form from "@radix-ui/react-form";
+import React from "react";
 
 function EmailFormField()
 {
@@ -78,8 +79,14 @@ function UsernameFormField()
 
 export function LoginForm()
 {
+
+    const handleSubmit = (event:React.FormEvent)=>{
+        debugger; //TODO
+    }
     return (
-        <Form.Root className="w-full">
+        <Form.Root
+            onSubmit={handleSubmit}
+            className="w-full">
             <EmailFormField/>
             <PasswordFormField/>
 
