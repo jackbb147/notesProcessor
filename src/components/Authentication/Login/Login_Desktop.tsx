@@ -4,6 +4,7 @@ import {useAppState, useDispatch} from "../../../hooks/AppStateAndGraphhooks";
 import {AppActionType} from "../../../reducers/AppStateReducer";
 import {LoginForm} from "./LoginForm";
 import React from "react";
+import {ToRegister} from "../RegisterLoginRedirect/Redirect";
 
 
 export function Login_Desktop()
@@ -20,10 +21,7 @@ export function Login_Desktop()
     }
 
 
-    const handleCreateAccountBtnClick = (e: React.MouseEvent)=>
-    {
-        //     TODO
-    }
+
 
     return (
         <Dialog.Root open={AppState.showLoginPage} onOpenChange={handleOpenChange}>
@@ -49,15 +47,7 @@ export function Login_Desktop()
                 >
                     <span className={"font-bold"}>Login</span>
                     <LoginForm/>
-                    <div className={"text-center mt-10 font-bold"}>
-                        Looking to
-                        <span
-                            className={`
-                            text-button
-                            `}
-                            onClick={handleCreateAccountBtnClick}> create an account</span> ?
-                    </div>
-
+                    <ToRegister/>
 
                     <Dialog.Close asChild>
                         <button

@@ -4,6 +4,7 @@ import {Cross2Icon} from '@radix-ui/react-icons';
 import {useAppState, useDispatch} from "../../../hooks/AppStateAndGraphhooks";
 import {AppActionType} from "../../../reducers/AppStateReducer";
 import {RegistrationForm} from "./RegistrationForm";
+import {ToLogin} from "../RegisterLoginRedirect/Redirect";
 
 
 export function Register_Desktop() {
@@ -44,6 +45,8 @@ export function Register_Desktop() {
                     >
                         <span className={"font-bold"}>Register</span>
                         <RegistrationForm/>
+
+                        <ToLogin/>
 
 
                         <Dialog.Close asChild>
