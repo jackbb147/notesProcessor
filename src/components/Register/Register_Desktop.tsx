@@ -42,13 +42,13 @@ export function Register_Desktop() {
                             shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] 
                             focus:outline-none`}
                     >
-                        Register
+                        <span className={"font-bold"}>Register</span>
                         <RegistrationForm/>
 
 
                         <Dialog.Close asChild>
                             <button
-                                className="text-violet11 hover:bg-violet4 focus:shadow-violet7 absolute top-[10px] right-[10px] inline-flex h-[25px] w-[25px] appearance-none items-center justify-center rounded-full focus:shadow-[0_0_0_2px] focus:outline-none"
+                                className=" text-black dark:text-white focus:shadow-violet7 absolute top-[10px] right-[10px] inline-flex h-[25px] w-[25px] appearance-none items-center justify-center rounded-full focus:shadow-[0_0_0_2px] focus:outline-none"
                                 aria-label="Close"
                             >
                                 <Cross2Icon/>

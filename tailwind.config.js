@@ -32,6 +32,7 @@ module.exports = {
         dark_primary: "#222831",
         dark_selectedItem_2: "#FFD369",
         dark_overlay: "black",
+        button: "#4ECFEC",
         ...mauve,
         ...violet,
         ...red,
