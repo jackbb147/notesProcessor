@@ -24,7 +24,7 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
       activeLabel: undefined,
       showLabelSelectorPopup: false,
       showSettingsPanel: false,
-      showLoginPage: false,
+      showLoginPage: true,
       showRegisterPage: false,
       isLoggedIn: false, //todo check for cookie
     },
