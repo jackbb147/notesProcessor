@@ -15,7 +15,7 @@ export function EditorPage() {
       </Desktop>
 
       <Tablet>
-        <Tablet_EditorPage />
+        <DesktopEditorPage />
       </Tablet>
 
       <Mobile>

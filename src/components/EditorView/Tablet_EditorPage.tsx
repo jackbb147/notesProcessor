@@ -13,7 +13,7 @@ export function Tablet_EditorPage() {
         <div id={"editorButtonGroup"} className={"w-1/2  "} />
       </TopBar>
 
-      <div className={"flex-grow"} style={{}}>
+      <div className={"flex-grow overflow-hidden h-full"} style={{}}>
         <EditorSwitch />
       </div>
     </div>

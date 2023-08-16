@@ -13,7 +13,7 @@ export function Mobile_EditorPage() {
         <BackButton />
       </TopBar>
 
-      <div className={"flex-grow"} style={{}}>
+      <div className={"flex-grow overflow-hidden h-full"} style={{}}>
         <EditorSwitch />
       </div>
     </div>
