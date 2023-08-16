@@ -1,8 +1,3 @@
-
-
-export function Register_Mobile()
-{
-    return (
-        <></>
-    )
+export function Register_Mobile() {
+  return <></>;
 }

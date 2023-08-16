@@ -1,61 +1,64 @@
 * {
-    box-sizing: border-box;
-    /*display: none;*/
+  box-sizing: border-box;
+  /*display: none;*/
 }
 
-html, body {
-    height: 100%;
-    margin: 0;
-    width: 100%;
+html,
+body {
+  height: 100%;
+  margin: 0;
+  width: 100%;
 }
 body {
-    /*padding: 25px;*/
+  /*padding: 25px;*/
 }
 
 #editor-container {
-    border: 1px solid #ccc;
-    font-family: 'Open Sans', Helvetica, sans-serif;
-    /*todo refactor this font size */
-    /*font-size: 15px;*/
-    height: 200px;
-    margin: 0 auto;
-    width: 450px;
+  border: 1px solid #ccc;
+  font-family: "Open Sans", Helvetica, sans-serif;
+  /*todo refactor this font size */
+  /*font-size: 15px;*/
+  height: 200px;
+  margin: 0 auto;
+  width: 450px;
 }
 #editor-container h1 + p,
 #editor-container h2 + p {
-    margin-top: 0.5em;
+  margin-top: 0.5em;
 }
 #editor-container blockquote {
-    border-left: 4px solid #111;
-    padding-left: 1em;
+  border-left: 4px solid #111;
+  padding-left: 1em;
 }
 #editor-container hr {
-    border: none;
-    color: #111;
-    letter-spacing: 1em;
-    text-align: center;
+  border: none;
+  color: #111;
+  letter-spacing: 1em;
+  text-align: center;
 }
 #editor-container hr:before {
-    content: '...';
+  content: "...";
 }
 
-#tooltip-controls, #sidebar-controls {
-    text-align: center;
+#tooltip-controls,
+#sidebar-controls {
+  text-align: center;
 }
 
 button {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 18px;
-    padding: 0;
-    height: 32px;
-    width: 32px;
-    text-align: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 18px;
+  padding: 0;
+  height: 32px;
+  width: 32px;
+  text-align: center;
 }
-button:active, button:focus {
-    outline: none;
+button:active,
+button:focus {
+  outline: none;
 }
 
 /*.mathbox-inline {*/
@@ -63,13 +66,10 @@ button:active, button:focus {
 /*    border: 1px solid red;*/
 /*}*/
 
-
-mjx-container{
-    display: inline!important;
+mjx-container {
+  display: inline !important;
 }
 
-.ql-hidden{
-    display: none;
+.ql-hidden {
+  display: none;
 }
-
-

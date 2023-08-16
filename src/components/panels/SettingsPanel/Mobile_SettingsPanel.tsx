@@ -1,18 +1,17 @@
-import {useAppState} from "../../../hooks/AppStateAndGraphhooks";
-import {LightModeButton} from "../../Buttons/LightModeButton";
-import {UploadButton} from "../../Buttons/UploadButton";
-import {DownloadButton} from "../../Buttons/DownloadButton";
-import {CloseSettingsPanelButton} from "../../Buttons/CloseSettingsPanelButton";
-import {Close} from "@radix-ui/react-popover";
+import { useAppState } from "../../../hooks/AppStateAndGraphhooks";
+import { LightModeButton } from "../../Buttons/LightModeButton";
+import { UploadButton } from "../../Buttons/UploadButton";
+import { DownloadButton } from "../../Buttons/DownloadButton";
+import { CloseSettingsPanelButton } from "../../Buttons/CloseSettingsPanelButton";
+import { Close } from "@radix-ui/react-popover";
 
-export function Mobile_SettingsPanel()
-{
-    const state = useAppState();
-    if(state.showSettingsPanel)
-    {
-        return (
-            <div className={`
-                ${state.darkModeOn ? 'bg-dark_secondary' : 'bg-grey'}
+export function Mobile_SettingsPanel() {
+  const state = useAppState();
+  if (state.showSettingsPanel) {
+    return (
+      <div
+        className={`
+                ${state.darkModeOn ? "bg-dark_secondary" : "bg-grey"}
                 absolute
                 left-0 
                 z-40 
@@ -30,20 +29,18 @@ export function Mobile_SettingsPanel()
                 border-opacity-25
                 z-30
             `}
-            >
-
-                <div className={'flex flex-col  h-full'}>
-                    <CloseSettingsPanelButton/>
-                    <LightModeButton/>
-                    <div className={'mt-auto flex flex-col justify-center w-full'}>
-                        <UploadButton/>
-                        <DownloadButton/>
-                    </div>
-                </div>
-            </div>
-        )
-    }else
-    {
-        return <>  </>
-    }
+      >
+        <div className={"flex flex-col  h-full"}>
+          <CloseSettingsPanelButton />
+          <LightModeButton />
+          <div className={"mt-auto flex flex-col justify-center w-full"}>
+            <UploadButton />
+            <DownloadButton />
+          </div>
+        </div>
+      </div>
+    );
+  } else {
+    return <> </>;
+  }
 }

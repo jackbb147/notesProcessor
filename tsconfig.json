@@ -1,12 +1,8 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "types": [ "@types/wicg-file-system-access"],
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "types": ["@types/wicg-file-system-access"],
 
     "allowJs": true,
     "skipLibCheck": true,
@@ -22,7 +18,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }

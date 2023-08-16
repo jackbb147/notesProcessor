@@ -1,4 +1,1 @@
-export function Login_Mobile()
-{
-
-}
+export function Login_Mobile() {}

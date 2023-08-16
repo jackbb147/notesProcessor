@@ -1,32 +1,32 @@
-import * as Dialog from '@radix-ui/react-dialog';
-import * as Form from '@radix-ui/react-form';
-import {Cross2Icon} from '@radix-ui/react-icons';
-import {useAppState, useDispatch} from "../../../hooks/AppStateAndGraphhooks";
-import {AppActionType} from "../../../reducers/AppStateReducer";
-import {RegistrationForm} from "./RegistrationForm";
-import {ToLogin} from "../RegisterLoginRedirect/Redirect";
-
+import * as Dialog from "@radix-ui/react-dialog";
+import * as Form from "@radix-ui/react-form";
+import { Cross2Icon } from "@radix-ui/react-icons";
+import { useAppState, useDispatch } from "../../../hooks/AppStateAndGraphhooks";
+import { AppActionType } from "../../../reducers/AppStateReducer";
+import { RegistrationForm } from "./RegistrationForm";
+import { ToLogin } from "../RegisterLoginRedirect/Redirect";
 
 export function Register_Desktop() {
+  const AppState = useAppState();
+  const dispatch = useDispatch();
 
-    const AppState = useAppState();
-    const dispatch = useDispatch();
+  function handleOpenChange(openStatus: boolean) {
+    dispatch({
+      type: AppActionType.setShowRegisterPage,
+      show: openStatus,
+    });
+  }
 
-
-    function handleOpenChange(openStatus: boolean) {
-        dispatch({
-            type: AppActionType.setShowRegisterPage,
-            show: openStatus
-        })
-    }
-
-    return (
-        <div className={`${AppState.darkModeOn && 'dark'}`}>
-            <Dialog.Root open={AppState.showRegisterPage} onOpenChange={handleOpenChange}>
-                <Dialog.Portal>
-                    <Dialog.Overlay className="bg-blackA9 data-[state=open]:animate-overlayShow fixed inset-0"/>
-                    <Dialog.Content
-                        className={`
+  return (
+    <div className={`${AppState.darkModeOn && "dark"}`}>
+      <Dialog.Root
+        open={AppState.showRegisterPage}
+        onOpenChange={handleOpenChange}
+      >
+        <Dialog.Portal>
+          <Dialog.Overlay className="bg-blackA9 data-[state=open]:animate-overlayShow fixed inset-0" />
+          <Dialog.Content
+            className={`
                             data-[state=open]:animate-contentShow 
                             fixed 
                             top-[50%] 
@@ -42,24 +42,23 @@ export function Register_Desktop() {
                             p-[25px] 
                             shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] 
                             focus:outline-none`}
-                    >
-                        <span className={"font-bold"}>Register</span>
-                        <RegistrationForm/>
+          >
+            <span className={"font-bold"}>Register</span>
+            <RegistrationForm />
 
-                        <ToLogin/>
+            <ToLogin />
 
-
-                        <Dialog.Close asChild>
-                            <button
-                                className=" text-black dark:text-white focus:shadow-violet7 absolute top-[10px] right-[10px] inline-flex h-[25px] w-[25px] appearance-none items-center justify-center rounded-full focus:shadow-[0_0_0_2px] focus:outline-none"
-                                aria-label="Close"
-                            >
-                                <Cross2Icon/>
-                            </button>
-                        </Dialog.Close>
-                    </Dialog.Content>
-                </Dialog.Portal>
-            </Dialog.Root>
-        </div>
-    )
+            <Dialog.Close asChild>
+              <button
+                className=" text-black dark:text-white focus:shadow-violet7 absolute top-[10px] right-[10px] inline-flex h-[25px] w-[25px] appearance-none items-center justify-center rounded-full focus:shadow-[0_0_0_2px] focus:outline-none"
+                aria-label="Close"
+              >
+                <Cross2Icon />
+              </button>
+            </Dialog.Close>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
+    </div>
+  );
 }

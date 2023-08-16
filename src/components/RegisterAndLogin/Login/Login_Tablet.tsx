@@ -1,4 +1,1 @@
-export function Login_Tablet()
-{
-
-}
+export function Login_Tablet() {}

@@ -1,7 +1,3 @@
-
-export function Register_Tablet()
-{
-    return (
-        <></>
-    )
+export function Register_Tablet() {
+  return <></>;
 }

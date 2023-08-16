@@ -1,13 +1,16 @@
 import React from "react";
 
-export function Overlay({children, handleClick=()=>{}}:{
-    children?: React.ReactNode,
-    handleClick?: (e: React.MouseEvent)=> any
+export function Overlay({
+  children,
+  handleClick = () => {},
+}: {
+  children?: React.ReactNode;
+  handleClick?: (e: React.MouseEvent) => any;
 }) {
-    return (
-        <>
-            <div
-                className={(`
+  return (
+    <>
+      <div
+        className={`
                 w-full
                 h-full
                 absolute
@@ -16,12 +19,12 @@ export function Overlay({children, handleClick=()=>{}}:{
                 bg-dark_overlay
                 opacity-60
                 z-10
-            `)}
-                onClick={handleClick}
-            >
-            </div>
+            `}
+        onClick={handleClick}
+      ></div>
 
-            <div className={`
+      <div
+        className={`
                 absolute
                
                 top-0
@@ -37,12 +40,11 @@ export function Overlay({children, handleClick=()=>{}}:{
                 z-20
                 
                 min-w-[50%]
-            `}>
-                {/*https://stackoverflow.com/a/9998303/21646295*/}
-                {children}
-            </div>
-
-        </>
-
-    )
+            `}
+      >
+        {/*https://stackoverflow.com/a/9998303/21646295*/}
+        {children}
+      </div>
+    </>
+  );
 }

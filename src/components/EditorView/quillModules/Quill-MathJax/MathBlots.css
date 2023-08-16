@@ -1,27 +1,25 @@
-
-
 .math-tooltip {
-    /*borde*/
-/*    tooltip.root.style["border-radius"] = "5px"*/
-    border-radius: 5px!important;
-    padding: 5px;
+  /*borde*/
+  /*    tooltip.root.style["border-radius"] = "5px"*/
+  border-radius: 5px !important;
+  padding: 5px;
 }
 
 .fullwidth {
-    width: 100%;
+  width: 100%;
 }
 
 /*TODO refactor this selector... */
-.ql-bubble .ql-editor .inlinetex{
-    background-color: #23241f;
-    color: #f8f8f2;
+.ql-bubble .ql-editor .inlinetex {
+  background-color: #23241f;
+  color: #f8f8f2;
 }
 
-.inline-editor-wrapper{
-    /*display: inline-block;*/
-    /*vertical-align: middle;*/
+.inline-editor-wrapper {
+  /*display: inline-block;*/
+  /*vertical-align: middle;*/
 
-    /*width: 1px; !*default width*!*/
+  /*width: 1px; !*default width*!*/
 }
 
 /* ;*/
@@ -32,17 +30,17 @@
                                                                                     ;*/
 
 #editor-container {
-    /*display: none!important;*/
-    /*position: relative!important;*/
-    /*z-index: 20000000000;*/
-    /*overflow: hidden!important;*/
+  /*display: none!important;*/
+  /*position: relative!important;*/
+  /*z-index: 20000000000;*/
+  /*overflow: hidden!important;*/
 }
 
 .ace_autocomplete {
-    /*height: 50px!important;*/
-    /*display: none;*/
-    /*position: absolute!important;*/
-    /*height: 60px!important;*/
-    /*top: 0px!important;*/
-    /*z-index: 0!important;*/
+  /*height: 50px!important;*/
+  /*display: none;*/
+  /*position: absolute!important;*/
+  /*height: 60px!important;*/
+  /*top: 0px!important;*/
+  /*z-index: 0!important;*/
 }

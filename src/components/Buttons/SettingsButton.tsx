@@ -1,31 +1,25 @@
-import {useDispatch, useAppState} from "../../hooks/AppStateAndGraphhooks";
-import {ListItem} from "./ListItem";
-import React, {forwardRef} from "react";
-import {AppActionType} from "../../reducers/AppStateReducer";
+import { useDispatch, useAppState } from "../../hooks/AppStateAndGraphhooks";
+import { ListItem } from "./ListItem";
+import React, { forwardRef } from "react";
+import { AppActionType } from "../../reducers/AppStateReducer";
 
-export const SettingsButton= forwardRef((props, ref) =>
-{
-    const state =useAppState()
-    const dispatch = useDispatch()
+export const SettingsButton = forwardRef((props, ref) => {
+  const state = useAppState();
+  const dispatch = useDispatch();
 
-
-
-    function handleClick()
-    {
-        dispatch({
-            type: AppActionType.setShowSettingsPanel,
-            show: !state.showSettingsPanel
-        })
-    }
-    return (
-        <ListItem
-                ref={ref}
-                    text={`Settings`}
-                  onClick={handleClick}
-                  iconOnly={state.LabelPanelClosed}
-                  icon={<span className="material-symbols-outlined">
-                        settings
-                    </span>}
-        />
-    )
-})
+  function handleClick() {
+    dispatch({
+      type: AppActionType.setShowSettingsPanel,
+      show: !state.showSettingsPanel,
+    });
+  }
+  return (
+    <ListItem
+      ref={ref}
+      text={`Settings`}
+      onClick={handleClick}
+      iconOnly={state.LabelPanelClosed}
+      icon={<span className="material-symbols-outlined">settings</span>}
+    />
+  );
+});
