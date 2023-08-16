@@ -5,6 +5,7 @@ import React from "react";
 import { Desktop } from "../../hooks/useMediaQuery";
 import { DesktopEditorPage } from "./DesktopEditorPage";
 import { BackButton } from "../Buttons/BackButton";
+import style from "../ScrollableButHiddenScrollBar.module.css";
 
 export function Mobile_EditorPage() {
   return (
@@ -13,7 +14,10 @@ export function Mobile_EditorPage() {
         <BackButton />
       </TopBar>
 
-      <div className={"flex-grow overflow-hidden h-full"} style={{}}>
+      <div
+        className={`flex-grow overflow-scroll ${style.ScrollableButHiddenScrollBar} h-full`}
+        style={{}}
+      >
         <EditorSwitch />
       </div>
     </div>
