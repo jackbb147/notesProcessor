@@ -34,7 +34,7 @@ export function PasswordFormField() {
       </Form.Control>
       <div className={`flex items-center border-white mt-0.5`}>
         <input
-          className={`w-4 h-4`}
+          className={`w-4 h-4 mr-0.5`}
           type={"checkbox"}
           onClick={toggleShowPassword}
         />{" "}

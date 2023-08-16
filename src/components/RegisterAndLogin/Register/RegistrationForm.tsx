@@ -92,9 +92,32 @@ function UsernameFormField() {
   );
 }
 
+interface registrationInfo {
+  email: string;
+  username: string;
+  password: string;
+}
+async function register(info: registrationInfo) {
+  debugger;
+  return "success";
+}
+
 export function RegistrationForm() {
+  async function handleSubmit(v: any) {
+    // debugger;
+    try {
+      const email = v.target[0].value,
+        username = v.target[1].value,
+        password = v.target[2].value;
+      var status = await register({ email, username, password });
+
+      debugger;
+    } catch (e) {
+      console.error(e);
+    }
+  }
   return (
-    <Form.Root className="w-full">
+    <Form.Root onSubmit={handleSubmit} className="w-full">
       <EmailFormField />
       <UsernameFormField />
       <PasswordFormField />

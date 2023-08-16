@@ -130,7 +130,7 @@ export function FolderPanelContent() {
 
       <div className={"mt-auto"}>
         <EditLabelsButton />
-        {/*<AccountButton />*/}
+        <AccountButton />
         <SettingsButton ref={settingsButtonRef} />
         <OutsideAlerter
           condition={SettingPanelOutsideClickCondition}

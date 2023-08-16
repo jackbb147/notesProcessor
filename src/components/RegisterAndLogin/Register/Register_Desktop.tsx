@@ -5,6 +5,8 @@ import { useAppState, useDispatch } from "../../../hooks/AppStateAndGraphhooks";
 import { AppActionType } from "../../../reducers/AppStateReducer";
 import { RegistrationForm } from "./RegistrationForm";
 import { ToLogin } from "../RegisterLoginRedirect/Redirect";
+import { MySignUpForm } from "../Forms/CreateForm";
+import { ReactHookRegistrationForm } from "../Forms/ReactHookRegistrationForm";
 
 export function Register_Desktop() {
   const AppState = useAppState();
@@ -45,6 +47,8 @@ export function Register_Desktop() {
           >
             <span className={"font-bold"}>Register</span>
             <RegistrationForm />
+            {/*<MySignUpForm />*/}
+            {/*<ReactHookRegistrationForm />*/}
 
             <ToLogin />
 
