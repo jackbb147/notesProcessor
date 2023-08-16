@@ -1,6 +1,7 @@
 import * as Form from "@radix-ui/react-form";
 import { PasswordFormField } from "../Forms/PasswordFormField";
 import { InputComponent } from "../Forms/InputComponent";
+import axios from "axios";
 
 function EmailFormField() {
   return (
@@ -98,20 +99,39 @@ interface registrationInfo {
   password: string;
 }
 async function register(info: registrationInfo) {
-  debugger;
-  return "success";
+  const endpoint = "http://localhost:5046/create";
+  try {
+    // const response = await axios.get("http://localhost:5046/getUsers");
+    const response = await axios.post(
+      endpoint,
+      {},
+      {
+        params: {
+          Name: info.username,
+          Email: info.email,
+          Password: info.password,
+        },
+      },
+    );
+    debugger;
+    return response;
+  } catch (e) {
+    debugger;
+    console.error(e);
+  }
 }
 
 export function RegistrationForm() {
   async function handleSubmit(v: any) {
     // debugger;
+    v.preventDefault();
     try {
       const email = v.target[0].value,
         username = v.target[1].value,
         password = v.target[2].value;
       var status = await register({ email, username, password });
 
-      debugger;
+      // debugger;
     } catch (e) {
       console.error(e);
     }
