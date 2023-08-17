@@ -34,8 +34,14 @@ export interface Node {
   dateLastModified?: Date;
 }
 
+export interface Link {
+  source: string;
+  target: string;
+}
+
 export interface GraphState {
   nodes: Node[];
+  links: Link[];
   deletedNodes: Node[];
   labels: string[];
 }

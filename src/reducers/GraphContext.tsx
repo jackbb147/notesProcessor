@@ -10,6 +10,7 @@ export const GraphDispatchContext =
 export function GraphProvider({ children }: { children: React.ReactNode }) {
   const [locallyStoredGraph, setLocallyStoredGraph] =
     useLocalStorage<GraphState>("graph", {
+      links: [],
       nodes: [
         // TODO delete this
         // {
