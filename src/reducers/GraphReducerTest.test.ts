@@ -134,7 +134,39 @@ describe("GraphReducer", () => {
     expect(state.deletedLinks.length).toBe(0);
   });
 
-  test("add link", () => {});
+  test("add link", () => {
+    let state: GraphState = {
+      nodes: [
+        {
+          id: "1",
+          content: "hello",
+          title: "hello",
+          labels: [],
+        },
+        {
+          id: "2",
+          content: "hello2",
+          title: "hello2",
+          labels: [],
+        },
+      ],
+      links: [],
+      deletedNodes: [],
+      deletedLinks: [],
+      labels: [],
+    };
+    let action: GraphAction = {
+      type: GraphActionType.addLink,
+      link: {
+        source: "1",
+        target: "2",
+      },
+    };
+    graphReducer(state, action);
+    expect(state.links.length).toBe(1);
+    expect(state.links[0].source).toBe("1");
+    expect(state.links[0].target).toBe("2");
+  });
   test("remove link", () => {});
   test("update link", () => {});
   test("recover link", () => {});
