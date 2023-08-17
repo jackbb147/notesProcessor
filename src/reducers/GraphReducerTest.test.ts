@@ -167,7 +167,83 @@ describe("GraphReducer", () => {
     expect(state.links[0].source).toBe("1");
     expect(state.links[0].target).toBe("2");
   });
-  test("remove link", () => {});
-  test("update link", () => {});
-  test("recover link", () => {});
+  test("remove link", () => {
+    let state: GraphState = {
+      nodes: [
+        {
+          id: "1",
+          content: "hello",
+          title: "hello",
+          labels: [],
+        },
+        {
+          id: "2",
+          content: "hello2",
+          title: "hello2",
+          labels: [],
+        },
+      ],
+      links: [
+        {
+          source: "1",
+          target: "2",
+        },
+      ],
+      deletedNodes: [],
+      deletedLinks: [],
+      labels: [],
+    };
+    let action: GraphAction = {
+      type: GraphActionType.removeLink,
+      link: {
+        source: "1",
+        target: "2",
+      },
+    };
+    graphReducer(state, action);
+    expect(state.links.length).toBe(0);
+    expect(state.deletedLinks.length).toBe(1);
+    expect(state.deletedLinks[0].source).toBe("1");
+    expect(state.deletedLinks[0].target).toBe("2");
+  });
+
+  test("recover link", () => {
+    let state: GraphState = {
+      nodes: [
+        {
+          id: "1",
+          content: "hello",
+          title: "hello",
+          labels: [],
+        },
+        {
+          id: "2",
+          content: "hello2",
+          title: "hello2",
+          labels: [],
+        },
+      ],
+      links: [],
+      deletedNodes: [],
+      deletedLinks: [
+        {
+          source: "1",
+          target: "2",
+        },
+      ],
+      labels: [],
+    };
+    let action: GraphAction = {
+      type: GraphActionType.recoverLink,
+      link: {
+        source: "1",
+        target: "2",
+      },
+    };
+    graphReducer(state, action);
+    expect(state.links.length).toBe(1);
+    expect(state.links[0].source).toBe("1");
+    expect(state.links[0].target).toBe("2");
+    expect(state.deletedLinks.length).toBe(0);
+  });
 });
