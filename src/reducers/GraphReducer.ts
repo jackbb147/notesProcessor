@@ -62,6 +62,9 @@ export function graphReducer(draft: GraphState, action: GraphAction): void {
       if (index < 0) return;
       draft.deletedNodes.push(draft.nodes[index]);
       draft.nodes.splice(index, 1);
+      draft.links = draft.links.filter((link) => {
+        return link.source !== action.id && link.target !== action.id;
+      });
       break;
     }
 
