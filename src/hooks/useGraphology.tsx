@@ -15,5 +15,7 @@ export function useGraphology() {
     graph.links.forEach((link) => {
       graphology.addEdge(link.source, link.target);
     });
-  }, [graph]);
+  }, [graph.nodes.length, graph.links.length]);
+
+  return graphologyRef.current;
 }
