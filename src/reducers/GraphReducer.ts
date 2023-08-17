@@ -93,6 +93,15 @@ export function graphReducer(draft: GraphState, action: GraphAction): void {
       if (draft.nodes.findIndex((node) => node.id === action.id) < 0) {
         draft.nodes.push(draft.deletedNodes[index]);
         draft.deletedNodes.splice(index, 1);
+        // recover links that are related to this node
+        draft.deletedLinks.forEach((link) => {
+          if (link.source === action.id || link.target === action.id) {
+            draft.links.push(link);
+          }
+        });
+        draft.deletedLinks = draft.deletedLinks.filter((link) => {
+          return link.source !== action.id && link.target !== action.id;
+        });
       } else {
         alert("GraphNode with specified ID already exists. ");
       }

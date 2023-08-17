@@ -115,6 +115,23 @@ describe("GraphReducer", () => {
       ],
       labels: [],
     };
+    let action: GraphAction = {
+      type: GraphActionType.recoverNode,
+      id: "2",
+    };
+    graphReducer(state, action);
+    expect(state.nodes.length).toBe(2);
+    expect(state.nodes[0].id).toBe("1");
+    expect(state.nodes[0].content).toBe("hello");
+    expect(state.nodes[0].labels.length).toBe(0);
+    expect(state.nodes[1].id).toBe("2");
+    expect(state.nodes[1].content).toBe("hello2");
+    expect(state.nodes[1].labels.length).toBe(0);
+    expect(state.links.length).toBe(1);
+    expect(state.links[0].source).toBe("1");
+    expect(state.links[0].target).toBe("2");
+    expect(state.deletedNodes.length).toBe(0);
+    expect(state.deletedLinks.length).toBe(0);
   });
   test("add link", () => {});
   test("remove link", () => {});
