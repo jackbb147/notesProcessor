@@ -7,7 +7,7 @@ import {
   AppStateContext,
   AppStateDispatchContext,
 } from "../../reducers/AppStateContext";
-import { GraphActionType, Node } from "../../reducers/GraphReducer";
+import { GraphActionType, GraphNode } from "../../reducers/GraphReducer";
 import { AppActionType, Collections } from "../../reducers/AppStateReducer";
 import { NoteEditor } from "./NoteEditor";
 import { ensure } from "../App";
@@ -22,7 +22,7 @@ export function EditorSwitch() {
   if (graph === null || graphDispatch === null)
     throw Error("graph or graphDispatch is null. ");
 
-  var note: Node | undefined;
+  var note: GraphNode | undefined;
   if (state.activeNodeID === undefined) return <></>;
 
   switch (state.activeCollection) {
@@ -40,7 +40,7 @@ export function EditorSwitch() {
     <NoteEditor
       darkModeOn={state.darkModeOn}
       note={note} //https://stackoverflow.com/a/54738437/21646295
-      onBlur={(note: Node) => {
+      onBlur={(note: GraphNode) => {
         // debugger;
         if (note.content.length !== 0) {
           graphDispatch({

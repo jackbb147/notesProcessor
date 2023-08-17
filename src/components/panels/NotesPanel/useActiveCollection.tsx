@@ -1,4 +1,4 @@
-import { GraphState, Node } from "../../../reducers/GraphReducer";
+import { GraphState, GraphNode } from "../../../reducers/GraphReducer";
 import { AppState, Collections } from "../../../reducers/AppStateReducer";
 import {
   useAppState,
@@ -16,7 +16,7 @@ export function useActiveCollection() {
   const dispatch = useDispatch();
 
   const getActiveCollection = useCallback(() => {
-    var collection: Node[];
+    var collection: GraphNode[];
     switch (state.activeCollection) {
       case Collections.All: {
         collection = graph.nodes;
@@ -43,9 +43,9 @@ export function useActiveCollection() {
     getActiveCollection(),
   );
 
-  // function getActiveCollection():Node[]
+  // function getActiveCollection():GraphNode[]
   // {
-  //     var collection:Node[];
+  //     var collection:GraphNode[];
   //     switch (state.activeCollection) {
   //         case Collections.All: {
   //             collection = graph.nodes

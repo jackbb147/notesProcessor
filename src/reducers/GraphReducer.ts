@@ -15,9 +15,9 @@ export enum GraphActionType {
 }
 
 export type GraphAction =
-  | { type: GraphActionType.addNode; node: Node }
+  | { type: GraphActionType.addNode; node: GraphNode }
   | { type: GraphActionType.removeNode; id: string }
-  | { type: GraphActionType.updateNode; node: Node }
+  | { type: GraphActionType.updateNode; node: GraphNode }
   | { type: GraphActionType.recoverNode; id: string }
   | { type: GraphActionType.addLabel; label: string }
   | { type: GraphActionType.removeLabel; label: string }
@@ -25,7 +25,7 @@ export type GraphAction =
   | { type: GraphActionType.merge; other: GraphState }
   | { type: GraphActionType.permanentRemoveNode; id: string };
 
-export interface Node {
+export interface GraphNode {
   id: string;
   title: string;
   content: string;
@@ -34,15 +34,16 @@ export interface Node {
   dateLastModified?: Date;
 }
 
-export interface Link {
+export interface GraphLink {
   source: string;
   target: string;
 }
 
 export interface GraphState {
-  nodes: Node[];
-  links: Link[];
-  deletedNodes: Node[];
+  nodes: GraphNode[];
+  links: GraphLink[];
+  deletedNodes: GraphNode[];
+  deletedLinks: GraphLink[];
   labels: string[];
 }
 
@@ -62,6 +63,11 @@ export function graphReducer(draft: GraphState, action: GraphAction): void {
       if (index < 0) return;
       draft.deletedNodes.push(draft.nodes[index]);
       draft.nodes.splice(index, 1);
+      draft.links.forEach((link) => {
+        if (link.source === action.id || link.target === action.id) {
+          draft.deletedLinks.push(link);
+        }
+      });
       draft.links = draft.links.filter((link) => {
         return link.source !== action.id && link.target !== action.id;
       });
@@ -88,7 +94,7 @@ export function graphReducer(draft: GraphState, action: GraphAction): void {
         draft.nodes.push(draft.deletedNodes[index]);
         draft.deletedNodes.splice(index, 1);
       } else {
-        alert("Node with specified ID already exists. ");
+        alert("GraphNode with specified ID already exists. ");
       }
       break;
     }

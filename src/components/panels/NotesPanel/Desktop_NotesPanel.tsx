@@ -3,7 +3,7 @@ import { AddNodeButton } from "../../Buttons/AddNodeButton";
 import { EditorSwitch } from "../../EditorView/EditorSwitch";
 import { Desktop_SidePanel } from "../../ui/SidePanel/Desktop/Desktop_SidePanel";
 import React from "react";
-import { Node } from "../../../reducers/GraphReducer";
+import { GraphNode } from "../../../reducers/GraphReducer";
 import { Collections } from "../../../reducers/AppStateReducer";
 import {
   useDispatch,
@@ -27,7 +27,7 @@ export function Desktop_NotesPanel({
   // function activeCollection() {
   //     if(graph===null || graphDispatch === null) throw Error("graph or graphDispatch is null. ");
   //     if(state === null) throw Error("state is null.")
-  //     var collection: Node[];
+  //     var collection: GraphNode[];
   //     switch (state.activeCollection) {
   //         case Collections.All: {
   //             collection = graph.nodes

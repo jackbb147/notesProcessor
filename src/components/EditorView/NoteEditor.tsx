@@ -7,7 +7,7 @@ import style from "../ScrollableButHiddenScrollBar.module.css";
 import { MathEditorModule } from "./quillModules/Quill-MathJax/MathEditorModule";
 import "./quillModules/Quill-MathJax/quill.bubble.css";
 import "./quillModules/Quill-MathJax/quill.snow.css";
-import { GraphActionType, Node } from "../../reducers/GraphReducer";
+import { GraphActionType, GraphNode } from "../../reducers/GraphReducer";
 import { RangeStatic } from "quill";
 import { LabelSelector } from "./LabelSelector";
 import { LastEditedWhen } from "./LastEditedWhen";
@@ -212,7 +212,7 @@ function QuillBoxComponent({
  */
 export function NoteEditor({
   note,
-  onBlur = (note: Node) => {},
+  onBlur = (note: GraphNode) => {},
   onFinishSetUp = () => {},
   locked = false,
   onEditAttempt = () => {
@@ -220,8 +220,8 @@ export function NoteEditor({
   },
   darkModeOn = true,
 }: {
-  note: Node;
-  onBlur?: (note: Node) => any;
+  note: GraphNode;
+  onBlur?: (note: GraphNode) => any;
   onFinishSetUp?: () => any;
   locked?: boolean | undefined;
   onEditAttempt?: () => any;
@@ -232,7 +232,7 @@ export function NoteEditor({
 
   const appState = useState();
 
-  const noteRef = useRef<Node>(note); //https://stackoverflow.com/questions/57847594/react-hooks-accessing-up-to-date-state-from-within-a-callback
+  const noteRef = useRef<GraphNode>(note); //https://stackoverflow.com/questions/57847594/react-hooks-accessing-up-to-date-state-from-within-a-callback
   noteRef.current = note;
 
   useEffect(() => {
@@ -298,7 +298,7 @@ export function NoteEditor({
 
   function handleBlur(s: string, firstLine: string = "") {
     // debugger;
-    var newNode: Node = {
+    var newNode: GraphNode = {
       ...noteRef.current,
       content: s,
       title: firstLine,

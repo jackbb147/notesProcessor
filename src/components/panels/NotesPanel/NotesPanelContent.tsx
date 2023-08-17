@@ -5,7 +5,7 @@ import {
   AppStateDispatchContext,
 } from "../../../reducers/AppStateContext";
 import { Button } from "../../ui/Button";
-import { GraphActionType, Node } from "../../../reducers/GraphReducer";
+import { GraphActionType, GraphNode } from "../../../reducers/GraphReducer";
 import { AppActionType, Collections } from "../../../reducers/AppStateReducer";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { ListItem } from "../../Buttons/ListItem";
@@ -58,7 +58,7 @@ export function NotesPanelContent({
   collection,
   topBarButtons,
 }: {
-  collection: Node[];
+  collection: GraphNode[];
   topBarButtons?: React.ReactNode[];
 }) {
   const state = useContext(AppStateContext);
@@ -95,7 +95,7 @@ export function NotesPanelContent({
     });
   }
 
-  function buildOptionalText(node: Node): string {
+  function buildOptionalText(node: GraphNode): string {
     if (
       !node.dateLastModified ||
       !node.dateLastModified.getHours ||
