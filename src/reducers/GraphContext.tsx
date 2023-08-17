@@ -35,6 +35,7 @@ export function GraphProvider({ children }: { children: React.ReactNode }) {
       labels: [
         // "Test", "not a test"
       ],
+      deletedLinks: [],
     });
   const [graph, graphDispatch] = useImmerReducer<GraphState, GraphAction>(
     graphReducer,
