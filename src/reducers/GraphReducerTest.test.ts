@@ -133,6 +133,7 @@ describe("GraphReducer", () => {
     expect(state.deletedNodes.length).toBe(0);
     expect(state.deletedLinks.length).toBe(0);
   });
+
   test("add link", () => {});
   test("remove link", () => {});
   test("update link", () => {});

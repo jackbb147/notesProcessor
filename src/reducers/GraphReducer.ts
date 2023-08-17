@@ -7,6 +7,9 @@ export enum GraphActionType {
   updateNode,
   removeNode,
   recoverNode,
+  addLink,
+  removeLink,
+  recoverLink,
   addLabel,
   removeLabel,
   addLabelToNode,
@@ -23,7 +26,10 @@ export type GraphAction =
   | { type: GraphActionType.removeLabel; label: string }
   | { type: GraphActionType.addLabelToNode; label: string; id: string }
   | { type: GraphActionType.merge; other: GraphState }
-  | { type: GraphActionType.permanentRemoveNode; id: string };
+  | { type: GraphActionType.permanentRemoveNode; id: string }
+  | { type: GraphActionType.addLink; link: GraphLink }
+  | { type: GraphActionType.removeLink; link: GraphLink }
+  | { type: GraphActionType.recoverLink; link: GraphLink };
 
 export interface GraphNode {
   id: string;
@@ -105,6 +111,42 @@ export function graphReducer(draft: GraphState, action: GraphAction): void {
       } else {
         alert("GraphNode with specified ID already exists. ");
       }
+      break;
+    }
+
+    case GraphActionType.addLink: {
+      let newLink = action.link;
+      if (
+        draft.links.some(
+          (link) =>
+            link.source === newLink.source && link.target === newLink.target,
+        )
+      ) {
+        return;
+      }
+      draft.links.push(newLink);
+      break;
+    }
+
+    case GraphActionType.removeLink: {
+      let link = action.link;
+      let index = draft.links.findIndex(
+        (l) => l.source === link.source && l.target === link.target,
+      );
+      if (index < 0) return;
+      draft.deletedLinks.push(draft.links[index]);
+      draft.links.splice(index, 1);
+      break;
+    }
+
+    case GraphActionType.recoverLink: {
+      let link = action.link;
+      let index = draft.deletedLinks.findIndex(
+        (l) => l.source === link.source && l.target === link.target,
+      );
+      if (index < 0) return;
+      draft.links.push(draft.deletedLinks[index]);
+      draft.deletedLinks.splice(index, 1);
       break;
     }
 
