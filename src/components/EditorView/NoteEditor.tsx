@@ -46,6 +46,7 @@ export function NoteEditor({
   const graphDispatch = useGraphDispatch();
 
   const appState = useState();
+  const [infoPanelWidth, setInfoPanelWidth] = useState("25%");
 
   const noteRef = useRef<GraphNode>(note); //https://stackoverflow.com/questions/57847594/react-hooks-accessing-up-to-date-state-from-within-a-callback
   noteRef.current = note;
@@ -213,9 +214,9 @@ export function NoteEditor({
           onEditAttempt={onEditAttempt}
           darkModeOn={darkModeOn}
           onTouchStart={() => {}}
-          width={"65%"}
+          width={`calc(100% - ${infoPanelWidth})`}
         />
-        <NoteInfoSidePanel note={note} width={"35%"} />
+        <NoteInfoSidePanel note={note} width={infoPanelWidth} />
       </div>
 
       <div
