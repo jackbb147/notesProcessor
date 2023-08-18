@@ -2,6 +2,8 @@ import styles from "./styles.module.css";
 import { GraphNode } from "../../../reducers/GraphReducer";
 import { useGraphology } from "../../../hooks/useGraphology";
 import { useEffect, useState } from "react";
+import { ListItem } from "../../Buttons/ListItem";
+import { useGraph } from "../../../hooks/AppStateAndGraphhooks";
 function Separator() {
   return (
     <div
@@ -16,6 +18,7 @@ function Separator() {
 }
 function LinksToThisNote({ note }: { note: GraphNode }) {
   const [graphology, updated] = useGraphology();
+  const GraphState = useGraph();
   const [InNeighbors, setInNeighbors] = useState<string[]>([]);
 
   useEffect(() => {
@@ -23,6 +26,10 @@ function LinksToThisNote({ note }: { note: GraphNode }) {
       console.log("LinksToThisNote");
       setInNeighbors((v) => graphology.inNeighbors(note.id));
       console.log("InNeighbors", InNeighbors);
+      console.log(
+        "InNeighbors",
+        InNeighbors.map((id) => graphology.getNodeAttributes(id)),
+      );
     } catch (e) {
       console.error(e);
     }
@@ -33,7 +40,13 @@ function LinksToThisNote({ note }: { note: GraphNode }) {
       <div>Links to this note</div>
       <div>
         {InNeighbors.map((id) => (
-          <div>{id}</div>
+          <ListItem
+            key={id}
+            text={
+              GraphState.nodes.find((node) => node.id === id)?.title ?? "error"
+            }
+            icon={<span className="material-symbols-outlined">article</span>}
+          />
         ))}
       </div>
       <Separator />
