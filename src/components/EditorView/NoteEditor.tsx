@@ -19,6 +19,43 @@ import { NoteInfoSidePanel } from "./NoteInfoSidePanel/NoteInfoSidePanel";
 import { Button } from "../ui/Button";
 import { AppActionType } from "../../reducers/AppStateReducer";
 
+function ToggleSideInfoPanelButton() {
+  const appState = useAppState();
+  const dispatch = useDispatch();
+  const [color, setColor] = useState("");
+  useEffect(() => {
+    if (appState.darkModeOn) {
+      if (appState.showNoteInfoPanel) {
+        setColor("#FFC700");
+      } else {
+        setColor("white");
+      }
+    } else {
+      if (appState.showNoteInfoPanel) {
+        setColor("#FFC700");
+      } else {
+        setColor("black");
+      }
+    }
+  }, [appState.showNoteInfoPanel, appState.darkModeOn]);
+
+  return (
+    <Button
+      icon={<span className="material-symbols-outlined">info</span>}
+      rootStyles={{
+        color: color,
+      }}
+      onClick={(e) => {
+        e.preventDefault();
+        dispatch({
+          type: AppActionType.setShowNoteInfoPanel,
+          show: !appState.showNoteInfoPanel,
+        });
+      }}
+    />
+  );
+}
+
 /**
  *
  * @param note
@@ -242,7 +279,7 @@ export function NoteEditor({
       >
         <div
           style={{
-            width: "65%",
+            width: "95%",
           }}
         >
           <LabelSelector handleChange={handleChange} labels={note.labels} />
@@ -251,17 +288,12 @@ export function NoteEditor({
         <div
           style={{
             flexGrow: "1",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end",
           }}
         >
-          <Button
-            icon={<span className="material-symbols-outlined">info</span>}
-            onClick={() => {
-              dispatch({
-                type: AppActionType.setShowNoteInfoPanel,
-                show: !appState.showNoteInfoPanel,
-              });
-            }}
-          />
+          <ToggleSideInfoPanelButton />
           {/*<span className="material-symbols-outlined">info</span>*/}
           {/*<LastEditedWhen />*/}
         </div>
