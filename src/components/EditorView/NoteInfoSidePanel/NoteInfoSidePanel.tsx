@@ -37,6 +37,20 @@ function Title({ text }: { text: string }) {
   );
 }
 
+function NoteItem({ note }: { note: GraphNode }) {
+  return (
+    <ListItem
+      key={note.id}
+      text={note.title}
+      icon={<span className="material-symbols-outlined">article</span>}
+      style={{
+        opacity: 0.7,
+        padding: "0",
+      }}
+    />
+  );
+}
+
 function LinksToThisNote({ note }: { note: GraphNode }) {
   const [graphology, updated] = useGraphology();
   const GraphState = useGraph();
@@ -62,19 +76,7 @@ function LinksToThisNote({ note }: { note: GraphNode }) {
           {InNeighbors.map((id) => {
             const node = GraphState.nodes.find((node) => node.id === id);
             if (node) {
-              return (
-                <ListItem
-                  key={id}
-                  text={node.title}
-                  icon={
-                    <span className="material-symbols-outlined">article</span>
-                  }
-                  style={{
-                    opacity: 0.7,
-                    padding: "0",
-                  }}
-                />
-              );
+              return <NoteItem note={node} />;
             } else {
               return null;
             }
@@ -109,19 +111,7 @@ function LinksFromThisNote({ note }: { note: GraphNode }) {
           {OutNeighbors.map((id) => {
             const node = GraphState.nodes.find((node) => node.id === id);
             if (node) {
-              return (
-                <ListItem
-                  key={id}
-                  text={node.title}
-                  icon={
-                    <span className="material-symbols-outlined">article</span>
-                  }
-                  style={{
-                    opacity: 0.7,
-                    padding: "0",
-                  }}
-                />
-              );
+              return <NoteItem note={node} />;
             } else {
               return null;
             }
