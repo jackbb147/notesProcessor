@@ -166,7 +166,7 @@ export function NoteEditor({
       ...noteRef.current,
       content: s,
       title: firstLine,
-      dateLastModified: new Date(),
+      dateLastModified: new Date().toJSON(),
     };
     // debugger;
     onBlur(newNode);

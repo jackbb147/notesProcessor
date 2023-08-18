@@ -96,15 +96,11 @@ export function NotesPanelContent({
   }
 
   function buildOptionalText(node: GraphNode): string {
-    if (
-      !node.dateLastModified ||
-      !node.dateLastModified.getHours ||
-      !node.dateLastModified.getMinutes
-    ) {
-      return "";
-    }
-    let hour = node.dateLastModified.getHours();
-    let minute = node.dateLastModified.getMinutes();
+    if (!node.dateLastModified) return "";
+    const dateLastModified = new Date(node.dateLastModified);
+
+    let hour = dateLastModified.getHours();
+    let minute = dateLastModified.getMinutes();
     let PM = false;
     var res = "";
 
@@ -155,6 +151,11 @@ export function NotesPanelContent({
                           text={node.title}
                           active={node.id === state.activeNodeID}
                           optionalText={buildOptionalText(node)}
+                          icon={
+                            <span className="material-symbols-outlined">
+                              article
+                            </span>
+                          }
                           onClick={() =>
                             dispatch({
                               type: AppActionType.setActiveNodeID,

@@ -36,8 +36,8 @@ export interface GraphNode {
   title: string;
   content: string;
   labels: string[];
-  dateCreated?: Date;
-  dateLastModified?: Date;
+  dateCreated?: string;
+  dateLastModified?: string;
 }
 
 export interface GraphLink {
