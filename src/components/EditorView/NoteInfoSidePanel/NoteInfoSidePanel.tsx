@@ -4,6 +4,7 @@ import { useGraphology } from "../../../hooks/useGraphology";
 import { useEffect, useState } from "react";
 import { ListItem } from "../../Buttons/ListItem";
 import { useGraph } from "../../../hooks/AppStateAndGraphhooks";
+import ScrollableButHiddenScrollBar from "../../ScrollableButHiddenScrollBar.module.css";
 function Separator() {
   return (
     <div
@@ -45,31 +46,35 @@ function LinksToThisNote({ note }: { note: GraphNode }) {
   }, [updated, note]);
 
   return (
-    <div className={`${styles.flexItem}`}>
-      <Title text={"Links to this note"} />
-      <div>
-        {InNeighbors.map((id) => {
-          const node = GraphState.nodes.find((node) => node.id === id);
-          if (node) {
-            return (
-              <ListItem
-                key={id}
-                text={node.title}
-                icon={
-                  <span className="material-symbols-outlined">article</span>
-                }
-                style={{
-                  opacity: 0.7,
-                }}
-              />
-            );
-          } else {
-            return null;
-          }
-        })}
+    <>
+      <div
+        className={`${styles.flexItem} ${ScrollableButHiddenScrollBar.ScrollableButHiddenScrollBar}`}
+      >
+        <Title text={"Links to this note"} />
+        <div>
+          {InNeighbors.map((id) => {
+            const node = GraphState.nodes.find((node) => node.id === id);
+            if (node) {
+              return (
+                <ListItem
+                  key={id}
+                  text={node.title}
+                  icon={
+                    <span className="material-symbols-outlined">article</span>
+                  }
+                  style={{
+                    opacity: 0.7,
+                  }}
+                />
+              );
+            } else {
+              return null;
+            }
+          })}
+        </div>
       </div>
       <Separator />
-    </div>
+    </>
   );
 }
 
@@ -87,31 +92,35 @@ function LinksFromThisNote({ note }: { note: GraphNode }) {
     }
   }, [updated, note]);
   return (
-    <div className={`${styles.flexItem}`}>
-      <Title text={"Links from this note"} />
-      <div>
-        {OutNeighbors.map((id) => {
-          const node = GraphState.nodes.find((node) => node.id === id);
-          if (node) {
-            return (
-              <ListItem
-                key={id}
-                text={node.title}
-                icon={
-                  <span className="material-symbols-outlined">article</span>
-                }
-                style={{
-                  opacity: 0.7,
-                }}
-              />
-            );
-          } else {
-            return null;
-          }
-        })}
+    <>
+      <div
+        className={`${styles.flexItem} ${ScrollableButHiddenScrollBar.ScrollableButHiddenScrollBar}`}
+      >
+        <Title text={"Links from this note"} />
+        <div>
+          {OutNeighbors.map((id) => {
+            const node = GraphState.nodes.find((node) => node.id === id);
+            if (node) {
+              return (
+                <ListItem
+                  key={id}
+                  text={node.title}
+                  icon={
+                    <span className="material-symbols-outlined">article</span>
+                  }
+                  style={{
+                    opacity: 0.7,
+                  }}
+                />
+              );
+            } else {
+              return null;
+            }
+          })}
+        </div>
       </div>
       <Separator />
-    </div>
+    </>
   );
 }
 export function NoteInfoSidePanel({

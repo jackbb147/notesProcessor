@@ -1,5 +1,9 @@
 .flexItem
 {
     margin-bottom: 1rem;
-;
+    /*background-color: #008a00;*/
+    height: 20%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    /*border-bottom: 1px solid white;*/
 }
