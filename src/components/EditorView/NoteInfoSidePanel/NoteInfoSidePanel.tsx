@@ -3,8 +3,10 @@ import { GraphNode } from "../../../reducers/GraphReducer";
 import { useGraphology } from "../../../hooks/useGraphology";
 import { useEffect, useState } from "react";
 import { ListItem } from "../../Buttons/ListItem";
-import { useGraph } from "../../../hooks/AppStateAndGraphhooks";
+import { useDispatch, useGraph } from "../../../hooks/AppStateAndGraphhooks";
 import ScrollableButHiddenScrollBar from "../../ScrollableButHiddenScrollBar.module.css";
+import { AppActionType, Collections } from "../../../reducers/AppStateReducer";
+
 function Separator() {
   return (
     <div
@@ -38,8 +40,21 @@ function Title({ text }: { text: string }) {
 }
 
 function NoteItem({ note }: { note: GraphNode }) {
+  const dispatch = useDispatch();
+  function onClick() {
+    dispatch({
+      type: AppActionType.setActiveNodeID,
+      id: note.id,
+    });
+    dispatch({
+      type: AppActionType.setActiveCollection,
+      activeCollection: Collections.All,
+    });
+  }
+
   return (
     <ListItem
+      onClick={onClick}
       key={note.id}
       text={note.title}
       icon={<span className="material-symbols-outlined">article</span>}
@@ -134,7 +149,7 @@ export function NoteInfoSidePanel({
       className={`flex flex-col`}
       style={{
         width: width,
-        paddingTop: "1rem",
+
         transition: "width .1s",
       }}
     >
