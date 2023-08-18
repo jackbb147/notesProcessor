@@ -5,7 +5,7 @@ import { Tablet_FolderPanel } from "./Tablet_FolderPanel";
 import { Mobile_FolderPanel } from "./Mobile_FolderPanel";
 import { useGraphology } from "../../../hooks/useGraphology";
 export function FolderPanel({ children }: { children: React.ReactNode }) {
-  const graphology = useGraphology();
+  const [graphology, updated] = useGraphology();
   useEffect(() => {
     const g = graphology;
     // debugger;

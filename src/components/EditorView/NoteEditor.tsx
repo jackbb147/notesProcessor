@@ -214,7 +214,7 @@ export function NoteEditor({
           darkModeOn={darkModeOn}
           onTouchStart={() => {}}
         />
-        <NoteInfoSidePanel />
+        <NoteInfoSidePanel note={note} />
       </div>
 
       <div
