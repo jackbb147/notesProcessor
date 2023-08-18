@@ -151,8 +151,20 @@ export function NotesPanelContent({
                           text={node.title}
                           active={node.id === state.activeNodeID}
                           optionalText={buildOptionalText(node)}
+                          style={{
+                            // height: "3rem",
+                            // border: "1px solid",
+                            marginBottom: ".2rem",
+                          }}
                           icon={
-                            <span className="material-symbols-outlined">
+                            <span
+                              className="material-symbols-outlined"
+                              style={
+                                {
+                                  // fontSize: "2rem",
+                                }
+                              }
+                            >
                               article
                             </span>
                           }
