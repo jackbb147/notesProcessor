@@ -10,9 +10,13 @@ function Separator() {
     <div
       style={{
         height: "1px",
-        width: "100%",
+        width: "90%",
+        marginLeft: "auto",
+        marginRight: "auto",
         backgroundColor: "white",
         marginTop: "0.5rem",
+        marginBottom: "0.5rem",
+        opacity: 0.7,
       }}
     />
   );
@@ -23,7 +27,9 @@ function Title({ text }: { text: string }) {
     <div
       className={`
   text-lg
-  font-bold`}
+  font-bold
+  text-left
+  `}
     >
       {text}
     </div>
@@ -64,6 +70,7 @@ function LinksToThisNote({ note }: { note: GraphNode }) {
                   }
                   style={{
                     opacity: 0.7,
+                    padding: "0",
                   }}
                 />
               );
@@ -110,6 +117,7 @@ function LinksFromThisNote({ note }: { note: GraphNode }) {
                   }
                   style={{
                     opacity: 0.7,
+                    padding: "0",
                   }}
                 />
               );
