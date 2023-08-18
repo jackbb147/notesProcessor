@@ -10,6 +10,7 @@ export function QuillBoxComponent({
   isReadOnly = false,
   onEditAttempt = () => {},
   darkModeOn = false,
+  width,
 }: {
   val: string;
   handleBlur: (s: string, firstLine?: string) => any;
@@ -18,6 +19,7 @@ export function QuillBoxComponent({
   isReadOnly?: boolean | undefined;
   onEditAttempt?: () => any;
   darkModeOn?: boolean;
+  width?: string;
 }) {
   const wrapperRef = useRef<any>(null);
   const ref = useRef<any>(null);
@@ -178,7 +180,7 @@ export function QuillBoxComponent({
       // className={style.ScrollableButHiddenScrollBar}
       tabIndex={0}
       style={{
-        // width: "100%",
+        width: width ?? "100%",
         flexGrow: "1",
         height: "100%",
         overflow: "hidden",

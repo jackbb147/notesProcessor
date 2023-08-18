@@ -114,9 +114,20 @@ function LinksFromThisNote({ note }: { note: GraphNode }) {
     </div>
   );
 }
-export function NoteInfoSidePanel({ note }: { note: GraphNode }) {
+export function NoteInfoSidePanel({
+  note,
+  width,
+}: {
+  note: GraphNode;
+  width: any;
+}) {
   return (
-    <div className={`flex flex-col`}>
+    <div
+      className={`flex flex-col`}
+      style={{
+        width: width,
+      }}
+    >
       <LinksToThisNote note={note} />
       <LinksFromThisNote note={note} />
     </div>

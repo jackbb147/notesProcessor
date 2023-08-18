@@ -213,8 +213,9 @@ export function NoteEditor({
           onEditAttempt={onEditAttempt}
           darkModeOn={darkModeOn}
           onTouchStart={() => {}}
+          width={"65%"}
         />
-        <NoteInfoSidePanel note={note} />
+        <NoteInfoSidePanel note={note} width={"35%"} />
       </div>
 
       <div
