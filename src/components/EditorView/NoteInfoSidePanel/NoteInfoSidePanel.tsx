@@ -61,6 +61,7 @@ function NoteItem({ note }: { note: GraphNode }) {
       style={{
         opacity: 0.7,
         padding: "0",
+        cursor: "pointer",
       }}
     />
   );
