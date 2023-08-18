@@ -26,7 +26,7 @@ function LinksToThisNote({ note }: { note: GraphNode }) {
     } catch (e) {
       console.error(e);
     }
-  }, [updated]);
+  }, [updated, note]);
 
   return (
     <div className={`${styles.flexItem}`}>
