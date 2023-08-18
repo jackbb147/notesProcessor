@@ -27,6 +27,7 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
       showLoginPage: false,
       showRegisterPage: false,
       isLoggedIn: false, //todo check for cookie
+      showNoteInfoPanel: false,
     },
   );
 
