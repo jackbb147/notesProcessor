@@ -48,15 +48,25 @@ function LinksToThisNote({ note }: { note: GraphNode }) {
     <div className={`${styles.flexItem}`}>
       <Title text={"Links to this note"} />
       <div>
-        {InNeighbors.map((id) => (
-          <ListItem
-            key={id}
-            text={
-              GraphState.nodes.find((node) => node.id === id)?.title ?? "error"
-            }
-            icon={<span className="material-symbols-outlined">article</span>}
-          />
-        ))}
+        {InNeighbors.map((id) => {
+          const node = GraphState.nodes.find((node) => node.id === id);
+          if (node) {
+            return (
+              <ListItem
+                key={id}
+                text={node.title}
+                icon={
+                  <span className="material-symbols-outlined">article</span>
+                }
+                style={{
+                  opacity: 0.7,
+                }}
+              />
+            );
+          } else {
+            return null;
+          }
+        })}
       </div>
       <Separator />
     </div>
@@ -90,6 +100,9 @@ function LinksFromThisNote({ note }: { note: GraphNode }) {
                 icon={
                   <span className="material-symbols-outlined">article</span>
                 }
+                style={{
+                  opacity: 0.7,
+                }}
               />
             );
           } else {
