@@ -16,6 +16,19 @@ function Separator() {
     />
   );
 }
+
+function Title({ text }: { text: string }) {
+  return (
+    <div
+      className={`
+  text-lg
+  font-bold`}
+    >
+      {text}
+    </div>
+  );
+}
+
 function LinksToThisNote({ note }: { note: GraphNode }) {
   const [graphology, updated] = useGraphology();
   const GraphState = useGraph();
@@ -26,10 +39,6 @@ function LinksToThisNote({ note }: { note: GraphNode }) {
       console.log("LinksToThisNote");
       setInNeighbors((v) => graphology.inNeighbors(note.id));
       console.log("InNeighbors", InNeighbors);
-      console.log(
-        "InNeighbors",
-        InNeighbors.map((id) => graphology.getNodeAttributes(id)),
-      );
     } catch (e) {
       console.error(e);
     }
@@ -37,7 +46,7 @@ function LinksToThisNote({ note }: { note: GraphNode }) {
 
   return (
     <div className={`${styles.flexItem}`}>
-      <div>Links to this note</div>
+      <Title text={"Links to this note"} />
       <div>
         {InNeighbors.map((id) => (
           <ListItem
@@ -55,10 +64,39 @@ function LinksToThisNote({ note }: { note: GraphNode }) {
 }
 
 function LinksFromThisNote({ note }: { note: GraphNode }) {
-  const graphology = useGraphology();
+  const [graphology, updated] = useGraphology();
+  const GraphState = useGraph();
+  const [OutNeighbors, setOutNeighbors] = useState<string[]>([]);
+  useEffect(() => {
+    try {
+      console.log("LinksFromThisNote");
+      setOutNeighbors((v) => graphology.outNeighbors(note.id));
+      console.log("OutNeighbors", OutNeighbors);
+    } catch (e) {
+      console.error(e);
+    }
+  }, [updated, note]);
   return (
     <div className={`${styles.flexItem}`}>
-      <div>Links from this note</div>
+      <Title text={"Links from this note"} />
+      <div>
+        {OutNeighbors.map((id) => {
+          const node = GraphState.nodes.find((node) => node.id === id);
+          if (node) {
+            return (
+              <ListItem
+                key={id}
+                text={node.title}
+                icon={
+                  <span className="material-symbols-outlined">article</span>
+                }
+              />
+            );
+          } else {
+            return null;
+          }
+        })}
+      </div>
       <Separator />
     </div>
   );
