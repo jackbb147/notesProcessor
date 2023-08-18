@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Quill } from "react-quill";
 import "./quillModules/quillStyle.css";
-import style from "../ScrollableButHiddenScrollBar.module.css";
 import { QuillBoxComponent } from "./QuillBoxComponent";
 
 //@ts-ignore
@@ -9,12 +7,17 @@ import { MathEditorModule } from "./quillModules/Quill-MathJax/MathEditorModule"
 import "./quillModules/Quill-MathJax/quill.bubble.css";
 import "./quillModules/Quill-MathJax/quill.snow.css";
 import { GraphActionType, GraphNode } from "../../reducers/GraphReducer";
-import { RangeStatic } from "quill";
 import { LabelSelector } from "./LabelSelector";
-import { LastEditedWhen } from "./LastEditedWhen";
 import { ActionMeta, Options } from "react-select";
-import { useGraph, useGraphDispatch } from "../../hooks/AppStateAndGraphhooks";
+import {
+  useAppState,
+  useDispatch,
+  useGraph,
+  useGraphDispatch,
+} from "../../hooks/AppStateAndGraphhooks";
 import { NoteInfoSidePanel } from "./NoteInfoSidePanel/NoteInfoSidePanel";
+import { Button } from "../ui/Button";
+import { AppActionType } from "../../reducers/AppStateReducer";
 
 /**
  *
@@ -45,8 +48,16 @@ export function NoteEditor({
   const graph = useGraph();
   const graphDispatch = useGraphDispatch();
 
-  const appState = useState();
-  const [infoPanelWidth, setInfoPanelWidth] = useState("25%");
+  const appState = useAppState();
+  const dispatch = useDispatch();
+  const [infoPanelWidth, setInfoPanelWidth] = useState("");
+  useEffect(() => {
+    if (appState.showNoteInfoPanel) {
+      setInfoPanelWidth("25%");
+    } else {
+      setInfoPanelWidth("0%");
+    }
+  }, [appState.showNoteInfoPanel]);
 
   const noteRef = useRef<GraphNode>(note); //https://stackoverflow.com/questions/57847594/react-hooks-accessing-up-to-date-state-from-within-a-callback
   noteRef.current = note;
@@ -242,7 +253,17 @@ export function NoteEditor({
             flexGrow: "1",
           }}
         >
-          <LastEditedWhen />
+          <Button
+            icon={<span className="material-symbols-outlined">info</span>}
+            onClick={() => {
+              dispatch({
+                type: AppActionType.setShowNoteInfoPanel,
+                show: !appState.showNoteInfoPanel,
+              });
+            }}
+          />
+          {/*<span className="material-symbols-outlined">info</span>*/}
+          {/*<LastEditedWhen />*/}
         </div>
       </div>
     </div>

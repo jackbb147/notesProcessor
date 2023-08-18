@@ -29,6 +29,7 @@ function Title({ text }: { text: string }) {
   text-lg
   font-bold
   text-left
+  mb-3
   `}
     >
       {text}
@@ -143,6 +144,7 @@ export function NoteInfoSidePanel({
       className={`flex flex-col`}
       style={{
         width: width,
+        paddingTop: "1rem",
       }}
     >
       <LinksToThisNote note={note} />
