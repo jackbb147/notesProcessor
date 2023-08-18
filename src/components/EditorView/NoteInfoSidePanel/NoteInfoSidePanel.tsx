@@ -145,6 +145,7 @@ export function NoteInfoSidePanel({
       style={{
         width: width,
         paddingTop: "1rem",
+        transition: "width .1s",
       }}
     >
       <LinksToThisNote note={note} />
