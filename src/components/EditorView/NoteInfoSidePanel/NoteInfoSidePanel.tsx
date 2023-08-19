@@ -70,12 +70,12 @@ function NoteItem({ note }: { note: GraphNode }) {
 function SeeAlso({ note }: { note: GraphNode }) {
   const [graphology, updated] = useGraphology();
   const GraphState = useGraph();
-  const [neighbors, setNeighbors] = useState<string[]>([]);
+  const [undirectedNeighbors, setUndirectedNeighbors] = useState<string[]>([]);
   useEffect(() => {
     try {
       console.log("SeeAlso");
-      setNeighbors((v) => graphology.neighbors(note.id));
-      console.log("neighbors", neighbors);
+      setUndirectedNeighbors((v) => graphology.undirectedNeighbors(note.id));
+      console.log("neighbors", undirectedNeighbors);
     } catch (e) {
       console.error(e);
     }
@@ -86,6 +86,16 @@ function SeeAlso({ note }: { note: GraphNode }) {
         className={`${styles.flexItem} ${ScrollableButHiddenScrollBar.ScrollableButHiddenScrollBar}`}
       >
         <Title text={"See also"} />
+        <div>
+          {undirectedNeighbors.map((id) => {
+            const node = GraphState.nodes.find((node) => node.id === id);
+            if (node) {
+              return <NoteItem note={node} />;
+            } else {
+              return null;
+            }
+          })}
+        </div>
       </div>
       <Separator />
     </>

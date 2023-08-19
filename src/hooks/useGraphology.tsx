@@ -31,7 +31,11 @@ export function useGraphology(): [Graph, number] {
       graphology.addNode(node.id);
     });
     graph.links.forEach((link) => {
-      graphology.addEdge(link.source, link.target);
+      if (link.undirected) {
+        graphology.addUndirectedEdge(link.source, link.target);
+      } else {
+        graphology.addDirectedEdge(link.source, link.target);
+      }
     });
 
     setUpdated((updated) => updated + 1);

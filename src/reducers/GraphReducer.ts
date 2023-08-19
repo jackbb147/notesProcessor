@@ -43,6 +43,7 @@ export interface GraphNode {
 export interface GraphLink {
   source: string;
   target: string;
+  undirected?: boolean;
 }
 
 export interface GraphState {
