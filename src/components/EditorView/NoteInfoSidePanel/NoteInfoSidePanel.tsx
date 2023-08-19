@@ -297,7 +297,15 @@ function Selector({ note }: { note: GraphNode }) {
     `}
     >
       <span className="material-symbols-outlined">add</span>
-      <Select options={options} onChange={handleChange} />
+      <Select
+        value={{
+          //TODO this is a hack to make the select box empty after a selection is made
+          value: "",
+          label: "",
+        }}
+        options={options}
+        onChange={handleChange}
+      />
     </div>
   );
 }
