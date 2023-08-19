@@ -22,6 +22,7 @@ import { useMediaQuery } from "react-responsive";
 import { Desktop, Mobile, Tablet } from "../../../hooks/useMediaQuery";
 import { All } from "../../Buttons/All";
 import { RecentlyDeleted } from "../../Buttons/RecentlyDeleted";
+import { Scrollbars } from "react-custom-scrollbars-2";
 
 function SettingsPanelWrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -114,18 +115,21 @@ export function FolderPanelContent() {
       </div>
       <All />
 
-      {graph.labels.map((s: string) => (
-        <ListItem
-          text={s}
-          iconOnly={state.LabelPanelClosed}
-          active={
-            state.activeCollection === Collections.Label &&
-            state.activeLabel === s
-          }
-          onClick={() => handleLabelClick(s)}
-          icon={<span className="material-symbols-outlined">label</span>}
-        />
-      ))}
+      {/*https://www.npmjs.com/package/react-custom-scrollbars-2*/}
+      <Scrollbars autoHide>
+        {graph.labels.map((s: string) => (
+          <ListItem
+            text={s}
+            iconOnly={state.LabelPanelClosed}
+            active={
+              state.activeCollection === Collections.Label &&
+              state.activeLabel === s
+            }
+            onClick={() => handleLabelClick(s)}
+            icon={<span className="material-symbols-outlined">label</span>}
+          />
+        ))}
+      </Scrollbars>
       <RecentlyDeleted />
 
       <div className={"mt-auto"}>
