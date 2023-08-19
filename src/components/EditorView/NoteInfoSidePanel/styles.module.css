@@ -13,3 +13,19 @@
 
     /*border-bottom: 1px solid white;*/
 }
+
+.noteInfoSidePanel
+{
+    transition: width .2s;
+}
+
+/*@media (max-width: 768px) {*/
+/*    .noteInfoSidePanel*/
+/*    {*/
+/*        position: absolute;*/
+/*        height: 100%;*/
+/*        right: 0;*/
+/*        width: 100% !important;*/
+/*    }*/
+/*}*/
+

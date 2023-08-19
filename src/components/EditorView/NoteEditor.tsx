@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import "./quillModules/quillStyle.css";
 import { QuillBoxComponent } from "./QuillBoxComponent";
 import styles from "./NoteEditorStyle.module.css";
+import { Desktop } from "../../hooks/useMediaQuery";
+import { Mobile } from "../../hooks/useMediaQuery";
 
 //@ts-ignore
 import { MathEditorModule } from "./quillModules/Quill-MathJax/MathEditorModule";
@@ -244,6 +246,7 @@ export function NoteEditor({
           marginBottom: ".2rem",
           display: "flex",
           flexDirection: "row",
+          position: "relative",
         }}
       >
         <QuillBoxComponent

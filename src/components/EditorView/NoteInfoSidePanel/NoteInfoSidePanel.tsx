@@ -12,6 +12,9 @@ import {
 import Select, { ActionMeta, CSSObjectWithLabel } from "react-select";
 import ScrollableButHiddenScrollBar from "../../ScrollableButHiddenScrollBar.module.css";
 import { AppActionType, Collections } from "../../../reducers/AppStateReducer";
+import { Tablet } from "../../../hooks/useMediaQuery";
+import { Desktop } from "../../../hooks/useMediaQuery";
+import { Mobile } from "../../../hooks/useMediaQuery";
 
 function Separator() {
   return (
@@ -370,6 +373,74 @@ function Selector({ note }: { note: GraphNode }) {
   );
 }
 
+function NoteInfoSidePanelWrapper({
+  width,
+  children,
+}: {
+  width: string;
+  children: React.ReactNode;
+}) {
+  const AppState = useAppState();
+  const dispatch = useDispatch();
+  return (
+    <>
+      <Mobile>
+        <div //this div is the dark overlay that covers the rest of the screen when the side panel is open
+          onClick={() => {
+            dispatch({
+              type: AppActionType.setShowNoteInfoPanel,
+              show: false,
+            });
+          }}
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            left: "0px",
+            top: "0px",
+            backgroundColor: "rgba(0,0,0,0.5)",
+            display: AppState.showNoteInfoPanel ? "block" : "none",
+          }}
+        ></div>
+        <div
+          className={`flex flex-col ${styles.noteInfoSidePanel} dark:bg-dark_secondary `}
+          style={{
+            width: AppState.showNoteInfoPanel ? "60%" : "0px",
+            position: "absolute",
+            right: "0px",
+            height: "100%",
+            zIndex: 100,
+          }}
+        >
+          {children}
+        </div>
+      </Mobile>
+
+      <Tablet>
+        <div
+          className={`flex flex-col ${styles.noteInfoSidePanel} `}
+          style={{
+            width: width,
+          }}
+        >
+          {children}
+        </div>
+      </Tablet>
+
+      <Desktop>
+        <div
+          className={`flex flex-col ${styles.noteInfoSidePanel} `}
+          style={{
+            width: width,
+          }}
+        >
+          {children}
+        </div>
+      </Desktop>
+    </>
+  );
+}
+
 export function NoteInfoSidePanel({
   note,
   width,
@@ -378,17 +449,10 @@ export function NoteInfoSidePanel({
   width: any;
 }) {
   return (
-    <div
-      className={`flex flex-col`}
-      style={{
-        width: width,
-
-        transition: "width .1s",
-      }}
-    >
+    <NoteInfoSidePanelWrapper width={width}>
       <References note={note} />
       <ReferencedBy note={note} />
       <SeeAlso note={note} />
-    </div>
+    </NoteInfoSidePanelWrapper>
   );
 }
