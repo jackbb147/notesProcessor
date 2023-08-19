@@ -1,9 +1,13 @@
 import styles from "./styles.module.css";
-import { GraphNode } from "../../../reducers/GraphReducer";
+import { GraphActionType, GraphNode } from "../../../reducers/GraphReducer";
 import { useGraphology } from "../../../hooks/useGraphology";
 import { useEffect, useState } from "react";
 import { ListItem } from "../../Buttons/ListItem";
-import { useDispatch, useGraph } from "../../../hooks/AppStateAndGraphhooks";
+import {
+  useDispatch,
+  useGraph,
+  useGraphDispatch,
+} from "../../../hooks/AppStateAndGraphhooks";
 import ScrollableButHiddenScrollBar from "../../ScrollableButHiddenScrollBar.module.css";
 import { AppActionType, Collections } from "../../../reducers/AppStateReducer";
 
@@ -42,9 +46,11 @@ function Title({ text }: { text: string }) {
 function NoteItem({
   note,
   deletable = false,
+  onDelete,
 }: {
   note: GraphNode;
   deletable?: boolean;
+  onDelete?: () => void;
 }) {
   const dispatch = useDispatch();
   function onClick() {
@@ -56,13 +62,6 @@ function NoteItem({
       type: AppActionType.setActiveCollection,
       activeCollection: Collections.All,
     });
-  }
-
-  function onDelete() {
-    // dispatch({
-    //   type: AppActionType.deleteNode,
-    //   id: note.id,
-    // });
   }
 
   return (
@@ -87,7 +86,7 @@ function NoteItem({
           cursor: "pointer",
         }}
       />
-      {deletable && (
+      {deletable && onDelete && (
         <div
           className={`
         cursor-pointer
@@ -118,6 +117,7 @@ function NoteItem({
 function SeeAlso({ note }: { note: GraphNode }) {
   const [graphology, updated] = useGraphology();
   const GraphState = useGraph();
+  const graphDispatch = useGraphDispatch();
   const [undirectedNeighbors, setUndirectedNeighbors] = useState<string[]>([]);
   useEffect(() => {
     try {
@@ -138,7 +138,28 @@ function SeeAlso({ note }: { note: GraphNode }) {
           {undirectedNeighbors.map((id) => {
             const node = GraphState.nodes.find((node) => node.id === id);
             if (node) {
-              return <NoteItem note={node} deletable={true} />;
+              return (
+                <NoteItem
+                  note={node}
+                  deletable={true}
+                  onDelete={() => {
+                    const link = GraphState.links.find((link) => {
+                      return (
+                        ((link.source === note.id && link.target === node.id) ||
+                          (link.source === node.id &&
+                            link.target === note.id)) &&
+                        link.undirected
+                      );
+                    });
+                    if (link) {
+                      graphDispatch({
+                        type: GraphActionType.removeLink,
+                        link,
+                      });
+                    }
+                  }}
+                />
+              );
             } else {
               return null;
             }
