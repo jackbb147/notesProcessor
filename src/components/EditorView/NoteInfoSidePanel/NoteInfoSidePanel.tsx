@@ -39,7 +39,13 @@ function Title({ text }: { text: string }) {
   );
 }
 
-function NoteItem({ note }: { note: GraphNode }) {
+function NoteItem({
+  note,
+  deletable = false,
+}: {
+  note: GraphNode;
+  deletable?: boolean;
+}) {
   const dispatch = useDispatch();
   function onClick() {
     dispatch({
@@ -52,18 +58,60 @@ function NoteItem({ note }: { note: GraphNode }) {
     });
   }
 
+  function onDelete() {
+    // dispatch({
+    //   type: AppActionType.deleteNode,
+    //   id: note.id,
+    // });
+  }
+
   return (
-    <ListItem
-      onClick={onClick}
-      key={note.id}
-      text={note.title}
-      icon={<span className="material-symbols-outlined">article</span>}
-      style={{
-        opacity: 0.7,
-        padding: "0",
-        cursor: "pointer",
-      }}
-    />
+    <div
+      className={`
+    flex
+    flex-row
+    justify-between
+    items-center
+    w-full
+   
+    `}
+    >
+      <ListItem
+        onClick={onClick}
+        key={note.id}
+        text={note.title}
+        icon={<span className="material-symbols-outlined">article</span>}
+        style={{
+          opacity: 0.7,
+          padding: "0",
+          cursor: "pointer",
+        }}
+      />
+      {deletable && (
+        <div
+          className={`
+        cursor-pointer
+        hover:text-red9
+        ml-1.5
+        h-full
+        flex
+        items-center
+       
+        justify-end
+        `}
+          onClick={onDelete}
+        >
+          <span
+            style={{
+              fontSize: "1.2rem",
+            }}
+            className="material-symbols-outlined"
+          >
+            close
+          </span>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -90,7 +138,7 @@ function SeeAlso({ note }: { note: GraphNode }) {
           {undirectedNeighbors.map((id) => {
             const node = GraphState.nodes.find((node) => node.id === id);
             if (node) {
-              return <NoteItem note={node} />;
+              return <NoteItem note={node} deletable={true} />;
             } else {
               return null;
             }
