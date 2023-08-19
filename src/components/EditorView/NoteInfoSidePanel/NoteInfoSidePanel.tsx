@@ -320,6 +320,7 @@ function Selector({ note }: { note: GraphNode }) {
             backgroundColor: "transparent",
             border: "none",
             boxShadow: "none",
+            cursor: "text",
           }),
           input: (provided, state) => ({
             ...provided,

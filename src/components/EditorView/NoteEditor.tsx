@@ -44,6 +44,7 @@ function ToggleSideInfoPanelButton() {
       icon={<span className="material-symbols-outlined">info</span>}
       rootStyles={{
         color: color,
+        cursor: "pointer",
       }}
       onClick={(e) => {
         e.preventDefault();
