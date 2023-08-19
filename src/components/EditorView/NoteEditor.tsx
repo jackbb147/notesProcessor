@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./quillModules/quillStyle.css";
 import { QuillBoxComponent } from "./QuillBoxComponent";
+import styles from "./NoteEditorStyle.module.css";
 
 //@ts-ignore
 import { MathEditorModule } from "./quillModules/Quill-MathJax/MathEditorModule";
@@ -235,15 +236,7 @@ export function NoteEditor({
   }
 
   return (
-    <div
-      style={{
-        // width: "100%",
-        flexGrow: "1",
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
+    <div className={`${styles.noteEditorContainer}`}>
       <div
         style={{
           height: "95%",
