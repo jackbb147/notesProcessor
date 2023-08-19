@@ -254,6 +254,7 @@ function Selector({ note }: { note: GraphNode }) {
   const AppState = useAppState();
   const GraphState = useGraph();
   const graphDispatch = useGraphDispatch();
+  const [isFocused, setIsFocused] = useState(false);
   useEffect(() => {
     try {
       console.log("Selector");
@@ -300,6 +301,8 @@ function Selector({ note }: { note: GraphNode }) {
     >
       <span className="material-symbols-outlined">add</span>
       <Select
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
         value={{
           //this is a hack to make the select box empty after a selection is made
           value: "",
@@ -316,6 +319,7 @@ function Selector({ note }: { note: GraphNode }) {
             ...provided,
             backgroundColor: "transparent",
             border: "none",
+            boxShadow: "none",
           }),
           input: (provided, state) => ({
             ...provided,
@@ -323,7 +327,13 @@ function Selector({ note }: { note: GraphNode }) {
 
             borderBottomWidth: "1px",
             borderBottomStyle: "solid",
-            borderBottomColor: AppState.darkModeOn ? "white" : "black",
+            borderBottomColor: AppState.darkModeOn
+              ? isFocused
+                ? state.theme.colors.primary
+                : state.theme.colors.neutral20
+              : isFocused
+              ? state.theme.colors.primary
+              : state.theme.colors.neutral20,
           }),
           indicatorsContainer: (provided, state) => ({
             ...provided,
