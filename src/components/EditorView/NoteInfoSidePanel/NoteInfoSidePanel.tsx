@@ -67,7 +67,32 @@ function NoteItem({ note }: { note: GraphNode }) {
   );
 }
 
-function LinksToThisNote({ note }: { note: GraphNode }) {
+function SeeAlso({ note }: { note: GraphNode }) {
+  const [graphology, updated] = useGraphology();
+  const GraphState = useGraph();
+  const [neighbors, setNeighbors] = useState<string[]>([]);
+  useEffect(() => {
+    try {
+      console.log("SeeAlso");
+      setNeighbors((v) => graphology.neighbors(note.id));
+      console.log("neighbors", neighbors);
+    } catch (e) {
+      console.error(e);
+    }
+  }, [updated, note]);
+  return (
+    <>
+      <div
+        className={`${styles.flexItem} ${ScrollableButHiddenScrollBar.ScrollableButHiddenScrollBar}`}
+      >
+        <Title text={"See also"} />
+      </div>
+      <Separator />
+    </>
+  );
+}
+
+function ReferencedBy({ note }: { note: GraphNode }) {
   const [graphology, updated] = useGraphology();
   const GraphState = useGraph();
   const [InNeighbors, setInNeighbors] = useState<string[]>([]);
@@ -87,7 +112,7 @@ function LinksToThisNote({ note }: { note: GraphNode }) {
       <div
         className={`${styles.flexItem} ${ScrollableButHiddenScrollBar.ScrollableButHiddenScrollBar}`}
       >
-        <Title text={"Links to this note"} />
+        <Title text={"Referenced By"} />
         <div>
           {InNeighbors.map((id) => {
             const node = GraphState.nodes.find((node) => node.id === id);
@@ -104,7 +129,7 @@ function LinksToThisNote({ note }: { note: GraphNode }) {
   );
 }
 
-function LinksFromThisNote({ note }: { note: GraphNode }) {
+function References({ note }: { note: GraphNode }) {
   const [graphology, updated] = useGraphology();
   const GraphState = useGraph();
   const [OutNeighbors, setOutNeighbors] = useState<string[]>([]);
@@ -122,7 +147,7 @@ function LinksFromThisNote({ note }: { note: GraphNode }) {
       <div
         className={`${styles.flexItem} ${ScrollableButHiddenScrollBar.ScrollableButHiddenScrollBar}`}
       >
-        <Title text={"Links from this note"} />
+        <Title text={"References"} />
         <div>
           {OutNeighbors.map((id) => {
             const node = GraphState.nodes.find((node) => node.id === id);
@@ -138,6 +163,7 @@ function LinksFromThisNote({ note }: { note: GraphNode }) {
     </>
   );
 }
+
 export function NoteInfoSidePanel({
   note,
   width,
@@ -154,8 +180,9 @@ export function NoteInfoSidePanel({
         transition: "width .1s",
       }}
     >
-      <LinksToThisNote note={note} />
-      <LinksFromThisNote note={note} />
+      <References note={note} />
+      <ReferencedBy note={note} />
+      <SeeAlso note={note} />
     </div>
   );
 }

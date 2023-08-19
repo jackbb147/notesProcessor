@@ -39,7 +39,7 @@ export function GraphProvider({ children }: { children: React.ReactNode }) {
     });
   const [graph, graphDispatch] = useImmerReducer<GraphState, GraphAction>(
     graphReducer,
-    locallyStoredGraph,
+    locallyStoredGraph, //TODO probably a good idea to merge this graph(which may not have the latest format ) into a blank GraphState object first, to make sure that it has the latest format
   );
 
   useEffect(() => {
