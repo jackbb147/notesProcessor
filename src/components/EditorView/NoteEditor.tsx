@@ -285,6 +285,7 @@ export function NoteEditor({
             display: "flex",
             flexDirection: "row",
             justifyContent: "flex-end",
+            marginLeft: "1rem",
           }}
         >
           <ToggleSideInfoPanelButton />
