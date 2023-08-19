@@ -8,6 +8,7 @@ import {
   useGraph,
   useGraphDispatch,
 } from "../../../hooks/AppStateAndGraphhooks";
+import Select, { ActionMeta } from "react-select";
 import ScrollableButHiddenScrollBar from "../../ScrollableButHiddenScrollBar.module.css";
 import { AppActionType, Collections } from "../../../reducers/AppStateReducer";
 
@@ -164,6 +165,7 @@ function SeeAlso({ note }: { note: GraphNode }) {
               return null;
             }
           })}
+          <Selector note={note} />
         </div>
       </div>
       <Separator />
@@ -240,6 +242,63 @@ function References({ note }: { note: GraphNode }) {
       </div>
       <Separator />
     </>
+  );
+}
+
+function Selector({ note }: { note: GraphNode }) {
+  //   TODO options should be all undirected neighbors of this note that are not already listed in the SeeAlso section
+  const [options, setOptions] = useState<any[]>([]);
+  const [graphology, updated] = useGraphology();
+  const [listed, setListed] = useState<string[]>([]);
+  const GraphState = useGraph();
+  const graphDispatch = useGraphDispatch();
+  useEffect(() => {
+    try {
+      console.log("Selector");
+      const allNotes = graphology.nodes();
+      const undirectedNeighbors = graphology.undirectedNeighbors(note.id);
+      const options = allNotes
+        .filter((id) => {
+          return note.id !== id && !undirectedNeighbors.includes(id);
+        })
+        .map((id) => {
+          return {
+            value: id,
+            label:
+              GraphState.nodes.find((node) => node.id === id)?.title ?? "ERROR",
+          };
+        });
+      setOptions(options);
+    } catch (e) {
+      console.error(e);
+    }
+  }, [updated, note]);
+
+  function handleChange(option: any, actionMeta: ActionMeta<any>) {
+    if (actionMeta.action !== "select-option") return;
+    const id = option.value;
+    graphDispatch({
+      type: GraphActionType.addLink,
+      link: {
+        source: note.id,
+        target: id,
+        undirected: true,
+      },
+    });
+  }
+
+  return (
+    <div
+      className={`
+    flex
+    flex-row
+    border
+    w-full
+    `}
+    >
+      <span className="material-symbols-outlined">add</span>
+      <Select options={options} onChange={handleChange} />
+    </div>
   );
 }
 
