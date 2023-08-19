@@ -4,11 +4,12 @@ import { useGraphology } from "../../../hooks/useGraphology";
 import { useEffect, useState } from "react";
 import { ListItem } from "../../Buttons/ListItem";
 import {
+  useAppState,
   useDispatch,
   useGraph,
   useGraphDispatch,
 } from "../../../hooks/AppStateAndGraphhooks";
-import Select, { ActionMeta } from "react-select";
+import Select, { ActionMeta, CSSObjectWithLabel } from "react-select";
 import ScrollableButHiddenScrollBar from "../../ScrollableButHiddenScrollBar.module.css";
 import { AppActionType, Collections } from "../../../reducers/AppStateReducer";
 
@@ -250,6 +251,7 @@ function Selector({ note }: { note: GraphNode }) {
   const [options, setOptions] = useState<any[]>([]);
   const [graphology, updated] = useGraphology();
   const [listed, setListed] = useState<string[]>([]);
+  const AppState = useAppState();
   const GraphState = useGraph();
   const graphDispatch = useGraphDispatch();
   useEffect(() => {
@@ -292,19 +294,66 @@ function Selector({ note }: { note: GraphNode }) {
       className={`
     flex
     flex-row
-    border
     w-full
+    items-center
     `}
     >
       <span className="material-symbols-outlined">add</span>
       <Select
         value={{
-          //TODO this is a hack to make the select box empty after a selection is made
+          //this is a hack to make the select box empty after a selection is made
           value: "",
           label: "",
         }}
         options={options}
         onChange={handleChange}
+        styles={{
+          container: (provided, state) => ({
+            ...provided,
+            width: "100%",
+          }),
+          control: (provided, state) => ({
+            ...provided,
+            backgroundColor: "transparent",
+            border: "none",
+          }),
+          input: (provided, state) => ({
+            ...provided,
+            color: AppState.darkModeOn ? "white" : "black",
+
+            borderBottomWidth: "1px",
+            borderBottomStyle: "solid",
+            borderBottomColor: AppState.darkModeOn ? "white" : "black",
+          }),
+          indicatorsContainer: (provided, state) => ({
+            ...provided,
+            display: "none",
+          }),
+          option: (base, state) => ({
+            ...base,
+            backgroundColor: AppState.darkModeOn
+              ? state.isFocused
+                ? state.theme.colors.neutral0
+                : "transparent"
+              : state.isFocused
+              ? state.theme.colors.primary50
+              : "transparent",
+            color: AppState.darkModeOn
+              ? state.isFocused
+                ? "black"
+                : "white"
+              : state.isFocused
+              ? "black"
+              : "black",
+          }),
+          menu: (base, state): CSSObjectWithLabel => ({
+            ...base,
+            backgroundColor: AppState.darkModeOn
+              ? state.theme.colors.neutral80
+              : "transparent",
+          }),
+          // o,
+        }}
       />
     </div>
   );
