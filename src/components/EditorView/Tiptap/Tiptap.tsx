@@ -1,6 +1,6 @@
 // src/Tiptap.jsx
 import "./tiptap.css";
-import "./Mention/styles.css";
+import "./Reference/styles.css";
 import {
   EditorProvider,
   FloatingMenu,
@@ -14,8 +14,9 @@ import { useAppState, useGraph } from "../../../hooks/AppStateAndGraphhooks";
 import { TextAlign } from "@tiptap/extension-text-align";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { Mention } from "@tiptap/extension-mention";
-import suggestion from "./Mention/suggestion";
+import suggestion from "./Reference/suggestion";
 import { GraphNode } from "../../../reducers/GraphReducer";
+import { CustomNode } from "./MathJax/MathJax";
 
 // define your extension array
 const extensions = [StarterKit];
@@ -30,6 +31,7 @@ export const Tiptap = ({ note }: { note: GraphNode }) => {
   const editor = useEditor({
     extensions: [
       StarterKit,
+      CustomNode,
       Mention.configure({
         HTMLAttributes: {
           class: "mention",
