@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./quillModules/quillStyle.css";
-import { QuillBoxComponent } from "./QuillBoxComponent";
+import "./Quill/quillModules/quillStyle.css";
+
 import styles from "./NoteEditorStyle.module.css";
 import { Desktop } from "../../hooks/useMediaQuery";
 import { Mobile } from "../../hooks/useMediaQuery";
 
 //@ts-ignore
-import { MathEditorModule } from "./quillModules/Quill-MathJax/MathEditorModule";
-import "./quillModules/Quill-MathJax/quill.bubble.css";
-import "./quillModules/Quill-MathJax/quill.snow.css";
+import { MathEditorModule } from "./Quill/quillModules/Quill-MathJax/MathEditorModule";
+import "./Quill/quillModules/Quill-MathJax/quill.bubble.css";
+import "./Quill/quillModules/Quill-MathJax/quill.snow.css";
 import { GraphActionType, GraphNode } from "../../reducers/GraphReducer";
 import { LabelSelector } from "./LabelSelector";
 import { ActionMeta, Options } from "react-select";
@@ -21,6 +21,7 @@ import {
 import { NoteInfoSidePanel } from "./NoteInfoSidePanel/NoteInfoSidePanel";
 import { Button } from "../ui/Button";
 import { AppActionType } from "../../reducers/AppStateReducer";
+import { TiptapBoxComponent } from "./Tiptap/Tiptap";
 
 function ToggleSideInfoPanelButton() {
   const appState = useAppState();
@@ -247,18 +248,11 @@ export function NoteEditor({
           display: "flex",
           flexDirection: "row",
           position: "relative",
+          paddingLeft: "2px",
         }}
       >
-        <QuillBoxComponent
-          val={note.content}
-          handleBlur={(s: string, firstLine?: string) => {
-            handleBlur(s, firstLine);
-          }}
-          onFinishSetup={onFinishSetUp}
-          isReadOnly={locked}
-          onEditAttempt={onEditAttempt}
-          darkModeOn={darkModeOn}
-          onTouchStart={() => {}}
+        <TiptapBoxComponent
+          note={note}
           width={`calc(100% - ${infoPanelWidth})`}
         />
         <NoteInfoSidePanel note={note} width={infoPanelWidth} />
