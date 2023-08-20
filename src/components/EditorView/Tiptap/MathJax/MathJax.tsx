@@ -5,6 +5,7 @@ const inputRegex = /(?:^|\s)((?:~)((?:[^~]+))(?:~))$/;
 export const CustomNode = Node.create({
   name: "customNode",
 
+  priority: 1000,
   addKeyboardShortcuts() {
     return {
       $: ({ editor }) => {
@@ -25,11 +26,8 @@ export const CustomNode = Node.create({
       //   } else {
       //     // //
       //     console.debug("backspace: ", cursorPos);
-      //     editor.commands.deleteRange({
-      //       from: cursorPos - 1,
-      //       to: cursorPos,
-      //     });
-      //     editor.commands.setTextSelection(cursorPos - 1);
+      //     // editor.commands.selectNodeBackward();
+      //     // editor.commands.deleteSelection();
       //   }
       //   // editor.chain().run();
       //   return true;

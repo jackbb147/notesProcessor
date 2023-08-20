@@ -17,6 +17,7 @@ import { Mention } from "@tiptap/extension-mention";
 import suggestion from "./Reference/suggestion";
 import { GraphNode } from "../../../reducers/GraphReducer";
 import { CustomNode } from "./MathJax/MathJax";
+import { EditorView } from "@tiptap/pm/view";
 
 // define your extension array
 const extensions = [StarterKit];
@@ -29,6 +30,27 @@ export const Tiptap = ({ note }: { note: GraphNode }) => {
   // @ts-ignore
   // @ts-ignore
   const editor = useEditor({
+    editorProps: {
+      handleKeyDown: (view: EditorView, e) => {
+        var cursorPos = view.state.selection.$anchor.pos;
+        var text = view.state.doc.textBetween(cursorPos - 1, cursorPos + 1);
+        if (text === "$$" && e.key === "Backspace") {
+          // debugger;
+          e.preventDefault();
+
+          view.dispatch(view.state.tr.delete(cursorPos - 1, cursorPos + 1));
+
+          // e.stopPropagation();
+        }
+        // console.debug(
+        //   `[handleKeyDown] ${JSON.stringify(view, null, 2)}, ${JSON.stringify(
+        //     e,
+        //     null,
+        //     2,
+        //   )}`,
+        // );
+      },
+    },
     extensions: [
       StarterKit,
       CustomNode,
