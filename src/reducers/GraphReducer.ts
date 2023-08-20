@@ -120,7 +120,9 @@ export function graphReducer(draft: GraphState, action: GraphAction): void {
       if (
         draft.links.some(
           (link) =>
-            link.source === newLink.source && link.target === newLink.target,
+            link.source === newLink.source &&
+            link.target === newLink.target &&
+            link.undirected === newLink.undirected,
         )
       ) {
         return;
