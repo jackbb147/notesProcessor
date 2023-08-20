@@ -31,31 +31,6 @@ export const Tiptap = ({ note }: { note: GraphNode }) => {
   // @ts-ignore
   // @ts-ignore
   const editor = useEditor({
-    editorProps: {
-      handleKeyDown: (view: EditorView, e) => {
-        //TODO move this to NodeView.js
-        var cursorPos = view.state.selection.$anchor.pos;
-        var text = view.state.doc.textBetween(cursorPos - 1, cursorPos + 1);
-        if (text === "$$") {
-          if (e.key === "Backspace") {
-            // debugger;
-            e.preventDefault();
-
-            view.dispatch(view.state.tr.delete(cursorPos - 1, cursorPos + 1));
-            return true;
-
-            // e.stopPropagation();
-          }
-        }
-        // console.debug(
-        //   `[handleKeyDown] ${JSON.stringify(view, null, 2)}, ${JSON.stringify(
-        //     e,
-        //     null,
-        //     2,
-        //   )}`,
-        // );
-      },
-    },
     extensions: [
       StarterKit,
       // CustomNode,
