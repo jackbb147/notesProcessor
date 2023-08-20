@@ -24,6 +24,9 @@ const content = "<p>Hello World!</p>";
 
 export const Tiptap = ({ note }: { note: GraphNode }) => {
   const Graph = useGraph();
+  const AppState = useAppState();
+  // @ts-ignore
+  // @ts-ignore
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -32,7 +35,9 @@ export const Tiptap = ({ note }: { note: GraphNode }) => {
           class: "mention",
         },
         renderLabel({ options, node }) {
-          return `${node.attrs.label ?? node.attrs.id}`;
+          // debugger;
+          return `${node.attrs.id.title}`;
+          // return `hello world ...`;
         },
         suggestion: {
           ...suggestion,
@@ -40,16 +45,15 @@ export const Tiptap = ({ note }: { note: GraphNode }) => {
 
           items: ({ query }) => {
             return [
-              "Lea Thompson",
-              "Oliver Feng",
-              ...Graph.nodes.map((node) => node.title),
-            ]
-              .filter(
-                (item) =>
-                  item.toLowerCase() !== note.title.toLowerCase() &&
-                  item.toLowerCase().startsWith(query.toLowerCase()),
-              )
-              .slice(0, 5);
+              // "Lea Thompson",
+              // "Oliver Feng",
+              ...Graph.nodes,
+            ].filter(
+              (item) =>
+                item.title.toLowerCase() !== note.title.toLowerCase() &&
+                item.title.toLowerCase().startsWith(query.toLowerCase()),
+            );
+            // .slice(0, 5);
           },
         },
 

@@ -6,15 +6,37 @@ import React, {
   useImperativeHandle,
   useState,
 } from "react";
+import {
+  useAppState,
+  useGraph,
+  useGraphDispatch,
+} from "../../../../hooks/AppStateAndGraphhooks";
+import { GraphActionType } from "../../../../reducers/GraphReducer";
 
 export default forwardRef((props, ref) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const graph = useGraph();
+  const graphDispatch = useGraphDispatch();
+  const AppState = useAppState();
 
   const selectItem = (index) => {
     const item = props.items[index];
 
     if (item) {
+      // debugger;
+      // TODO  : get the current node id from the graph state and then link the current node to the selected node
       props.command({ id: item });
+      try {
+        graphDispatch({
+          type: GraphActionType.addLink,
+          link: {
+            source: AppState.activeNodeID,
+            target: item.id,
+          },
+        });
+      } catch (e) {
+        console.error(e);
+      }
     }
   };
 
@@ -64,7 +86,9 @@ export default forwardRef((props, ref) => {
             key={index}
             onClick={() => selectItem(index)}
           >
-            {item}
+            {/*TODO  change this to the actual name of the node
+             */}
+            {item.title}
           </button>
         ))
       ) : (

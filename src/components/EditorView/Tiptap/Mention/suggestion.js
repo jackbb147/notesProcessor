@@ -23,6 +23,7 @@ export default {
           getReferenceClientRect: props.clientRect,
           appendTo: () => document.body,
           content: component.element,
+          // content: "hello!",
           showOnCreate: true,
           interactive: true,
           trigger: "manual",

@@ -23,5 +23,6 @@
   height: 1em;
   background: url("./fileIcon.svg") no-repeat;
   background-size: contain;
+  /*https://stackoverflow.com/a/53336754*/
   filter: invert(69%) sepia(63%) saturate(4601%) hue-rotate(171deg) brightness(104%) contrast(86%);
 }
