@@ -36,7 +36,7 @@ export const Tiptap = ({ note }: { note: GraphNode }) => {
         },
         renderLabel({ options, node }) {
           // debugger;
-          return `${node.attrs.id.title}`;
+          return `${node.attrs.id.title}`; //TODO this is a hack. It works but it's not the right way to do it
           // return `hello world ...`;
         },
         suggestion: {
