@@ -18,6 +18,7 @@ import suggestion from "./Reference/suggestion";
 import { GraphNode } from "../../../reducers/GraphReducer";
 import { CustomNode } from "./MathJax/MathJax";
 import { EditorView } from "@tiptap/pm/view";
+import NodeView from "./MathJax/NodeView";
 
 // define your extension array
 const extensions = [StarterKit];
@@ -32,15 +33,19 @@ export const Tiptap = ({ note }: { note: GraphNode }) => {
   const editor = useEditor({
     editorProps: {
       handleKeyDown: (view: EditorView, e) => {
+        //TODO move this to NodeView.js
         var cursorPos = view.state.selection.$anchor.pos;
         var text = view.state.doc.textBetween(cursorPos - 1, cursorPos + 1);
-        if (text === "$$" && e.key === "Backspace") {
-          // debugger;
-          e.preventDefault();
+        if (text === "$$") {
+          if (e.key === "Backspace") {
+            // debugger;
+            e.preventDefault();
 
-          view.dispatch(view.state.tr.delete(cursorPos - 1, cursorPos + 1));
+            view.dispatch(view.state.tr.delete(cursorPos - 1, cursorPos + 1));
+            return true;
 
-          // e.stopPropagation();
+            // e.stopPropagation();
+          }
         }
         // console.debug(
         //   `[handleKeyDown] ${JSON.stringify(view, null, 2)}, ${JSON.stringify(
@@ -53,7 +58,8 @@ export const Tiptap = ({ note }: { note: GraphNode }) => {
     },
     extensions: [
       StarterKit,
-      CustomNode,
+      // CustomNode,
+      NodeView,
       Mention.configure({
         HTMLAttributes: {
           class: "mention",
@@ -90,7 +96,9 @@ export const Tiptap = ({ note }: { note: GraphNode }) => {
     ],
     content: `
         <h2>Heading</h2>
-        
+        <node-view>
+          <p>This is editable.</p>
+        </node-view>
         <p ></p>
         <p ></p>
         <p ></p>
