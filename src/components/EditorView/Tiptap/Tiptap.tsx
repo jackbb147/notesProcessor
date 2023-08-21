@@ -38,7 +38,7 @@ export const Tiptap = ({ note }: { note: GraphNode }) => {
       // CustomNode,
       ReactComponent,
 
-      NodeView,
+      // NodeView,
       Mention.configure({
         HTMLAttributes: {
           class: "mention",
