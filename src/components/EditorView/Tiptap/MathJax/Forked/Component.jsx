@@ -27,6 +27,7 @@ export default (props) => {
         <AceEditor
           mode="javascript"
           theme="monokai"
+          enableLiveAutocompletion={true}
           onChange={onChange}
           name="UNIQUE_ID_OF_DIV"
           editorProps={{ $blockScrolling: true }}

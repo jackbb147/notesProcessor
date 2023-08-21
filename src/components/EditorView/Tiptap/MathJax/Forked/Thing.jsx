@@ -1,29 +1,64 @@
-import './styles.css'
+import "./styles.css";
 
-import { EditorContent, useEditor } from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
-import React from 'react'
+import { EditorContent, useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import React from "react";
 
-import ReactComponent from './Extension.js'
+import ReactComponent from "./Extension.js";
 
 export default () => {
   const editor = useEditor({
-    extensions: [
-      StarterKit,
-      ReactComponent,
-    ],
-    content: `
-    <p>
-      This is still the text editor you’re used to, but enriched with node views.
-    </p>
-<!--    <react-component count="0"></react-component>-->
-    <p>
-      Did you see that? That’s a React component. We are really living in the future.
-    </p>
-    `,
-  })
+    extensions: [StarterKit, ReactComponent],
+    content: ``,
+  });
 
   return (
-    <EditorContent editor={editor} />
-  )
-}
+    <div
+      style={{
+        textAlign: "initial",
+      }}
+    >
+      <div
+        style={{
+          // border: "1px solid yellow",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        {/*<button*/}
+        {/*  onClick={() => editor.chain().focus().setTextAlign("left").run()}*/}
+        {/*  className={editor.isActive({ textAlign: "left" }) ? "is-active" : ""}*/}
+        {/*>*/}
+        {/*  left*/}
+        {/*</button>*/}
+        {/*<button*/}
+        {/*  onClick={() => editor.chain().focus().setTextAlign("center").run()}*/}
+        {/*  className={*/}
+        {/*    editor.isActive({ textAlign: "center" }) ? "is-active" : ""*/}
+        {/*  }*/}
+        {/*>*/}
+        {/*  center*/}
+        {/*</button>*/}
+        {/*<button*/}
+        {/*  onClick={() => editor.chain().focus().setTextAlign("right").run()}*/}
+        {/*  className={editor.isActive({ textAlign: "right" }) ? "is-active" : ""}*/}
+        {/*>*/}
+        {/*  right*/}
+        {/*</button>*/}
+        {/*<button*/}
+        {/*  onClick={() => editor.chain().focus().setTextAlign("justify").run()}*/}
+        {/*  className={*/}
+        {/*    editor.isActive({ textAlign: "justify" }) ? "is-active" : ""*/}
+        {/*  }*/}
+        {/*>*/}
+        {/*  justify*/}
+        {/*</button>*/}
+        {/*<button onClick={() => editor.chain().focus().unsetTextAlign().run()}>*/}
+        {/*  unsetTextAlign*/}
+        {/*</button>*/}
+      </div>
+      <EditorContent editor={editor} />
+    </div>
+  );
+};
