@@ -1,5 +1,5 @@
 // TODO refactor / rename this ...
-const MATHJAXCOMMANDS = [
+const _MATHJAXCOMMANDS = [
   // `input/tex-base`,
   // String.raw `_`,
   // String.raw `,`,
@@ -1366,4 +1366,6 @@ const MATHJAXCOMMANDS = [
   `xxalignat`,
 ];
 
+const MATHJAXCOMMANDS = _MATHJAXCOMMANDS;
+// debugger;
 export { MATHJAXCOMMANDS };
