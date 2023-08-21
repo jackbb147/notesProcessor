@@ -5,6 +5,9 @@ import { Plugin, PluginKey } from "@tiptap/pm/state";
 import "./NodeViewStyles.css";
 import { EditorView } from "@tiptap/pm/view";
 
+import { edit } from "ace-builds";
+import "ace-builds/src-noconflict/theme-monokai";
+import "ace-builds/src-noconflict/mode-javascript";
 const CustomExtension = Extension.create({
   name: "custom",
 });
@@ -142,10 +145,23 @@ export default Node.create({
       label.contentEditable = false;
 
       const content = document.createElement("div");
-
-      content.classList.add("content");
+      content.id = "CONTENT";
 
       dom.append(label, content);
+
+      const ace = window.ace;
+      if (!ace) {
+        console.error("ace is not defined");
+      } else {
+        console.log("[addNodeView] ace is defined");
+        const editor = edit(content);
+        // debugger;
+        editor.setTheme("ace/theme/monokai");
+
+        editor.session.setMode("ace/mode/javascript");
+      }
+
+      content.classList.add("content");
 
       return {
         dom,

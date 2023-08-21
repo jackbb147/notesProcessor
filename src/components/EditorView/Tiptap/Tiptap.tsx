@@ -1,5 +1,6 @@
 // src/Tiptap.jsx
 import "./tiptap.css";
+import "./MathJax/ReactComponent/styles.css";
 import "./Reference/styles.css";
 import {
   EditorProvider,
@@ -8,6 +9,7 @@ import {
   EditorContent,
   useEditor,
 } from "@tiptap/react";
+import ReactComponent from "./MathJax/ReactComponent/Extension";
 import StarterKit from "@tiptap/starter-kit";
 import React, { useEffect, useRef, useState } from "react";
 import { useAppState, useGraph } from "../../../hooks/AppStateAndGraphhooks";
@@ -34,6 +36,8 @@ export const Tiptap = ({ note }: { note: GraphNode }) => {
     extensions: [
       StarterKit,
       // CustomNode,
+      ReactComponent,
+
       NodeView,
       Mention.configure({
         HTMLAttributes: {
@@ -71,9 +75,11 @@ export const Tiptap = ({ note }: { note: GraphNode }) => {
     ],
     content: `
         <h2>Heading</h2>
-        <node-view>
-          <p>This is editable.</p>
-        </node-view>
+<!--        <node-view>-->
+<!--          <p>This is editable.</p>-->
+<!--        </node-view>-->
+    <react-component count="0"></react-component>
+
         <p ></p>
         <p ></p>
         <p ></p>
