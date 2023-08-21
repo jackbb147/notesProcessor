@@ -2,6 +2,7 @@ import { NodeViewWrapper } from "@jackhou147/tiptap/packages/react";
 import React from "react";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-javascript";
+import "ace-builds/src-noconflict/mode-latex";
 import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/ext-language_tools";
 
@@ -25,7 +26,7 @@ export default (props) => {
           This button has been clicked {props.node.attrs.count} times.
         </button>
         <AceEditor
-          mode="javascript"
+          mode="latex"
           theme="monokai"
           enableLiveAutocompletion={true}
           onChange={onChange}

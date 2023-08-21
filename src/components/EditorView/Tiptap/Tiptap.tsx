@@ -22,7 +22,7 @@ import { GraphNode } from "../../../reducers/GraphReducer";
 import { CustomNode } from "./MathJax/MathJax";
 import { EditorView } from "@tiptap/pm/view";
 import NodeView from "./MathJax/NodeView";
-import Thing from "./MathJax/Forked/Thing";
+import TiptapEditor from "./MathJax/Forked/TiptapEditor";
 
 // define your extension array
 const extensions = [StarterKit];
@@ -86,7 +86,7 @@ export function TiptapBoxComponent({
       }}
       autoHide
     >
-      <Thing />
+      <TiptapEditor />
       {/*<Tiptap note={note} />*/}
     </Scrollbars>
     // <div
