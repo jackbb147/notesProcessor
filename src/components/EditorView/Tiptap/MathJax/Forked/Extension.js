@@ -83,6 +83,19 @@ export default Node.create({
     ];
   },
 
+  addKeyboardShortcuts() {
+    return {
+      $: ({ editor }) => {
+        editor.commands.insertContent("$$");
+        const selection = editor.state.selection;
+        const cursorPos = selection.$anchor.pos;
+        editor.commands.setTextSelection(cursorPos - 1);
+        // debugger;
+        return true;
+      },
+    };
+  },
+
   addAttributes() {
     return {
       count: {
