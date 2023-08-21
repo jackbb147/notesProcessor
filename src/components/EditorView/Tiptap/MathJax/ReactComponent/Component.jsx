@@ -8,7 +8,7 @@ import "prismjs/themes/prism.css"; //Example style, you can use another
 
 function CodeEditor() {
   const [code, setCode] = React.useState(
-    `function add(a, b) {\n  return a + b;\n}`,
+    `function add(c, d) {\n  return a + b;\n}`,
   );
   return (
     <Editor

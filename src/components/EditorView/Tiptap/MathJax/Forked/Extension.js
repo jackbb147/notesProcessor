@@ -1,8 +1,8 @@
 import { mergeAttributes, Node } from "@jackhou147/tiptap/packages/core";
 import { ReactNodeViewRenderer } from "@jackhou147/tiptap/packages/react";
+import { Plugin, PluginKey } from "@jackhou147/tiptap/packages/pm/state";
 
 import Component from "./Component.jsx";
-import { Plugin, PluginKey } from "@jackhou147/tiptap/packages/pm/state";
 
 export default Node.create({
   name: "reactComponent",
@@ -12,23 +12,31 @@ export default Node.create({
   atom: true,
 
   addProseMirrorPlugins() {
-    var that = this;
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const that = this;
+
     return [
       new Plugin({
         key: new PluginKey("eventHandler"),
         props: {
           handleKeyDown: (view, e) => {
-            //TODO move this to NodeView.js
-            var cursorPos = view.state.selection.$anchor.pos;
-            var text = view.state.doc.textBetween(cursorPos - 1, cursorPos + 1);
+            // TODO move this to NodeView.js
+            const cursorPos = view.state.selection.$anchor.pos;
+            const text = view.state.doc.textBetween(
+              cursorPos - 1,
+              cursorPos + 1,
+            );
+
             if (text === "$$") {
               if (e.key === "Backspace") {
                 // debugger;
                 e.preventDefault();
+
                 view.dispatch(
                   view.state.tr.delete(cursorPos - 1, cursorPos + 1),
                 );
                 return true;
+
                 // e.stopPropagation();
               }
             }
@@ -42,14 +50,16 @@ export default Node.create({
           },
           handleTextInput(view, from, to, textInput) {
             try {
-              var editorInstance = that.editor;
+              // debugger;
+              const editorInstance = that.editor;
 
-              var cursorPos = view.state.selection.$anchor.pos;
-              var text = view.state.doc.textBetween(
+              const cursorPos = view.state.selection.$anchor.pos;
+              const text = view.state.doc.textBetween(
                 cursorPos - 1,
                 cursorPos + 1,
               );
-              if (text == "$$") {
+
+              if (text === "$$") {
                 // debugger;
                 // TODO: insert a node
                 // editorInstance.commands.insertContentAt(cursorPos, "nihao");

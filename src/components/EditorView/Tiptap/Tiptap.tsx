@@ -8,9 +8,10 @@ import {
   BubbleMenu,
   EditorContent,
   useEditor,
-} from "@tiptap/react";
-import ReactComponent from "./MathJax/ReactComponent/Extension";
-import StarterKit from "@tiptap/starter-kit";
+} from "@jackhou147/tiptap/packages/react"; //from "@tiptap/react"; //// from "@tiptap/react";
+import StarterKit from "@jackhou147/tiptap/packages/starter-kit"; //from "@tiptap/starter-kit"; //from "@jackhou147/tiptap/packages/starter-kit";
+
+import ReactComponent from "../Tiptap/MathJax/Forked/Extension";
 import React, { useEffect, useRef, useState } from "react";
 import { useAppState, useGraph } from "../../../hooks/AppStateAndGraphhooks";
 import { TextAlign } from "@tiptap/extension-text-align";
@@ -21,132 +22,48 @@ import { GraphNode } from "../../../reducers/GraphReducer";
 import { CustomNode } from "./MathJax/MathJax";
 import { EditorView } from "@tiptap/pm/view";
 import NodeView from "./MathJax/NodeView";
+import Thing from "./MathJax/Forked/Thing";
 
 // define your extension array
 const extensions = [StarterKit];
 
 const content = "<p>Hello World!</p>";
 
-export const Tiptap = ({ note }: { note: GraphNode }) => {
-  const Graph = useGraph();
-  const AppState = useAppState();
-  // @ts-ignore
-  // @ts-ignore
-  const editor = useEditor({
-    extensions: [
-      StarterKit,
-      // CustomNode,
-      ReactComponent,
-
-      // NodeView,
-      Mention.configure({
-        HTMLAttributes: {
-          class: "mention",
-        },
-        renderLabel({ options, node }) {
-          // debugger;
-          return `${node.attrs.id.title}`; //TODO this is a hack. It works but it's not the right way to do it
-          // return `hello world ...`;
-        },
-        suggestion: {
-          ...suggestion,
-          char: "[[",
-
-          items: ({ query }) => {
-            return [
-              // "Lea Thompson",
-              // "Oliver Feng",
-              ...Graph.nodes,
-            ].filter(
-              (item) =>
-                item.title.toLowerCase() !== note.title.toLowerCase() &&
-                item.title.toLowerCase().startsWith(query.toLowerCase()),
-            );
-            // .slice(0, 5);
-          },
-        },
-
-        // suggestion,
-      }),
-
-      TextAlign.configure({
-        types: ["heading", "paragraph"],
-      }),
-    ],
-    content: `
-        <h2>Heading</h2>
-<!--        <node-view>-->
-<!--          <p>This is editable.</p>-->
-<!--        </node-view>-->
-    <react-component count="0"></react-component>
-
-        <p ></p>
-        <p ></p>
-        <p ></p>
-        <p ></p>
-        <p ></p>
-        <p ></p>
-        <p ></p>
-        <p ></p>
-        <p ></p>
-        <p ></p>
-      `,
-  });
-
-  if (!editor) {
-    return null;
-  }
-
-  return (
-    <div
-      style={{
-        textAlign: "initial",
-      }}
-    >
-      <div
-        style={{
-          // border: "1px solid yellow",
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        {/*<button*/}
-        {/*  onClick={() => editor.chain().focus().setTextAlign("left").run()}*/}
-        {/*  className={editor.isActive({ textAlign: "left" }) ? "is-active" : ""}*/}
-        {/*>*/}
-        {/*  left*/}
-        {/*</button>*/}
-        {/*<button*/}
-        {/*  onClick={() => editor.chain().focus().setTextAlign("center").run()}*/}
-        {/*  className={*/}
-        {/*    editor.isActive({ textAlign: "center" }) ? "is-active" : ""*/}
-        {/*  }*/}
-        {/*>*/}
-        {/*  center*/}
-        {/*</button>*/}
-        {/*<button*/}
-        {/*  onClick={() => editor.chain().focus().setTextAlign("right").run()}*/}
-        {/*  className={editor.isActive({ textAlign: "right" }) ? "is-active" : ""}*/}
-        {/*>*/}
-        {/*  right*/}
-        {/*</button>*/}
-        {/*<button*/}
-        {/*  onClick={() => editor.chain().focus().setTextAlign("justify").run()}*/}
-        {/*  className={*/}
-        {/*    editor.isActive({ textAlign: "justify" }) ? "is-active" : ""*/}
-        {/*  }*/}
-        {/*>*/}
-        {/*  justify*/}
-        {/*</button>*/}
-        {/*<button onClick={() => editor.chain().focus().unsetTextAlign().run()}>*/}
-        {/*  unsetTextAlign*/}
-        {/*</button>*/}
-      </div>
-      <EditorContent editor={editor} />
-    </div>
-  );
-};
+// export const Tiptap = ({ note }: { note: GraphNode }) => {
+//   const Graph = useGraph();
+//   const AppState = useAppState();
+//   // @ts-ignore
+//   // @ts-ignore
+//   // const editor: Editor | undefined = useEditor({
+//   //   content,
+//   // });
+//
+//   return (
+//     <div
+//       style={{
+//         textAlign: "initial",
+//       }}
+//     >
+//       <div
+//         style={{
+//           // border: "1px solid yellow",
+//           display: "flex",
+//           flexDirection: "row",
+//           justifyContent: "space-between",
+//         }}
+//       ></div>
+//       <>
+//         <EditorProvider
+//           extensions={[StarterKit, ReactComponent]}
+//           content={content}
+//         >
+//           <FloatingMenu>This is the floating menu</FloatingMenu>
+//           <BubbleMenu>This is the bubble menu</BubbleMenu>
+//         </EditorProvider>
+//       </>
+//     </div>
+//   );
+// };
 
 export function TiptapBoxComponent({
   note,
@@ -169,7 +86,8 @@ export function TiptapBoxComponent({
       }}
       autoHide
     >
-      <Tiptap note={note} />
+      <Thing />
+      {/*<Tiptap note={note} />*/}
     </Scrollbars>
     // <div
     //   tabIndex={0}
