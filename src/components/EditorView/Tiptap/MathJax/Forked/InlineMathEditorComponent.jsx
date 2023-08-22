@@ -42,6 +42,7 @@ export default (props) => {
 
   function onChange(newValue) {
     console.log("change", newValue);
+    updateSize(null, reactAceRef.current.editor.renderer);
     setValue(newValue);
   }
 
@@ -77,6 +78,7 @@ export default (props) => {
 
   useEffect(() => {
     if (!reactAceRef.current) return;
+    updateSize(null, reactAceRef.current.editor.renderer);
     if (completerConfigured) return;
     const editor = reactAceRef.current.editor;
     // debugger;
@@ -114,7 +116,11 @@ export default (props) => {
     });
 
     editor.renderer.on("beforeRender", updateSize);
+
     updateSize(null, editor.renderer);
+    window.f = () => {
+      updateSize(null, editor.renderer);
+    };
 
     // make sure the auto complete pop up boxes are on top, instead of bottom
     const config = {
@@ -166,7 +172,7 @@ export default (props) => {
     observer.observe(document.body, config);
 
     setCompleterConfigured(true);
-  }, [completerConfigured, reactAceRef.current]);
+  }, [completerConfigured, isEditing]);
 
   return (
     <NodeViewWrapper className="react-component">
@@ -191,6 +197,7 @@ export default (props) => {
                 focus={true}
                 ref={reactAceRef}
                 mode="latex"
+                value={value}
                 theme={AppState.darkModeOn ? "monokai" : "github"}
                 style={
                   {
@@ -198,7 +205,6 @@ export default (props) => {
                     // minWidth: "1rem",
                   }
                 }
-                value={value}
                 placeholder={"\\text{hello world}"}
                 showGutter={false}
                 showPrintMargin={false}
@@ -274,9 +280,6 @@ export default (props) => {
                   console.debug(`[InlineMathEditorComponent] blur`);
                   setIsEditing(false);
                   setCompleterConfigured(false);
-                }}
-                onLoad={(editor) => {
-                  updateSize(null, editor.renderer);
                 }}
                 name="UNIQUE_ID_OF_DIV"
                 editorProps={{ $blockScrolling: true }}
