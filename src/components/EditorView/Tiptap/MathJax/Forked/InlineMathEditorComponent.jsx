@@ -28,6 +28,7 @@ export default (props) => {
   const [completerConfigured, setCompleterConfigured] = React.useState(false);
   const [destroyed, setDestroyed] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [value, setValue] = useState("");
   useResizeObserverBugFix();
   const increase = () => {
     props.updateAttributes({
@@ -37,6 +38,7 @@ export default (props) => {
 
   function onChange(newValue) {
     console.log("change", newValue);
+    setValue(newValue);
   }
 
   useEffect(() => {
@@ -237,9 +239,11 @@ export default (props) => {
             <Tooltip
               // options
               title="Welcome to React"
+              html={<div>{value}</div>}
               position={"bottom"}
               // trigger="click"
               open={showTooltip}
+              arrow={true}
             >
               <AceEditor
                 ref={reactAceRef}
