@@ -28,6 +28,8 @@ export default (props) => {
   const reactAceRef = useRef(null);
   const [completerConfigured, setCompleterConfigured] = React.useState(false);
   const [destroyed, setDestroyed] = useState(false);
+  const [isEditing, setIsEditing] = useState(true); // ["latex", "mathml"
+
   const [showTooltip, setShowTooltip] = useState(false);
   const [value, setValue] = useState("");
   useResizeObserverBugFix();
@@ -75,6 +77,10 @@ export default (props) => {
       },
     };
 
+    function switchMode() {
+      setIsEditing(!isEditing);
+    }
+
     editor.completers.push(staticWordCompleter);
     // https://stackoverflow.com/a/38437098
     editor.on("change", (obj, editor) => {
@@ -93,7 +99,12 @@ export default (props) => {
     });
 
     editor.focus();
-    // editor.setValue("hello world");
+    editor.setValue(value);
+
+    editor.on("blur", () => {
+      setIsEditing(false);
+      setCompleterConfigured(false);
+    });
 
     editor.commands.addCommand({
       name: "deleteMe",
@@ -136,6 +147,7 @@ export default (props) => {
           setCursorPos(p.editor, getCursorPos(p.editor) - 1);
 
           //TODO convertEditorToMath(editor);
+          switchMode();
         }
         return false;
       },
@@ -152,6 +164,7 @@ export default (props) => {
           let p = props;
           setCursorPos(p.editor, getCursorPos(p.editor) + 1);
           // TODO convertEditorToMath(editor, "right");
+          switchMode();
         }
         return false;
       },
@@ -235,42 +248,54 @@ export default (props) => {
         {/*<button onClick={increase}>*/}
         {/*  This button has been clicked {props.node.attrs.count} times.*/}
         {/*</button>*/}
-        {!destroyed && (
-          <Tooltip
-            // options
-            title="Welcome to React"
-            html={
+        {!destroyed &&
+          (isEditing ? (
+            <Tooltip
+              // options
+              title="Welcome to React"
+              html={
+                <MathJaxContext>
+                  <MathJax>{`\\( ${value} \\)`}</MathJax>
+                </MathJaxContext>
+              }
+              position={"bottom"}
+              // trigger="click"
+              open={showTooltip}
+              arrow={true}
+            >
+              <AceEditor
+                ref={reactAceRef}
+                mode="latex"
+                theme={AppState.darkModeOn ? "monokai" : "github"}
+                style={{
+                  maxWidth: "100%",
+                  minWidth: "1rem",
+                }}
+                value={value}
+                placeholder={"\\text{hello world}"}
+                showGutter={false}
+                showPrintMargin={false}
+                highlightActiveLine={false}
+                maxLines={1}
+                enableLiveAutocompletion={false}
+                enableBasicAutocompletion={true}
+                onChange={onChange}
+                onLoad={(editor) => {}}
+                name="UNIQUE_ID_OF_DIV"
+                editorProps={{ $blockScrolling: true }}
+              />
+            </Tooltip>
+          ) : (
+            <div
+              onClick={() => {
+                setIsEditing(true);
+              }}
+            >
               <MathJaxContext>
                 <MathJax>{`\\( ${value} \\)`}</MathJax>
               </MathJaxContext>
-            }
-            position={"bottom"}
-            // trigger="click"
-            open={showTooltip}
-            arrow={true}
-          >
-            <AceEditor
-              ref={reactAceRef}
-              mode="latex"
-              theme={AppState.darkModeOn ? "monokai" : "github"}
-              style={{
-                maxWidth: "100%",
-                minWidth: "1rem",
-              }}
-              placeholder={"\\text{hello world}"}
-              showGutter={false}
-              showPrintMargin={false}
-              highlightActiveLine={false}
-              maxLines={1}
-              enableLiveAutocompletion={false}
-              enableBasicAutocompletion={true}
-              onChange={onChange}
-              onLoad={(editor) => {}}
-              name="UNIQUE_ID_OF_DIV"
-              editorProps={{ $blockScrolling: true }}
-            />
-          </Tooltip>
-        )}
+            </div>
+          ))}
       </div>
     </NodeViewWrapper>
   );
