@@ -46,6 +46,8 @@ export default (props) => {
   }
 
   function updateSize(e, renderer) {
+    // console.log(`[updateSize] fired`);
+    // debugger;
     // https://stackoverflow.com/a/57279878/21646295
     var text = renderer.session.getLine(0);
     var chars = renderer.session.$getStringScreenWidth(text)[0];
@@ -164,7 +166,7 @@ export default (props) => {
     observer.observe(document.body, config);
 
     setCompleterConfigured(true);
-  }, [completerConfigured]);
+  }, [completerConfigured, reactAceRef.current]);
 
   return (
     <NodeViewWrapper className="react-component">
@@ -273,9 +275,9 @@ export default (props) => {
                   setIsEditing(false);
                   setCompleterConfigured(false);
                 }}
-                // onLoad={(editor) => {
-                //   updateSize(null, editor.renderer);
-                // }}
+                onLoad={(editor) => {
+                  updateSize(null, editor.renderer);
+                }}
                 name="UNIQUE_ID_OF_DIV"
                 editorProps={{ $blockScrolling: true }}
               />
