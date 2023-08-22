@@ -3,29 +3,30 @@
   margin-top: 0.75em;
 }
 .react-component {
-  background: #faf594;
-  border: none;
+  /*background: #faf594;*/
+  background-color: transparent;
+  border: 1px solid red;
   border-radius: 0.5rem;
   margin: 0;
   position: relative;
   display: inline-block;
 }
-.react-component .label {
-  margin-left: 1rem;
-  background-color: #0d0d0d;
-  font-size: 0.6rem;
-  letter-spacing: 1px;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: #fff;
-  position: absolute;
-  top: 0;
-  padding: 0.25rem 0.75rem;
-  border-radius: 0 0 0.5rem 0.5rem;
-}
+
 .react-component .content {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  margin-left: 10px;
+  margin-right: 10px;
+  border: 1px solid red;
+  position: relative;
+}
+
+.react-component .content:before {
+  content: "  ";
+  position: absolute;
+  right: 0;
+  color: white;
 }
 
 

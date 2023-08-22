@@ -9,8 +9,10 @@ export default Node.create({
 
   group: "inline",
   inline: true,
-  atom: true,
+  atom: false,
   selectable: true,
+  code: true,
+  defining: true,
 
   addProseMirrorPlugins() {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
