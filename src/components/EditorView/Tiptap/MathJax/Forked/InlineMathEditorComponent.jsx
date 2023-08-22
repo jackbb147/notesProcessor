@@ -279,6 +279,7 @@ export default (props) => {
             <div
               onClick={() => {
                 setIsEditing(true);
+                setCompleterConfigured(false);
               }}
             >
               <MathView
