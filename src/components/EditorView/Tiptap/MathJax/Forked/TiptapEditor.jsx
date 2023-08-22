@@ -11,7 +11,8 @@ export default () => {
     extensions: [StarterKit, ReactComponent],
     content: `
     <p></p>
-    <react-component></react-component>
+<!--    <react-component>hello!</react-component>-->
+   
     `,
   });
 

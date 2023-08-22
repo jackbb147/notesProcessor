@@ -2,7 +2,8 @@ import { mergeAttributes, Node } from "@jackhou147/tiptap/packages/core";
 import { ReactNodeViewRenderer } from "@jackhou147/tiptap/packages/react";
 import { Plugin, PluginKey } from "@jackhou147/tiptap/packages/pm/state";
 
-import Component from "./InlineMathEditorComponent.jsx";
+import { InlineMathEditorComponent } from "./InlineMathEditorComponent.tsx";
+import { getCursorPos, setCursorPos } from "./TiptapCursorPos";
 
 export default Node.create({
   name: "reactComponent",
@@ -10,8 +11,8 @@ export default Node.create({
   group: "inline",
   inline: true,
   atom: false,
-  selectable: true,
-  code: true,
+  selectable: false,
+
   defining: true,
 
   addProseMirrorPlugins() {
@@ -124,6 +125,6 @@ export default Node.create({
   },
 
   addNodeView() {
-    return ReactNodeViewRenderer(Component);
+    return ReactNodeViewRenderer(InlineMathEditorComponent);
   },
 });

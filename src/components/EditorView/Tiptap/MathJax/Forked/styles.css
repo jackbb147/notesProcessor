@@ -21,6 +21,7 @@
   margin-right: 2px;
   /*border: 1px solid red;*/
   position: relative;
+  height: 50px;
 }
 
 .react-component .content:before {
@@ -35,4 +36,16 @@
   display: inline-block;
   vertical-align: middle;
 }
+
+/*.ace_text-input{*/
+/*  opacity: initial!important;*/
+/*  width: 50px!important;*/
+/*  height: 10px!important;*/
+/*  background-color: red;*/
+/*  position: absolute!important;*/
+/*  left: 0!important;*/
+/*  top: 0!important;*/
+/*  z-index: 50000!important;*/
+/*  transform: none!important;*/
+/*}*/
 
