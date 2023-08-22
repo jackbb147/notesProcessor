@@ -9,7 +9,10 @@ import ReactComponent from "./Extension.js";
 export default () => {
   const editor = useEditor({
     extensions: [StarterKit, ReactComponent],
-    content: ``,
+    content: `
+    <p></p>
+    <react-component></react-component>
+    `,
   });
 
   return (

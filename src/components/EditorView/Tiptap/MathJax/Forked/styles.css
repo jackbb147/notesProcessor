@@ -4,10 +4,11 @@
 }
 .react-component {
   background: #faf594;
-  border: 3px solid #0d0d0d;
+  border: none;
   border-radius: 0.5rem;
-  margin: 1rem 0;
+  margin: 0;
   position: relative;
+  display: inline-block;
 }
 .react-component .label {
   margin-left: 1rem;
@@ -23,7 +24,12 @@
   border-radius: 0 0 0.5rem 0.5rem;
 }
 .react-component .content {
-  margin-top: 1.5rem;
-  padding: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+
+.node-reactComponent{
+  display: inline-block;
 }
 

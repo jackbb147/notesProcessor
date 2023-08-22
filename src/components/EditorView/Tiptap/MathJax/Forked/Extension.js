@@ -2,14 +2,15 @@ import { mergeAttributes, Node } from "@jackhou147/tiptap/packages/core";
 import { ReactNodeViewRenderer } from "@jackhou147/tiptap/packages/react";
 import { Plugin, PluginKey } from "@jackhou147/tiptap/packages/pm/state";
 
-import Component from "./Component.jsx";
+import Component from "./InlineMathEditorComponent.jsx";
 
 export default Node.create({
   name: "reactComponent",
 
-  group: "block",
-
+  group: "inline",
+  inline: true,
   atom: true,
+  selectable: true,
 
   addProseMirrorPlugins() {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
@@ -67,9 +68,13 @@ export default Node.create({
                   from: cursorPos - 1,
                   to: cursorPos + 1,
                 });
-                editorInstance.commands.insertContentAt(cursorPos, {
-                  type: "reactComponent",
-                });
+                editorInstance.commands.insertContentAt(
+                  cursorPos - 1,
+                  // "hello wolrd",
+                  {
+                    type: "reactComponent",
+                  },
+                );
                 // debugger;
 
                 return true; // this is to prevent the default behavior of inserting the text: https://prosemirror.net/docs/ref/

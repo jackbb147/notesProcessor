@@ -4,6 +4,7 @@ import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/mode-latex";
 import "ace-builds/src-noconflict/theme-monokai";
+import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/ext-language_tools";
 import { MATHJAXCOMMANDS } from "../Forked/mathjaxCommands";
 
@@ -56,24 +57,56 @@ export default (props) => {
           break;
       }
     });
+
+    editor.focus();
+    // editor.setValue("hello world");
+
+    editor.renderer.on("beforeRender", updateSize);
+    function updateSize(e, renderer) {
+      // https://stackoverflow.com/a/57279878/21646295
+      var text = renderer.session.getLine(0);
+      var chars = renderer.session.$getStringScreenWidth(text)[0];
+
+      var width =
+        Math.max(chars, 2) * renderer.characterWidth + // text size
+        2 * renderer.$padding + // padding
+        2; // add border width if needed
+
+      // update container size
+      renderer.container.style.width = width + "px";
+      // update computed size stored by the editor
+      renderer.onResize(false, 0, width, renderer.$size.height);
+    }
+    updateSize(null, editor.renderer);
+
     setCompleterConfigured(true);
   }, [reactAceRef.current]);
 
   return (
     <NodeViewWrapper className="react-component">
-      <span className="label">React Component</span>
+      {/*<span className="label">React Component</span>*/}
 
       <div className="content">
-        <button onClick={increase}>
-          This button has been clicked {props.node.attrs.count} times.
-        </button>
+        {/*<button onClick={increase}>*/}
+        {/*  This button has been clicked {props.node.attrs.count} times.*/}
+        {/*</button>*/}
         <AceEditor
           ref={reactAceRef}
           mode="latex"
-          theme="monokai"
+          theme="github"
+          style={{
+            maxWidth: "100%",
+            minWidth: "1rem",
+          }}
+          placeholder={"\\text{hello world}"}
+          showGutter={false}
+          showPrintMargin={false}
+          highlightActiveLine={false}
+          maxLines={1}
           enableLiveAutocompletion={false}
           enableBasicAutocompletion={true}
           onChange={onChange}
+          onLoad={(editor) => {}}
           name="UNIQUE_ID_OF_DIV"
           editorProps={{ $blockScrolling: true }}
         />
