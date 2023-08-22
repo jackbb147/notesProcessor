@@ -40,7 +40,7 @@ export default (props) => {
     });
   };
 
-  function onChange(newValue) {
+  function onChange(newValue, a) {
     console.log("change", newValue);
     updateSize(null, reactAceRef.current.editor.renderer);
     setValue(newValue);
