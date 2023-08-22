@@ -7,6 +7,7 @@ import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/ext-language_tools";
 import { MATHJAXCOMMANDS } from "../Forked/mathjaxCommands";
+import { useAppState } from "../../../../../hooks/AppStateAndGraphhooks";
 
 function getCursorPos(tiptapEditor) {
   const selection = tiptapEditor.state.selection;
@@ -19,6 +20,7 @@ function setCursorPos(tiptapEditor, pos) {
 }
 
 export default (props) => {
+  const AppState = useAppState();
   const reactAceRef = useRef(null);
   const [completerConfigured, setCompleterConfigured] = React.useState(false);
   const [destroyed, setDestroyed] = React.useState(false);
@@ -33,11 +35,14 @@ export default (props) => {
   }
 
   useEffect(() => {
-    if (!props.selected) return;
+    if (!reactAceRef.current) return;
+    if (!props.selected) {
+      return;
+    }
     console.debug(
       `[InlineMathEditorComponent] props.selected: ${props.selected}`,
     );
-    if (!reactAceRef.current) return;
+
     reactAceRef.current.editor.focus();
   }, [props.selected]);
 
@@ -176,7 +181,7 @@ export default (props) => {
           <AceEditor
             ref={reactAceRef}
             mode="latex"
-            theme="github"
+            theme={AppState.darkModeOn ? "monokai" : "github"}
             style={{
               maxWidth: "100%",
               minWidth: "1rem",

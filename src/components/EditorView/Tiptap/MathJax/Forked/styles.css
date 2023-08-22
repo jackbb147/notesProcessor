@@ -5,8 +5,9 @@
 .react-component {
   /*background: #faf594;*/
   background-color: transparent;
-  border: 1px solid red;
-  border-radius: 0.5rem;
+  border: 1px solid grey;
+  /*border: none;*/
+  border-radius: 5px;
   margin: 0;
   position: relative;
   display: inline-block;
@@ -16,9 +17,9 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  margin-left: 10px;
-  margin-right: 10px;
-  border: 1px solid red;
+  margin-left: 2px;
+  margin-right: 2px;
+  /*border: 1px solid red;*/
   position: relative;
 }
 
@@ -32,5 +33,6 @@
 
 .node-reactComponent{
   display: inline-block;
+  vertical-align: middle;
 }
 
