@@ -11,6 +11,7 @@ import { useAppState } from "../../../../../hooks/AppStateAndGraphhooks";
 import "react-tippy/dist/tippy.css";
 import { Tooltip } from "react-tippy";
 import { useResizeObserverBugFix } from "../../../../../hooks/useResizeObserverBugFix";
+import { MathJax, MathJaxContext } from "better-react-mathjax";
 
 function getCursorPos(tiptapEditor) {
   const selection = tiptapEditor.state.selection;
@@ -22,7 +23,7 @@ function setCursorPos(tiptapEditor, pos) {
   tiptapEditor.chain().focus().setTextSelection(pos).run();
 }
 
-export default (props) => {
+function InlineMathEditorComponent(props) {
   const AppState = useAppState();
   const reactAceRef = useRef(null);
   const [completerConfigured, setCompleterConfigured] = React.useState(false);
@@ -235,40 +236,50 @@ export default (props) => {
         {/*  This button has been clicked {props.node.attrs.count} times.*/}
         {/*</button>*/}
         {!destroyed && (
-          <>
-            <Tooltip
-              // options
-              title="Welcome to React"
-              html={<div>{value}</div>}
-              position={"bottom"}
-              // trigger="click"
-              open={showTooltip}
-              arrow={true}
-            >
-              <AceEditor
-                ref={reactAceRef}
-                mode="latex"
-                theme={AppState.darkModeOn ? "monokai" : "github"}
-                style={{
-                  maxWidth: "100%",
-                  minWidth: "1rem",
-                }}
-                placeholder={"\\text{hello world}"}
-                showGutter={false}
-                showPrintMargin={false}
-                highlightActiveLine={false}
-                maxLines={1}
-                enableLiveAutocompletion={false}
-                enableBasicAutocompletion={true}
-                onChange={onChange}
-                onLoad={(editor) => {}}
-                name="UNIQUE_ID_OF_DIV"
-                editorProps={{ $blockScrolling: true }}
-              />
-            </Tooltip>
-          </>
+          <Tooltip
+            // options
+            title="Welcome to React"
+            html={
+              <MathJaxContext>
+                <MathJax>{`\\( ${value} \\)`}</MathJax>
+              </MathJaxContext>
+            }
+            position={"bottom"}
+            // trigger="click"
+            open={showTooltip}
+            arrow={true}
+          >
+            <AceEditor
+              ref={reactAceRef}
+              mode="latex"
+              theme={AppState.darkModeOn ? "monokai" : "github"}
+              style={{
+                maxWidth: "100%",
+                minWidth: "1rem",
+              }}
+              placeholder={"\\text{hello world}"}
+              showGutter={false}
+              showPrintMargin={false}
+              highlightActiveLine={false}
+              maxLines={1}
+              enableLiveAutocompletion={false}
+              enableBasicAutocompletion={true}
+              onChange={onChange}
+              onLoad={(editor) => {}}
+              name="UNIQUE_ID_OF_DIV"
+              editorProps={{ $blockScrolling: true }}
+            />
+          </Tooltip>
         )}
       </div>
     </NodeViewWrapper>
   );
-};
+}
+
+export default function WithContext() {
+  return (
+    <MathJaxContext>
+      <InlineMathEditorComponent />
+    </MathJaxContext>
+  );
+}

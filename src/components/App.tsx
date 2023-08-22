@@ -41,6 +41,7 @@ import { EditorPage } from "./EditorView/EditorPage";
 import { Register } from "./RegisterAndLogin/Register/Register";
 import { useAppState } from "../hooks/AppStateAndGraphhooks";
 import { Login } from "./RegisterAndLogin/Login/Login";
+import { MathJax, MathJaxContext } from "better-react-mathjax";
 
 export function ensure<T>(
   argument: T | undefined | null,
@@ -76,25 +77,29 @@ function Container({ children }: { children: React.ReactNode }) {
 function App() {
   return (
     <>
-      <AppStateProvider>
-        <GraphProvider>
-          <Container>
-            <div className="bg-grey dark:bg-dark_secondary w-full h-full flex flex-row overflow-hidden dark:text-white">
-              <RecoverNodePopup />
-              <LabelSelectorPopUp />
-              <Register />
-              <Login />
-              <FolderPanel>
-                <div className={"App__main bg-white h-full grow w-full"}>
-                  <NotesPanel>
-                    <EditorPage />
-                  </NotesPanel>
-                </div>
-              </FolderPanel>
-            </div>
-          </Container>
-        </GraphProvider>
-      </AppStateProvider>
+      <MathJaxContext>
+        <AppStateProvider>
+          <GraphProvider>
+            <Container>
+              <MathJax>{"\\(\\frac{10}{4x} \\approx 2^{12}\\)"}</MathJax>
+
+              <div className="bg-grey dark:bg-dark_secondary w-full h-full flex flex-row overflow-hidden dark:text-white">
+                <RecoverNodePopup />
+                <LabelSelectorPopUp />
+                <Register />
+                <Login />
+                <FolderPanel>
+                  <div className={"App__main bg-white h-full grow w-full"}>
+                    <NotesPanel>
+                      <EditorPage />
+                    </NotesPanel>
+                  </div>
+                </FolderPanel>
+              </div>
+            </Container>
+          </GraphProvider>
+        </AppStateProvider>
+      </MathJaxContext>
     </>
   );
 }
