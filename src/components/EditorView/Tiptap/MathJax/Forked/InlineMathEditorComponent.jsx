@@ -78,10 +78,6 @@ export default (props) => {
       },
     };
 
-    function switchMode() {
-      setIsEditing(!isEditing);
-    }
-
     editor.completers.push(staticWordCompleter);
     // https://stackoverflow.com/a/38437098
     editor.on("change", (obj, editor) => {
@@ -97,73 +93,6 @@ export default (props) => {
           }
           break;
       }
-    });
-
-    editor.focus();
-    editor.setValue(value);
-
-    editor.commands.addCommand({
-      name: "deleteMe",
-      bindKey: { win: "backspace", mac: "backspace" },
-      exec: function (editor) {
-        //  ;
-        let value = editor.getValue();
-        console.log(value);
-        if (value.length === 0) {
-          let p = props;
-          // editor.destroy();
-
-          setDestroyed(true);
-          // debugger;
-          const cursorPos = getCursorPos(p.editor);
-          p.deleteNode();
-          setCursorPos(p.editor, cursorPos);
-          return true;
-
-          // user wants to delete the quillModules box ...
-          // let index = quill.getSelection().index;
-          // quill.deleteText(index, 1);
-          // tooltip.hide();
-        }
-
-        return false; // must return false in order to fire the default event:https://stackoverflow.com/a/42020190/21646295
-      },
-    });
-
-    editor.commands.addCommand({
-      name: "exit me, left",
-      bindKey: { win: "Left", mac: "Left" },
-      exec: function (editor) {
-        let cursorPosition = editor.selection.getCursor();
-
-        if (cursorPosition.column === 0) {
-          //
-          // debugger;
-          let p = props;
-          setCursorPos(p.editor, getCursorPos(p.editor) - 1);
-
-          //TODO convertEditorToMath(editor);
-          switchMode();
-        }
-        return false;
-      },
-    });
-
-    editor.commands.addCommand({
-      name: "exit me, right",
-      bindKey: { win: "Right", mac: "Right" },
-      exec: function (editor) {
-        let cursorPosition = editor.selection.getCursor();
-        let len = editor.getValue().length;
-        //
-        if (cursorPosition.column === len) {
-          let p = props;
-          setCursorPos(p.editor, getCursorPos(p.editor) + 1);
-          // TODO convertEditorToMath(editor, "right");
-          switchMode();
-        }
-        return false;
-      },
     });
 
     editor.renderer.on("beforeRender", updateSize);
@@ -256,6 +185,7 @@ export default (props) => {
               arrow={true}
             >
               <AceEditor
+                focus={true}
                 ref={reactAceRef}
                 mode="latex"
                 theme={AppState.darkModeOn ? "monokai" : "github"}
@@ -272,6 +202,69 @@ export default (props) => {
                 enableLiveAutocompletion={false}
                 enableBasicAutocompletion={true}
                 onChange={onChange}
+                commands={[
+                  {
+                    name: "deleteMe",
+                    bindKey: { win: "backspace", mac: "backspace" },
+                    exec: function (editor) {
+                      //  ;
+                      let value = editor.getValue();
+                      console.log(value);
+                      if (value.length === 0) {
+                        let p = props;
+                        // editor.destroy();
+
+                        setDestroyed(true);
+                        // debugger;
+                        const cursorPos = getCursorPos(p.editor);
+                        p.deleteNode();
+                        setCursorPos(p.editor, cursorPos);
+                        return true;
+
+                        // user wants to delete the quillModules box ...
+                        // let index = quill.getSelection().index;
+                        // quill.deleteText(index, 1);
+                        // tooltip.hide();
+                      }
+
+                      return false; // must return false in order to fire the default event:https://stackoverflow.com/a/42020190/21646295
+                    },
+                  },
+                  {
+                    name: "exit me, left",
+                    bindKey: { win: "Left", mac: "Left" },
+                    exec: function (editor) {
+                      let cursorPosition = editor.selection.getCursor();
+
+                      if (cursorPosition.column === 0) {
+                        //
+                        // debugger;
+                        let p = props;
+                        setCursorPos(p.editor, getCursorPos(p.editor) - 1);
+
+                        //TODO convertEditorToMath(editor);
+                        setIsEditing(false);
+                      }
+                      return false;
+                    },
+                  },
+                  {
+                    name: "exit me, right",
+                    bindKey: { win: "Right", mac: "Right" },
+                    exec: function (editor) {
+                      let cursorPosition = editor.selection.getCursor();
+                      let len = editor.getValue().length;
+                      //
+                      if (cursorPosition.column === len) {
+                        let p = props;
+                        setCursorPos(p.editor, getCursorPos(p.editor) + 1);
+                        // TODO convertEditorToMath(editor, "right");
+                        setIsEditing(false);
+                      }
+                      return false;
+                    },
+                  },
+                ]}
                 onBlur={() => {
                   console.debug(`[InlineMathEditorComponent] blur`);
                   setIsEditing(false);
