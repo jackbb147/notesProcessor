@@ -45,6 +45,22 @@ export default (props) => {
     setValue(newValue);
   }
 
+  function updateSize(e, renderer) {
+    // https://stackoverflow.com/a/57279878/21646295
+    var text = renderer.session.getLine(0);
+    var chars = renderer.session.$getStringScreenWidth(text)[0];
+
+    var width =
+      Math.max(chars, 2) * renderer.characterWidth + // text size
+      2 * renderer.$padding + // padding
+      2; // add border width if needed
+
+    // update container size
+    renderer.container.style.width = width + "px";
+    // update computed size stored by the editor
+    renderer.onResize(false, 0, width, renderer.$size.height);
+  }
+
   useEffect(() => {
     if (!reactAceRef.current) return;
     if (!props.selected) {
@@ -96,21 +112,6 @@ export default (props) => {
     });
 
     editor.renderer.on("beforeRender", updateSize);
-    function updateSize(e, renderer) {
-      // https://stackoverflow.com/a/57279878/21646295
-      var text = renderer.session.getLine(0);
-      var chars = renderer.session.$getStringScreenWidth(text)[0];
-
-      var width =
-        Math.max(chars, 2) * renderer.characterWidth + // text size
-        2 * renderer.$padding + // padding
-        2; // add border width if needed
-
-      // update container size
-      renderer.container.style.width = width + "px";
-      // update computed size stored by the editor
-      renderer.onResize(false, 0, width, renderer.$size.height);
-    }
     updateSize(null, editor.renderer);
 
     // make sure the auto complete pop up boxes are on top, instead of bottom
@@ -163,7 +164,7 @@ export default (props) => {
     observer.observe(document.body, config);
 
     setCompleterConfigured(true);
-  }, [reactAceRef.current]);
+  }, [completerConfigured]);
 
   return (
     <NodeViewWrapper className="react-component">
@@ -189,10 +190,12 @@ export default (props) => {
                 ref={reactAceRef}
                 mode="latex"
                 theme={AppState.darkModeOn ? "monokai" : "github"}
-                style={{
-                  maxWidth: "100%",
-                  minWidth: "1rem",
-                }}
+                style={
+                  {
+                    // maxWidth: "100%",
+                    // minWidth: "1rem",
+                  }
+                }
                 value={value}
                 placeholder={"\\text{hello world}"}
                 showGutter={false}
@@ -270,7 +273,9 @@ export default (props) => {
                   setIsEditing(false);
                   setCompleterConfigured(false);
                 }}
-                onLoad={(editor) => {}}
+                // onLoad={(editor) => {
+                //   updateSize(null, editor.renderer);
+                // }}
                 name="UNIQUE_ID_OF_DIV"
                 editorProps={{ $blockScrolling: true }}
               />
