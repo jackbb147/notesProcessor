@@ -47,6 +47,7 @@
     "react-scrollbars-custom": "^4.1.1",
     "react-select": "^5.7.4",
     "react-simple-code-editor": "^0.13.1",
+    "react-tippy": "^1.4.0",
     "react-transition-group": "^4.4.5",
     "tippy.js": "^6.3.7",
     "tiptap": "github:jackbb147/tiptap",

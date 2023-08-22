@@ -1,5 +1,5 @@
 import { NodeViewWrapper } from "@jackhou147/tiptap/packages/react";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/mode-latex";
@@ -8,6 +8,9 @@ import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/ext-language_tools";
 import { MATHJAXCOMMANDS } from "../Forked/mathjaxCommands";
 import { useAppState } from "../../../../../hooks/AppStateAndGraphhooks";
+import "react-tippy/dist/tippy.css";
+import { Tooltip } from "react-tippy";
+import { useResizeObserverBugFix } from "../../../../../hooks/useResizeObserverBugFix";
 
 function getCursorPos(tiptapEditor) {
   const selection = tiptapEditor.state.selection;
@@ -23,7 +26,9 @@ export default (props) => {
   const AppState = useAppState();
   const reactAceRef = useRef(null);
   const [completerConfigured, setCompleterConfigured] = React.useState(false);
-  const [destroyed, setDestroyed] = React.useState(false);
+  const [destroyed, setDestroyed] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
+  useResizeObserverBugFix();
   const increase = () => {
     props.updateAttributes({
       count: props.node.attrs.count + 1,
@@ -74,6 +79,7 @@ export default (props) => {
         case "insert":
           let lines = obj.lines;
           let char = lines[0];
+          setShowTooltip(true);
           if (lines.length === 1 && char.length === 1 && /\\/i.test(char)) {
             setTimeout(() => {
               editor.commands.byName.startAutocomplete.exec(editor);
@@ -166,6 +172,55 @@ export default (props) => {
     }
     updateSize(null, editor.renderer);
 
+    // make sure the auto complete pop up boxes are on top, instead of bottom
+    const config = {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["style"],
+    };
+
+    const callback = (mutationList, observer) => {
+      //  ;
+      for (const mutation of mutationList) {
+        if (
+          mutation.type === "childList" &&
+          // /**/&&
+          "addedNodes" in mutation &&
+          mutation.addedNodes.length > 0 &&
+          mutation.addedNodes[0].classList &&
+          mutation.addedNodes[0].classList.contains("ace_autocomplete")
+        ) {
+          let auto = mutation.addedNodes[0];
+          // https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver
+          // this is to override ACE's styling choices for the autocomplete pop up box.
+          const myObserver = new ResizeObserver((entries) => {
+            // We wrap it in requestAnimationFrame to avoid this error - ResizeObserver loop limit exceeded
+            // window.requestAnimationFrame(() => {
+            entries.forEach((entry) => {
+              console.log("width", entry.contentRect.width);
+              console.log("height", entry.contentRect.height);
+              let target = entry.target;
+              // let height = entry.contentRect.height;
+              let height = 100; // in pixels todo don't hard code this..
+              if (height != 0) {
+                //  ;
+                let bounds = editor.container.getBoundingClientRect();
+                target.style.top = bounds.y - 1.01 * height + "px";
+                target.style.height = height + "px";
+              }
+            });
+            // });
+          });
+
+          myObserver.observe(auto);
+        }
+      }
+    };
+    const observer = new MutationObserver(callback);
+
+    observer.observe(document.body, config);
+
     setCompleterConfigured(true);
   }, [reactAceRef.current]);
 
@@ -178,26 +233,36 @@ export default (props) => {
         {/*  This button has been clicked {props.node.attrs.count} times.*/}
         {/*</button>*/}
         {!destroyed && (
-          <AceEditor
-            ref={reactAceRef}
-            mode="latex"
-            theme={AppState.darkModeOn ? "monokai" : "github"}
-            style={{
-              maxWidth: "100%",
-              minWidth: "1rem",
-            }}
-            placeholder={"\\text{hello world}"}
-            showGutter={false}
-            showPrintMargin={false}
-            highlightActiveLine={false}
-            maxLines={1}
-            enableLiveAutocompletion={false}
-            enableBasicAutocompletion={true}
-            onChange={onChange}
-            onLoad={(editor) => {}}
-            name="UNIQUE_ID_OF_DIV"
-            editorProps={{ $blockScrolling: true }}
-          />
+          <>
+            <Tooltip
+              // options
+              title="Welcome to React"
+              position={"bottom"}
+              // trigger="click"
+              open={showTooltip}
+            >
+              <AceEditor
+                ref={reactAceRef}
+                mode="latex"
+                theme={AppState.darkModeOn ? "monokai" : "github"}
+                style={{
+                  maxWidth: "100%",
+                  minWidth: "1rem",
+                }}
+                placeholder={"\\text{hello world}"}
+                showGutter={false}
+                showPrintMargin={false}
+                highlightActiveLine={false}
+                maxLines={1}
+                enableLiveAutocompletion={false}
+                enableBasicAutocompletion={true}
+                onChange={onChange}
+                onLoad={(editor) => {}}
+                name="UNIQUE_ID_OF_DIV"
+                editorProps={{ $blockScrolling: true }}
+              />
+            </Tooltip>
+          </>
         )}
       </div>
     </NodeViewWrapper>
