@@ -12,6 +12,7 @@ import "react-tippy/dist/tippy.css";
 import { Tooltip } from "react-tippy";
 import { useResizeObserverBugFix } from "../../../../../hooks/useResizeObserverBugFix";
 import { MathJax, MathJaxContext } from "better-react-mathjax";
+import MathView from "./MathView";
 
 function getCursorPos(tiptapEditor) {
   const selection = tiptapEditor.state.selection;
@@ -253,11 +254,7 @@ export default (props) => {
             <Tooltip
               // options
               title="Welcome to React"
-              html={
-                <MathJaxContext>
-                  <MathJax>{`\\( ${value} \\)`}</MathJax>
-                </MathJaxContext>
-              }
+              html={<MathView value={value} />}
               position={"bottom"}
               // trigger="click"
               open={showTooltip}
@@ -291,9 +288,12 @@ export default (props) => {
                 setIsEditing(true);
               }}
             >
-              <MathJaxContext>
-                <MathJax>{`\\( ${value} \\)`}</MathJax>
-              </MathJaxContext>
+              <MathView
+                value={value}
+                styles={{
+                  color: "yellow",
+                }}
+              />
             </div>
           ))}
       </div>
