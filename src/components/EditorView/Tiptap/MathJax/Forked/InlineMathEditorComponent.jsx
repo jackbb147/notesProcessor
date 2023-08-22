@@ -109,6 +109,40 @@ export default (props) => {
       },
     });
 
+    editor.commands.addCommand({
+      name: "exit me, left",
+      bindKey: { win: "Left", mac: "Left" },
+      exec: function (editor) {
+        let cursorPosition = editor.selection.getCursor();
+
+        if (cursorPosition.column === 0) {
+          //
+          // debugger;
+          let p = props;
+          setCursorPos(p.editor, getCursorPos(p.editor) - 1);
+
+          //TODO convertEditorToMath(editor);
+        }
+        return false;
+      },
+    });
+
+    editor.commands.addCommand({
+      name: "exit me, right",
+      bindKey: { win: "Right", mac: "Right" },
+      exec: function (editor) {
+        let cursorPosition = editor.selection.getCursor();
+        let len = editor.getValue().length;
+        //
+        if (cursorPosition.column === len) {
+          let p = props;
+          setCursorPos(p.editor, getCursorPos(p.editor) + 1);
+          // TODO convertEditorToMath(editor, "right");
+        }
+        return false;
+      },
+    });
+
     editor.renderer.on("beforeRender", updateSize);
     function updateSize(e, renderer) {
       // https://stackoverflow.com/a/57279878/21646295
