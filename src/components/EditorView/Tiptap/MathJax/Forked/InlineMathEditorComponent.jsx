@@ -102,11 +102,6 @@ export default (props) => {
     editor.focus();
     editor.setValue(value);
 
-    editor.on("blur", () => {
-      setIsEditing(false);
-      setCompleterConfigured(false);
-    });
-
     editor.commands.addCommand({
       name: "deleteMe",
       bindKey: { win: "backspace", mac: "backspace" },
@@ -277,6 +272,11 @@ export default (props) => {
                 enableLiveAutocompletion={false}
                 enableBasicAutocompletion={true}
                 onChange={onChange}
+                onBlur={() => {
+                  console.debug(`[InlineMathEditorComponent] blur`);
+                  setIsEditing(false);
+                  setCompleterConfigured(false);
+                }}
                 onLoad={(editor) => {}}
                 name="UNIQUE_ID_OF_DIV"
                 editorProps={{ $blockScrolling: true }}
