@@ -66,20 +66,9 @@ export default (props) => {
 
   useEffect(() => {
     if (!reactAceRef.current) return;
-    if (!props.selected) {
-      return;
-    }
-    console.debug(
-      `[InlineMathEditorComponent] props.selected: ${props.selected}`,
-    );
-
-    reactAceRef.current.editor.focus();
-  }, [props.selected]);
-
-  useEffect(() => {
-    if (!reactAceRef.current) return;
     updateSize(null, reactAceRef.current.editor.renderer);
     if (completerConfigured) return;
+    console.log(`[useEffect] fired`);
     const editor = reactAceRef.current.editor;
     // debugger;
     const completionOptions = MATHJAXCOMMANDS.map(function (word) {
@@ -98,6 +87,7 @@ export default (props) => {
       },
     };
 
+    // debugger;
     editor.completers.push(staticWordCompleter);
     // https://stackoverflow.com/a/38437098
     editor.on("change", (obj, editor) => {
@@ -113,6 +103,11 @@ export default (props) => {
           }
           break;
       }
+    });
+
+    editor.renderer.on("afterRender", () => {
+      console.log(`[afterRender] fired`);
+      editor.focus();
     });
 
     editor.renderer.on("beforeRender", updateSize);
@@ -194,7 +189,6 @@ export default (props) => {
               arrow={true}
             >
               <AceEditor
-                focus={true}
                 ref={reactAceRef}
                 mode="latex"
                 value={value}
@@ -280,6 +274,12 @@ export default (props) => {
                   console.debug(`[InlineMathEditorComponent] blur`);
                   setIsEditing(false);
                   setCompleterConfigured(false);
+                }}
+                onLoad={(editor) => {
+                  editor.renderer.on("afterRender", () => {
+                    // debugger;
+                    editor.focus();
+                  });
                 }}
                 name="UNIQUE_ID_OF_DIV"
                 editorProps={{ $blockScrolling: true }}
