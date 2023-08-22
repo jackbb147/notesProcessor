@@ -23,7 +23,7 @@ function setCursorPos(tiptapEditor, pos) {
   tiptapEditor.chain().focus().setTextSelection(pos).run();
 }
 
-function InlineMathEditorComponent(props) {
+export default (props) => {
   const AppState = useAppState();
   const reactAceRef = useRef(null);
   const [completerConfigured, setCompleterConfigured] = React.useState(false);
@@ -274,12 +274,4 @@ function InlineMathEditorComponent(props) {
       </div>
     </NodeViewWrapper>
   );
-}
-
-export default function WithContext() {
-  return (
-    <MathJaxContext>
-      <InlineMathEditorComponent />
-    </MathJaxContext>
-  );
-}
+};
