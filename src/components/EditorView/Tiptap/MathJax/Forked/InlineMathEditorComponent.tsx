@@ -59,6 +59,7 @@ function ContentContainer({ onSingleClick, onDoubleClick, onLongPress, onFinishL
     // alert('Long pressed!');
     onLongPress?.()
   }, {
+    threshold: 200,
     cancelOnMovement: true,
     onFinish: onFinishLongPress ?? (()=>{}),
   } );
@@ -88,11 +89,22 @@ function ContentContainer({ onSingleClick, onDoubleClick, onLongPress, onFinishL
 }
 
 export function InlineMathEditorComponent(props: NodeViewProps) {
-  const [isEditing, setIsEditing] = useState(true); // ["latex", "mathml"
   const [draggableKey, setDraggableKey] = useState(0); //changing this will achieve the effect of resetting the node position: https://github.com/react-grid-layout/react-draggable/issues/214#issuecomment-270021423
 
+  const [showTooltip, setShowTooltip] = useState(false);
   function resetNodePosition(){
     setDraggableKey(draggableKey+1)
+  }
+
+  function handleNodeLongPress()
+  {
+    // alert("long press detected")
+    setShowTooltip(true);
+  }
+
+  function handleRequestCloseTooltip()
+  {
+    setShowTooltip(false);
   }
 
   // @ts-ignore
@@ -100,68 +112,48 @@ export function InlineMathEditorComponent(props: NodeViewProps) {
       <Draggable key={draggableKey}>
         <NodeViewWrapper className="react-component" >
           {/*<span className="label">React Component</span>*/}
-
           <ContentContainer
-              onLongPress={()=>{
-                alert("long press detected")
-                // setDisableDraggable(true);
-              }}>
-            {
-              isEditing ? (
+              onLongPress={handleNodeLongPress}>
+            <TippedMath
+                value={props.node.attrs.value}
+                showTooltip={showTooltip}
+                requestClose={handleRequestCloseTooltip}
+                onChange={(newValue: string) => {
+                  // setValue(newValue);
+                  props.updateAttributes({
+                    value: newValue
+                  })
+                }}
+            />
+            {/*// <Tippy*/}
+            {/*// allowHTML={true}*/}
+            {/*// interactive={true}*/}
+            {/*// content={*/}
+            {/*//   <div>asklflk</div>*/}
+            {/*//   // <AceEditor></AceEditor>*/}
+            {/*// }>*/}
+            {/*//   <div>{value}</div>*/}
+            {/*// </Tippy>*/}
 
-                  <TippedMath
-                      value={props.node.attrs.value}
-                      onChange={(newValue: string) => {
-                        // setValue(newValue);
-                        props.updateAttributes({
-                          value: newValue
-                        })
-                      }}
-                  />
-                  // <Tippy
-                  // allowHTML={true}
-                  // interactive={true}
-                  // content={
-                  //   <div>asklflk</div>
-                  //   // <AceEditor></AceEditor>
-                  // }>
-                  //   <div>{value}</div>
-                  // </Tippy>
-
-                  // withTooltip(MyCustomACEEditor, {
-                  //   html:
-                  //   <MyCustomACEEditor
-                  //     props={props}
-                  //     value={value}
-                  //     setValue={setValue}
-                  //   />,
-                  //
-                  //   // position: "top",
-                  //   // trigger="click"
-                  //   open: showTooltip,
-                  //   arrow: true,
-                  // })
-                  // <MathView value={value} />
-                  // <MyCustomACEEditor
-                  //   props={props}
-                  //   value={value}
-                  //   setValue={setValue}
-                  // />
-              ) : (
-                  <div
-                      onClick={() => {
-                        setIsEditing(true);
-                      }}
-                  >
-                    <MathView
-                        value={props.node.attrs.value}
-                        styles={{
-                          color: "yellow",
-                        }}
-                    />
-                  </div>
-              )
-            }
+            {/*// withTooltip(MyCustomACEEditor, {*/}
+            {/*//   html:*/}
+            {/*//   <MyCustomACEEditor*/}
+            {/*//     props={props}*/}
+            {/*//     value={value}*/}
+            {/*//     setValue={setValue}*/}
+            {/*//   />,*/}
+            {/*//*/}
+            {/*//   // position: "top",*/}
+            {/*//   // trigger="click"*/}
+            {/*//   open: showTooltip,*/}
+            {/*//   arrow: true,*/}
+            {/*// })*/}
+            {/*// <MathView value={value} />*/}
+            {/*// <MyCustomACEEditor*/}
+            {/*//   props={props}*/}
+            {/*//   value={value}*/}
+            {/*//   setValue={setValue}*/}
+            {/*// />*/}
           </ContentContainer>
         </NodeViewWrapper>
       </Draggable>
