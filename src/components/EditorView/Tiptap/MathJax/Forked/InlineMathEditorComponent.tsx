@@ -104,9 +104,11 @@ function ContentContainer({ onSingleClick, onDoubleClick, onLongPress, onFinishL
 export function InlineMathEditorComponent(props: NodeViewProps) {
   const [draggableKey, setDraggableKey] = useState(0); //changing this will achieve the effect of resetting the node position: https://github.com/react-grid-layout/react-draggable/issues/214#issuecomment-270021423
 
+  const [nodeMoved, setNodeMoved] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
   function resetNodePosition(){
     setDraggableKey(draggableKey+1)
+    setNodeMoved(false)
   }
 
   function handleNodeLongPress()
@@ -121,9 +123,13 @@ export function InlineMathEditorComponent(props: NodeViewProps) {
 
   }
 
+  function handleNodeMove()
+  {
+    setNodeMoved(true);
+  }
   // @ts-ignore
   return (
-      <Draggable key={draggableKey}>
+      <Draggable key={draggableKey} onDrag={handleNodeMove}>
         <NodeViewWrapper className="react-component" >
           {/*<span className="label">React Component</span>*/}
           <ContentContainer
@@ -150,7 +156,8 @@ export function InlineMathEditorComponent(props: NodeViewProps) {
                   style={{
                 position: "absolute",
                 left: "100%",
-                top: "0"
+                top: "0",
+                    cursor: "pointer",
               }}>near_me</span>
             </div>
             {/*// <Tippy*/}
