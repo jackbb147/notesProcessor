@@ -12,7 +12,6 @@ export default Node.create({
   inline: true,
   atom: false,
   selectable: false,
-  draggable: true,
 
   defining: true,
 

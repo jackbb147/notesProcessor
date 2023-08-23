@@ -14,6 +14,7 @@ export function TippedMath({value, onChange})
                 backgroundColor: "transparent",
             }}
 
+
             html={
                 <div style={{
                     width: "350px", // need to be the same as the maxWidth value listed here : https://atomiks.github.io/tippyjs/v5/all-props/

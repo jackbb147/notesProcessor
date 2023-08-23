@@ -1,5 +1,5 @@
 import { NodeViewWrapper } from "@jackhou147/tiptap/packages/react";
-import React, { useEffect, useRef, useState } from "react";
+import React, {LegacyRef, MutableRefObject, useEffect, useRef, useState} from "react";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/mode-latex";
@@ -24,6 +24,11 @@ import { Ace } from "ace-builds";
 import { VirtualRenderer } from "ace-builds/ace";
 import ReactFocusLock from "react-focus-lock";
 import {TippedMath} from "./TippedMath";
+import Draggable from 'react-draggable'; // The default
+import useDoubleClick from "use-double-click";
+import {useLongPress} from "use-long-press";
+
+
 interface Point {
   row: number;
   column: number;
@@ -36,6 +41,52 @@ interface Delta {
   lines: string[];
 }
 
+function ContentContainer({ onSingleClick, onDoubleClick, onLongPress, onFinishLongPress, children}:{
+    onSingleClick?: (e: React.MouseEvent<Element, MouseEvent>) => void,
+    onDoubleClick?: (e: React.MouseEvent<Element, MouseEvent>) => void,
+    onLongPress?: () => void,
+    onFinishLongPress?: () => void,
+  children: React.ReactNode})
+{
+  const buttonRef = useRef<HTMLDivElement>(null)
+  // useDoubleClick(
+  //     {
+  //       ref: buttonRef,
+  //   onSingleClick: onSingleClick??(()=>{}),
+  //   onDoubleClick: onDoubleClick??(()=>{}),
+  // })
+  const bind = useLongPress(() => {
+    // alert('Long pressed!');
+    onLongPress?.()
+  }, {
+    cancelOnMovement: true,
+    onFinish: onFinishLongPress ?? (()=>{}),
+  } );
+  return (
+      <div className="content"
+           {
+        ... bind()
+      }
+
+           ref={buttonRef}
+           tabIndex={1}
+           // onFocus={()=>{
+           //   alert("FOCUSED")
+           // }}
+           // onTouchStart={()=>{alert("touched")}}
+
+
+           // onDoubleClick={()=>{
+           //   alert("HEY!")
+           //   setDisableDraggable(true);
+           // }}
+           // onClick={()=>{
+           //      onSingleClick?.(null as any)
+           // }}
+      >{children}</div>
+  )
+}
+
 export function InlineMathEditorComponent(props: NodeViewProps) {
   const AppState = useAppState();
 
@@ -43,77 +94,96 @@ export function InlineMathEditorComponent(props: NodeViewProps) {
   const [isEditing, setIsEditing] = useState(true); // ["latex", "mathml"
 
   const [showTooltip, setShowTooltip] = useState(false);
+  const [disableDraggable, setDisableDraggable] = useState(false);
   // const [value, setValue] = useState("hello!!!");
   // useDisableErrorOverlay();
 
   // @ts-ignore
   return (
-    <NodeViewWrapper className="react-component">
-      {/*<span className="label">React Component</span>*/}
+      <Draggable disabled={disableDraggable}>
+        <NodeViewWrapper className="react-component" >
+          {/*<span className="label">React Component</span>*/}
 
-      <div className="content" draggable="true"
-           data-drag-handle tabIndex={0}>
-        {/*<button onClick={increase}>*/}
-        {/*  This button has been clicked {props.node.attrs.count} times.*/}
-        {/*</button>*/}
-        {!destroyed &&
-          (isEditing ? (
-
-
-              <TippedMath
-                  value={props.node.attrs.value}
-                  onChange={(newValue: string) => {
-                    // setValue(newValue);
-                    props.updateAttributes({
-                      value: newValue
-                    })
-                  }}
-              />
-              // <Tippy
-              // allowHTML={true}
-              // interactive={true}
-              // content={
-              //   <div>asklflk</div>
-              //   // <AceEditor></AceEditor>
-              // }>
-              //   <div>{value}</div>
-              // </Tippy>
-
-            // withTooltip(MyCustomACEEditor, {
-            //   html:
-            //   <MyCustomACEEditor
-            //     props={props}
-            //     value={value}
-            //     setValue={setValue}
-            //   />,
-            //
-            //   // position: "top",
-            //   // trigger="click"
-            //   open: showTooltip,
-            //   arrow: true,
-            // })
-              // <MathView value={value} />
-            // <MyCustomACEEditor
-            //   props={props}
-            //   value={value}
-            //   setValue={setValue}
-            // />
-          ) : (
-            <div
-              onClick={() => {
-                setIsEditing(true);
+          <ContentContainer
+              onLongPress={()=>{
+                alert("long press detected")
+                // setDisableDraggable(true);
               }}
-            >
-              <MathView
-                value={props.node.attrs.value}
-                styles={{
-                  color: "yellow",
-                }}
-              />
-            </div>
-          ))}
-      </div>
-    </NodeViewWrapper>
+              onFinishLongPress={()=>{
+
+                // setDisableDraggable(false)
+              }}
+              onDoubleClick={
+            (e)=>{
+              alert("double click")
+              // setDisableDraggable(true)
+            }
+          }
+                            onSingleClick={(e)=>{
+                              alert("single click")
+                              // setDisableDraggable(true) // can drag, but not edit
+                            }}
+          >
+            {!destroyed &&
+                (isEditing ? (
+
+
+                    <TippedMath
+                        value={props.node.attrs.value}
+                        onChange={(newValue: string) => {
+                          // setValue(newValue);
+                          props.updateAttributes({
+                            value: newValue
+                          })
+                        }}
+                    />
+                    // <Tippy
+                    // allowHTML={true}
+                    // interactive={true}
+                    // content={
+                    //   <div>asklflk</div>
+                    //   // <AceEditor></AceEditor>
+                    // }>
+                    //   <div>{value}</div>
+                    // </Tippy>
+
+                    // withTooltip(MyCustomACEEditor, {
+                    //   html:
+                    //   <MyCustomACEEditor
+                    //     props={props}
+                    //     value={value}
+                    //     setValue={setValue}
+                    //   />,
+                    //
+                    //   // position: "top",
+                    //   // trigger="click"
+                    //   open: showTooltip,
+                    //   arrow: true,
+                    // })
+                    // <MathView value={value} />
+                    // <MyCustomACEEditor
+                    //   props={props}
+                    //   value={value}
+                    //   setValue={setValue}
+                    // />
+                ) : (
+                    <div
+                        onClick={() => {
+                          setIsEditing(true);
+                        }}
+                    >
+                      <MathView
+                          value={props.node.attrs.value}
+                          styles={{
+                            color: "yellow",
+                          }}
+                      />
+                    </div>
+                ))}
+          </ContentContainer>
+        </NodeViewWrapper>
+      </Draggable>
+
   );
 }
 
