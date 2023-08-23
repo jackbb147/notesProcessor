@@ -109,6 +109,9 @@ export default Node.create({
       count: {
         default: 0,
       },
+      value: {
+        default: "HELLO WORLD!!",
+      }
     };
   },
 

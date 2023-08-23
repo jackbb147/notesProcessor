@@ -43,7 +43,7 @@ export function InlineMathEditorComponent(props: NodeViewProps) {
   const [isEditing, setIsEditing] = useState(true); // ["latex", "mathml"
 
   const [showTooltip, setShowTooltip] = useState(false);
-  const [value, setValue] = useState("hello!!!");
+  // const [value, setValue] = useState("hello!!!");
   // useDisableErrorOverlay();
 
   // @ts-ignore
@@ -60,9 +60,12 @@ export function InlineMathEditorComponent(props: NodeViewProps) {
 
 
               <TippedMath
-                  value={value}
+                  value={props.node.attrs.value}
                   onChange={(newValue: string) => {
-                    setValue(newValue);
+                    // setValue(newValue);
+                    props.updateAttributes({
+                      value: newValue
+                    })
                   }}
               />
               // <Tippy
@@ -101,7 +104,7 @@ export function InlineMathEditorComponent(props: NodeViewProps) {
               }}
             >
               <MathView
-                value={value}
+                value={props.node.attrs.value}
                 styles={{
                   color: "yellow",
                 }}
