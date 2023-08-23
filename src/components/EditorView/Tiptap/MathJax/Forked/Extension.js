@@ -12,6 +12,7 @@ export default Node.create({
   inline: true,
   atom: false,
   selectable: false,
+  draggable: true,
 
   defining: true,
 
@@ -103,6 +104,8 @@ export default Node.create({
       },
     };
   },
+
+
 
   addAttributes() {
     return {

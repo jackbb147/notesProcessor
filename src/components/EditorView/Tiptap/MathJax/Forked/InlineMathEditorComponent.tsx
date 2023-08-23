@@ -51,7 +51,8 @@ export function InlineMathEditorComponent(props: NodeViewProps) {
     <NodeViewWrapper className="react-component">
       {/*<span className="label">React Component</span>*/}
 
-      <div className="content" tabIndex={0}>
+      <div className="content" draggable="true"
+           data-drag-handle tabIndex={0}>
         {/*<button onClick={increase}>*/}
         {/*  This button has been clicked {props.node.attrs.count} times.*/}
         {/*</button>*/}
