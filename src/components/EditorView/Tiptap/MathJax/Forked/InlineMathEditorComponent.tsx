@@ -94,13 +94,15 @@ export function InlineMathEditorComponent(props: NodeViewProps) {
   const [isEditing, setIsEditing] = useState(true); // ["latex", "mathml"
 
   const [showTooltip, setShowTooltip] = useState(false);
-  const [disableDraggable, setDisableDraggable] = useState(false);
-  // const [value, setValue] = useState("hello!!!");
-  // useDisableErrorOverlay();
+  const [draggableKey, setDraggableKey] = useState(0); //changing this will achieve the effect of resetting the node position: https://github.com/react-grid-layout/react-draggable/issues/214#issuecomment-270021423
+
+  function resetNodePosition(){
+    setDraggableKey(draggableKey+1)
+  }
 
   // @ts-ignore
   return (
-      <Draggable disabled={disableDraggable}>
+      <Draggable key={draggableKey}>
         <NodeViewWrapper className="react-component" >
           {/*<span className="label">React Component</span>*/}
 
@@ -108,10 +110,6 @@ export function InlineMathEditorComponent(props: NodeViewProps) {
               onLongPress={()=>{
                 alert("long press detected")
                 // setDisableDraggable(true);
-              }}
-              onFinishLongPress={()=>{
-
-                // setDisableDraggable(false)
               }}
               onDoubleClick={
             (e)=>{
