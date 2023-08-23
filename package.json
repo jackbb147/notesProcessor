@@ -4,7 +4,11 @@
   "homepage": "https://jackbb147.github.io/notesProcessor",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@jackhou147/tiptap": "^1.0.1",
+    "@mui/icons-material": "^5.14.3",
+    "@mui/material": "^5.14.5",
     "@radix-ui/colors": "^1.0.1",
     "@radix-ui/react-alert-dialog": "^1.0.4",
     "@radix-ui/react-form": "^0.0.3",

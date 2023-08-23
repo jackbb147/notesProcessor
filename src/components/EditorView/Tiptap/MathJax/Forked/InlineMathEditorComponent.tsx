@@ -1,5 +1,11 @@
 import { NodeViewWrapper } from "@jackhou147/tiptap/packages/react";
-import React, {LegacyRef, MutableRefObject, useEffect, useRef, useState} from "react";
+import React, {
+  LegacyRef,
+  MutableRefObject,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/mode-latex";
@@ -7,11 +13,12 @@ import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/theme-xcode";
 import "ace-builds/src-noconflict/ext-language_tools";
+
 import { MATHJAXCOMMANDS } from "../Forked/mathjaxCommands";
 import { useAppState } from "../../../../../hooks/AppStateAndGraphhooks";
 // import "react-tippy/dist/tippy.css";
 import { Tooltip, withTooltip } from "react-tippy";
-import Tippy from '@tippyjs/react';
+import Tippy from "@tippyjs/react";
 // import 'tippy.js/dist/tippy.css'; // optional
 import { useDisableErrorOverlay } from "../../../../../hooks/useDisableErrorOverlay";
 import { MathJax, MathJaxContext } from "better-react-mathjax";
@@ -23,11 +30,12 @@ import { IAceEditor } from "react-ace/lib/types";
 import { Ace } from "ace-builds";
 import { VirtualRenderer } from "ace-builds/ace";
 import ReactFocusLock from "react-focus-lock";
-import {TippedMath} from "./TippedMath";
-import Draggable from 'react-draggable'; // The default
+import { TippedMath } from "./TippedMath";
+import Draggable from "react-draggable"; // The default
 import useDoubleClick from "use-double-click";
-import {useLongPress} from "use-long-press";
-
+import { useLongPress } from "use-long-press";
+import NearMeIcon from "@mui/icons-material/NearMe";
+import { NearMeOutlined } from "@mui/icons-material";
 
 interface Point {
   row: number;
@@ -41,64 +49,74 @@ interface Delta {
   lines: string[];
 }
 
-function ContentContainer({ onSingleClick, onDoubleClick, onLongPress, onFinishLongPress, children}:{
-    onSingleClick?: (e: React.MouseEvent<Element, MouseEvent>) => void,
-    onDoubleClick?: (e: React.MouseEvent<Element, MouseEvent>) => void,
-    onLongPress?: () => void,
-    onFinishLongPress?: () => void,
-  children: React.ReactNode})
-{
-  const buttonRef = useRef<HTMLDivElement>(null)
-  const [className, setClassName] = useState<"NoPointerEvents"|"">("")
+function ContentContainer({
+  onSingleClick,
+  onDoubleClick,
+  onLongPress,
+  onFinishLongPress,
+  children,
+}: {
+  onSingleClick?: (e: React.MouseEvent<Element, MouseEvent>) => void;
+  onDoubleClick?: (e: React.MouseEvent<Element, MouseEvent>) => void;
+  onLongPress?: () => void;
+  onFinishLongPress?: () => void;
+  children: React.ReactNode;
+}) {
+  const buttonRef = useRef<HTMLDivElement>(null);
+  const [className, setClassName] = useState<"NoPointerEvents" | "">("");
   // useDoubleClick(
   //     {
   //       ref: buttonRef,
   //   onSingleClick: onSingleClick??(()=>{}),
   //   onDoubleClick: onDoubleClick??(()=>{}),
   // })
-  const bind = useLongPress(() => {
-    // alert('Long pressed!');
-    onLongPress?.()
-  }, {
-    threshold: 200,
-    cancelOnMovement: true,
-    onStart: ()=>{setClassName("NoPointerEvents")},
-    onFinish: () => {
-      // https://stackoverflow.com/a/20290312/21646295
-      window.addEventListener(
-          'click',
+  const bind = useLongPress(
+    () => {
+      // alert('Long pressed!');
+      onLongPress?.();
+    },
+    {
+      threshold: 200,
+      cancelOnMovement: true,
+      onStart: () => {
+        setClassName("NoPointerEvents");
+      },
+      onFinish: () => {
+        // https://stackoverflow.com/a/20290312/21646295
+        window.addEventListener(
+          "click",
           function captureClick(e) {
             e.stopPropagation(); // Stop the click from being propagated.
-            console.log('click captured');
-            window.removeEventListener('click', captureClick, true); // cleanup
+            console.log("click captured");
+            window.removeEventListener("click", captureClick, true); // cleanup
           },
-          true
-      )
-    }
-  } );
+          true,
+        );
+      },
+    },
+  );
   return (
-      <div className={`content`}
-           {
-        ... bind()
-      }
+    <div
+      className={`content`}
+      {...bind()}
+      ref={buttonRef}
+      tabIndex={1}
+      // onFocus={()=>{
+      //   alert("FOCUSED")
+      // }}
+      // onTouchStart={()=>{alert("touched")}}
 
-           ref={buttonRef}
-           tabIndex={1}
-           // onFocus={()=>{
-           //   alert("FOCUSED")
-           // }}
-           // onTouchStart={()=>{alert("touched")}}
-
-
-           // onDoubleClick={()=>{
-           //   alert("HEY!")
-           //   setDisableDraggable(true);
-           // }}
-           // onClick={()=>{
-           //      onSingleClick?.(null as any)
-           // }}
-      >{children}</div>
-  )
+      // onDoubleClick={()=>{
+      //   alert("HEY!")
+      //   setDisableDraggable(true);
+      // }}
+      // onClick={()=>{
+      //      onSingleClick?.(null as any)
+      // }}
+    >
+      {children}
+    </div>
+  );
 }
 
 export function InlineMathEditorComponent(props: NodeViewProps) {
@@ -106,106 +124,114 @@ export function InlineMathEditorComponent(props: NodeViewProps) {
 
   const [nodeMoved, setNodeMoved] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
-  function resetNodePosition(){
-    setDraggableKey(draggableKey+1)
-    setNodeMoved(false)
+  function resetNodePosition() {
+    setDraggableKey(draggableKey + 1);
+    setNodeMoved(false);
   }
 
-  function handleNodeLongPress()
-  {
+  function handleNodeLongPress() {
     // alert("long press detected")
     setShowTooltip(true);
   }
 
-  function handleRequestCloseTooltip()
-  {
+  function handleRequestCloseTooltip() {
     setShowTooltip(false); //TODO modify this somehow
-
   }
 
-  function handleNodeMove()
-  {
+  function handleNodeMove() {
     setNodeMoved(true);
   }
   // @ts-ignore
   return (
-      <Draggable key={draggableKey} onDrag={handleNodeMove}>
-        <NodeViewWrapper className="react-component" >
-          {/*<span className="label">React Component</span>*/}
-          <ContentContainer
-              onLongPress={handleNodeLongPress}>
+    <Draggable key={draggableKey} onDrag={handleNodeMove}>
+      <NodeViewWrapper className="react-component">
+        {/*<span className="label">React Component</span>*/}
+        <ContentContainer onLongPress={handleNodeLongPress}>
+          <div
+            style={{
+              // border: "1px solid yellow",
+              position: "relative",
+              marginRight: "1.15rem",
+            }}
+          >
+            <TippedMath
+              value={props.node.attrs.value}
+              showTooltip={showTooltip}
+              requestClose={handleRequestCloseTooltip}
+              onChange={(newValue: string) => {
+                // setValue(newValue);
+                props.updateAttributes({
+                  value: newValue,
+                });
+              }}
+            />
             <div
-                style={{
-                  border: "1px solid yellow",
-                  position: "relative",
-                }}
-            >
-              <TippedMath
-                  value={props.node.attrs.value}
-                  showTooltip={showTooltip}
-                  requestClose={handleRequestCloseTooltip}
-                  onChange={(newValue: string) => {
-                    // setValue(newValue);
-                    props.updateAttributes({
-                      value: newValue
-                    })
-                  }}/>
-              <span
               onClick={resetNodePosition}
-              className="material-symbols-outlined"
-                  style={{
+              onTouchStart={resetNodePosition}
+              style={{
+                display: "inline",
+                // width: "1rem",
+                // border: "1px solid blue",
                 position: "absolute",
                 left: "100%",
                 top: "0",
-                    cursor: "pointer",
-              }}>near_me</span>
+                cursor: "pointer",
+                fontSize: "1rem",
+                opacity: ".4",
+                // color: "red"
+              }}
+            >
+              {nodeMoved ? (
+                <NearMeOutlined fontSize={"inherit"}></NearMeOutlined>
+              ) : (
+                <NearMeIcon fontSize={"inherit"}></NearMeIcon>
+              )}
             </div>
-            {/*// <Tippy*/}
-            {/*// allowHTML={true}*/}
-            {/*// interactive={true}*/}
-            {/*// content={*/}
-            {/*//   <div>asklflk</div>*/}
-            {/*//   // <AceEditor></AceEditor>*/}
-            {/*// }>*/}
-            {/*//   <div>{value}</div>*/}
-            {/*// </Tippy>*/}
+          </div>
+          {/*// <Tippy*/}
+          {/*// allowHTML={true}*/}
+          {/*// interactive={true}*/}
+          {/*// content={*/}
+          {/*//   <div>asklflk</div>*/}
+          {/*//   // <AceEditor></AceEditor>*/}
+          {/*// }>*/}
+          {/*//   <div>{value}</div>*/}
+          {/*// </Tippy>*/}
 
-            {/*// withTooltip(MyCustomACEEditor, {*/}
-            {/*//   html:*/}
-            {/*//   <MyCustomACEEditor*/}
-            {/*//     props={props}*/}
-            {/*//     value={value}*/}
-            {/*//     setValue={setValue}*/}
-            {/*//   />,*/}
-            {/*//*/}
-            {/*//   // position: "top",*/}
-            {/*//   // trigger="click"*/}
-            {/*//   open: showTooltip,*/}
-            {/*//   arrow: true,*/}
-            {/*// })*/}
-            {/*// <MathView value={value} />*/}
-            {/*// <MyCustomACEEditor*/}
-            {/*//   props={props}*/}
-            {/*//   value={value}*/}
-            {/*//   setValue={setValue}*/}
-            {/*// />*/}
-          </ContentContainer>
-        </NodeViewWrapper>
-      </Draggable>
-
+          {/*// withTooltip(MyCustomACEEditor, {*/}
+          {/*//   html:*/}
+          {/*//   <MyCustomACEEditor*/}
+          {/*//     props={props}*/}
+          {/*//     value={value}*/}
+          {/*//     setValue={setValue}*/}
+          {/*//   />,*/}
+          {/*//*/}
+          {/*//   // position: "top",*/}
+          {/*//   // trigger="click"*/}
+          {/*//   open: showTooltip,*/}
+          {/*//   arrow: true,*/}
+          {/*// })*/}
+          {/*// <MathView value={value} />*/}
+          {/*// <MyCustomACEEditor*/}
+          {/*//   props={props}*/}
+          {/*//   value={value}*/}
+          {/*//   setValue={setValue}*/}
+          {/*// />*/}
+        </ContentContainer>
+      </NodeViewWrapper>
+    </Draggable>
   );
 }
 
 export function MyCustomACEEditor({
-    width="350px",
+  width = "350px",
   value,
-    onChange
+  onChange,
 }: {
-    width?:string,
-  value:string,
-  onChange: (newValue: string) => void
+  width?: string;
+  value: string;
+  onChange: (newValue: string) => void;
 }) {
-
   const reactAceRef = useRef<ReactAce>(null);
   const [completerConfigured, setCompleterConfigured] = React.useState(false);
   function updateSize(
@@ -237,7 +263,6 @@ export function MyCustomACEEditor({
     // renderer.onResize(false, 0, width, renderer.$size.height); //TODO put this back in somehow...?
     // renderer.on("resize");
   }
-
 
   useEffect(() => {
     if (!reactAceRef.current) return;
@@ -293,8 +318,6 @@ export function MyCustomACEEditor({
       }
     });
 
-
-
     // make sure the auto complete pop up boxes are on top, instead of bottom
     // const config = {
     //   childList: true,
@@ -342,8 +365,6 @@ export function MyCustomACEEditor({
     // };
     // const observer = new MutationObserver(callback);
 
-
-
     setCompleterConfigured(true);
   }, [completerConfigured]);
   return (
@@ -356,15 +377,13 @@ export function MyCustomACEEditor({
         // focus={true}
         theme={"monokai"}
         // theme={AppState.darkModeOn ? "monokai" : "github"}
-        style={
-          {
-            // height: "50px",
-            // maxWidth: "100%",
-            // minWidth: "1rem",
-            width: width,
-            maxHeight: "10vh",
-          }
-        }
+        style={{
+          // height: "50px",
+          // maxWidth: "100%",
+          // minWidth: "1rem",
+          width: width,
+          maxHeight: "10vh",
+        }}
         placeholder={"\\text{hello world}"}
         // showGutter={false}
         // showPrintMargin={false}
