@@ -128,17 +128,31 @@ export function InlineMathEditorComponent(props: NodeViewProps) {
           {/*<span className="label">React Component</span>*/}
           <ContentContainer
               onLongPress={handleNodeLongPress}>
-            <TippedMath
-                value={props.node.attrs.value}
-                showTooltip={showTooltip}
-                requestClose={handleRequestCloseTooltip}
-                onChange={(newValue: string) => {
-                  // setValue(newValue);
-                  props.updateAttributes({
-                    value: newValue
-                  })
+            <div
+                style={{
+                  border: "1px solid yellow",
+                  position: "relative",
                 }}
-            />
+            >
+              <TippedMath
+                  value={props.node.attrs.value}
+                  showTooltip={showTooltip}
+                  requestClose={handleRequestCloseTooltip}
+                  onChange={(newValue: string) => {
+                    // setValue(newValue);
+                    props.updateAttributes({
+                      value: newValue
+                    })
+                  }}/>
+              <span
+              onClick={resetNodePosition}
+              className="material-symbols-outlined"
+                  style={{
+                position: "absolute",
+                left: "100%",
+                top: "0"
+              }}>near_me</span>
+            </div>
             {/*// <Tippy*/}
             {/*// allowHTML={true}*/}
             {/*// interactive={true}*/}
