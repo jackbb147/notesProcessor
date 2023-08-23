@@ -5,6 +5,7 @@ import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/mode-latex";
 import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/theme-github";
+import "ace-builds/src-noconflict/theme-xcode";
 import "ace-builds/src-noconflict/ext-language_tools";
 import { MATHJAXCOMMANDS } from "../Forked/mathjaxCommands";
 import { useAppState } from "../../../../../hooks/AppStateAndGraphhooks";
@@ -270,7 +271,7 @@ export function MyCustomACEEditor({
         mode="latex"
         value={value}
         // focus={true}
-        theme={"github"}
+        theme={"xcode"}
         // theme={AppState.darkModeOn ? "monokai" : "github"}
         style={
           {
