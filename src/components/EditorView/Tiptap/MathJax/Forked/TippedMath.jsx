@@ -8,16 +8,13 @@ export function TippedMath({value, onChange})
     return (
         <Tooltip
             interactive={true}
+
             html={
-            <MyCustomACEEditor value={value} onChange={onChange} />
-                // <AceEditor
-                //     theme={"github"}
-                //     value={value}
-                //     onChange={onChange}
-                //     style={{
-                //         maxHeight: "10vh",
-                //     }}
-                // ></AceEditor>
+                <div style={{
+                    width: "350px", // need to be the same as the maxWidth value listed here : https://atomiks.github.io/tippyjs/v5/all-props/
+                }}>
+                    <MyCustomACEEditor width={"350px"} value={value} onChange={onChange} />
+                </div>
             }
         >
              <MathView value={value} />

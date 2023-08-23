@@ -113,9 +113,11 @@ export function InlineMathEditorComponent(props: NodeViewProps) {
 }
 
 export function MyCustomACEEditor({
+    width="350px",
   value,
     onChange
 }: {
+    width?:string,
   value:string,
   onChange: (newValue: string) => void
 }) {
@@ -275,6 +277,7 @@ export function MyCustomACEEditor({
             // height: "50px",
             // maxWidth: "100%",
             // minWidth: "1rem",
+            width: width,
             maxHeight: "10vh",
           }
         }
