@@ -49,6 +49,7 @@ function ContentContainer({ onSingleClick, onDoubleClick, onLongPress, onFinishL
   children: React.ReactNode})
 {
   const buttonRef = useRef<HTMLDivElement>(null)
+  const [className, setClassName] = useState<"NoPointerEvents"|"">("")
   // useDoubleClick(
   //     {
   //       ref: buttonRef,
@@ -61,10 +62,22 @@ function ContentContainer({ onSingleClick, onDoubleClick, onLongPress, onFinishL
   }, {
     threshold: 200,
     cancelOnMovement: true,
-    onFinish: onFinishLongPress ?? (()=>{}),
+    onStart: ()=>{setClassName("NoPointerEvents")},
+    onFinish: () => {
+      // https://stackoverflow.com/a/20290312/21646295
+      window.addEventListener(
+          'click',
+          function captureClick(e) {
+            e.stopPropagation(); // Stop the click from being propagated.
+            console.log('click captured');
+            window.removeEventListener('click', captureClick, true); // cleanup
+          },
+          true
+      )
+    }
   } );
   return (
-      <div className="content"
+      <div className={`content`}
            {
         ... bind()
       }
@@ -104,7 +117,8 @@ export function InlineMathEditorComponent(props: NodeViewProps) {
 
   function handleRequestCloseTooltip()
   {
-    setShowTooltip(false);
+    setShowTooltip(false); //TODO modify this somehow
+
   }
 
   // @ts-ignore

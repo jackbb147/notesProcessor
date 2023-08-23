@@ -10,6 +10,7 @@ export function TippedMath({value, onChange, showTooltip, requestClose})
         <Tooltip
             interactive={true}
             // theme={"light"}
+            trigger={"mouseenter"}
             open={showTooltip}
             onRequestClose={requestClose}
             style={{
