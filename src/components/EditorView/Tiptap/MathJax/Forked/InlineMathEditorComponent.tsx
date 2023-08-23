@@ -10,6 +10,8 @@ import { MATHJAXCOMMANDS } from "../Forked/mathjaxCommands";
 import { useAppState } from "../../../../../hooks/AppStateAndGraphhooks";
 import "react-tippy/dist/tippy.css";
 import { Tooltip, withTooltip } from "react-tippy";
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css'; // optional
 import { useDisableErrorOverlay } from "../../../../../hooks/useDisableErrorOverlay";
 import { MathJax, MathJaxContext } from "better-react-mathjax";
 import MathView from "./MathView";
@@ -19,8 +21,8 @@ import ReactAce from "react-ace";
 import { IAceEditor } from "react-ace/lib/types";
 import { Ace } from "ace-builds";
 import { VirtualRenderer } from "ace-builds/ace";
-import { focusAndOpenKeyboard } from "./focusAndOpenKeyboard";
 import ReactFocusLock from "react-focus-lock";
+import {TippedMath} from "./TippedMath";
 interface Point {
   row: number;
   column: number;
@@ -40,9 +42,10 @@ export function InlineMathEditorComponent(props: NodeViewProps) {
   const [isEditing, setIsEditing] = useState(true); // ["latex", "mathml"
 
   const [showTooltip, setShowTooltip] = useState(false);
-  const [value, setValue] = useState("   ");
+  const [value, setValue] = useState("hello!!!");
   // useDisableErrorOverlay();
 
+  // @ts-ignore
   return (
     <NodeViewWrapper className="react-component">
       {/*<span className="label">React Component</span>*/}
@@ -53,18 +56,43 @@ export function InlineMathEditorComponent(props: NodeViewProps) {
         {/*</button>*/}
         {!destroyed &&
           (isEditing ? (
+
+
+              <TippedMath
+                  value={value}
+                  onChange={(newValue: string) => {
+                    setValue(newValue);
+                  }}
+              />
+              // <Tippy
+              // allowHTML={true}
+              // interactive={true}
+              // content={
+              //   <div>asklflk</div>
+              //   // <AceEditor></AceEditor>
+              // }>
+              //   <div>{value}</div>
+              // </Tippy>
+
             // withTooltip(MyCustomACEEditor, {
-            //   html: <MathView value={value} />,
-            //   position: "top",
+            //   html:
+            //   <MyCustomACEEditor
+            //     props={props}
+            //     value={value}
+            //     setValue={setValue}
+            //   />,
+            //
+            //   // position: "top",
             //   // trigger="click"
             //   open: showTooltip,
             //   arrow: true,
             // })
-            <MyCustomACEEditor
-              props={props}
-              value={value}
-              setValue={setValue}
-            />
+              // <MathView value={value} />
+            // <MyCustomACEEditor
+            //   props={props}
+            //   value={value}
+            //   setValue={setValue}
+            // />
           ) : (
             <div
               onClick={() => {
@@ -85,29 +113,15 @@ export function InlineMathEditorComponent(props: NodeViewProps) {
 }
 
 export function MyCustomACEEditor({
-  props,
   value,
-  setValue,
+    onChange
 }: {
-  props: NodeViewProps;
-  value: string;
-  setValue: (value: string) => void;
+  value:string,
+  onChange: (newValue: string) => void
 }) {
-  const AppState = useAppState();
-  const inputRef = useRef<any>(null);
+
   const reactAceRef = useRef<ReactAce>(null);
   const [completerConfigured, setCompleterConfigured] = React.useState(false);
-  function onChange(newValue: string) {
-    console.log("change", newValue);
-    setValue(newValue);
-    if (!reactAceRef.current) return;
-    updateSize(
-      null,
-      reactAceRef.current.editor,
-      reactAceRef.current.editor.renderer,
-    );
-  }
-
   function updateSize(
     e: any,
     editor: IAceEditor,
@@ -138,24 +152,14 @@ export function MyCustomACEEditor({
     // renderer.on("resize");
   }
 
-  useEffect(() => {
-    // alert("hey selected");
-    if (!reactAceRef.current) return;
-    // alert("hey!");
-    focusAndOpenKeyboard(reactAceRef.current.editor);
-    // setTimeout(() => {
-    //   inputRef.current?.focus();
-    //   reactAceRef.current?.editor.focus();
-    // }, 50);
-  }, [props.selected]);
 
   useEffect(() => {
     if (!reactAceRef.current) return;
-    updateSize(
-      null,
-      reactAceRef.current.editor,
-      reactAceRef.current.editor.renderer,
-    );
+    // updateSize(
+    //   null,
+    //   reactAceRef.current.editor,
+    //   reactAceRef.current.editor.renderer,
+    // );
     if (completerConfigured) return;
     console.log(`[useEffect] fired`);
     const editor = reactAceRef.current.editor;
@@ -188,32 +192,22 @@ export function MyCustomACEEditor({
     // debugger;
     editor.completers.push(staticWordCompleter);
     // https://stackoverflow.com/a/38437098
-    editor.on("change", (delta: Delta) => {
-      // switch (obj.action) {
-      //   case "insert":
-      //     let lines = obj.lines;
-      //     let char = lines[0];
-      //     setShowTooltip(true);
-      //     if (lines.length === 1 && char.length === 1 && /\\/i.test(char)) {
-      //       setTimeout(() => {
-      //         editor.commands.byName.startAutocomplete.exec(editor);
-      //       }, 50);
-      //     }
-      //     break;
-      // }
+    editor.on("change", (obj: Delta) => {
+      // debugger;
+      switch (obj.action) {
+        case "insert":
+          let lines = obj.lines;
+          let char = lines[0];
+          if (lines.length === 1 && char.length === 1 && /\\/i.test(char)) {
+            setTimeout(() => {
+              editor.commands.byName.startAutocomplete.exec(editor);
+            }, 50);
+          }
+          break;
+      }
     });
 
-    // editor.renderer.on("afterRender", () => {
-    //   console.log(`[afterRender] fired`);
-    //   editor.focus();
-    // });
 
-    // editor.renderer.on("beforeRender", updateSize);
-
-    // updateSize(null, editor.renderer);
-    // window.f = () => {
-    //   updateSize(null, editor.renderer);
-    // };
 
     // make sure the auto complete pop up boxes are on top, instead of bottom
     // const config = {
@@ -262,7 +256,7 @@ export function MyCustomACEEditor({
     // };
     // const observer = new MutationObserver(callback);
 
-    // observer.observe(document.body, config);
+
 
     setCompleterConfigured(true);
   }, [completerConfigured]);
@@ -275,87 +269,85 @@ export function MyCustomACEEditor({
         value={value}
         // focus={true}
         theme={"github"}
-        height={"50px"}
         // theme={AppState.darkModeOn ? "monokai" : "github"}
         style={
           {
             // height: "50px",
             // maxWidth: "100%",
             // minWidth: "1rem",
+            maxHeight: "10vh",
           }
         }
         placeholder={"\\text{hello world}"}
-        showGutter={false}
-        showPrintMargin={false}
-        highlightActiveLine={false}
-        maxLines={10}
+        // showGutter={false}
+        // showPrintMargin={false}
         enableLiveAutocompletion={false}
         enableBasicAutocompletion={true}
         onChange={onChange}
-        commands={[
-          {
-            name: "deleteMe",
-            bindKey: { win: "backspace", mac: "backspace" },
-            exec: function (editor) {
-              //  ;
-              let value = editor.getValue();
-              console.log(value);
-              if (value.length === 0) {
-                let p = props;
-                // editor.destroy();
-
-                // setDestroyed(true);
-                // debugger;
-                const cursorPos = getCursorPos(p.editor);
-                p.deleteNode();
-                setCursorPos(props.editor, cursorPos);
-                // setCursorPos(p.editor, cursorPos);
-                return true;
-
-                // user wants to delete the quillModules box ...
-                // let index = quill.getSelection().index;
-                // quill.deleteText(index, 1);
-                // tooltip.hide();
-              }
-
-              return false; // must return false in order to fire the default event:https://stackoverflow.com/a/42020190/21646295
-            },
-          },
-          {
-            name: "exit me, left",
-            bindKey: { win: "Left", mac: "Left" },
-            exec: function (editor) {
-              let cursorPosition = editor.selection.getCursor();
-
-              if (cursorPosition.column === 0) {
-                //
-                // debugger;
-                let p = props;
-                setCursorPos(p.editor, getCursorPos(p.editor) - 1);
-
-                //TODO convertEditorToMath(editor);
-                // setIsEditing(false);
-              }
-              return false;
-            },
-          },
-          {
-            name: "exit me, right",
-            bindKey: { win: "Right", mac: "Right" },
-            exec: function (editor) {
-              let cursorPosition = editor.selection.getCursor();
-              let len = editor.getValue().length;
-              //
-              if (cursorPosition.column === len) {
-                let p = props;
-                setCursorPos(p.editor, getCursorPos(p.editor) + 1);
-                // TODO convertEditorToMath(editor, "right");
-                // setIsEditing(false);
-              }
-              return false;
-            },
-          },
-        ]}
+        // commands={[
+        //   {
+        //     name: "deleteMe",
+        //     bindKey: { win: "backspace", mac: "backspace" },
+        //     exec: function (editor) {
+        //       //  ;
+        //       let value = editor.getValue();
+        //       console.log(value);
+        //       if (value.length === 0) {
+        //         let p = props;
+        //         // editor.destroy();
+        //
+        //         // setDestroyed(true);
+        //         // debugger;
+        //         const cursorPos = getCursorPos(p.editor);
+        //         p.deleteNode();
+        //         setCursorPos(props.editor, cursorPos);
+        //         // setCursorPos(p.editor, cursorPos);
+        //         return true;
+        //
+        //         // user wants to delete the quillModules box ...
+        //         // let index = quill.getSelection().index;
+        //         // quill.deleteText(index, 1);
+        //         // tooltip.hide();
+        //       }
+        //
+        //       return false; // must return false in order to fire the default event:https://stackoverflow.com/a/42020190/21646295
+        //     },
+        //   },
+        //   {
+        //     name: "exit me, left",
+        //     bindKey: { win: "Left", mac: "Left" },
+        //     exec: function (editor) {
+        //       let cursorPosition = editor.selection.getCursor();
+        //
+        //       if (cursorPosition.column === 0) {
+        //         //
+        //         // debugger;
+        //         let p = props;
+        //         setCursorPos(p.editor, getCursorPos(p.editor) - 1);
+        //
+        //         //TODO convertEditorToMath(editor);
+        //         // setIsEditing(false);
+        //       }
+        //       return false;
+        //     },
+        //   },
+        //   {
+        //     name: "exit me, right",
+        //     bindKey: { win: "Right", mac: "Right" },
+        //     exec: function (editor) {
+        //       let cursorPosition = editor.selection.getCursor();
+        //       let len = editor.getValue().length;
+        //       //
+        //       if (cursorPosition.column === len) {
+        //         let p = props;
+        //         setCursorPos(p.editor, getCursorPos(p.editor) + 1);
+        //         // TODO convertEditorToMath(editor, "right");
+        //         // setIsEditing(false);
+        //       }
+        //       return false;
+        //     },
+        //   },
+        // ]}
         onBlur={() => {
           console.debug(`[InlineMathEditorComponent] blur`);
           // setIsEditing(false);

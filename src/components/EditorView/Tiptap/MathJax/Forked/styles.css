@@ -5,7 +5,7 @@
 .react-component {
   /*background: #faf594;*/
   background-color: transparent;
-  border: 1px solid grey;
+  /*border: 1px solid grey;*/
   /*border: none;*/
   border-radius: 5px;
   margin: 0;
@@ -13,29 +13,29 @@
   display: inline-block;
 }
 
-.react-component .content {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  margin-left: 2px;
-  margin-right: 2px;
-  /*border: 1px solid red;*/
-  position: relative;
-  height: 50px;
-}
+/*.react-component .content {*/
+/*  box-sizing: border-box;*/
+/*  margin: 0;*/
+/*  padding: 0;*/
+/*  margin-left: 2px;*/
+/*  margin-right: 2px;*/
+/*  !*border: 1px solid red;*!*/
+/*  position: relative;*/
+/*  height: 50px;*/
+/*}*/
 
-.react-component .content:before {
-  content: "  ";
-  position: absolute;
-  right: 0;
-  color: white;
-}
+/*.react-component .content:before {*/
+/*  content: "  ";*/
+/*  position: absolute;*/
+/*  right: 0;*/
+/*  color: white;*/
+/*}*/
 
 
-.node-reactComponent{
-  display: inline-block;
-  vertical-align: middle;
-}
+/*.node-reactComponent{*/
+/*  display: inline-block;*/
+/*  vertical-align: middle;*/
+/*}*/
 
 /*.ace_text-input{*/
 /*  opacity: initial!important;*/
