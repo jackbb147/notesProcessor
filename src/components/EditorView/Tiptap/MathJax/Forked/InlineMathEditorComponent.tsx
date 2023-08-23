@@ -9,10 +9,10 @@ import "ace-builds/src-noconflict/theme-xcode";
 import "ace-builds/src-noconflict/ext-language_tools";
 import { MATHJAXCOMMANDS } from "../Forked/mathjaxCommands";
 import { useAppState } from "../../../../../hooks/AppStateAndGraphhooks";
-import "react-tippy/dist/tippy.css";
+// import "react-tippy/dist/tippy.css";
 import { Tooltip, withTooltip } from "react-tippy";
 import Tippy from '@tippyjs/react';
-import 'tippy.js/dist/tippy.css'; // optional
+// import 'tippy.js/dist/tippy.css'; // optional
 import { useDisableErrorOverlay } from "../../../../../hooks/useDisableErrorOverlay";
 import { MathJax, MathJaxContext } from "better-react-mathjax";
 import MathView from "./MathView";
@@ -274,7 +274,7 @@ export function MyCustomACEEditor({
         mode="latex"
         value={value}
         // focus={true}
-        theme={"xcode"}
+        theme={"monokai"}
         // theme={AppState.darkModeOn ? "monokai" : "github"}
         style={
           {

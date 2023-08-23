@@ -11,7 +11,7 @@ export function TippedMath({value, onChange})
             interactive={true}
             // theme={"light"}
             style={{
-                backgroundColor: "transparent"
+                backgroundColor: "transparent",
             }}
 
             html={
