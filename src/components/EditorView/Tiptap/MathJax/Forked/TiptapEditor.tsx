@@ -15,7 +15,7 @@ export default ({ note }: { note: GraphNode }) => {
   const editor = useEditor({
     extensions: [
       StarterKit,
-      // ReactComponent,
+      ReactComponent,
       Mention.configure({
         HTMLAttributes: {
           class: "mention",

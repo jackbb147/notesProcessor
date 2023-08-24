@@ -1,10 +1,10 @@
-import { mergeAttributes, Node } from "@jackhou147/tiptap/packages/core";
-import { ReactNodeViewRenderer } from "@jackhou147/tiptap/packages/react";
-import { Plugin, PluginKey } from "@jackhou147/tiptap/packages/pm/state";
+// import { mergeAttributes, Node } from "@jackhou147/tiptap/packages/core";
+import { mergeAttributes, Node } from "@tiptap/core";
+import { ReactNodeViewRenderer } from "@tiptap/react";
+
+import { PluginKey, Plugin } from "@tiptap/pm/state";
 
 import { InlineMathEditorComponent } from "./InlineMathEditorComponent.tsx";
-import { getCursorPos, setCursorPos } from "./TiptapCursorPos";
-
 export default Node.create({
   name: "reactComponent",
 
@@ -104,8 +104,6 @@ export default Node.create({
     };
   },
 
-
-
   addAttributes() {
     return {
       count: {
@@ -113,7 +111,7 @@ export default Node.create({
       },
       value: {
         default: "HELLO WORLD!!",
-      }
+      },
     };
   },
 
