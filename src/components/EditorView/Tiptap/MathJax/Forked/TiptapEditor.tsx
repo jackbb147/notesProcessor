@@ -5,10 +5,47 @@ import StarterKit from "@tiptap/starter-kit";
 import React from "react";
 
 import ReactComponent from "./Extension.js";
+import { Mention } from "@tiptap/extension-mention";
+import suggestion from "../../Mention/suggestion";
 
-export default () => {
+import { useGraph } from "../../../../../hooks/AppStateAndGraphhooks";
+import { GraphNode } from "../../../../../reducers/GraphReducer";
+export default ({ note }: { note: GraphNode }) => {
+  const Graph = useGraph();
   const editor = useEditor({
-    extensions: [StarterKit, ReactComponent],
+    extensions: [
+      StarterKit,
+      // ReactComponent,
+      Mention.configure({
+        HTMLAttributes: {
+          class: "mention",
+        },
+        renderLabel({ options, node }) {
+          // debugger;
+          return `${node.attrs.id.title}`; //TODO this is a hack. It works but it's not the right way to do it
+          // return `hello world ...`;
+        },
+        suggestion: {
+          ...suggestion,
+          char: "[[",
+
+          items: ({ query }) => {
+            return [
+              // "Lea Thompson",
+              // "Oliver Feng",
+              ...Graph.nodes,
+            ].filter(
+              (item) =>
+                item.title.toLowerCase() !== note.title.toLowerCase() &&
+                item.title.toLowerCase().startsWith(query.toLowerCase()),
+            );
+            // .slice(0, 5);
+          },
+        },
+
+        // suggestion,
+      }),
+    ],
     content: `
     <p></p>
 <!--    <react-component>hello!</react-component>-->
