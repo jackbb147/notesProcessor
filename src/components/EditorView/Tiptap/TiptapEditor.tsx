@@ -18,7 +18,8 @@ export default ({ note }: { note: GraphNode }) => {
     if (!editor) return;
     // https://tiptap.dev/guide/custom-extensions#storage
     editor.storage.mention.note = note;
-  }, [note]);
+    editor.storage.mention.graph = Graph;
+  }, [note, Graph]);
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -27,6 +28,7 @@ export default ({ note }: { note: GraphNode }) => {
         addStorage() {
           return {
             note: note,
+            graph: Graph,
           };
         },
       }).configure({
@@ -44,12 +46,13 @@ export default ({ note }: { note: GraphNode }) => {
           char: "[[",
 
           items: ({ query, editor }) => {
+            const note = editor.storage.mention.note;
+            const graph = editor.storage.mention.graph;
             return [
               // "Lea Thompson",
               // "Oliver Feng",
-              ...Graph.nodes,
+              ...graph.nodes,
             ].filter((item) => {
-              const note = editor.storage.mention.note;
               // debugger;
               return (
                 item.title.toLowerCase() !== note.title.toLowerCase() &&
