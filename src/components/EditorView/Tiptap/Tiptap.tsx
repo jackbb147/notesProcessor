@@ -86,7 +86,7 @@ export function TiptapBoxComponent({
       }}
       autoHide
     >
-      <TiptapEditor />
+      <TiptapEditor note={note} />
       {/*<Tiptap note={note} />*/}
     </Scrollbars>
     // <div
