@@ -6,10 +6,10 @@ import React from "react";
 
 import ReactComponent from "./Extension.js";
 import { Mention } from "@tiptap/extension-mention";
-import suggestion from "../../Mention/suggestion";
+import suggestion from "../Mention/suggestion";
 
-import { useGraph } from "../../../../../hooks/AppStateAndGraphhooks";
-import { GraphNode } from "../../../../../reducers/GraphReducer";
+import { useGraph } from "../../../../hooks/AppStateAndGraphhooks";
+import { GraphNode } from "../../../../reducers/GraphReducer";
 export default ({ note }: { note: GraphNode }) => {
   const Graph = useGraph();
   const editor = useEditor({

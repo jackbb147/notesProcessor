@@ -14,13 +14,13 @@ import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/theme-xcode";
 import "ace-builds/src-noconflict/ext-language_tools";
 
-import { MATHJAXCOMMANDS } from "../Forked/mathjaxCommands";
-import { useAppState } from "../../../../../hooks/AppStateAndGraphhooks";
+import { MATHJAXCOMMANDS } from "./mathjaxCommands";
+import { useAppState } from "../../../../hooks/AppStateAndGraphhooks";
 // import "react-tippy/dist/tippy.css";
 import { Tooltip, withTooltip } from "react-tippy";
 import Tippy from "@tippyjs/react";
 // import 'tippy.js/dist/tippy.css'; // optional
-import { useDisableErrorOverlay } from "../../../../../hooks/useDisableErrorOverlay";
+import { useDisableErrorOverlay } from "../../../../hooks/useDisableErrorOverlay";
 import { MathJax, MathJaxContext } from "better-react-mathjax";
 import MathView from "./MathView";
 import { getCursorPos, setCursorPos } from "./TiptapCursorPos";
