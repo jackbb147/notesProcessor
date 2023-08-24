@@ -1,5 +1,5 @@
 import "./tiptap.css";
-import "./Mention/styles.css";
+import "./Reference/styles.css";
 // import "./Reference/styles.css";
 import StarterKit from "@jackhou147/tiptap/packages/starter-kit"; //from "@tiptap/starter-kit"; //from "@jackhou147/tiptap/packages/starter-kit";
 
@@ -8,7 +8,7 @@ import { useAppState, useGraph } from "../../../hooks/AppStateAndGraphhooks";
 import { TextAlign } from "@tiptap/extension-text-align";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { GraphNode } from "../../../reducers/GraphReducer";
-import TiptapEditor from "./MathEditor/TiptapEditor";
+import TiptapEditor from "./TiptapEditor";
 export function TiptapBoxComponent({
   note,
   width,
