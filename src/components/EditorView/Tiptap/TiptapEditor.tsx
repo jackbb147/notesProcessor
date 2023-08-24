@@ -2,7 +2,7 @@ import "./MathEditor/styles.css";
 
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import React from "react";
+import React, { useEffect } from "react";
 
 import ReactComponent from "./MathEditor/Extension.js";
 import { Mention } from "@tiptap/extension-mention";
@@ -10,13 +10,26 @@ import suggestion from "./Reference/suggestion";
 
 import { useGraph } from "../../../hooks/AppStateAndGraphhooks";
 import { GraphNode } from "../../../reducers/GraphReducer";
+import { Editor } from "@tiptap/core";
 export default ({ note }: { note: GraphNode }) => {
   const Graph = useGraph();
+
+  useEffect(() => {
+    if (!editor) return;
+    // https://tiptap.dev/guide/custom-extensions#storage
+    editor.storage.mention.note = note;
+  }, [note]);
   const editor = useEditor({
     extensions: [
       StarterKit,
       ReactComponent,
-      Mention.configure({
+      Mention.extend({
+        addStorage() {
+          return {
+            note: note,
+          };
+        },
+      }).configure({
         HTMLAttributes: {
           class: "mention",
         },
@@ -25,20 +38,24 @@ export default ({ note }: { note: GraphNode }) => {
           return `${node.attrs.id.title}`; //TODO this is a hack. It works but it's not the right way to do it
           // return `hello world ...`;
         },
+
         suggestion: {
           ...suggestion,
           char: "[[",
 
-          items: ({ query }) => {
+          items: ({ query, editor }) => {
             return [
               // "Lea Thompson",
               // "Oliver Feng",
               ...Graph.nodes,
-            ].filter(
-              (item) =>
+            ].filter((item) => {
+              const note = editor.storage.mention.note;
+              // debugger;
+              return (
                 item.title.toLowerCase() !== note.title.toLowerCase() &&
-                item.title.toLowerCase().startsWith(query.toLowerCase()),
-            );
+                item.title.toLowerCase().startsWith(query.toLowerCase())
+              );
+            });
             // .slice(0, 5);
           },
         },
