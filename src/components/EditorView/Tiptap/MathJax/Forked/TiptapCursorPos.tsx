@@ -1,4 +1,4 @@
-import { Editor } from "@jackhou147/tiptap/packages/core/";
+import { Editor } from "@tiptap/core";
 
 export function getCursorPos(tiptapEditor: Editor | any) {
   const selection = tiptapEditor.state.selection;

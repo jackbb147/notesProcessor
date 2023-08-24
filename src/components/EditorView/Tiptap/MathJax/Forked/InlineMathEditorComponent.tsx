@@ -1,4 +1,4 @@
-import { NodeViewWrapper } from "@jackhou147/tiptap/packages/react";
+import { NodeViewWrapper } from "@tiptap/react";
 import React, {
   LegacyRef,
   MutableRefObject,
@@ -24,7 +24,8 @@ import { useDisableErrorOverlay } from "../../../../../hooks/useDisableErrorOver
 import { MathJax, MathJaxContext } from "better-react-mathjax";
 import MathView from "./MathView";
 import { getCursorPos, setCursorPos } from "./TiptapCursorPos";
-import { NodeViewProps } from "@jackhou147/tiptap/packages/react";
+
+import { NodeViewProps } from "@tiptap/react";
 import ReactAce from "react-ace";
 import { IAceEditor } from "react-ace/lib/types";
 import { Ace } from "ace-builds";

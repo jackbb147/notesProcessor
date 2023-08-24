@@ -1,4 +1,3 @@
-// import { mergeAttributes, Node } from "@jackhou147/tiptap/packages/core";
 import { mergeAttributes, Node } from "@tiptap/core";
 import { ReactNodeViewRenderer } from "@tiptap/react";
 
