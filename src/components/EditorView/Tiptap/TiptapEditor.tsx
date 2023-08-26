@@ -20,58 +20,57 @@ export default ({ note }: { note: GraphNode }) => {
     editor.storage.mention.note = note;
     editor.storage.mention.graph = Graph;
   }, [note, Graph]);
-  const editor = useEditor({
-    extensions: [
-      StarterKit,
-      ReactComponent,
-      Mention.extend({
-        addStorage() {
-          return {
-            note: note,
-            graph: Graph,
-          };
-        },
-      }).configure({
-        HTMLAttributes: {
-          class: "mention",
-        },
-        renderLabel({ options, node }) {
-          // debugger;
-          return `${node.attrs.id.title}`; //TODO this is a hack. It works but it's not the right way to do it
-          // return `hello world ...`;
-        },
-
-        suggestion: {
-          ...suggestion,
-          char: "[[",
-
-          items: ({ query, editor }) => {
-            const note = editor.storage.mention.note;
-            const graph = editor.storage.mention.graph;
-            return [
-              // "Lea Thompson",
-              // "Oliver Feng",
-              ...graph.nodes,
-            ].filter((item) => {
-              // debugger;
-              return (
-                item.title.toLowerCase() !== note.title.toLowerCase() &&
-                item.title.toLowerCase().startsWith(query.toLowerCase())
-              );
-            });
-            // .slice(0, 5);
+  const editor = useEditor(
+    {
+      extensions: [
+        StarterKit,
+        ReactComponent,
+        Mention.extend({
+          addStorage() {
+            return {
+              note: note,
+              graph: Graph,
+            };
           },
-        },
+        }).configure({
+          HTMLAttributes: {
+            class: "mention",
+          },
+          renderLabel({ options, node }) {
+            // debugger;
+            return `${node.attrs.id.title}`; //TODO this is a hack. It works but it's not the right way to do it
+            // return `hello world ...`;
+          },
 
-        // suggestion,
-      }),
-    ],
-    content: `
-    <p></p>
-<!--    <react-component>hello!</react-component>-->
-   
-    `,
-  });
+          suggestion: {
+            ...suggestion,
+            char: "[[",
+
+            items: ({ query, editor }) => {
+              const note = editor.storage.mention.note;
+              const graph = editor.storage.mention.graph;
+              return [
+                // "Lea Thompson",
+                // "Oliver Feng",
+                ...graph.nodes,
+              ].filter((item) => {
+                // debugger;
+                return (
+                  item.title.toLowerCase() !== note.title.toLowerCase() &&
+                  item.title.toLowerCase().startsWith(query.toLowerCase())
+                );
+              });
+              // .slice(0, 5);
+            },
+          },
+
+          // suggestion,
+        }),
+      ],
+      content: note.content,
+    },
+    [note.id],
+  );
 
   return (
     <div
