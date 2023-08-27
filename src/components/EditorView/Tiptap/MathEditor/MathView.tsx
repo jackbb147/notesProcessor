@@ -10,6 +10,7 @@ export default ({
 }) => {
   return (
     <MathJaxContext>
+      {/*<div>hello</div>*/}
       <MathJax
         style={{
           ...styles,
@@ -17,4 +18,5 @@ export default ({
       >{`\\( ${value} \\)`}</MathJax>
     </MathJaxContext>
   );
+  //<div>hello</div>;
 };
