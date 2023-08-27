@@ -200,6 +200,9 @@ export function NoteEditor({
         <TiptapBoxComponent
           note={note}
           width={`calc(100% - ${infoPanelWidth})`}
+          updateReferences={(map: Map<string, number>) => {
+            setReferenceMap(map);
+          }}
         />
         <NoteInfoSidePanel
           note={note}
