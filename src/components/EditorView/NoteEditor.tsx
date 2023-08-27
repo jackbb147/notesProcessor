@@ -5,6 +5,8 @@ import styles from "./NoteEditorStyle.module.css";
 import { Desktop } from "../../hooks/useMediaQuery";
 import { Mobile } from "../../hooks/useMediaQuery";
 
+import { ReferenceMapProvider } from "./Tiptap/Reference/ReferenceMapContext";
+
 //@ts-ignore
 import { MathEditorModule } from "./Quill/quillModules/Quill-MathJax/MathEditorModule";
 import "./Quill/quillModules/Quill-MathJax/quill.bubble.css";
@@ -94,7 +96,7 @@ export function NoteEditor({
   const dispatch = useDispatch();
   const [infoPanelWidth, setInfoPanelWidth] = useState("");
 
-  const [referenceMap, setReferenceMap] = useState(new Map());
+  // const [referenceMap, setReferenceMap] = useState(new Map());
 
   useEffect(() => {
     if (appState.showNoteInfoPanel) {
@@ -197,18 +199,20 @@ export function NoteEditor({
           paddingLeft: "2px",
         }}
       >
-        <TiptapBoxComponent
-          note={note}
-          width={`calc(100% - ${infoPanelWidth})`}
-          updateReferences={(map: Map<string, number>) => {
-            setReferenceMap(map);
-          }}
-        />
-        <NoteInfoSidePanel
-          note={note}
-          width={infoPanelWidth}
-          referenceMap={new Map(referenceMap.entries())}
-        />
+        <ReferenceMapProvider>
+          <TiptapBoxComponent
+            note={note}
+            width={`calc(100% - ${infoPanelWidth})`}
+            // updateReferences={(map: Map<string, number>) => {
+            //   setReferenceMap(map);
+            // }}
+          />
+          <NoteInfoSidePanel
+            note={note}
+            width={infoPanelWidth}
+            // referenceMap={new Map(referenceMap.entries())}
+          />
+        </ReferenceMapProvider>
       </div>
 
       <div

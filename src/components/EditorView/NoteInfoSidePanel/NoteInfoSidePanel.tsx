@@ -1,7 +1,7 @@
 import styles from "./styles.module.css";
 import { GraphActionType, GraphNode } from "../../../reducers/GraphReducer";
 import { useGraphology } from "../../../hooks/useGraphology";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ListItem } from "../../Buttons/ListItem";
 import {
   useAppState,
@@ -15,6 +15,7 @@ import { AppActionType, Collections } from "../../../reducers/AppStateReducer";
 import { Tablet } from "../../../hooks/useMediaQuery";
 import { Desktop } from "../../../hooks/useMediaQuery";
 import { Mobile } from "../../../hooks/useMediaQuery";
+import { ReferenceMapContext } from "../Tiptap/Reference/ReferenceMapContext";
 
 function Separator() {
   return (
@@ -452,12 +453,11 @@ function NoteInfoSidePanelWrapper({
 export function NoteInfoSidePanel({
   note,
   width,
-  referenceMap,
 }: {
   note: GraphNode;
   width: any;
-  referenceMap: Map<string, number>;
 }) {
+  const referenceMap = useContext(ReferenceMapContext);
   return (
     <NoteInfoSidePanelWrapper width={width}>
       <References note={note} referenceMap={referenceMap} />

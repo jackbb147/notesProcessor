@@ -1,7 +1,7 @@
 import "./tiptap.css";
 import "./Reference/styles.css";
 // import "./Reference/styles.css";
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import {
   useAppState,
   useGraphDispatch,
@@ -17,16 +17,16 @@ import Text from "@tiptap/extension-text";
 import Bold from "@tiptap/extension-bold";
 import MathExtension from "./MathEditor/Extension";
 import { Mention } from "@tiptap/extension-mention";
+import { SetReferenceMapContext } from "./Reference/ReferenceMapContext";
 
 export function TiptapBoxComponent({
   note,
   width,
-  updateReferences,
 }: {
   note: GraphNode;
   width?: string;
-  updateReferences: (referenceMap: Map<string, number>) => any;
 }) {
+  const setReferenceMap = useContext(SetReferenceMapContext);
   const AppState = useAppState();
   const GraphDispatch = useGraphDispatch();
   useEffect(() => {
@@ -38,7 +38,7 @@ export function TiptapBoxComponent({
       MathExtension,
       Mention,
     ]);
-    updateReferences(countReferences(contentJSON));
+    setReferenceMap(countReferences(contentJSON));
   }, [note.id]);
 
   function handleBlur(content: string) {
@@ -63,11 +63,7 @@ export function TiptapBoxComponent({
       }}
       autoHide
     >
-      <TiptapEditor
-        note={note}
-        handleBlur={handleBlur}
-        updateReferences={updateReferences}
-      />
+      <TiptapEditor note={note} handleBlur={handleBlur} />
       {/*<Tiptap note={note} />*/}
     </Scrollbars>
     // <div
