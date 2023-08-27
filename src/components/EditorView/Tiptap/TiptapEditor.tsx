@@ -16,9 +16,11 @@ export default forwardRef(
     {
       note,
       handleBlur,
+      updateReferences,
     }: {
       note: GraphNode;
       handleBlur?: (content: string) => any;
+      updateReferences: (referenceMap: Map<string, number>) => any;
     },
     ref,
   ) => {
