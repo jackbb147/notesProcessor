@@ -1,7 +1,7 @@
 import "./tiptap.css";
 import "./Reference/styles.css";
 // import "./Reference/styles.css";
-import React from "react";
+import React, { useRef } from "react";
 import {
   useAppState,
   useGraphDispatch,

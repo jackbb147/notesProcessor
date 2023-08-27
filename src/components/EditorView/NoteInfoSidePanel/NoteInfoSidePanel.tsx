@@ -214,7 +214,13 @@ function ReferencedBy({ note }: { note: GraphNode }) {
   );
 }
 
-function References({ note }: { note: GraphNode }) {
+function References({
+  note,
+  referenceMap,
+}: {
+  note: GraphNode;
+  referenceMap: Map<string, number>;
+}) {
   const [graphology, updated] = useGraphology();
   const GraphState = useGraph();
   const [OutNeighbors, setOutNeighbors] = useState<string[]>([]);
@@ -234,13 +240,15 @@ function References({ note }: { note: GraphNode }) {
       >
         <Title text={"References"} />
         <div>
-          {OutNeighbors.map((id) => {
+          {Array.from(referenceMap.entries()).map(([id, count]) => {
+            if (count < 1) return null;
             const node = GraphState.nodes.find((node) => node.id === id);
             if (node) {
               return <NoteItem note={node} />;
             } else {
               return null;
             }
+            return <div></div>;
           })}
         </div>
       </div>
@@ -444,13 +452,15 @@ function NoteInfoSidePanelWrapper({
 export function NoteInfoSidePanel({
   note,
   width,
+  referenceMap,
 }: {
   note: GraphNode;
   width: any;
+  referenceMap: Map<string, number>;
 }) {
   return (
     <NoteInfoSidePanelWrapper width={width}>
-      <References note={note} />
+      <References note={note} referenceMap={referenceMap} />
       <ReferencedBy note={note} />
       <SeeAlso note={note} />
     </NoteInfoSidePanelWrapper>

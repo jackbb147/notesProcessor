@@ -93,6 +93,9 @@ export function NoteEditor({
   const appState = useAppState();
   const dispatch = useDispatch();
   const [infoPanelWidth, setInfoPanelWidth] = useState("");
+
+  const [referenceMap, setReferenceMap] = useState(new Map());
+
   useEffect(() => {
     if (appState.showNoteInfoPanel) {
       setInfoPanelWidth("25%");
@@ -107,63 +110,6 @@ export function NoteEditor({
   useEffect(() => {
     console.log(`note changed: ${JSON.stringify(note)}`);
   }, [note]);
-
-  useEffect(() => {
-    console.log("HEY! CHANGING COLOR");
-    if (darkModeOn) {
-      document
-        .querySelectorAll(".ql-toolbar .ql-stroke")
-        .forEach((val: Element) => {
-          val.classList.add("fill-none", "stroke-fff");
-        });
-
-      document
-        .querySelectorAll(".ql-toolbar .ql-fill")
-        .forEach((val: Element) => {
-          val.classList.add("fill-fff", "stroke-none");
-        });
-
-      document
-        .querySelectorAll(".ql-toolbar .ql-picker")
-        .forEach((val: Element) => {
-          // val.classList.add("color-fff");
-        });
-
-      document.querySelectorAll(".ql-picker-label").forEach((val) => {
-        val.classList.add("color-white");
-      });
-
-      document.querySelectorAll(".ql-quillModules.ql-blank").forEach((val) => {
-        val.classList.add("placeholderWhite");
-      });
-    } else {
-      document
-        .querySelectorAll(".ql-toolbar .ql-stroke")
-        .forEach((val: Element) => {
-          val.classList.remove("fill-none", "stroke-fff");
-        });
-
-      document
-        .querySelectorAll(".ql-toolbar .ql-fill")
-        .forEach((val: Element) => {
-          val.classList.remove("fill-fff", "stroke-none");
-        });
-
-      document
-        .querySelectorAll(".ql-toolbar .ql-picker")
-        .forEach((val: Element) => {
-          // val.classList.remove("color-fff");
-        });
-
-      document.querySelectorAll(".ql-picker-label").forEach((val) => {
-        val.classList.remove("color-white");
-      });
-
-      document.querySelectorAll(".ql-quillModules.ql-blank").forEach((val) => {
-        val.classList.remove("placeholderWhite");
-      });
-    }
-  }, [darkModeOn]);
 
   function handleBlur(s: string, firstLine: string = "") {
     // debugger;
@@ -255,7 +201,11 @@ export function NoteEditor({
           note={note}
           width={`calc(100% - ${infoPanelWidth})`}
         />
-        <NoteInfoSidePanel note={note} width={infoPanelWidth} />
+        <NoteInfoSidePanel
+          note={note}
+          width={infoPanelWidth}
+          referenceMap={new Map(referenceMap.entries())}
+        />
       </div>
 
       <div
