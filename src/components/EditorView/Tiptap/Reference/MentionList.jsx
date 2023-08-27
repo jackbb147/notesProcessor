@@ -2,6 +2,7 @@ import "./MentionList.css";
 
 import React, {
   forwardRef,
+  useContext,
   useEffect,
   useImperativeHandle,
   useState,
@@ -12,10 +13,17 @@ import {
   useGraphDispatch,
 } from "../../../../hooks/AppStateAndGraphhooks";
 import { GraphActionType } from "../../../../reducers/GraphReducer";
+import {
+  ReferenceMapContext,
+  SetReferenceMapContext,
+} from "./ReferenceMapContext";
 
 export default forwardRef((props, ref) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const graph = useGraph();
+
+  const referenceMap = useContext(ReferenceMapContext);
+  const setReferenceMap = useContext(SetReferenceMapContext);
   const graphDispatch = useGraphDispatch();
   const AppState = useAppState();
 
@@ -25,17 +33,28 @@ export default forwardRef((props, ref) => {
     // debugger;
     if (node) {
       props.command({ id: item });
-      //   // debugger;
+      setReferenceMap((previousMap) => {
+        var newMap = new Map(previousMap);
+        if (!newMap.has(node.id)) {
+          newMap.set(node.id, 1);
+        } else {
+          newMap.set(node.id, 1 + newMap.get(node.id));
+        }
+
+        return newMap;
+      });
+      // debugger;
       //   // TODO  : get the current node id from the graph state and then link the current node to the selected node
 
       //
-      graphDispatch({
-        type: GraphActionType.addLink,
-        link: {
-          source: AppState.activeNodeID,
-          target: node.id,
-        },
-      });
+
+      // graphDispatch({
+      //   type: GraphActionType.addLink,
+      //   link: {
+      //     source: AppState.activeNodeID,
+      //     target: node.id,
+      //   },
+      // });
     }
   };
 
