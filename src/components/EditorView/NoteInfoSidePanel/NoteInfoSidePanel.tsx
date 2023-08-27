@@ -16,6 +16,7 @@ import { Tablet } from "../../../hooks/useMediaQuery";
 import { Desktop } from "../../../hooks/useMediaQuery";
 import { Mobile } from "../../../hooks/useMediaQuery";
 import { ReferenceMapContext } from "../Tiptap/Reference/ReferenceMapContext";
+import { useSyncGraphLinks } from "../Tiptap/Reference/useSyncGraphLinks";
 
 function Separator() {
   return (
@@ -458,6 +459,8 @@ export function NoteInfoSidePanel({
   width: any;
 }) {
   const referenceMap = useContext(ReferenceMapContext);
+
+  useSyncGraphLinks({ sourceID: note.id });
   return (
     <NoteInfoSidePanelWrapper width={width}>
       <References note={note} referenceMap={referenceMap} />
