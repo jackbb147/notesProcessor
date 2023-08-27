@@ -2,7 +2,7 @@ import "./MathEditor/styles.css";
 
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import React, { forwardRef, useEffect } from "react";
+import React, { forwardRef, useContext, useEffect } from "react";
 
 import ReactComponent from "./MathEditor/Extension.js";
 import { Mention } from "@tiptap/extension-mention";
@@ -11,6 +11,7 @@ import suggestion from "./Reference/suggestion";
 import { useGraph } from "../../../hooks/AppStateAndGraphhooks";
 import { GraphNode } from "../../../reducers/GraphReducer";
 import { Editor } from "@tiptap/core";
+import { SetReferenceMapContext } from "./Reference/ReferenceMapContext";
 export default forwardRef(
   (
     {
@@ -23,6 +24,8 @@ export default forwardRef(
     ref,
   ) => {
     const Graph = useGraph();
+
+    const setReferenceMap = useContext(SetReferenceMapContext);
 
     useEffect(() => {
       if (!editor) return;
@@ -68,7 +71,15 @@ export default forwardRef(
                       if (node.type.name === this.name) {
                         // TODO update the reference map
                         const st = storage;
+
+                        const parsedNote = JSON.parse(node.attrs.id);
+                        const id = parsedNote.id;
                         // debugger;
+                        setReferenceMap((prev) => {
+                          const newMap = new Map(prev);
+                          newMap.set(id, newMap.get(id) - 1);
+                          return newMap;
+                        });
 
                         isMention = true;
                         tr.insertText(
