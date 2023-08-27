@@ -1,14 +1,15 @@
 import "./tiptap.css";
 import "./Reference/styles.css";
 // import "./Reference/styles.css";
-import StarterKit from "@jackhou147/tiptap/packages/starter-kit"; //from "@tiptap/starter-kit"; //from "@jackhou147/tiptap/packages/starter-kit";
-
-import React, { useEffect, useRef, useState } from "react";
-import { useAppState, useGraph } from "../../../hooks/AppStateAndGraphhooks";
-import { TextAlign } from "@tiptap/extension-text-align";
+import React from "react";
+import {
+  useAppState,
+  useGraphDispatch,
+} from "../../../hooks/AppStateAndGraphhooks";
 import { Scrollbars } from "react-custom-scrollbars-2";
-import { GraphNode } from "../../../reducers/GraphReducer";
+import { GraphActionType, GraphNode } from "../../../reducers/GraphReducer";
 import TiptapEditor from "./TiptapEditor";
+
 export function TiptapBoxComponent({
   note,
   width,
@@ -17,6 +18,17 @@ export function TiptapBoxComponent({
   width?: string;
 }) {
   const AppState = useAppState();
+  const GraphDispatch = useGraphDispatch();
+
+  function handleBlur(content: string) {
+    GraphDispatch({
+      type: GraphActionType.updateNode,
+      node: {
+        ...note,
+        content: content,
+      },
+    });
+  }
   return (
     <Scrollbars
       style={{
@@ -30,7 +42,7 @@ export function TiptapBoxComponent({
       }}
       autoHide
     >
-      <TiptapEditor note={note} />
+      <TiptapEditor note={note} handleBlur={handleBlur} />
       {/*<Tiptap note={note} />*/}
     </Scrollbars>
     // <div

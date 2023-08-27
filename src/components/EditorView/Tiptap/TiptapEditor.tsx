@@ -11,7 +11,13 @@ import suggestion from "./Reference/suggestion";
 import { useGraph } from "../../../hooks/AppStateAndGraphhooks";
 import { GraphNode } from "../../../reducers/GraphReducer";
 import { Editor } from "@tiptap/core";
-export default ({ note }: { note: GraphNode }) => {
+export default ({
+  note,
+  handleBlur,
+}: {
+  note: GraphNode;
+  handleBlur?: (content: string) => any;
+}) => {
   const Graph = useGraph();
 
   useEffect(() => {
@@ -22,6 +28,12 @@ export default ({ note }: { note: GraphNode }) => {
   }, [note, Graph]);
   const editor = useEditor(
     {
+      onBlur: (props) => {
+        console.log("onblur");
+        const content = props.editor.getHTML();
+        // debugger;
+        handleBlur?.(content);
+      },
       extensions: [
         StarterKit,
         ReactComponent,
@@ -37,8 +49,9 @@ export default ({ note }: { note: GraphNode }) => {
             class: "mention",
           },
           renderLabel({ options, node }) {
-            // debugger;
-            return `${node.attrs.id.title}`; //TODO this is a hack. It works but it's not the right way to do it
+            const parsedNode: GraphNode = JSON.parse(node.attrs.id); //TODO this is a hack. It works but it's not the right way to do it
+            // const Node: GraphNode = JSON.parse(node);
+            return `${parsedNode.title}`;
             // return `hello world ...`;
           },
 
@@ -49,18 +62,22 @@ export default ({ note }: { note: GraphNode }) => {
             items: ({ query, editor }) => {
               const note = editor.storage.mention.note;
               const graph = editor.storage.mention.graph;
-              return [
-                // "Lea Thompson",
-                // "Oliver Feng",
-                ...graph.nodes,
-              ].filter((item) => {
-                // debugger;
-                return (
-                  item.title.toLowerCase() !== note.title.toLowerCase() &&
-                  item.title.toLowerCase().startsWith(query.toLowerCase())
-                );
-              });
-              // .slice(0, 5);
+              return (
+                [
+                  // "Lea Thompson",
+                  // "Oliver Feng",
+                  ...graph.nodes,
+                ]
+                  .filter((item) => {
+                    // debugger;
+                    return (
+                      item.title.toLowerCase() !== note.title.toLowerCase() &&
+                      item.title.toLowerCase().startsWith(query.toLowerCase())
+                    );
+                  })
+                  // .map((item) => "hello world");
+                  .map((node) => JSON.stringify(node))
+              );
             },
           },
 

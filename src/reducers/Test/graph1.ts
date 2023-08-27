@@ -7,27 +7,27 @@ export const graph1: GraphState = {
     //   target: "test2",
     // },
     {
-      source: "test1",
-      target: "test3",
+      source: "id1",
+      target: "id3",
       undirected: true,
     },
   ],
   nodes: [
     // TODO delete this
     {
-      id: "test1",
-      title: "test",
+      id: "id1",
+      title: "test1",
       content: "this is test 1",
       labels: ["Test"],
     },
     {
-      id: "test2",
+      id: "id2",
       title: "test2",
       content: "this is test2 ",
       labels: [],
     },
     {
-      id: "test3",
+      id: "id3",
       title: "test 3",
       content: "Hello from test3! ",
       labels: [],

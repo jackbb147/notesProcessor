@@ -21,22 +21,21 @@ export default forwardRef((props, ref) => {
 
   const selectItem = (index) => {
     const item = props.items[index];
-
-    if (item) {
-      // debugger;
-      // TODO  : get the current node id from the graph state and then link the current node to the selected node
+    const node = JSON.parse(item);
+    // debugger;
+    if (node) {
       props.command({ id: item });
-      try {
-        graphDispatch({
-          type: GraphActionType.addLink,
-          link: {
-            source: AppState.activeNodeID,
-            target: item.id,
-          },
-        });
-      } catch (e) {
-        console.error(e);
-      }
+      //   // debugger;
+      //   // TODO  : get the current node id from the graph state and then link the current node to the selected node
+
+      //
+      graphDispatch({
+        type: GraphActionType.addLink,
+        link: {
+          source: AppState.activeNodeID,
+          target: node.id,
+        },
+      });
     }
   };
 
@@ -80,7 +79,7 @@ export default forwardRef((props, ref) => {
   return (
     <div className="items">
       {props.items.length ? (
-        props.items.map((item, index) => (
+        props.items.map((stringifiedNode, index) => (
           <button
             className={`item ${index === selectedIndex ? "is-selected" : ""}`}
             key={index}
@@ -88,7 +87,8 @@ export default forwardRef((props, ref) => {
           >
             {/*TODO  change this to the actual name of the node
              */}
-            {item.title}
+            {/*{"hello world!"}*/}
+            {JSON.parse(stringifiedNode).title}
           </button>
         ))
       ) : (
