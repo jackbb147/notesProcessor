@@ -460,7 +460,7 @@ export function NoteInfoSidePanel({
 }) {
   const referenceMap = useContext(ReferenceMapContext);
 
-  // useSyncGraphLinks({ sourceID: note.id });
+  useSyncGraphLinks({ sourceID: note.id });
   return (
     <NoteInfoSidePanelWrapper width={width}>
       <References note={note} referenceMap={referenceMap} />

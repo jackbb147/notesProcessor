@@ -12,6 +12,8 @@ export function useSyncGraphLinks({ sourceID }: { sourceID: string }) {
   const graphDispatch = useGraphDispatch();
   useEffect(() => {
     const entriesArray = Array.from(referenceMap.entries());
+
+    // debugger;
     const additions = entriesArray.filter((pair) => pair[1] >= 1);
     const deletions = entriesArray.filter((pair) => pair[1] < 1);
 
