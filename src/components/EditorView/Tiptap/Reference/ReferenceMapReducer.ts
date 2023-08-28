@@ -17,6 +17,11 @@ export type ReferenceMapAction =
       referenceMap: ReferenceMap;
     };
 
+/**
+ * A map from node ID to the number of references to that node.
+ * Note that the source node is not included in the map.
+ * It is the responsibility of the caller to keep track of the source node.
+ */
 export type ReferenceMap = Map<string, number>;
 
 export function ReferenceMapReducer(

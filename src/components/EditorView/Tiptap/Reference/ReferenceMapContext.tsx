@@ -4,6 +4,7 @@ import {
   ReferenceMapAction,
   ReferenceMapActionType,
   ReferenceMapReducer,
+  ReferenceMap,
 } from "./ReferenceMapReducer";
 import { enableMapSet } from "immer";
 import { GraphNode } from "../../../../reducers/GraphReducer";
@@ -16,7 +17,6 @@ import Text from "@tiptap/extension-text";
 import MathExtension from "../MathEditor/Extension";
 import { Mention } from "@tiptap/extension-mention";
 
-export type ReferenceMap = Map<string, number>;
 export const ReferenceMapContext = createContext<Map<string, number>>(
   new Map(),
 );
