@@ -17,7 +17,7 @@ import Text from "@tiptap/extension-text";
 import Bold from "@tiptap/extension-bold";
 import MathExtension from "./MathEditor/Extension";
 import { Mention } from "@tiptap/extension-mention";
-import { SetReferenceMapContext } from "./Reference/ReferenceMapContext";
+import { ReferenceMapDispatchContext } from "./Reference/ReferenceMapContext";
 
 export function TiptapBoxComponent({
   note,
@@ -26,20 +26,9 @@ export function TiptapBoxComponent({
   note: GraphNode;
   width?: string;
 }) {
-  const setReferenceMap = useContext(SetReferenceMapContext);
+  const setReferenceMap = useContext(ReferenceMapDispatchContext);
   const AppState = useAppState();
   const GraphDispatch = useGraphDispatch();
-  useEffect(() => {
-    const contentJSON = generateJSON(note.content, [
-      Document,
-      Paragraph,
-      Bold,
-      Text,
-      MathExtension,
-      Mention,
-    ]);
-    setReferenceMap(countReferences(contentJSON));
-  }, [note.id]);
 
   function handleBlur(content: string) {
     GraphDispatch({

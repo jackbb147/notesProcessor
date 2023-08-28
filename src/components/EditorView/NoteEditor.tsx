@@ -24,6 +24,14 @@ import { NoteInfoSidePanel } from "./NoteInfoSidePanel/NoteInfoSidePanel";
 import { Button } from "../ui/Button";
 import { AppActionType } from "../../reducers/AppStateReducer";
 import { TiptapBoxComponent } from "./Tiptap/Tiptap";
+import { countReferences } from "./Tiptap/Reference/countReferences";
+import { generateJSON } from "@tiptap/core";
+import Document from "@tiptap/extension-document";
+import Paragraph from "@tiptap/extension-paragraph";
+import Bold from "@tiptap/extension-bold";
+import Text from "@tiptap/extension-text";
+import MathExtension from "./Tiptap/MathEditor/Extension";
+import { Mention } from "@tiptap/extension-mention";
 
 function ToggleSideInfoPanelButton() {
   const appState = useAppState();
@@ -199,7 +207,18 @@ export function NoteEditor({
           paddingLeft: "2px",
         }}
       >
-        <ReferenceMapProvider>
+        <ReferenceMapProvider
+          defaultReferenceMap={countReferences(
+            generateJSON(note.content, [
+              Document,
+              Paragraph,
+              Bold,
+              Text,
+              MathExtension,
+              Mention,
+            ]),
+          )}
+        >
           <TiptapBoxComponent
             note={note}
             width={`calc(100% - ${infoPanelWidth})`}

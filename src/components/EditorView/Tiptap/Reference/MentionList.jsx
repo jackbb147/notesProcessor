@@ -15,17 +15,15 @@ import {
 import { GraphActionType } from "../../../../reducers/GraphReducer";
 import {
   ReferenceMapContext,
-  SetReferenceMapContext,
+  ReferenceMapDispatchContext,
 } from "./ReferenceMapContext";
+import { ReferenceMapActionType } from "./ReferenceMapReducer";
 
 export default forwardRef((props, ref) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const graph = useGraph();
 
   const referenceMap = useContext(ReferenceMapContext);
-  const setReferenceMap = useContext(SetReferenceMapContext);
-  const graphDispatch = useGraphDispatch();
-  const AppState = useAppState();
+  const referenceMapDispatch = useContext(ReferenceMapDispatchContext);
 
   const selectItem = (index) => {
     const item = props.items[index];
@@ -33,16 +31,26 @@ export default forwardRef((props, ref) => {
     // debugger;
     if (node) {
       props.command({ id: item });
-      setReferenceMap((previousMap) => {
-        var newMap = new Map(previousMap);
-        if (!newMap.has(node.id)) {
-          newMap.set(node.id, 1);
-        } else {
-          newMap.set(node.id, 1 + newMap.get(node.id));
-        }
+      const sourceNode = props.editor.storage.mention.note;
 
-        return newMap;
+      referenceMapDispatch({
+        type: ReferenceMapActionType.addReference,
+        reference: {
+          source: sourceNode.id, //TODO : get the current node id somehow
+          target: node.id,
+        },
       });
+
+      // setReferenceMap((previousMap) => {
+      //   var newMap = new Map(previousMap);
+      //   if (!newMap.has(node.id)) {
+      //     newMap.set(node.id, 1);
+      //   } else {
+      //     newMap.set(node.id, 1 + newMap.get(node.id));
+      //   }
+      //
+      //   return newMap;
+      // });
       // debugger;
       //   // TODO  : get the current node id from the graph state and then link the current node to the selected node
 

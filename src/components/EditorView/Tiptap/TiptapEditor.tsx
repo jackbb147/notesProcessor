@@ -11,7 +11,7 @@ import suggestion from "./Reference/suggestion";
 import { useGraph } from "../../../hooks/AppStateAndGraphhooks";
 import { GraphNode } from "../../../reducers/GraphReducer";
 import { Editor } from "@tiptap/core";
-import { SetReferenceMapContext } from "./Reference/ReferenceMapContext";
+import { ReferenceMapDispatchContext } from "./Reference/ReferenceMapContext";
 export default forwardRef(
   (
     {
@@ -25,7 +25,7 @@ export default forwardRef(
   ) => {
     const Graph = useGraph();
 
-    const setReferenceMap = useContext(SetReferenceMapContext);
+    const setReferenceMap = useContext(ReferenceMapDispatchContext);
 
     useEffect(() => {
       if (!editor) return;
@@ -75,11 +75,12 @@ export default forwardRef(
                         const parsedNote = JSON.parse(node.attrs.id);
                         const id = parsedNote.id;
                         // debugger;
-                        setReferenceMap((prev) => {
-                          const newMap = new Map(prev);
-                          newMap.set(id, newMap.get(id) - 1);
-                          return newMap;
-                        });
+
+                        // setReferenceMap((prev) => {
+                        //   const newMap = new Map(prev);
+                        //   newMap.set(id, newMap.get(id) - 1);
+                        //   return newMap;
+                        // });
 
                         isMention = true;
                         tr.insertText(

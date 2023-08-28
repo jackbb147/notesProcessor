@@ -21,10 +21,12 @@ export function ReferenceMapReducer(
   switch (action.type) {
     case ReferenceMapActionType.addReference: {
       //   TODO add reference to map
+      debugger;
       break;
     }
     case ReferenceMapActionType.removeReference: {
       //   TODO remove reference from map
+      debugger;
       break;
     }
   }

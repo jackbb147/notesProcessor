@@ -1,8 +1,8 @@
+import { ReferenceMap } from "./ReferenceMapReducer";
+
 export function countReferences(
   contentJSON: Record<string, any>,
-): Map<string, number> {
-  // debugger;
-
+): ReferenceMap {
   var res = new Map();
   function visit(root: Record<string, any>) {
     if (!root) return;
