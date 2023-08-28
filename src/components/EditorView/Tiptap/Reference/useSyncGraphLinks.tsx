@@ -3,6 +3,10 @@ import { ReferenceMapContext } from "./ReferenceMapContext";
 import { useGraphDispatch } from "../../../../hooks/AppStateAndGraphhooks";
 import { GraphActionType } from "../../../../reducers/GraphReducer";
 
+/**
+ * This hook is used to keep the Graph links in sync with the reference map.
+ * @param sourceID
+ */
 export function useSyncGraphLinks({ sourceID }: { sourceID: string }) {
   const referenceMap = useContext(ReferenceMapContext);
   const graphDispatch = useGraphDispatch();
