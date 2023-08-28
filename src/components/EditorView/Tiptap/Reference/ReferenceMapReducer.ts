@@ -1,6 +1,7 @@
 export enum ReferenceMapActionType {
   addReference,
   removeReference,
+  setReferenceMap,
 }
 
 export interface Reference {
@@ -10,7 +11,11 @@ export interface Reference {
 
 export type ReferenceMapAction =
   | { type: ReferenceMapActionType.addReference; reference: Reference }
-  | { type: ReferenceMapActionType.removeReference; reference: Reference };
+  | { type: ReferenceMapActionType.removeReference; reference: Reference }
+  | {
+      type: ReferenceMapActionType.setReferenceMap;
+      referenceMap: ReferenceMap;
+    };
 
 export type ReferenceMap = Map<string, number>;
 
@@ -22,7 +27,6 @@ export function ReferenceMapReducer(
     case ReferenceMapActionType.addReference: {
       //   TODO add reference to map
 
-      debugger;
       draft.set(
         action.reference.targetID,
         1 + (draft.get(action.reference.targetID) ?? 0),
@@ -31,13 +35,20 @@ export function ReferenceMapReducer(
     }
     case ReferenceMapActionType.removeReference: {
       //   TODO remove reference from map
-      debugger;
       if (!draft.has(action.reference.targetID)) return;
       draft.set(
         action.reference.targetID,
         draft.get(action.reference.targetID)! - 1,
       );
       break;
+    }
+
+    case ReferenceMapActionType.setReferenceMap: {
+      //   TODO set reference map
+      draft.clear();
+      action.referenceMap.forEach((value, key) => {
+        draft.set(key, value);
+      });
     }
   }
 }

@@ -207,18 +207,7 @@ export function NoteEditor({
           paddingLeft: "2px",
         }}
       >
-        <ReferenceMapProvider
-          defaultReferenceMap={countReferences(
-            generateJSON(note.content, [
-              Document,
-              Paragraph,
-              Bold,
-              Text,
-              MathExtension,
-              Mention,
-            ]),
-          )}
-        >
+        <ReferenceMapProvider note={note}>
           <TiptapBoxComponent
             note={note}
             width={`calc(100% - ${infoPanelWidth})`}
