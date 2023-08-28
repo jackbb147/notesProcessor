@@ -10,8 +10,9 @@ import suggestion from "./Reference/suggestion";
 
 import { useGraph } from "../../../hooks/AppStateAndGraphhooks";
 import { GraphNode } from "../../../reducers/GraphReducer";
-import { Editor } from "@tiptap/core";
 import { ReferenceMapDispatchContext } from "./Reference/ReferenceMapContext";
+import { ReferenceMapActionType } from "./Reference/ReferenceMapReducer";
+
 export default forwardRef(
   (
     {
@@ -25,7 +26,7 @@ export default forwardRef(
   ) => {
     const Graph = useGraph();
 
-    const setReferenceMap = useContext(ReferenceMapDispatchContext);
+    const referenceMapDispatch = useContext(ReferenceMapDispatchContext);
 
     useEffect(() => {
       if (!editor) return;
@@ -76,11 +77,13 @@ export default forwardRef(
                         const id = parsedNote.id;
                         // debugger;
 
-                        // setReferenceMap((prev) => {
-                        //   const newMap = new Map(prev);
-                        //   newMap.set(id, newMap.get(id) - 1);
-                        //   return newMap;
-                        // });
+                        referenceMapDispatch({
+                          type: ReferenceMapActionType.removeReference,
+                          reference: {
+                            sourceID: note.id,
+                            targetID: id,
+                          },
+                        });
 
                         isMention = true;
                         tr.insertText(

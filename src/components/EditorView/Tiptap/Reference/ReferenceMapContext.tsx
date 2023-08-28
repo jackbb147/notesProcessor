@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import { useImmerReducer } from "use-immer";
 import { ReferenceMapAction, ReferenceMapReducer } from "./ReferenceMapReducer";
+import { enableMapSet } from "immer";
 
 export type ReferenceMap = Map<string, number>;
 export const ReferenceMapContext = createContext<Map<string, number>>(
@@ -30,6 +31,8 @@ export function ReferenceMapProvider({
   children: React.ReactNode;
 }) {
   // const [referenceMap, setReferenceMap] = useState<ReferenceMap>(new Map());
+
+  enableMapSet(); // https://immerjs.github.io/immer/map-set/
   const [referenceMap, dispatch] = useImmerReducer<
     ReferenceMap,
     ReferenceMapAction
