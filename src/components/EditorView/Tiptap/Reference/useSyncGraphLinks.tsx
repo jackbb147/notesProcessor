@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { ReferenceMapContext } from "./ReferenceMapContext";
+import { ReferenceStateContext } from "./ReferenceStateContext";
 import { useGraphDispatch } from "../../../../hooks/AppStateAndGraphhooks";
 import { GraphActionType } from "../../../../reducers/GraphReducer";
 
@@ -8,10 +8,10 @@ import { GraphActionType } from "../../../../reducers/GraphReducer";
  * @param sourceID
  */
 export function useSyncGraphLinks({ sourceID }: { sourceID: string }) {
-  const referenceMap = useContext(ReferenceMapContext);
+  const referenceState = useContext(ReferenceStateContext);
   const graphDispatch = useGraphDispatch();
   useEffect(() => {
-    const entriesArray = Array.from(referenceMap.entries());
+    const entriesArray = Array.from(referenceState.referenceMap.entries());
 
     // debugger;
     const additions = entriesArray.filter((pair) => pair[1] >= 1);
@@ -37,5 +37,5 @@ export function useSyncGraphLinks({ sourceID }: { sourceID: string }) {
         },
       });
     });
-  }, [referenceMap]);
+  }, [referenceState]);
 }

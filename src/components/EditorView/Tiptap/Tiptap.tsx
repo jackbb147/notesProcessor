@@ -17,7 +17,7 @@ import Text from "@tiptap/extension-text";
 import Bold from "@tiptap/extension-bold";
 import MathExtension from "./MathEditor/Extension";
 import { Mention } from "@tiptap/extension-mention";
-import { ReferenceMapDispatchContext } from "./Reference/ReferenceMapContext";
+import { ReferenceStateDispatchContext } from "./Reference/ReferenceStateContext";
 
 export function TiptapBoxComponent({
   note,
@@ -26,7 +26,7 @@ export function TiptapBoxComponent({
   note: GraphNode;
   width?: string;
 }) {
-  const setReferenceMap = useContext(ReferenceMapDispatchContext);
+  const setReferenceMap = useContext(ReferenceStateDispatchContext);
   const AppState = useAppState();
   const GraphDispatch = useGraphDispatch();
 

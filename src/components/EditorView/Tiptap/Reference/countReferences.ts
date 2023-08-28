@@ -1,4 +1,4 @@
-import { ReferenceMap } from "./ReferenceMapReducer";
+import { ReferenceMap } from "./ReferenceStateReducer";
 
 export function countReferences(
   contentJSON: Record<string, any>,

@@ -5,7 +5,7 @@ import styles from "./NoteEditorStyle.module.css";
 import { Desktop } from "../../hooks/useMediaQuery";
 import { Mobile } from "../../hooks/useMediaQuery";
 
-import { ReferenceMapProvider } from "./Tiptap/Reference/ReferenceMapContext";
+import { ReferenceMapProvider } from "./Tiptap/Reference/ReferenceStateContext";
 
 //@ts-ignore
 import { MathEditorModule } from "./Quill/quillModules/Quill-MathJax/MathEditorModule";

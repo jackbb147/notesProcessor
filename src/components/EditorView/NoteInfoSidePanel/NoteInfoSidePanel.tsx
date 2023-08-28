@@ -15,7 +15,7 @@ import { AppActionType, Collections } from "../../../reducers/AppStateReducer";
 import { Tablet } from "../../../hooks/useMediaQuery";
 import { Desktop } from "../../../hooks/useMediaQuery";
 import { Mobile } from "../../../hooks/useMediaQuery";
-import { ReferenceMapContext } from "../Tiptap/Reference/ReferenceMapContext";
+import { ReferenceStateContext } from "../Tiptap/Reference/ReferenceStateContext";
 import { useSyncGraphLinks } from "../Tiptap/Reference/useSyncGraphLinks";
 
 function Separator() {
@@ -458,12 +458,12 @@ export function NoteInfoSidePanel({
   note: GraphNode;
   width: any;
 }) {
-  const referenceMap = useContext(ReferenceMapContext);
+  const referenceState = useContext(ReferenceStateContext);
 
   useSyncGraphLinks({ sourceID: note.id });
   return (
     <NoteInfoSidePanelWrapper width={width}>
-      <References note={note} referenceMap={referenceMap} />
+      <References note={note} referenceMap={referenceState.referenceMap} />
       <ReferencedBy note={note} />
       <SeeAlso note={note} />
     </NoteInfoSidePanelWrapper>

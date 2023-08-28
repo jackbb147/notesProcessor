@@ -14,16 +14,16 @@ import {
 } from "../../../../hooks/AppStateAndGraphhooks";
 import { GraphActionType } from "../../../../reducers/GraphReducer";
 import {
-  ReferenceMapContext,
-  ReferenceMapDispatchContext,
-} from "./ReferenceMapContext";
-import { ReferenceMapActionType } from "./ReferenceMapReducer";
+  ReferenceStateContext,
+  ReferenceStateDispatchContext,
+} from "./ReferenceStateContext";
+import { ReferenceStateActionType } from "./ReferenceStateReducer";
 
 export default forwardRef((props, ref) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const referenceMap = useContext(ReferenceMapContext);
-  const referenceMapDispatch = useContext(ReferenceMapDispatchContext);
+  const referenceMap = useContext(ReferenceStateContext);
+  const referenceMapDispatch = useContext(ReferenceStateDispatchContext);
 
   const selectItem = (index) => {
     const item = props.items[index];
@@ -34,7 +34,7 @@ export default forwardRef((props, ref) => {
       const sourceNode = props.editor.storage.mention.note;
 
       referenceMapDispatch({
-        type: ReferenceMapActionType.addReference,
+        type: ReferenceStateActionType.addReference,
         reference: {
           sourceID: sourceNode.id, //TODO : get the current node id somehow
           targetID: node.id,

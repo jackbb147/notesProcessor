@@ -10,8 +10,8 @@ import suggestion from "./Reference/suggestion";
 
 import { useGraph } from "../../../hooks/AppStateAndGraphhooks";
 import { GraphNode } from "../../../reducers/GraphReducer";
-import { ReferenceMapDispatchContext } from "./Reference/ReferenceMapContext";
-import { ReferenceMapActionType } from "./Reference/ReferenceMapReducer";
+import { ReferenceStateDispatchContext } from "./Reference/ReferenceStateContext";
+import { ReferenceStateActionType } from "./Reference/ReferenceStateReducer";
 
 export default forwardRef(
   (
@@ -26,7 +26,7 @@ export default forwardRef(
   ) => {
     const Graph = useGraph();
 
-    const referenceMapDispatch = useContext(ReferenceMapDispatchContext);
+    const referenceMapDispatch = useContext(ReferenceStateDispatchContext);
 
     useEffect(() => {
       if (!editor) return;
@@ -78,7 +78,7 @@ export default forwardRef(
                         // debugger;
 
                         referenceMapDispatch({
-                          type: ReferenceMapActionType.removeReference,
+                          type: ReferenceStateActionType.removeReference,
                           reference: {
                             sourceID: note.id,
                             targetID: id,
