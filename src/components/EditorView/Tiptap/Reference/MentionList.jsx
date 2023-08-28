@@ -36,8 +36,8 @@ export default forwardRef((props, ref) => {
       referenceMapDispatch({
         type: ReferenceMapActionType.addReference,
         reference: {
-          source: sourceNode.id, //TODO : get the current node id somehow
-          target: node.id,
+          sourceID: sourceNode.id, //TODO : get the current node id somehow
+          targetID: node.id,
         },
       });
 
