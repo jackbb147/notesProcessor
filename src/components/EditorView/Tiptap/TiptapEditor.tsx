@@ -12,6 +12,8 @@ import { useGraph } from "../../../hooks/AppStateAndGraphhooks";
 import { GraphNode } from "../../../reducers/GraphReducer";
 import { ReferenceStateDispatchContext } from "./Reference/ReferenceStateContext";
 import { ReferenceStateActionType } from "./Reference/ReferenceStateReducer";
+import { Editor } from "@tiptap/core";
+import { TextAlign } from "@tiptap/extension-text-align";
 
 export default forwardRef(
   (
@@ -44,6 +46,9 @@ export default forwardRef(
         },
         extensions: [
           StarterKit,
+          TextAlign.configure({
+            alignments: ["left", "right", "center", "justify"],
+          }),
           ReactComponent,
           Mention.extend({
             addStorage() {
@@ -160,23 +165,37 @@ export default forwardRef(
             justifyContent: "space-between",
           }}
         >
-          {/*<button*/}
-          {/*  onClick={() => editor.chain().focus().setTextAlign("left").run()}*/}
-          {/*  className={editor.isActive({ textAlign: "left" }) ? "is-active" : ""}*/}
-          {/*>*/}
-          {/*  left*/}
-          {/*</button>*/}
-          {/*<button*/}
-          {/*  onClick={() => editor.chain().focus().setTextAlign("center").run()}*/}
-          {/*  className={*/}
-          {/*    editor.isActive({ textAlign: "center" }) ? "is-active" : ""*/}
-          {/*  }*/}
-          {/*>*/}
-          {/*  center*/}
-          {/*</button>*/}
+          <button
+            onClick={() => {
+              alert("hey");
+              editor?.chain().focus().setTextAlign("left").run();
+            }}
+            className={
+              editor?.isActive({ textAlign: "left" }) ? "is-active" : ""
+            }
+          >
+            left
+          </button>
+          <button
+            onClick={() => {
+              editor?.chain().focus().toggleBold().run();
+            }}
+          >
+            Bold
+          </button>
+          <button
+            onClick={() => editor?.chain().focus().setTextAlign("center").run()}
+            className={
+              editor?.isActive({ textAlign: "center" }) ? "is-active" : ""
+            }
+          >
+            center
+          </button>
           {/*<button*/}
           {/*  onClick={() => editor.chain().focus().setTextAlign("right").run()}*/}
-          {/*  className={editor.isActive({ textAlign: "right" }) ? "is-active" : ""}*/}
+          {/*  className={*/}
+          {/*    editor.isActive({ textAlign: "right" }) ? "is-active" : ""*/}
+          {/*  }*/}
           {/*>*/}
           {/*  right*/}
           {/*</button>*/}
