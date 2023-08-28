@@ -24,6 +24,11 @@ export type ReferenceMapAction =
  */
 export type ReferenceMap = Map<string, number>;
 
+export interface ReferenceState {
+  sourceID: string;
+  referenceMap: ReferenceMap;
+}
+
 export function ReferenceMapReducer(
   draft: ReferenceMap,
   action: ReferenceMapAction,
@@ -41,6 +46,10 @@ export function ReferenceMapReducer(
     case ReferenceMapActionType.removeReference: {
       //   TODO remove reference from map
       if (!draft.has(action.reference.targetID)) return;
+      if (draft.get(action.reference.targetID) === 1) {
+        draft.delete(action.reference.targetID);
+        return;
+      }
       draft.set(
         action.reference.targetID,
         draft.get(action.reference.targetID)! - 1,

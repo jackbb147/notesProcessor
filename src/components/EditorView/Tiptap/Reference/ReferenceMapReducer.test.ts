@@ -28,10 +28,32 @@ describe("Reference map reducer", () => {
 
   test("remove reference", () => {
     let referenceMap: ReferenceMap = new Map();
-    referenceMap.set("2", 1);
+    referenceMap.set("2", 3);
     ReferenceMapReducer(referenceMap, {
       type: ReferenceMapActionType.removeReference,
       reference: { sourceID: "1", targetID: "2" },
     });
+    expect(referenceMap.get("2")).toBe(2);
+    ReferenceMapReducer(referenceMap, {
+      type: ReferenceMapActionType.removeReference,
+      reference: { sourceID: "1", targetID: "2" },
+    });
+    expect(referenceMap.get("2")).toBe(1);
+    ReferenceMapReducer(referenceMap, {
+      type: ReferenceMapActionType.removeReference,
+      reference: { sourceID: "1", targetID: "2" },
+    });
+    expect(referenceMap.has("2")).toBe(false);
+  });
+
+  test("set reference map", () => {
+    let referenceMap: ReferenceMap = new Map();
+    referenceMap.set("2", 1);
+    ReferenceMapReducer(referenceMap, {
+      type: ReferenceMapActionType.setReferenceMap,
+      referenceMap: new Map([["3", 2]]),
+    });
+    expect(referenceMap.get("3")).toBe(2);
+    expect(referenceMap.has("2")).toBe(false);
   });
 });
