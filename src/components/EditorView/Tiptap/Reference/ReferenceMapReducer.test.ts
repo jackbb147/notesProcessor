@@ -48,7 +48,8 @@ describe("Reference state reducer", () => {
       type: ReferenceStateActionType.removeReference,
       reference: { sourceID: "1", targetID: "2" },
     });
-    expect(referenceState.referenceMap.has("2")).toBe(false);
+    expect(referenceState.referenceMap.get("2")).toBe(0);
+    // expect(referenceState.referenceMap.has("2")).toBe(false);
   });
 
   test("set reference state", () => {

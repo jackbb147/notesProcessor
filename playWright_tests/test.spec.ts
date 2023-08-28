@@ -57,26 +57,26 @@ test.describe("test suite 1", () => {
     await page.getByText("test 3").nth(1).click();
   });
 
-  test("test add then delete reference", async ({ page }) => {
-    await page.goto("http://localhost:3000/notesProcessor");
-    await page.getByText("test 3").click();
-    await page.getByText("Hello from test3!").click();
-    await page
-      .locator("div")
-      .filter({ hasText: /^Hello from test3!$/ })
-      .nth(4)
-      .fill("Hello from test3! [[");
-    await page.getByRole("button", { name: "test1" }).click();
-    await page.getByText("test1").nth(2).click();
-    await page.getByText("test 3").nth(1).click();
-    await page.getByText("Hello from test3! test1").click();
-    await page
-      .locator("div")
-      .filter({ hasText: /^Hello from test3! test1$/ })
-      .nth(4)
-      .fill("Hello from test3! ");
-    await page.getByText("article test1").first().click();
-  });
+  // test("test add then delete reference", async ({ page }) => {
+  //   await page.goto("http://localhost:3000/notesProcessor");
+  //   await page.getByText("test 3").click();
+  //   await page.getByText("Hello from test3!").click();
+  //   await page
+  //     .locator("div")
+  //     .filter({ hasText: /^Hello from test3!$/ })
+  //     .nth(4)
+  //     .fill("Hello from test3! [[");
+  //   await page.getByRole("button", { name: "test1" }).click();
+  //   await page.getByText("test1").nth(2).click();
+  //   await page.getByText("test 3").nth(1).click();
+  //   await page.getByText("Hello from test3! test1").click();
+  //   await page
+  //     .locator("div")
+  //     .filter({ hasText: /^Hello from test3! test1$/ })
+  //     .nth(4)
+  //     .fill("Hello from test3! ");
+  //   await page.getByText("article test1").first().click();
+  // });
 
   test("test add two references", async ({ page }) => {
     await page.goto("http://localhost:3000/notesProcessor");
@@ -122,6 +122,29 @@ test.describe("test suite 1", () => {
     await page.getByRole("button", { name: "test1" }).click();
     await expect(page.getByText("test1").nth(2)).toBeVisible();
   });
+
+  test("test adding a reference then removing it ", async ({ page }) => {
+    await page.goto("http://localhost:3000/notesProcessor");
+    await page.evaluate(() => window.localStorage.clear());
+    await page.goto("http://localhost:3000/notesProcessor");
+    await page.getByText("test2").click();
+    await page.getByText("this is test2").click();
+    await page
+      .locator("div")
+      .filter({ hasText: /^this is test2$/ })
+      .nth(4)
+      .fill("this is test2 [[");
+    await page.getByRole("button", { name: "test1" }).click();
+    await page.getByText("this is test2 test1").click();
+    await page.keyboard.press("Backspace");
+    await page.keyboard.press("Backspace");
+    await page.keyboard.press("Backspace");
+    await page.keyboard.press("Backspace");
+    await page.keyboard.press("Backspace");
+    await page.getByText("test1").click();
+    await expect(page.getByText("test2").nth(1)).not.toBeVisible();
+  });
+  // await expect(page.getByText("test2").nth(1)).not.toBeVisible();
 });
 
 // test('has title', async ({ page }) => {

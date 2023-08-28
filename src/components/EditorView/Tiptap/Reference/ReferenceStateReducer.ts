@@ -47,10 +47,10 @@ export function ReferenceStateReducer(
       //   TODO remove reference from map
       if (action.reference.sourceID !== draft.sourceID) return;
       if (!draft.referenceMap.has(action.reference.targetID)) return;
-      if (draft.referenceMap.get(action.reference.targetID) === 1) {
-        draft.referenceMap.delete(action.reference.targetID);
-        return;
-      }
+      // if (draft.referenceMap.get(action.reference.targetID) === 1) {
+      //   draft.referenceMap.delete(action.reference.targetID);
+      //   return;
+      // }
       draft.referenceMap.set(
         action.reference.targetID,
         draft.referenceMap.get(action.reference.targetID)! - 1,
