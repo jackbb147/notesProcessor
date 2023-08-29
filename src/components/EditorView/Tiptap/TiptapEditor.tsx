@@ -14,6 +14,7 @@ import { ReferenceStateDispatchContext } from "./Reference/ReferenceStateContext
 import { ReferenceStateActionType } from "./Reference/ReferenceStateReducer";
 import { Editor } from "@tiptap/core";
 import { TextAlign } from "@tiptap/extension-text-align";
+import ToolbarDemo from "./Toolbar";
 
 export default forwardRef(
   (
@@ -157,58 +158,59 @@ export default forwardRef(
           textAlign: "initial",
         }}
       >
-        <div>
-          <button
-            onClick={() => {
-              alert("hey");
-              editor?.chain().focus().setTextAlign("left").run();
-            }}
-            className={
-              editor?.isActive({ textAlign: "left" }) ? "is-active" : ""
-            }
-          >
-            left
-          </button>
+        <ToolbarDemo />
+        {/*<div>*/}
+        {/*  <button*/}
+        {/*    onClick={() => {*/}
+        {/*      alert("hey");*/}
+        {/*      editor?.chain().focus().setTextAlign("left").run();*/}
+        {/*    }}*/}
+        {/*    className={*/}
+        {/*      editor?.isActive({ textAlign: "left" }) ? "is-active" : ""*/}
+        {/*    }*/}
+        {/*  >*/}
+        {/*    left*/}
+        {/*  </button>*/}
 
-          <button
-            onClick={() => {
-              editor?.chain().focus().toggleBold().run();
-            }}
-          >
-            Bold
-          </button>
-          <button
-            onClick={() => editor?.chain().focus().setTextAlign("center").run()}
-            className={
-              editor?.isActive({ textAlign: "center" }) ? "is-active" : ""
-            }
-          >
-            center
-          </button>
-          {/*<button*/}
-          {/*  onClick={() => editor.chain().focus().setTextAlign("right").run()}*/}
-          {/*  className={*/}
-          {/*    editor.isActive({ textAlign: "right" }) ? "is-active" : ""*/}
-          {/*  }*/}
-          {/*>*/}
-          {/*  right*/}
-          {/*</button>*/}
-          {/*<button*/}
-          {/*  onClick={() =>*/}
-          {/*    editor.chain().focus().setTextAlign("justify").run()*/}
-          {/*  }*/}
-          {/*  className={*/}
-          {/*    editor.isActive({ textAlign: "justify" }) ? "is-active" : ""*/}
-          {/*  }*/}
-          {/*>*/}
-          {/*  justify*/}
-          {/*</button>*/}
-          {/*<button*/}
-          {/*  onClick={() => editor.chain().focus().unsetTextAlign().run()}*/}
-          {/*>*/}
-          {/*  unsetTextAlign*/}
-          {/*</button>*/}
-        </div>
+        {/*  <button*/}
+        {/*    onClick={() => {*/}
+        {/*      editor?.chain().focus().toggleBold().run();*/}
+        {/*    }}*/}
+        {/*  >*/}
+        {/*    Bold*/}
+        {/*  </button>*/}
+        {/*  <button*/}
+        {/*    onClick={() => editor?.chain().focus().setTextAlign("center").run()}*/}
+        {/*    className={*/}
+        {/*      editor?.isActive({ textAlign: "center" }) ? "is-active" : ""*/}
+        {/*    }*/}
+        {/*  >*/}
+        {/*    center*/}
+        {/*  </button>*/}
+        {/*  /!*<button*!/*/}
+        {/*  /!*  onClick={() => editor.chain().focus().setTextAlign("right").run()}*!/*/}
+        {/*  /!*  className={*!/*/}
+        {/*  /!*    editor.isActive({ textAlign: "right" }) ? "is-active" : ""*!/*/}
+        {/*  /!*  }*!/*/}
+        {/*  /!*>*!/*/}
+        {/*  /!*  right*!/*/}
+        {/*  /!*</button>*!/*/}
+        {/*  /!*<button*!/*/}
+        {/*  /!*  onClick={() =>*!/*/}
+        {/*  /!*    editor.chain().focus().setTextAlign("justify").run()*!/*/}
+        {/*  /!*  }*!/*/}
+        {/*  /!*  className={*!/*/}
+        {/*  /!*    editor.isActive({ textAlign: "justify" }) ? "is-active" : ""*!/*/}
+        {/*  /!*  }*!/*/}
+        {/*  /!*>*!/*/}
+        {/*  /!*  justify*!/*/}
+        {/*  /!*</button>*!/*/}
+        {/*  /!*<button*!/*/}
+        {/*  /!*  onClick={() => editor.chain().focus().unsetTextAlign().run()}*!/*/}
+        {/*  /!*>*!/*/}
+        {/*  /!*  unsetTextAlign*!/*/}
+        {/*  /!*</button>*!/*/}
+        {/*</div>*/}
 
         <EditorContent editor={editor} />
       </div>
