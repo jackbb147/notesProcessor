@@ -14,6 +14,8 @@ import { ReferenceStateDispatchContext } from "./Reference/ReferenceStateContext
 import { ReferenceStateActionType } from "./Reference/ReferenceStateReducer";
 import { Editor } from "@tiptap/core";
 import { TextAlign } from "@tiptap/extension-text-align";
+import Underline from "@tiptap/extension-underline";
+
 import MyToolbar from "./Toolbar/Toolbar";
 
 export default forwardRef(
@@ -51,6 +53,7 @@ export default forwardRef(
             alignments: ["left", "right", "center", "justify"],
           }),
           ReactComponent,
+          Underline,
           Mention.extend({
             addStorage() {
               return {

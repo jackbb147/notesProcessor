@@ -13,6 +13,7 @@ import { MenuItem } from "./Buttons/MenuItem";
 import { Editor } from "@tiptap/core";
 import { Bold } from "./Buttons/Bold";
 import { Italic } from "./Buttons/Italic";
+import { Underline } from "./Buttons/Underline";
 
 export const MyToolbar = ({ editor }: { editor: Editor | null }) => (
   <Toolbar.Root
@@ -22,6 +23,7 @@ export const MyToolbar = ({ editor }: { editor: Editor | null }) => (
     <Toolbar.ToggleGroup type="multiple" aria-label="Text formatting">
       <Bold editor={editor} />
       <Italic editor={editor} />
+      <Underline editor={editor} />
     </Toolbar.ToggleGroup>
     <Toolbar.Separator className="w-[1px] bg-mauve6 mx-[10px]" />
     <Toolbar.ToggleGroup type="single" aria-label="Text alignment">
