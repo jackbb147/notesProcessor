@@ -11,8 +11,13 @@ export function Undo({ editor }: { editor: Editor | null }) {
     editor.chain().focus().undo().run();
   }
   return (
-    <MenuItem value={"undo"} ariaLabel={"Undo"} isActive={false}>
-      <Undo2 size={"15px"} onClick={handleClick} />
+    <MenuItem
+      value={"undo"}
+      ariaLabel={"Undo"}
+      isActive={false}
+      onClick={handleClick}
+    >
+      <Undo2 size={"15px"} />
     </MenuItem>
   );
 }

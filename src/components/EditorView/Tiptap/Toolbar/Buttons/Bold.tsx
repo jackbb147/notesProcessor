@@ -22,8 +22,13 @@ export function Bold({ editor }: { editor: Editor | null }) {
   }, [editor]);
 
   return (
-    <MenuItem value={"bold"} ariaLabel={"Bold"} isActive={isActive}>
-      <FontBoldIcon onClick={handleClick} />
+    <MenuItem
+      value={"bold"}
+      ariaLabel={"Bold"}
+      isActive={isActive}
+      onClick={handleClick}
+    >
+      <FontBoldIcon />
     </MenuItem>
   );
 }

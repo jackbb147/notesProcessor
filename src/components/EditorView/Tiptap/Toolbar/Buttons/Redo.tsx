@@ -8,8 +8,13 @@ export function Redo({ editor }: { editor: Editor | null }) {
     editor.chain().focus().redo().run();
   }
   return (
-    <MenuItem value={"redo"} ariaLabel={"Redo"} isActive={false}>
-      <Redo2 size={"15px"} onClick={handleClick} />
+    <MenuItem
+      value={"redo"}
+      ariaLabel={"Redo"}
+      isActive={false}
+      onClick={handleClick}
+    >
+      <Redo2 size={"15px"} />
     </MenuItem>
   );
 }

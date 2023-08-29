@@ -6,12 +6,14 @@ export function MenuItem({
   ariaLabel,
   isActive,
   styles = {},
+  onClick,
 }: {
   children: React.ReactNode;
   value: string;
   ariaLabel: string;
   styles?: React.CSSProperties;
   isActive: boolean;
+  onClick?: () => void;
 }) {
   return (
     <Toolbar.ToggleItem //data-[state=on]:bg-violet5 data-[state=on]:text-violet11
@@ -23,6 +25,7 @@ export function MenuItem({
       style={{
         ...styles,
       }}
+      onClick={onClick ?? (() => {})}
     >
       {children}
     </Toolbar.ToggleItem>
