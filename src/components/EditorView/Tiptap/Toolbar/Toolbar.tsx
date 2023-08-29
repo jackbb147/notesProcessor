@@ -14,12 +14,18 @@ import { Editor } from "@tiptap/core";
 import { Bold } from "./Buttons/Bold";
 import { Italic } from "./Buttons/Italic";
 import { Underline } from "./Buttons/Underline";
+import { Undo } from "./Buttons/Undo";
+import { Redo } from "./Buttons/Redo";
 
 export const MyToolbar = ({ editor }: { editor: Editor | null }) => (
   <Toolbar.Root
     className="flex w-full  p-[5px] min-w-max  border-b "
     aria-label="Formatting options"
   >
+    <Toolbar.ToggleGroup type="multiple" aria-label="History">
+      <Undo editor={editor} />
+      <Redo editor={editor} />
+    </Toolbar.ToggleGroup>
     <Toolbar.ToggleGroup type="multiple" aria-label="Text formatting">
       <Bold editor={editor} />
       <Italic editor={editor} />
