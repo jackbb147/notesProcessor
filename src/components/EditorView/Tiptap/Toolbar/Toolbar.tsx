@@ -39,7 +39,7 @@ export const MyToolbar = ({ editor }: { editor: Editor | null }) => (
       <Underline editor={editor} />
     </Toolbar.ToggleGroup>
     <Toolbar.Separator className="w-[1px] bg-mauve6 mx-[10px]" />
-    <SelectDemo />
+    <SelectDemo editor={editor} />
     <Toolbar.Separator className="w-[1px] bg-mauve6 mx-[10px]" />
     <Toolbar.ToggleGroup type="single" aria-label="Text alignment">
       <LeftAlign editor={editor} />

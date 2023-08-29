@@ -16,6 +16,7 @@ import { Editor } from "@tiptap/core";
 import { TextAlign } from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
 import { History } from "@tiptap/extension-history";
+import { Heading } from "@tiptap/extension-heading";
 
 import MyToolbar from "./Toolbar/Toolbar";
 

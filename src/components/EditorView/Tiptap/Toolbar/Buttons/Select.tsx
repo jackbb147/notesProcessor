@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import * as Select from "@radix-ui/react-select";
 import classnames from "classnames";
 import {
@@ -6,6 +6,7 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
 } from "@radix-ui/react-icons";
+import { Editor } from "@tiptap/core";
 
 const SelectItem = React.forwardRef(
   (
@@ -13,11 +14,13 @@ const SelectItem = React.forwardRef(
       children,
       className,
       value,
+      onClick,
       ...props
     }: {
       children: React.ReactNode;
       value: string;
       className?: string;
+      onClick?: () => void;
     },
     forwardedRef: any,
   ) => {
@@ -40,46 +43,85 @@ const SelectItem = React.forwardRef(
   },
 );
 
-const SelectDemo = () => (
-  <Select.Root>
-    <Select.Trigger
-      className="inline-flex items-center justify-center rounded px-[5px] text-[13px] leading-none  hover:bg-grey hover:text-violet11 focus:shadow-[0_0_0_2px] focus:shadow-black outline-none"
-      aria-label="Food"
+const enum Formats {
+  normal = "normal",
+  heading1 = "heading1",
+  heading2 = "heading2",
+  heading3 = "heading3",
+}
+
+const SelectDemo = ({ editor }: { editor: Editor | null }) => {
+  const [value, setValue] = React.useState<string>(Formats.normal);
+  function handleValueChange(newValue: string) {
+    switch (newValue) {
+      case Formats.heading1:
+        editor?.chain().focus().toggleHeading({ level: 1 }).run();
+        setValue(newValue);
+        break;
+      case Formats.heading2:
+        editor?.chain().focus().toggleHeading({ level: 2 }).run();
+        setValue(newValue);
+        break;
+      case Formats.normal:
+        switch (value) {
+          case Formats.heading1:
+            editor?.chain().focus().toggleHeading({ level: 1 }).run();
+            break;
+          case Formats.heading2:
+            editor?.chain().focus().toggleHeading({ level: 2 }).run();
+            break;
+        }
+        setValue(newValue);
+        break;
+    }
+  }
+  return (
+    <Select.Root
+      onValueChange={(val) => {
+        handleValueChange(val);
+      }}
     >
-      <Select.Value placeholder="Select a fruit…" />
-      <Select.Icon>
-        <ChevronDownIcon />
-      </Select.Icon>
-    </Select.Trigger>
-
-    <Select.Portal>
-      <Select.Content
-        position={"popper"}
-        side={"bottom"}
-        className="overflow-hidden  bg-dark_secondary rounded-md"
+      <Select.Trigger
+        className="inline-flex items-center justify-center rounded px-[5px] text-[13px] leading-none  hover:bg-grey hover:text-violet11 focus:shadow-[0_0_0_2px] focus:shadow-black outline-none"
+        aria-label="Food"
       >
-        <Select.ScrollUpButton className="flex items-center justify-center h-[15px] bg-white cursor-default">
-          <ChevronUpIcon />
-        </Select.ScrollUpButton>
-        <Select.Viewport className="">
-          <Select.Group>
-            <Select.Label className="px-[15px] text-xs leading-[25px] text-mauve11">
-              Fruits
-            </Select.Label>
-            <SelectItem value="apple">Apple</SelectItem>
-            <SelectItem value="banana">Banana</SelectItem>
-            <SelectItem value="blueberry">Blueberry</SelectItem>
-            <SelectItem value="grapes">Grapes</SelectItem>
-            <SelectItem value="pineapple">Pineapple</SelectItem>
-          </Select.Group>
+        <Select.Value placeholder="Select a fruit…" />
+        <Select.Icon>
+          <ChevronDownIcon />
+        </Select.Icon>
+      </Select.Trigger>
 
-          <Select.Separator />
-        </Select.Viewport>
-        <Select.ScrollDownButton />
-        <Select.Arrow />
-      </Select.Content>
-    </Select.Portal>
-  </Select.Root>
-);
+      <Select.Portal>
+        <Select.Content
+          position={"popper"}
+          side={"bottom"}
+          className="overflow-hidden  bg-dark_secondary rounded-md"
+        >
+          <Select.ScrollUpButton className="flex items-center justify-center h-[15px] bg-white cursor-default">
+            <ChevronUpIcon />
+          </Select.ScrollUpButton>
+          <Select.Viewport className="">
+            <Select.Group>
+              <Select.Label className="px-[15px] text-xs leading-[25px] text-mauve11">
+                Fruits
+              </Select.Label>
+              <SelectItem value={Formats.normal}>Normal</SelectItem>
+              <SelectItem value={Formats.heading1}>Heading 1</SelectItem>
+              <SelectItem value={Formats.heading2}>Heading 2</SelectItem>
+              {/*<SelectItem value="banana">Banana</SelectItem>*/}
+              {/*<SelectItem value="blueberry">Blueberry</SelectItem>*/}
+              {/*<SelectItem value="grapes">Grapes</SelectItem>*/}
+              {/*<SelectItem value="pineapple">Pineapple</SelectItem>*/}
+            </Select.Group>
+
+            <Select.Separator />
+          </Select.Viewport>
+          <Select.ScrollDownButton />
+          <Select.Arrow />
+        </Select.Content>
+      </Select.Portal>
+    </Select.Root>
+  );
+};
 
 export default SelectDemo;
