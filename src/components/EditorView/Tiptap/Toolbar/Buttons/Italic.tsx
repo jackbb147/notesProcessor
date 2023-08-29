@@ -4,7 +4,7 @@ import { Editor } from "@tiptap/core";
 
 export function Italic({ editor }: { editor: Editor | null }) {
   return (
-    <MenuItem value={"italic"} ariaLabel={"Italic"}>
+    <MenuItem value={"italic"} ariaLabel={"Italic"} isActive={false}>
       <FontItalicIcon />
     </MenuItem>
   );
