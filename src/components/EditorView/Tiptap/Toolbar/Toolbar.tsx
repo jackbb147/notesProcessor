@@ -9,19 +9,18 @@ import {
   FontItalicIcon,
 } from "@radix-ui/react-icons";
 
-export const ToolbarDemo = () => (
+import { MenuItem } from "./Buttons/MenuItem";
+import { Editor } from "@tiptap/core";
+
+export const MyToolbar = ({ editor }: { editor: Editor | null }) => (
   <Toolbar.Root
     className="flex w-full  p-[5px] min-w-max  border-b "
     aria-label="Formatting options"
   >
     <Toolbar.ToggleGroup type="multiple" aria-label="Text formatting">
-      <Toolbar.ToggleItem
-        className="flex-shrink-0 flex-grow-0 basis-auto h-[25px] px-[5px] rounded inline-flex text-[13px] leading-none items-center justify-center  ml-0.5 outline-none hover:bg-grey hover:text-violet11 focus:relative focus:shadow-[0_0_0_2px] focus:shadow-violet7 first:ml-0 data-[state=on]:bg-violet5 data-[state=on]:text-violet11"
-        value="bold"
-        aria-label="Bold"
-      >
+      <MenuItem value={"bold"} ariaLabel={"Bold"}>
         <FontBoldIcon />
-      </Toolbar.ToggleItem>
+      </MenuItem>
       <Toolbar.ToggleItem
         className="flex-shrink-0 flex-grow-0 basis-auto  h-[25px] px-[5px] rounded inline-flex text-[13px] leading-none items-center justify-center  ml-0.5 outline-none hover:bg-grey hover:text-violet11 focus:relative focus:shadow-[0_0_0_2px] focus:shadow-violet7 first:ml-0 data-[state=on]:bg-violet5 data-[state=on]:text-violet11"
         value="italic"
@@ -71,4 +70,4 @@ export const ToolbarDemo = () => (
   </Toolbar.Root>
 );
 
-export default ToolbarDemo;
+export default MyToolbar;

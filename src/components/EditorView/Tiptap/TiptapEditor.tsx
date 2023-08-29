@@ -14,7 +14,7 @@ import { ReferenceStateDispatchContext } from "./Reference/ReferenceStateContext
 import { ReferenceStateActionType } from "./Reference/ReferenceStateReducer";
 import { Editor } from "@tiptap/core";
 import { TextAlign } from "@tiptap/extension-text-align";
-import ToolbarDemo from "./Toolbar";
+import MyToolbar from "./Toolbar/Toolbar";
 
 export default forwardRef(
   (
@@ -158,7 +158,7 @@ export default forwardRef(
           textAlign: "initial",
         }}
       >
-        <ToolbarDemo />
+        <MyToolbar editor={editor} />
         {/*<div>*/}
         {/*  <button*/}
         {/*    onClick={() => {*/}
