@@ -157,14 +157,7 @@ export default forwardRef(
           textAlign: "initial",
         }}
       >
-        <div
-          style={{
-            // border: "1px solid yellow",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
+        <div>
           <button
             onClick={() => {
               alert("hey");
@@ -176,6 +169,7 @@ export default forwardRef(
           >
             left
           </button>
+
           <button
             onClick={() => {
               editor?.chain().focus().toggleBold().run();
@@ -200,17 +194,22 @@ export default forwardRef(
           {/*  right*/}
           {/*</button>*/}
           {/*<button*/}
-          {/*  onClick={() => editor.chain().focus().setTextAlign("justify").run()}*/}
+          {/*  onClick={() =>*/}
+          {/*    editor.chain().focus().setTextAlign("justify").run()*/}
+          {/*  }*/}
           {/*  className={*/}
           {/*    editor.isActive({ textAlign: "justify" }) ? "is-active" : ""*/}
           {/*  }*/}
           {/*>*/}
           {/*  justify*/}
           {/*</button>*/}
-          {/*<button onClick={() => editor.chain().focus().unsetTextAlign().run()}>*/}
+          {/*<button*/}
+          {/*  onClick={() => editor.chain().focus().unsetTextAlign().run()}*/}
+          {/*>*/}
           {/*  unsetTextAlign*/}
           {/*</button>*/}
         </div>
+
         <EditorContent editor={editor} />
       </div>
     );
