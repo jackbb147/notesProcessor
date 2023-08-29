@@ -56,7 +56,7 @@ const SelectDemo = () => (
       <Select.Content
         position={"popper"}
         side={"bottom"}
-        className="overflow-hidden  bg-dark_primary rounded-md shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]"
+        className="overflow-hidden  bg-dark_secondary rounded-md"
       >
         <Select.ScrollUpButton className="flex items-center justify-center h-[15px] bg-white cursor-default">
           <ChevronUpIcon />
