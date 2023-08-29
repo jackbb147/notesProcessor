@@ -22,8 +22,13 @@ export function Italic({ editor }: { editor: Editor | null }) {
     });
   }, [editor]);
   return (
-    <MenuItem value={"italic"} ariaLabel={"Italic"} isActive={isActive}>
-      <FontItalicIcon onClick={handleClick} />
+    <MenuItem
+      value={"italic"}
+      ariaLabel={"Italic"}
+      isActive={isActive}
+      onClick={handleClick}
+    >
+      <FontItalicIcon />
     </MenuItem>
   );
 }

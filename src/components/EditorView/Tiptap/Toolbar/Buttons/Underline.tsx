@@ -22,8 +22,13 @@ export function Underline({ editor }: { editor: Editor | null }) {
     });
   }, [editor]);
   return (
-    <MenuItem value={"underline"} ariaLabel={"Underline"} isActive={isActive}>
-      <UnderlineIcon onClick={handleClick} />
+    <MenuItem
+      value={"underline"}
+      ariaLabel={"Underline"}
+      isActive={isActive}
+      onClick={handleClick}
+    >
+      <UnderlineIcon />
     </MenuItem>
   );
 }
