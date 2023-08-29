@@ -11,6 +11,8 @@ import {
 
 import { MenuItem } from "./Buttons/MenuItem";
 import { Editor } from "@tiptap/core";
+import { Bold } from "./Buttons/Bold";
+import { Italic } from "./Buttons/Italic";
 
 export const MyToolbar = ({ editor }: { editor: Editor | null }) => (
   <Toolbar.Root
@@ -18,23 +20,8 @@ export const MyToolbar = ({ editor }: { editor: Editor | null }) => (
     aria-label="Formatting options"
   >
     <Toolbar.ToggleGroup type="multiple" aria-label="Text formatting">
-      <MenuItem value={"bold"} ariaLabel={"Bold"}>
-        <FontBoldIcon />
-      </MenuItem>
-      <Toolbar.ToggleItem
-        className="flex-shrink-0 flex-grow-0 basis-auto  h-[25px] px-[5px] rounded inline-flex text-[13px] leading-none items-center justify-center  ml-0.5 outline-none hover:bg-grey hover:text-violet11 focus:relative focus:shadow-[0_0_0_2px] focus:shadow-violet7 first:ml-0 data-[state=on]:bg-violet5 data-[state=on]:text-violet11"
-        value="italic"
-        aria-label="Italic"
-      >
-        <FontItalicIcon />
-      </Toolbar.ToggleItem>
-      <Toolbar.ToggleItem
-        className="flex-shrink-0 flex-grow-0 basis-auto  h-[25px] px-[5px] rounded inline-flex text-[13px] leading-none items-center justify-center  ml-0.5 outline-none hover:bg-grey hover:text-violet11 focus:relative focus:shadow-[0_0_0_2px] focus:shadow-violet7 first:ml-0 data-[state=on]:bg-violet5 data-[state=on]:text-violet11"
-        value="strikethrough"
-        aria-label="Strike through"
-      >
-        <StrikethroughIcon />
-      </Toolbar.ToggleItem>
+      <Bold editor={editor} />
+      <Italic editor={editor} />
     </Toolbar.ToggleGroup>
     <Toolbar.Separator className="w-[1px] bg-mauve6 mx-[10px]" />
     <Toolbar.ToggleGroup type="single" aria-label="Text alignment">
