@@ -52,6 +52,7 @@ export default forwardRef(
           StarterKit,
           TextAlign.configure({
             alignments: ["left", "right", "center", "justify"],
+            types: ["heading", "paragraph"],
           }),
           ReactComponent,
           Underline,
