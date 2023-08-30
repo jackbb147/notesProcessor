@@ -195,7 +195,17 @@ export function NoteEditor({
   }
 
   return (
-    <div className={`${styles.noteEditorContainer}`}>
+    <div
+      className={`${styles.noteEditorContainer}`}
+      style={{
+        // width: "100%",
+        overflowX: "hidden",
+        // ensures no selection
+        userSelect: "none",
+        // disable browser handling of all panning and zooming gestures on touch devices
+        touchAction: "none",
+      }}
+    >
       <div
         style={{
           height: "95%",
