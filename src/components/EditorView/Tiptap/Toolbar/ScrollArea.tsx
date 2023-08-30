@@ -6,7 +6,7 @@ const TAGS = Array.from({ length: 50 }).map(
   (_, i, a) => `v1.2.0-beta.${a.length - i}`,
 );
 
-const SCROLLBAR_SIZE = 10;
+const SCROLLBAR_SIZE = 7;
 
 const StyledScrollArea = styled(ScrollAreaPrimitive.Root, {
   width: "100%",
