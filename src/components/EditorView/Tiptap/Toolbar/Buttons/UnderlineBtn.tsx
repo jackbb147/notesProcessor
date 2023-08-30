@@ -2,8 +2,10 @@ import { MenuItem } from "./MenuItem";
 import { UnderlineIcon } from "@radix-ui/react-icons";
 import { Editor } from "@tiptap/core";
 import { useEffect, useState } from "react";
+import { Underline } from "lucide-react";
+import { IconSize } from "./IconSize";
 
-export function Underline({ editor }: { editor: Editor | null }) {
+export function UnderlineBtn({ editor }: { editor: Editor | null }) {
   const [isActive, setIsActive] = useState(false);
 
   function handleClick() {
@@ -28,7 +30,7 @@ export function Underline({ editor }: { editor: Editor | null }) {
       isActive={isActive}
       onClick={handleClick}
     >
-      <UnderlineIcon />
+      <Underline size={IconSize} />
     </MenuItem>
   );
 }

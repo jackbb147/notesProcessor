@@ -6,12 +6,13 @@ const TAGS = Array.from({ length: 50 }).map(
   (_, i, a) => `v1.2.0-beta.${a.length - i}`,
 );
 
-const SCROLLBAR_SIZE = 7;
+const SCROLLBAR_SIZE = 6;
 
 const StyledScrollArea = styled(ScrollAreaPrimitive.Root, {
   width: "100%",
   // height: 225,
   borderRadius: 4,
+  padding: "9px 0px",
   overflow: "hidden",
   boxShadow: `0 2px 10px ${blackA.blackA7}`,
 });
@@ -84,7 +85,7 @@ const Tag = styled("div", {
 });
 
 export const ScrollAreaDemo = ({ children }: { children: React.ReactNode }) => (
-  <ScrollArea type={"scroll"} scrollHideDelay={300}>
+  <ScrollArea type={"always"} scrollHideDelay={300}>
     <ScrollAreaViewport>
       <div
         style={{

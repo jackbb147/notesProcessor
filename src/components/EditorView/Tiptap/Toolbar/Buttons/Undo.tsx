@@ -2,6 +2,7 @@ import { Undo2 } from "lucide-react";
 import { FontBoldIcon } from "@radix-ui/react-icons";
 import { MenuItem } from "./MenuItem";
 import { Editor } from "@tiptap/core";
+import { IconSize } from "./IconSize";
 
 export function Undo({ editor }: { editor: Editor | null }) {
   function handleClick() {
@@ -17,7 +18,7 @@ export function Undo({ editor }: { editor: Editor | null }) {
       isActive={false}
       onClick={handleClick}
     >
-      <Undo2 size={"15px"} />
+      <Undo2 size={IconSize} />
     </MenuItem>
   );
 }

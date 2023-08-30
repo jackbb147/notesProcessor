@@ -13,9 +13,9 @@ import * as Select from "@radix-ui/react-select";
 
 import { MenuItem } from "./Buttons/MenuItem";
 import { Editor } from "@tiptap/core";
-import { Bold } from "./Buttons/Bold";
-import { Italic } from "./Buttons/Italic";
-import { Underline } from "./Buttons/Underline";
+import { BoldBtn } from "./Buttons/BoldBtn";
+import { ItalicBtn } from "./Buttons/ItalicBtn";
+import { UnderlineBtn } from "./Buttons/UnderlineBtn";
 import { Undo } from "./Buttons/Undo";
 import { Redo } from "./Buttons/Redo";
 import { LeftAlign } from "./Buttons/LeftAlign";
@@ -41,7 +41,7 @@ const Separator = styled(Toolbar.Separator, {
 
 export const MyToolbar = ({ editor }: { editor: Editor | null }) => (
   <Toolbar.Root
-    className="flex w-full   overflow-hidden p-[5px] border-b  "
+    className="flex w-full   overflow-hidden border-b  "
     aria-label="Formatting options"
   >
     <ScrollAreaDemo>
@@ -50,10 +50,11 @@ export const MyToolbar = ({ editor }: { editor: Editor | null }) => (
         <Redo editor={editor} />
       </ToggleGroup>
       <Separator className="w-[1px] bg-mauve6 mx-[10px]" />
+
       <ToggleGroup type="multiple" aria-label="Text formatting">
-        <Bold editor={editor} />
-        <Italic editor={editor} />
-        <Underline editor={editor} />
+        <BoldBtn editor={editor} />
+        <ItalicBtn editor={editor} />
+        <UnderlineBtn editor={editor} />
       </ToggleGroup>
       <Separator className="w-[1px] bg-mauve6 mx-[10px]" />
       <SelectDemo editor={editor} />

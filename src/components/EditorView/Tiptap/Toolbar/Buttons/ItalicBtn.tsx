@@ -2,8 +2,10 @@ import { MenuItem } from "./MenuItem";
 import { FontItalicIcon } from "@radix-ui/react-icons";
 import { Editor } from "@tiptap/core";
 import { useEffect, useState } from "react";
+import { Italic } from "lucide-react";
+import { IconSize } from "./IconSize";
 
-export function Italic({ editor }: { editor: Editor | null }) {
+export function ItalicBtn({ editor }: { editor: Editor | null }) {
   const [isActive, setIsActive] = useState(false);
 
   function handleClick() {
@@ -28,7 +30,7 @@ export function Italic({ editor }: { editor: Editor | null }) {
       isActive={isActive}
       onClick={handleClick}
     >
-      <FontItalicIcon />
+      <Italic size={IconSize} />
     </MenuItem>
   );
 }
