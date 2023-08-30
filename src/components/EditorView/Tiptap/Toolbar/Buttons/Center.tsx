@@ -15,7 +15,7 @@ export function Center({ editor }: { editor: Editor | null }) {
     editor.chain().focus().setTextAlign("center").run();
   }
   useEffect(() => {
-    editor?.on("selectionUpdate", ({ editor }) => {
+    editor?.on("transaction", ({ editor }) => {
       if (editor.isActive({ textAlign: "center" })) {
         setIsActive(true);
       } else {

@@ -11,7 +11,7 @@ export function LeftAlign({ editor }: { editor: Editor | null }) {
     editor.chain().focus().setTextAlign("left").run();
   }
   useEffect(() => {
-    editor?.on("selectionUpdate", ({ editor }) => {
+    editor?.on("transaction", ({ editor }) => {
       if (editor.isActive({ textAlign: "left" })) {
         setIsActive(true);
       } else {

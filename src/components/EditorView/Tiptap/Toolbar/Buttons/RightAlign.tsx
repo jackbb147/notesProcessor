@@ -12,7 +12,7 @@ export function RightAlign({ editor }: { editor: Editor | null }) {
   }
 
   useEffect(() => {
-    editor?.on("selectionUpdate", ({ editor }) => {
+    editor?.on("transaction", ({ editor }) => {
       if (editor.isActive({ textAlign: "right" })) {
         console.debug("[right] is active");
         setIsActive(true);
