@@ -83,26 +83,36 @@ const Tag = styled("div", {
   paddingRight: 10,
 });
 
+const HorizontalScroll = styled("div", {
+  display: "flex",
+  flexDirection: "row",
+  width: "100%",
+  overflowX: "auto",
+  scrollbarColor: "red red !important",
+
+  // "&::-webkit-scrollbar-track": {
+  //   border: "2px solid red",
+  // },
+  "&::-webkit-scrollbar": {
+    // display: "none",
+    // background: "transparent",
+  },
+});
+
 export const ScrollAreaDemo = ({ children }: { children: React.ReactNode }) => (
-  <ScrollArea type={"scroll"} scrollHideDelay={300}>
-    <ScrollAreaViewport>
-      <div
-        style={{
-          // width: 400,
-          // padding: "15px 20px",
-          display: "flex",
-          flexDirection: "row",
-        }}
-      >
-        {children}
-        {/*{TAGS.map((tag) => (*/}
-        {/*  <Tag key={tag}>{tag}</Tag>*/}
-        {/*))}*/}
-      </div>
-    </ScrollAreaViewport>
-    <ScrollAreaScrollbar orientation="horizontal">
-      <ScrollAreaThumb />
-    </ScrollAreaScrollbar>
-    <ScrollAreaCorner />
-  </ScrollArea>
+  <HorizontalScroll>
+    {children}
+    {/*{TAGS.map((tag) => (*/}
+    {/*  <Tag key={tag}>{tag}</Tag>*/}
+    {/*))}*/}
+  </HorizontalScroll>
+  // <ScrollArea type={"scroll"} scrollHideDelay={300}>
+  //   <ScrollAreaViewport>
+  //
+  //   </ScrollAreaViewport>
+  //   <ScrollAreaScrollbar orientation="horizontal">
+  //     <ScrollAreaThumb />
+  //   </ScrollAreaScrollbar>
+  //   <ScrollAreaCorner />
+  // </ScrollArea>
 );
