@@ -23,31 +23,51 @@ import { Center } from "./Buttons/Center";
 import { RightAlign } from "./Buttons/RightAlign";
 import SelectDemo from "./Buttons/Select";
 import { ScrollAreaDemo } from "./ScrollArea";
+import { styled } from "@stitches/react";
+
+const ToggleGroup = styled(Toolbar.ToggleGroup, {
+  display: "flex",
+});
 
 export const MyToolbar = ({ editor }: { editor: Editor | null }) => (
   <Toolbar.Root
-    className="flex w-full   overflow-hidden p-[5px] min-w-max  border-b border-red-400 min-w-0"
+    className="flex w-full   overflow-hidden p-[5px] border-b  "
     aria-label="Formatting options"
   >
     <ScrollAreaDemo>
-      <Toolbar.ToggleGroup type="multiple" aria-label="History">
+      <ToggleGroup type="multiple" aria-label="History">
         <Undo editor={editor} />
         <Redo editor={editor} />
-      </Toolbar.ToggleGroup>
+      </ToggleGroup>
       <Toolbar.Separator className="w-[1px] bg-mauve6 mx-[10px]" />
-      <Toolbar.ToggleGroup type="multiple" aria-label="Text formatting">
+      <ToggleGroup type="multiple" aria-label="History">
+        <Undo editor={editor} />
+        <Redo editor={editor} />
+      </ToggleGroup>
+      <Toolbar.Separator className="w-[1px] bg-mauve6 mx-[10px]" />
+      <ToggleGroup type="multiple" aria-label="History">
+        <Undo editor={editor} />
+        <Redo editor={editor} />
+      </ToggleGroup>
+      <Toolbar.Separator className="w-[1px] bg-mauve6 mx-[10px]" />
+      <ToggleGroup type="multiple" aria-label="History">
+        <Undo editor={editor} />
+        <Redo editor={editor} />
+      </ToggleGroup>
+      <Toolbar.Separator className="w-[1px] bg-mauve6 mx-[10px]" />
+      <ToggleGroup type="multiple" aria-label="Text formatting">
         <Bold editor={editor} />
         <Italic editor={editor} />
         <Underline editor={editor} />
-      </Toolbar.ToggleGroup>
+      </ToggleGroup>
       <Toolbar.Separator className="w-[1px] bg-mauve6 mx-[10px]" />
       <SelectDemo editor={editor} />
       <Toolbar.Separator className="w-[1px] bg-mauve6 mx-[10px]" />
-      <Toolbar.ToggleGroup type="single" aria-label="Text alignment">
+      <ToggleGroup type="single" aria-label="Text alignment">
         <LeftAlign editor={editor} />
         <Center editor={editor} />
         <RightAlign editor={editor} />
-      </Toolbar.ToggleGroup>
+      </ToggleGroup>
       <Toolbar.Separator className="w-[1px] bg-mauve6 mx-[10px]" />
     </ScrollAreaDemo>
   </Toolbar.Root>
