@@ -101,12 +101,29 @@ const HorizontalScroll = styled("div", {
 });
 
 export const ScrollAreaDemo = ({ children }: { children: React.ReactNode }) => (
-  <HorizontalScroll>
-    {children}
-    {/*{TAGS.map((tag) => (*/}
-    {/*  <Tag key={tag}>{tag}</Tag>*/}
-    {/*))}*/}
-  </HorizontalScroll>
+  // <HorizontalScroll>
+  <ScrollArea type={"scroll"} scrollHideDelay={300}>
+    <ScrollAreaViewport>
+      <div
+        style={{
+          // width: 400,
+          // padding: "15px 20px",
+          display: "flex",
+          flexDirection: "row",
+        }}
+      >
+        {children}
+        {/*{TAGS.map((tag) => (*/}
+        {/*  <Tag key={tag}>{tag}</Tag>*/}
+        {/*))}*/}
+      </div>
+    </ScrollAreaViewport>
+    <ScrollAreaScrollbar orientation="horizontal">
+      <ScrollAreaThumb />
+    </ScrollAreaScrollbar>
+    <ScrollAreaCorner />
+  </ScrollArea>
+  // </HorizontalScroll>
   // <ScrollArea type={"scroll"} scrollHideDelay={300}>
   //   <ScrollAreaViewport>
   //
