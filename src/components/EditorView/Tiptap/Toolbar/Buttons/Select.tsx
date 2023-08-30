@@ -7,6 +7,7 @@ import {
   ChevronUpIcon,
 } from "@radix-ui/react-icons";
 import { Editor } from "@tiptap/core";
+import { Level } from "@tiptap/extension-heading";
 
 const SelectItem = React.forwardRef(
   (
@@ -51,27 +52,23 @@ const enum Formats {
 }
 
 const SelectDemo = ({ editor }: { editor: Editor | null }) => {
-  const [value, setValue] = React.useState<string>(Formats.normal);
   function handleValueChange(newValue: string) {
+    if (!editor) return;
     switch (newValue) {
       case Formats.heading1:
         editor?.chain().focus().toggleHeading({ level: 1 }).run();
-        setValue(newValue);
         break;
       case Formats.heading2:
         editor?.chain().focus().toggleHeading({ level: 2 }).run();
-        setValue(newValue);
         break;
       case Formats.normal:
-        switch (value) {
-          case Formats.heading1:
-            editor?.chain().focus().toggleHeading({ level: 1 }).run();
+        for (var x in [1, 2, 3]) {
+          const lvl = Number(x) as Level;
+          if (editor.isActive("heading", { level: lvl })) {
+            editor.chain().focus().toggleHeading({ level: lvl }).run();
             break;
-          case Formats.heading2:
-            editor?.chain().focus().toggleHeading({ level: 2 }).run();
-            break;
+          }
         }
-        setValue(newValue);
         break;
     }
   }
