@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as Select from "@radix-ui/react-select";
 import classnames from "classnames";
 import {
@@ -52,11 +52,13 @@ const enum Formats {
 }
 
 const SelectDemo = ({ editor }: { editor: Editor | null }) => {
+  const [value, setValue] = useState<string>(Formats.normal);
   function handleValueChange(newValue: string) {
     if (!editor) return;
     switch (newValue) {
       case Formats.heading1:
         editor?.chain().focus().toggleHeading({ level: 1 }).run();
+
         break;
       case Formats.heading2:
         editor?.chain().focus().toggleHeading({ level: 2 }).run();
@@ -71,9 +73,41 @@ const SelectDemo = ({ editor }: { editor: Editor | null }) => {
         }
         break;
     }
+    setValue(newValue);
   }
+
+  useEffect(() => {
+    if (!editor) return;
+    editor.on("selectionUpdate", ({ editor }) => {
+      var level: Level | undefined = undefined;
+      for (var x in [1, 2, 3]) {
+        const lvl = Number(x) as Level;
+        if (editor.isActive("heading", { level: lvl })) {
+          level = lvl;
+          break;
+        }
+      }
+      if (level === undefined) {
+        setValue(Formats.normal);
+        return;
+      } else {
+        switch (level) {
+          case 1:
+            setValue(Formats.heading1);
+            break;
+          case 2:
+            setValue(Formats.heading2);
+            break;
+          case 3:
+            setValue(Formats.heading3);
+            break;
+        }
+      }
+    });
+  }, [editor]);
   return (
     <Select.Root
+      value={value}
       onValueChange={(val) => {
         handleValueChange(val);
       }}
