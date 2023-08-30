@@ -84,7 +84,7 @@ const Tag = styled("div", {
 });
 
 export const ScrollAreaDemo = ({ children }: { children: React.ReactNode }) => (
-  <ScrollArea type={"scroll"}>
+  <ScrollArea type={"scroll"} scrollHideDelay={300}>
     <ScrollAreaViewport>
       <div
         style={{
