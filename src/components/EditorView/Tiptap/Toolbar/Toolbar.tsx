@@ -27,6 +27,8 @@ import { styled } from "@stitches/react";
 
 const ToggleGroup = styled(Toolbar.ToggleGroup, {
   display: "flex",
+  paddingTop: "5px",
+  paddingBottom: "5px",
 });
 
 export const MyToolbar = ({ editor }: { editor: Editor | null }) => (
