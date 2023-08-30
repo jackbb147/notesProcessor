@@ -3,6 +3,8 @@ import * as Toolbar from "@radix-ui/react-toolbar";
 import React, { useEffect, useState } from "react";
 import { Editor } from "@tiptap/core";
 import { MenuItem } from "./MenuItem";
+import { AlignRight } from "lucide-react";
+import { IconSize } from "./IconSize";
 
 export function RightAlign({ editor }: { editor: Editor | null }) {
   const [isActive, setIsActive] = useState(false);
@@ -28,7 +30,7 @@ export function RightAlign({ editor }: { editor: Editor | null }) {
       isActive={isActive}
       onClick={handleClick}
     >
-      <TextAlignRightIcon />
+      <AlignRight size={IconSize} />
     </MenuItem>
   );
 }

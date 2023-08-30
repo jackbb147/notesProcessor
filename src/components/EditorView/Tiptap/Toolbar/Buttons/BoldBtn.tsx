@@ -1,9 +1,12 @@
 import { MenuItem } from "./MenuItem";
 import { FontBoldIcon } from "@radix-ui/react-icons";
+
+import { Bold } from "lucide-react";
 import { Editor } from "@tiptap/core";
 import { useEffect, useState } from "react";
+import { IconSize } from "./IconSize";
 
-export function Bold({ editor }: { editor: Editor | null }) {
+export function BoldBtn({ editor }: { editor: Editor | null }) {
   const [isActive, setIsActive] = useState(false);
   function handleClick() {
     if (!editor) return;
@@ -28,7 +31,7 @@ export function Bold({ editor }: { editor: Editor | null }) {
       isActive={isActive}
       onClick={handleClick}
     >
-      <FontBoldIcon />
+      <Bold size={IconSize} />
     </MenuItem>
   );
 }

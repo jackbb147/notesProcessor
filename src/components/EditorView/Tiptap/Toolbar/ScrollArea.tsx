@@ -12,6 +12,7 @@ const StyledScrollArea = styled(ScrollAreaPrimitive.Root, {
   width: "100%",
   // height: 225,
   borderRadius: 4,
+  padding: "13px 0px",
   overflow: "hidden",
   boxShadow: `0 2px 10px ${blackA.blackA7}`,
 });
