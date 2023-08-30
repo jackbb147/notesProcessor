@@ -413,7 +413,7 @@ function NoteInfoSidePanelWrapper({
           }}
         ></div>
         <div
-          className={`flex flex-col ${styles.noteInfoSidePanel} dark:bg-dark_secondary `}
+          className={`flex flex-col ${styles.noteInfoSidePanel}  bg-white dark:bg-dark_secondary `}
           style={{
             width: AppState.showNoteInfoPanel ? "60%" : "0px",
             position: "absolute",
