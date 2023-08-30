@@ -108,6 +108,7 @@ export const ScrollAreaDemo = ({ children }: { children: React.ReactNode }) => (
       flexDirection: "row",
       width: "100%",
       overflowX: "auto",
+      padding: "4px 0px",
     }}
     className={styles.CustomScrollBar}
   >
