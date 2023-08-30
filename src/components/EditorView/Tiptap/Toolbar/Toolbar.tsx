@@ -31,6 +31,14 @@ const ToggleGroup = styled(Toolbar.ToggleGroup, {
   paddingBottom: "5px",
 });
 
+const Separator = styled(Toolbar.Separator, {
+  marginRight: "13px",
+  marginLeft: "10px",
+  width: "1px",
+  marginTop: "9px",
+  marginBottom: "9px",
+});
+
 export const MyToolbar = ({ editor }: { editor: Editor | null }) => (
   <Toolbar.Root
     className="flex w-full   overflow-hidden p-[5px] border-b  "
@@ -41,36 +49,21 @@ export const MyToolbar = ({ editor }: { editor: Editor | null }) => (
         <Undo editor={editor} />
         <Redo editor={editor} />
       </ToggleGroup>
-      <Toolbar.Separator className="w-[1px] bg-mauve6 mx-[10px]" />
-      <ToggleGroup type="multiple" aria-label="History">
-        <Undo editor={editor} />
-        <Redo editor={editor} />
-      </ToggleGroup>
-      <Toolbar.Separator className="w-[1px] bg-mauve6 mx-[10px]" />
-      <ToggleGroup type="multiple" aria-label="History">
-        <Undo editor={editor} />
-        <Redo editor={editor} />
-      </ToggleGroup>
-      <Toolbar.Separator className="w-[1px] bg-mauve6 mx-[10px]" />
-      <ToggleGroup type="multiple" aria-label="History">
-        <Undo editor={editor} />
-        <Redo editor={editor} />
-      </ToggleGroup>
-      <Toolbar.Separator className="w-[1px] bg-mauve6 mx-[10px]" />
+      <Separator className="w-[1px] bg-mauve6 mx-[10px]" />
       <ToggleGroup type="multiple" aria-label="Text formatting">
         <Bold editor={editor} />
         <Italic editor={editor} />
         <Underline editor={editor} />
       </ToggleGroup>
-      <Toolbar.Separator className="w-[1px] bg-mauve6 mx-[10px]" />
+      <Separator className="w-[1px] bg-mauve6 mx-[10px]" />
       <SelectDemo editor={editor} />
-      <Toolbar.Separator className="w-[1px] bg-mauve6 mx-[10px]" />
+      <Separator className="w-[1px] bg-mauve6 mx-[10px]" />
       <ToggleGroup type="single" aria-label="Text alignment">
         <LeftAlign editor={editor} />
         <Center editor={editor} />
         <RightAlign editor={editor} />
       </ToggleGroup>
-      <Toolbar.Separator className="w-[1px] bg-mauve6 mx-[10px]" />
+      <Separator className="w-[1px] bg-mauve6 mx-[10px]" />
     </ScrollAreaDemo>
   </Toolbar.Root>
 );
