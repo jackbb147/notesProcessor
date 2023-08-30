@@ -54,6 +54,16 @@ export const MyToolbar = ({ editor }: { editor: Editor | null }) => (
         <Redo editor={editor} />
       </ToggleGroup>
       <Separator className="w-[1px] bg-mauve6 mx-[10px]" />
+      <ToggleGroup type="multiple" aria-label="History">
+        <Undo editor={editor} />
+        <Redo editor={editor} />
+      </ToggleGroup>
+      <Separator className="w-[1px] bg-mauve6 mx-[10px]" />
+      <ToggleGroup type="multiple" aria-label="History">
+        <Undo editor={editor} />
+        <Redo editor={editor} />
+      </ToggleGroup>
+      <Separator className="w-[1px] bg-mauve6 mx-[10px]" />
 
       <ToggleGroup type="multiple" aria-label="Text formatting">
         <BoldBtn editor={editor} />
