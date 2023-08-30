@@ -89,7 +89,7 @@ export const ScrollAreaDemo = ({ children }: { children: React.ReactNode }) => (
       <div
         style={{
           // width: 400,
-          padding: "15px 20px",
+          // padding: "15px 20px",
           display: "flex",
           flexDirection: "row",
         }}
