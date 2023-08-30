@@ -43,10 +43,9 @@ export const MyToolbar = ({ editor }: { editor: Editor | null }) => (
   <Toolbar.Root
     className="flex w-full   overflow-hidden border-b  sticky top-0 bg-white z-40 dark:bg-dark_primary"
     aria-label="Formatting options"
-    // style={{
-    //   backgroundColor: "red",
-    //   zIndex: 100,
-    // }}
+    style={{
+      paddingBottom: "2px",
+    }}
   >
     <ScrollAreaDemo>
       <ToggleGroup type="multiple" aria-label="History">
