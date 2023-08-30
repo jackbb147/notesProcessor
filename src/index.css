@@ -6,7 +6,14 @@ html,
 body {
   height: 100%;
   /*border: 1px solid red;*/
+  /*very important. keeps the web page from being dragged up and down */
   overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
+
+  /*userSelect: "none",*/
+  /*// disable browser handling of all panning and zooming gestures on touch devices*/
+  /*touchAction: "none",*/
 }
 
 body {
