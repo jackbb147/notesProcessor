@@ -1,6 +1,7 @@
 import { styled } from "@stitches/react";
 import { violet, mauve, blackA } from "@radix-ui/colors";
 import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area";
+import styles from "./CustomScrollBar.module.css";
 
 const TAGS = Array.from({ length: 50 }).map(
   (_, i, a) => `v1.2.0-beta.${a.length - i}`,
@@ -105,11 +106,14 @@ export const ScrollAreaDemo = ({ children }: { children: React.ReactNode }) => (
     style={{
       display: "flex",
       flexDirection: "row",
+      width: "100%",
       overflowX: "auto",
     }}
+    className={styles.CustomScrollBar}
   >
     {children}
   </div>
+  // <HorizontalScroll>{children}</HorizontalScroll>
   // <HorizontalScroll>
   // <ScrollArea type={"scroll"} scrollHideDelay={300}>
   //   <ScrollAreaViewport>
