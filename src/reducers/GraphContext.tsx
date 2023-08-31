@@ -3,6 +3,8 @@ import { GraphAction, graphReducer, GraphState } from "./GraphReducer";
 import React, { createContext, useEffect } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import { graph1 } from "./Test/graph1";
+import * as localforage from "localforage";
+import { Version } from "../Version";
 
 export const GraphContext = createContext<GraphState | null>(null);
 export const GraphDispatchContext =
@@ -17,8 +19,21 @@ export function GraphProvider({ children }: { children: React.ReactNode }) {
   );
 
   useEffect(() => {
+    const res = localforage.config({
+      driver: [
+        localforage.INDEXEDDB,
+        localforage.WEBSQL,
+        localforage.LOCALSTORAGE,
+      ],
+      name: "Binder",
+      version: Number(Version.GraphState),
+    });
+  }, []);
+
+  useEffect(() => {
     console.log("---- updating local storage ---- ");
     setLocallyStoredGraph(graph);
+    localforage.setItem("graph", graph);
   }, [graph]);
 
   return (

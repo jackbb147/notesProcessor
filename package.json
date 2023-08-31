@@ -54,6 +54,7 @@
     "clsx": "^2.0.0",
     "graphology": "^0.25.4",
     "immer": "^10.0.2",
+    "localforage": "^1.10.0",
     "lodash": "^4.17.21",
     "lucide-react": "^0.270.0",
     "prismjs": "^1.29.0",
