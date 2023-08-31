@@ -48,7 +48,15 @@ export const ListItem = forwardRef(
               active && "font-bold text-dark_primary"
             }`}
           >
-            <span>{text}</span>
+            {/*<span>hello</span>*/}
+            <span
+              style={{
+                overflowWrap: "break-word",
+              }}
+            >
+              {text.length > 30 ? text.slice(0, 30) + "..." : text}
+              {/*{text.slice(0, 30)}*/}
+            </span>
             <span>{optionalText}</span>
           </div>
         )}
