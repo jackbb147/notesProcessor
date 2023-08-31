@@ -109,7 +109,7 @@ export default Node.create({
         default: 0,
       },
       value: {
-        default: "HELLO WORLD!!",
+        default: String.raw`\hat{H} \ket{\psi} = E\ket{\psi}`,
       },
     };
   },

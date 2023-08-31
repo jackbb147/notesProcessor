@@ -24,6 +24,7 @@ import { RightAlign } from "./Buttons/RightAlign";
 import SelectDemo from "./Buttons/Select";
 import { ScrollAreaDemo } from "./ScrollArea";
 import { styled } from "@stitches/react";
+import { MathBtn } from "./Buttons/MathBtn";
 
 const ToggleGroup = styled(Toolbar.ToggleGroup, {
   display: "flex",
@@ -34,6 +35,7 @@ const ToggleGroup = styled(Toolbar.ToggleGroup, {
 const Separator = styled(Toolbar.Separator, {
   marginRight: "13px",
   marginLeft: "10px",
+  backgroundColor: "hsl(0deg 0% 80%)",
   width: "1px",
   marginTop: "9px",
   marginBottom: "9px",
@@ -68,6 +70,9 @@ export const MyToolbar = ({ editor }: { editor: Editor | null }) => (
         <RightAlign editor={editor} />
       </ToggleGroup>
       <Separator className="w-[1px] bg-mauve6 mx-[10px]" />
+      <ToggleGroup type="single" aria-label="Math">
+        <MathBtn editor={editor} />
+      </ToggleGroup>
     </ScrollAreaDemo>
   </Toolbar.Root>
 );
