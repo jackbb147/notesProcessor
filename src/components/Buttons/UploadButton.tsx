@@ -18,7 +18,7 @@ export function UploadButton() {
   async function handleClick() {
     let obj = (await upload()) as GraphState;
     graphDispatch({
-      type: GraphActionType.merge,
+      type: GraphActionType.merge, // todo maybe change this to "set" because "merge" creates trouble when the versions aren't the same??  Or maybe migrate first, before merging?
       other: obj,
     });
   }

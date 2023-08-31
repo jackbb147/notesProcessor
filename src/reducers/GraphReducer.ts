@@ -1,5 +1,5 @@
 import { ImmerReducer } from "use-immer";
-
+import { z } from "zod";
 const _ = require("lodash");
 
 export enum GraphActionType {
@@ -15,6 +15,7 @@ export enum GraphActionType {
   addLabelToNode,
   merge,
   permanentRemoveNode,
+  set,
 }
 
 export type GraphAction =
@@ -29,31 +30,63 @@ export type GraphAction =
   | { type: GraphActionType.permanentRemoveNode; id: string }
   | { type: GraphActionType.addLink; link: GraphLink }
   | { type: GraphActionType.removeLink; link: GraphLink }
-  | { type: GraphActionType.recoverLink; link: GraphLink };
+  | { type: GraphActionType.recoverLink; link: GraphLink }
+  | { type: GraphActionType.set; state: GraphState };
 
-export interface GraphNode {
-  id: string;
-  title: string;
-  content: string;
-  labels: string[];
-  dateCreated?: string;
-  dateLastModified?: string;
-}
+// export interface GraphNode {
+//   id: string;
+//   title: string;
+//   content: string;
+//   labels: string[];
+//   dateCreated?: string;
+//   dateLastModified?: string;
+// }
 
-export interface GraphLink {
-  source: string;
-  target: string;
-  undirected?: boolean;
-}
+const GraphNode = z.object({
+  id: z.string(),
+  title: z.string(),
+  content: z.string(),
+  labels: z.array(z.string()),
+  dateCreated: z.string().optional(),
+  dateLastModified: z.string().optional(),
+});
 
-export interface GraphState {
-  version: string;
-  nodes: GraphNode[];
-  links: GraphLink[];
-  deletedNodes: GraphNode[];
-  deletedLinks: GraphLink[];
-  labels: string[];
-}
+export type GraphNode = z.infer<typeof GraphNode>;
+
+// export interface GraphLink {
+//   source: string;
+//   target: string;
+//   undirected?: boolean;
+// }
+
+const GraphLink = z.object({
+  source: z.string(),
+
+  target: z.string(),
+  undirected: z.boolean().optional(),
+});
+
+export type GraphLink = z.infer<typeof GraphLink>;
+
+export const GraphState = z.object({
+  version: z.string(),
+  nodes: z.array(GraphNode),
+  links: z.array(GraphLink),
+  deletedNodes: z.array(GraphNode),
+  deletedLinks: z.array(GraphLink),
+  labels: z.array(z.string()),
+});
+
+export type GraphState = z.infer<typeof GraphState>;
+
+// export interface GraphState {
+//   version: string;
+//   nodes: GraphNode[];
+//   links: GraphLink[];
+//   deletedNodes: GraphNode[];
+//   deletedLinks: GraphLink[];
+//   labels: string[];
+// }
 
 export function graphReducer(draft: GraphState, action: GraphAction): void {
   // console.log(`dispatched: ${JSON.stringify(action)}`)
@@ -213,6 +246,16 @@ export function graphReducer(draft: GraphState, action: GraphAction): void {
         action.other.deletedNodes,
         "id",
       );
+
+      break;
+    }
+
+    case GraphActionType.set: {
+      if (draft.version !== action.state.version) {
+        throw new Error("Graph state version mismatch.");
+        return;
+      }
+      _.assign(draft, action.state);
     }
   }
 }
