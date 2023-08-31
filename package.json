@@ -29,6 +29,7 @@
     "@tiptap/extension-heading": "^2.1.7",
     "@tiptap/extension-history": "^2.1.7",
     "@tiptap/extension-mention": "^2.1.6",
+    "@tiptap/extension-placeholder": "^2.1.7",
     "@tiptap/extension-text-align": "^2.1.6",
     "@tiptap/extension-underline": "^2.1.7",
     "@tiptap/pm": "^2.1.6",

@@ -1,4 +1,5 @@
 import "./MathEditor/styles.css";
+import "./placeholder.css";
 
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -7,6 +8,7 @@ import React, { forwardRef, useContext, useEffect } from "react";
 import ReactComponent from "./MathEditor/Extension.js";
 import { Mention } from "@tiptap/extension-mention";
 import suggestion from "./Reference/suggestion";
+import Placeholder from "@tiptap/extension-placeholder";
 
 import { useGraph } from "../../../hooks/AppStateAndGraphhooks";
 import { GraphNode } from "../../../reducers/GraphReducer";
@@ -54,6 +56,18 @@ export default forwardRef(
           TextAlign.configure({
             alignments: ["left", "right", "center", "justify"],
             types: ["heading", "paragraph"],
+          }),
+          Placeholder.configure({
+            // Use a placeholder:
+            placeholder: "Write something …",
+            // Use different placeholders depending on the node type:
+            // placeholder: ({ node }) => {
+            //   if (node.type.name === 'heading') {
+            //     return 'What’s the title?'
+            //   }
+
+            //   return 'Can you add some further context?'
+            // },
           }),
           ReactComponent,
           Underline,
