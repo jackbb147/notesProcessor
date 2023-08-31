@@ -6,6 +6,7 @@ import {
   AppStateReducer,
   Collections,
 } from "./AppStateReducer";
+import { Version } from "../Version";
 
 export const AppStateContext = createContext<AppState | null>(null);
 
@@ -16,7 +17,7 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useImmerReducer<AppState, AppAction>(
     AppStateReducer,
     {
-      version: "1.0",
+      version: Version.AppState,
       activeNodeID: undefined,
       activeCollection: Collections.All,
       LabelPanelClosed: true,
