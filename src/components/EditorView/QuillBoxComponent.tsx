@@ -184,7 +184,6 @@ export function QuillBoxComponent({
         flexGrow: "1",
         height: "100%",
         overflow: "hidden",
-        borderRight: darkModeOn ? "1px solid white" : "1px solid #ccc",
       }}
     >
       <div ref={ref}></div>

@@ -209,7 +209,7 @@ export function NoteEditor({
       <div
         style={{
           height: "95%",
-          border: darkModeOn ? "1px solid white" : "1px solid #ccc",
+          // border: darkModeOn ? "1px solid red" : "1px solid #ccc",
           marginBottom: ".2rem",
           display: "flex",
           flexDirection: "row",

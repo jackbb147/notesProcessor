@@ -109,8 +109,12 @@ export const ScrollAreaDemo = ({ children }: { children: React.ReactNode }) => (
       width: "100%",
       overflowX: "auto",
       padding: "4px 0px",
+      // backgroundColor: "red",
+      borderRadius: "9px",
+      boxShadow:
+        "0px 0px 0px #00000077,0px 0px 9px #00000055,inset 0px 0px 0px 1px #49555f",
     }}
-    className={styles.CustomScrollBar}
+    className={`${styles.CustomScrollBar} dark:bg-dark_secondary`}
   >
     {children}
   </div>

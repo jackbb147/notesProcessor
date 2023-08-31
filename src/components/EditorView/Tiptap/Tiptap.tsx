@@ -48,7 +48,6 @@ export function TiptapBoxComponent({
         height: "100%",
         // overflowX: "hidden",
         // overflowY: "scroll",
-        borderRight: AppState.darkModeOn ? "1px solid white" : "1px solid #ccc",
       }}
       autoHide
     >
