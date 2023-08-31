@@ -16,6 +16,7 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useImmerReducer<AppState, AppAction>(
     AppStateReducer,
     {
+      version: "1.0",
       activeNodeID: undefined,
       activeCollection: Collections.All,
       LabelPanelClosed: true,

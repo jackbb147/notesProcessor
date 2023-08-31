@@ -1,6 +1,7 @@
 import { GraphState } from "../GraphReducer";
 
 export const graph1: GraphState = {
+  version: "1.0",
   links: [
     // {
     //   source: "test",

@@ -21,6 +21,7 @@ describe("sum module, for testing", () => {
 describe("GraphReducer", () => {
   test("add node", () => {
     let state: GraphState = {
+      version: "1.0",
       nodes: [],
       links: [],
       deletedNodes: [],
@@ -45,6 +46,7 @@ describe("GraphReducer", () => {
   });
   test("remove node", () => {
     let state: GraphState = {
+      version: "1.0",
       nodes: [
         {
           id: "1",
@@ -90,6 +92,7 @@ describe("GraphReducer", () => {
   test("update node", () => {});
   test("recover node", () => {
     let state: GraphState = {
+      version: "1.0",
       nodes: [
         {
           id: "1",
@@ -136,6 +139,7 @@ describe("GraphReducer", () => {
 
   test("add link", () => {
     let state: GraphState = {
+      version: "1.0",
       nodes: [
         {
           id: "1",
@@ -169,6 +173,7 @@ describe("GraphReducer", () => {
   });
   test("remove link", () => {
     let state: GraphState = {
+      version: "1.0",
       nodes: [
         {
           id: "1",
@@ -209,6 +214,7 @@ describe("GraphReducer", () => {
 
   test("recover link", () => {
     let state: GraphState = {
+      version: "1.0",
       nodes: [
         {
           id: "1",

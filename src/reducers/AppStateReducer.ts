@@ -38,6 +38,7 @@ export enum Collections {
 }
 
 export interface AppState {
+  version: string;
   activeNodeID: string | undefined;
   activeCollection: Collections;
   activeLabel: string | undefined;

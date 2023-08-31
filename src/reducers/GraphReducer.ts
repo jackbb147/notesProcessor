@@ -47,6 +47,7 @@ export interface GraphLink {
 }
 
 export interface GraphState {
+  version: string;
   nodes: GraphNode[];
   links: GraphLink[];
   deletedNodes: GraphNode[];
