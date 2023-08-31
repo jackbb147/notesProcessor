@@ -125,6 +125,10 @@ export function InlineMathEditorComponent(props: NodeViewProps) {
 
   const [nodeMoved, setNodeMoved] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+
+  useEffect(() => {
+    setShowTooltip(true);
+  }, []);
   function resetNodePosition() {
     setDraggableKey(draggableKey + 1);
     setNodeMoved(false);
