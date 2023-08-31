@@ -1,6 +1,7 @@
 import { describe, expect, test } from "@jest/globals";
 import * as V0 from "./GraphStates/V0";
 import * as V1_0 from "./GraphStates/V1_0";
+import { V0_SAMPLE } from "./GraphStates/V0_SAMPLE";
 import { GraphStateMigrations } from "./GraphStateMigration";
 function sum(a: number, b: number) {
   return a + b;
@@ -61,7 +62,23 @@ describe("V0 to V1_0", () => {
     labels: ["something"],
   };
 
-  test("converts V0 to V1_0", () => {
+  test("I. converts V0 to V1_0", () => {
     expect(GraphStateMigrations[0].up(v0)).toEqual(expectedV1_0);
+  });
+
+  test("II. converts V0 to V1_0", () => {
+    const received: any = GraphStateMigrations[0].up(V0_SAMPLE);
+    expect(received).toHaveProperty("version", "1.0");
+    expect(received).toHaveProperty("nodes");
+    expect(received.nodes.length).toBe(V0_SAMPLE.nodes.length);
+    expect(received).toHaveProperty("links");
+    expect(received.links.length).toBe(0);
+    expect(received).toHaveProperty("deletedNodes");
+    expect(received.deletedNodes.length).toBe(V0_SAMPLE.deletedNodes.length);
+    expect(received).toHaveProperty("deletedLinks");
+    expect(received.labels.length).toBe(V0_SAMPLE.labels.length);
+
+    expect(received).toHaveProperty("labels");
+    expect(received.labels.length).toBe(V0_SAMPLE.labels.length);
   });
 });
