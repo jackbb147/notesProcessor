@@ -1,9 +1,11 @@
 import * as Form from "@radix-ui/react-form";
 import { PasswordFormField } from "../Forms/PasswordFormField";
-import React, { useState } from "react";
+import React, {useContext, useState} from "react";
 import axios from "axios";
 import {useLogInStatus} from "./useLogInStatus";
 import {api} from "../../../Api/Api";
+import {useSetUser} from "../../../hooks/AppStateAndGraphAndUserhooks";
+import {UserContext} from "../AuthContext";
 
 function EmailFormField() {
   return (
@@ -115,6 +117,7 @@ interface loginInfo {
 export function LoginForm() {
 
 
+    const setUser = useSetUser();
     async function login(info: loginInfo) {
         // const endpoint = "http://localhost:5046/isLoggedIn";
         const endpoint = "http://localhost:5046/Authenticate/Login";
@@ -130,22 +133,30 @@ export function LoginForm() {
                     }
                 }
             );
-            debugger;
+
+
             return response;
         } catch (e) {
-            debugger;
+            // debugger;
             console.error(e);
         }
     }
   const handleSubmit = async (event: any) => {
 
-        debugger;
+        // debugger;
         event.preventDefault();
       const response = await login({
             email: event.target[0].value,
             password: event.target[1].value,
       });
-      debugger; //TODO
+      // debugger;
+      if(response?.status === 200){
+          setUser(response.data);
+      }else{
+          console.dir(response);
+          throw new Error("Login failed. Check the console for more information. ");
+      }
+      // debugger; //TODO
 
   };
   return (

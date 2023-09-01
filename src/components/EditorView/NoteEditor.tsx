@@ -12,7 +12,7 @@ import { RangeStatic } from "quill";
 import { LabelSelector } from "./LabelSelector";
 import { LastEditedWhen } from "./LastEditedWhen";
 import { ActionMeta, Options } from "react-select";
-import { useGraph, useGraphDispatch } from "../../hooks/AppStateAndGraphhooks";
+import { useGraph, useGraphDispatch } from "../../hooks/AppStateAndGraphAndUserhooks";
 
 function QuillBoxComponent({
   val,

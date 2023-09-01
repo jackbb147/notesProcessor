@@ -10,7 +10,7 @@ import {
   useGraph,
   useGraphDispatch,
   useAppState,
-} from "../../../hooks/AppStateAndGraphhooks";
+} from "../../../hooks/AppStateAndGraphAndUserhooks";
 import { useActiveCollection } from "./useActiveCollection";
 
 export function Desktop_NotesPanel({

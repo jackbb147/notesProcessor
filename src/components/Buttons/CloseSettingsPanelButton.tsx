@@ -1,6 +1,6 @@
 import { Button } from "../ui/Button";
 import React from "react";
-import { useDispatch } from "../../hooks/AppStateAndGraphhooks";
+import { useDispatch } from "../../hooks/AppStateAndGraphAndUserhooks";
 import { AppActionType } from "../../reducers/AppStateReducer";
 
 export function CloseSettingsPanelButton() {

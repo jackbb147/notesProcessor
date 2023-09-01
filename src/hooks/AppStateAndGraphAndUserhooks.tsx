@@ -4,6 +4,7 @@ import {
   AppStateDispatchContext,
 } from "../reducers/AppStateContext";
 import { GraphContext, GraphDispatchContext } from "../reducers/GraphContext";
+import {SetUserContext, UserContext} from "../components/RegisterAndLogin/AuthContext";
 
 export function useAppState() {
   var state = useContext(AppStateContext);
@@ -29,4 +30,16 @@ export function useGraphDispatch() {
   var graphDispatch = useContext(GraphDispatchContext);
   if (graphDispatch === null) throw Error("graphDispatch is null. ");
   return graphDispatch;
+}
+
+export function useUser() {
+  var user = useContext(UserContext);
+  return user;
+}
+
+
+export function useSetUser() {
+  var setUser = useContext(SetUserContext);
+  if (setUser === null) throw Error("setUser is null. ");
+  return setUser;
 }

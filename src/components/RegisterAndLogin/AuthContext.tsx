@@ -1,15 +1,19 @@
-import React, {createContext, Dispatch, SetStateAction, useState} from "react";
+import React, {createContext, Dispatch, SetStateAction, useEffect, useState} from "react";
 
 
 
 export const UserContext = createContext(null);
 
-export const SetUserContext = createContext<Dispatch<SetStateAction<null>>|null>(null);
+export const SetUserContext = createContext<any>(null);
 
 export const ActiveUserProvider = ({children}:{
     children: React.ReactNode
 }) => {
     const [user, setUser] = useState(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    useEffect(()=>{
+
+    }, [])
 
     return (
         <UserContext.Provider value={user}>

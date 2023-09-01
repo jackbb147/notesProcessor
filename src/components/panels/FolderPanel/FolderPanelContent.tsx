@@ -4,8 +4,8 @@ import {
   useDispatch,
   useGraph,
   useGraphDispatch,
-  useAppState,
-} from "../../../hooks/AppStateAndGraphhooks";
+  useAppState, useUser,
+} from "../../../hooks/AppStateAndGraphAndUserhooks";
 import { AppActionType, Collections } from "../../../reducers/AppStateReducer";
 import React, { useContext, useRef } from "react";
 import {
@@ -67,8 +67,8 @@ export function FolderPanelContent() {
 
   const settingsButtonRef = useRef<any>(null);
   const isMobile = useMediaQuery({ maxWidth: 767 });
-  const isLoggedIn = useLogInStatus();
-
+  // const isLoggedIn = useLogInStatus();
+  const activeUser = useUser();
   function handleSettingPanelOutsideClick() {
     if (!isMobile) {
       dispatch({
@@ -133,7 +133,7 @@ export function FolderPanelContent() {
       <div className={"mt-auto"}>
         <EditLabelsButton />
         {
-            isLoggedIn ? "you are logged in!" : <AccountButton />
+            activeUser ? "you are logged in!" : <AccountButton />
         }
         <SettingsButton ref={settingsButtonRef} />
         <OutsideAlerter

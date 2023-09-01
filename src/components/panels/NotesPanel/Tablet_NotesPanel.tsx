@@ -9,7 +9,7 @@ import {
   useGraph,
   useGraphDispatch,
   useAppState,
-} from "../../../hooks/AppStateAndGraphhooks";
+} from "../../../hooks/AppStateAndGraphAndUserhooks";
 import { useActiveCollection } from "./useActiveCollection";
 
 export function Tablet_NotesPanel({ children }: { children: React.ReactNode }) {
