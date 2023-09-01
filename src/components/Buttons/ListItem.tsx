@@ -12,6 +12,7 @@ export const ListItem = forwardRef(
       optionalText,
       style,
       iconOnly = false,
+      boldText = false,
     }: {
       text: string;
       icon?: React.ReactNode;
@@ -21,6 +22,7 @@ export const ListItem = forwardRef(
       optionalText?: string;
       style?: Object;
       iconOnly?: boolean;
+      boldText?: boolean;
     },
     ref: React.ForwardedRef<any>,
   ) => {
@@ -52,6 +54,7 @@ export const ListItem = forwardRef(
             <span
               style={{
                 overflowWrap: "break-word",
+                fontWeight: boldText ? "bold" : "normal",
               }}
             >
               {text.length > 30 ? text.slice(0, 30) + "..." : text}

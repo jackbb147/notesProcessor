@@ -101,6 +101,9 @@ export function NotesPanelContent({
 
     let hour = dateLastModified.getHours();
     let minute = dateLastModified.getMinutes();
+    const date = dateLastModified.getDate();
+    const month = dateLastModified.getMonth() + 1;
+    const year = dateLastModified.getFullYear();
     let PM = false;
     var res = "";
 
@@ -114,6 +117,8 @@ export function NotesPanelContent({
     if (minute < 10) res += "0";
     res += minute.toString();
     if (PM) res += "PM";
+    else res += "AM";
+    res += ` ${month}/${date}/${year}`;
     return res;
   }
 
@@ -149,12 +154,14 @@ export function NotesPanelContent({
                       node: (
                         <ListItem
                           text={node.title}
+                          boldText={true}
                           active={node.id === state.activeNodeID}
                           optionalText={buildOptionalText(node)}
                           style={{
                             // height: "3rem",
                             // border: "1px solid",
-                            marginBottom: ".2rem",
+                            marginBottom: ".4rem",
+                            borderBottom: ".7px solid grey",
                           }}
                           icon={
                             <span

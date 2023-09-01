@@ -37,6 +37,7 @@ export function TiptapBoxComponent({
         ...note,
         title: title,
         content: content,
+        dateLastModified: new Date().toJSON(),
       },
     });
   }
