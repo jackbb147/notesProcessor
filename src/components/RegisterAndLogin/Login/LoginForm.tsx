@@ -118,20 +118,11 @@ export function LoginForm() {
     async function login(info: loginInfo) {
         // const endpoint = "http://localhost:5046/isLoggedIn";
         const endpoint = "http://localhost:5046/Authenticate/Login";
+        const shortEndpoint  = "/Authenticate/Login";
         // const endpoint = "http://name5-dev.eba-zcpkbqup.us-west-2.elasticbeanstalk.com/isLoggedIn";
         try {
-            // const response = await axios.get("http://localhost:5046/getUsers");
-            // const response = await checkLogin();
-            // debugger;
-            // const response = await axios.get(
-            //     endpoint,{
-            //         withCredentials: true,
-            //     }
-            // );
-            const response = await axios.post(
-              endpoint,{
-                withCredentials: true,
-                },
+            const response = await api.post(
+              shortEndpoint,null,
                 {
                     params: {
                         Email: info.email,

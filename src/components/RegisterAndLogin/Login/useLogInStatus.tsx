@@ -12,7 +12,6 @@ export function useLogInStatus()
     useEffect(()=>{
         async function checkLogin()
         {
-            const endpoint = "isLoggedIn";
             // const envi= process.env;
             const response = await api.get("/isLoggedIn");
             if(response.status !== 200) throw new Error("[useLogInStatus] Failed to check login status; got status code: " + response.status);
