@@ -36,6 +36,7 @@ function getFirstLine(json: JSONContent): string {
       q.push(...node.content);
     }
   }
+  if (res.length < 1) res = "New Note";
   return res;
 }
 
