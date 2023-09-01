@@ -2,6 +2,7 @@ import * as Form from "@radix-ui/react-form";
 import { PasswordFormField } from "../Forms/PasswordFormField";
 import { InputComponent } from "../Forms/InputComponent";
 import axios from "axios";
+import {useEffect} from "react";
 
 function EmailFormField() {
   return (
@@ -98,21 +99,46 @@ interface registrationInfo {
   username: string;
   password: string;
 }
+
+async function checkLogin()
+{
+  // const endpoint = "http://localhost:5046/dog";
+  try {
+    const response = await axios.get("http://localhost:5046/dog",{
+      withCredentials: true,
+    });
+    // const response = await axios.get("http://localhost:5046/getUsers");
+    // const response = await axios.get(
+    //     endpoint,
+    //     {},
+    // );
+    debugger;
+
+  } catch (e) {
+    debugger;
+    console.error(e);
+  }
+}
+// useEffect(() => {
+//   // const endpoint = "http://localhost:5046/isLoggedIn";
+//
+// }, [])
 async function register(info: registrationInfo) {
   const endpoint = "http://localhost:5046/create";
   try {
     // const response = await axios.get("http://localhost:5046/getUsers");
-    const response = await axios.post(
-      endpoint,
-      {},
-      {
-        params: {
-          Name: info.username,
-          Email: info.email,
-          Password: info.password,
-        },
-      },
-    );
+    const response = await checkLogin();
+    // const response = await axios.post(
+    //   endpoint,
+    //   {},
+    //   {
+    //     params: {
+    //       Name: info.username,
+    //       Email: info.email,
+    //       Password: info.password,
+    //     },
+    //   },
+    // );
     debugger;
     return response;
   } catch (e) {
@@ -130,6 +156,8 @@ export function RegistrationForm() {
         username = v.target[1].value,
         password = v.target[2].value;
       var status = await register({ email, username, password });
+      // var status = await checkLogin();
+      // debugger;
 
       // debugger;
     } catch (e) {

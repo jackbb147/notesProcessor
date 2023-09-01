@@ -1,6 +1,7 @@
 import * as Form from "@radix-ui/react-form";
 import { PasswordFormField } from "../Forms/PasswordFormField";
 import React, { useState } from "react";
+import axios from "axios";
 
 function EmailFormField() {
   return (
@@ -104,9 +105,54 @@ function UsernameFormField() {
   );
 }
 
+
+interface loginInfo {
+    email: string;
+    password: string;
+}
 export function LoginForm() {
-  const handleSubmit = (event: React.FormEvent) => {
-    debugger; //TODO
+
+    async function login(info: loginInfo) {
+        // const endpoint = "http://localhost:5046/isLoggedIn";
+        const endpoint = "http://localhost:5046/Authenticate/Login";
+        // const endpoint = "http://name5-dev.eba-zcpkbqup.us-west-2.elasticbeanstalk.com/isLoggedIn";
+        try {
+            // const response = await axios.get("http://localhost:5046/getUsers");
+            // const response = await checkLogin();
+            // debugger;
+            // const response = await axios.get(
+            //     endpoint,{
+            //         withCredentials: true,
+            //     }
+            // );
+            const response = await axios.post(
+              endpoint,{
+                withCredentials: true,
+                },
+                {
+                    params: {
+                        Email: info.email,
+                        Password: info.password,
+                    }
+                }
+            );
+            debugger;
+            return response;
+        } catch (e) {
+            debugger;
+            console.error(e);
+        }
+    }
+  const handleSubmit = async (event: any) => {
+
+        debugger;
+        event.preventDefault();
+      const response = await login({
+            email: event.target[0].value,
+            password: event.target[1].value,
+      });
+      debugger; //TODO
+
   };
   return (
     <Form.Root onSubmit={handleSubmit} className="w-full">
