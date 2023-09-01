@@ -1,7 +1,7 @@
 import "./MathEditor/styles.css";
 import "./placeholder.css";
 
-import { EditorContent, useEditor } from "@tiptap/react";
+import { EditorContent, JSONContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import React, { forwardRef, useContext, useEffect } from "react";
 
@@ -22,6 +22,23 @@ import { Heading } from "@tiptap/extension-heading";
 
 import MyToolbar from "./Toolbar/Toolbar";
 
+function getFirstLine(json: JSONContent): string {
+  let res: string = "";
+  var q = [json];
+  while (q.length > 0) {
+    var node = q.shift();
+    if (!node) continue;
+    if (node.type === "text") {
+      res = node.text ?? "";
+      break;
+    }
+    if (node.content) {
+      q.push(...node.content);
+    }
+  }
+  return res;
+}
+
 export default forwardRef(
   (
     {
@@ -29,7 +46,7 @@ export default forwardRef(
       handleBlur,
     }: {
       note: GraphNode;
-      handleBlur?: (content: string) => any;
+      handleBlur?: (title: string, content: string) => any;
     },
     ref,
   ) => {
@@ -48,8 +65,9 @@ export default forwardRef(
         onBlur: (props) => {
           console.log("onblur");
           const content = props.editor.getHTML();
+          let firstLine: string = getFirstLine(props.editor.getJSON());
           // debugger;
-          handleBlur?.(content);
+          handleBlur?.(firstLine, content);
         },
         extensions: [
           StarterKit,

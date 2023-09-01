@@ -30,11 +30,12 @@ export function TiptapBoxComponent({
   const AppState = useAppState();
   const GraphDispatch = useGraphDispatch();
 
-  function handleBlur(content: string) {
+  function handleBlur(title: string, content: string) {
     GraphDispatch({
       type: GraphActionType.updateNode,
       node: {
         ...note,
+        title: title,
         content: content,
       },
     });
