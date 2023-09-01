@@ -36,6 +36,17 @@ export function useActiveCollection() {
       }
     }
 
+    /**
+     * .sort((note1: GraphNode, note2: GraphNode) => {
+     *                       // debugger;
+     *                       if (!note1.dateLastModified || !note2.dateLastModified)
+     *                         return 1; // if one of the notes has no date, return a random value for now...
+     *                       const date1 = new Date(note1.dateLastModified);
+     *                       const date2 = new Date(note2.dateLastModified);
+     *                       if (date1 < date2) return 1;
+     *                       else return -1;
+     *                     })
+     */
     return collection;
   }, [state, graph]);
 

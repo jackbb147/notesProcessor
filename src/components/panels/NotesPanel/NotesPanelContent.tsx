@@ -149,43 +149,61 @@ export function NotesPanelContent({
           <AnimatedList
             data={
               collection.length > 0
-                ? collection.map((node) => {
-                    return {
-                      node: (
-                        <ListItem
-                          text={node.title}
-                          boldText={true}
-                          active={node.id === state.activeNodeID}
-                          optionalText={buildOptionalText(node)}
-                          style={{
-                            // height: "3rem",
-                            // border: "1px solid",
-                            marginBottom: ".4rem",
-                            borderBottom: ".7px solid grey",
-                          }}
-                          icon={
-                            <span
-                              className="material-symbols-outlined"
-                              style={
-                                {
-                                  // fontSize: "2rem",
+                ? collection
+                    .slice()
+                    .sort((a, b) => {
+                      // if (!a.dateLastModified || !b.dateLastModified) return 0;
+                      const dateA = a.dateCreated ?? a.dateLastModified;
+                      const dateB = b.dateCreated ?? b.dateLastModified;
+                      if (!dateA) {
+                        return 1;
+                      }
+
+                      if (!dateB) {
+                        return -1;
+                      }
+
+                      return (
+                        new Date(dateB).getTime() - new Date(dateA).getTime()
+                      );
+                    })
+                    .map((node) => {
+                      return {
+                        node: (
+                          <ListItem
+                            text={node.title}
+                            boldText={true}
+                            active={node.id === state.activeNodeID}
+                            optionalText={buildOptionalText(node)}
+                            style={{
+                              // height: "3rem",
+                              // border: "1px solid",
+                              marginBottom: ".4rem",
+                              borderBottom: ".7px solid grey",
+                            }}
+                            icon={
+                              <span
+                                className="material-symbols-outlined"
+                                style={
+                                  {
+                                    // fontSize: "2rem",
+                                  }
                                 }
-                              }
-                            >
-                              article
-                            </span>
-                          }
-                          onClick={() =>
-                            dispatch({
-                              type: AppActionType.setActiveNodeID,
-                              id: node.id,
-                            })
-                          }
-                        />
-                      ),
-                      id: node.id,
-                    };
-                  })
+                              >
+                                article
+                              </span>
+                            }
+                            onClick={() =>
+                              dispatch({
+                                type: AppActionType.setActiveNodeID,
+                                id: node.id,
+                              })
+                            }
+                          />
+                        ),
+                        id: node.id,
+                      };
+                    })
                 : [
                     {
                       node: (
