@@ -2,6 +2,8 @@ import * as Form from "@radix-ui/react-form";
 import { PasswordFormField } from "../Forms/PasswordFormField";
 import React, { useState } from "react";
 import axios from "axios";
+import {useLogInStatus} from "./useLogInStatus";
+import {api} from "../../../Api/Api";
 
 function EmailFormField() {
   return (
@@ -111,6 +113,7 @@ interface loginInfo {
     password: string;
 }
 export function LoginForm() {
+
 
     async function login(info: loginInfo) {
         // const endpoint = "http://localhost:5046/isLoggedIn";

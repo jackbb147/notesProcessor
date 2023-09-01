@@ -22,6 +22,7 @@ import { useMediaQuery } from "react-responsive";
 import { Desktop, Mobile, Tablet } from "../../../hooks/useMediaQuery";
 import { All } from "../../Buttons/All";
 import { RecentlyDeleted } from "../../Buttons/RecentlyDeleted";
+import {useLogInStatus} from "../../RegisterAndLogin/Login/useLogInStatus";
 
 function SettingsPanelWrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -66,6 +67,7 @@ export function FolderPanelContent() {
 
   const settingsButtonRef = useRef<any>(null);
   const isMobile = useMediaQuery({ maxWidth: 767 });
+  const isLoggedIn = useLogInStatus();
 
   function handleSettingPanelOutsideClick() {
     if (!isMobile) {
@@ -130,7 +132,9 @@ export function FolderPanelContent() {
 
       <div className={"mt-auto"}>
         <EditLabelsButton />
-        <AccountButton />
+        {
+            isLoggedIn ? "you are logged in!" : <AccountButton />
+        }
         <SettingsButton ref={settingsButtonRef} />
         <OutsideAlerter
           condition={SettingPanelOutsideClickCondition}
