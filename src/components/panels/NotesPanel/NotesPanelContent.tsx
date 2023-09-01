@@ -74,20 +74,20 @@ export function NotesPanelContent({
     if (graph === null) return;
     if (dispatch === null) return;
     if (state === null) return;
-    if (graph.nodes.length < 2) return;
+    if (collection.length < 2) return;
 
     if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
 
-    let index = graph.nodes.findIndex((node) => node.id === state.activeNodeID);
+    let index = collection.findIndex((node) => node.id === state.activeNodeID);
 
     let nextID;
     if (e.key === "ArrowDown")
-      nextID = graph.nodes[(index + 1) % graph.nodes.length].id;
+      nextID = collection[(index + 1) % collection.length].id;
     else
       nextID =
         index - 1 >= 0
-          ? graph.nodes[(index - 1) % graph.nodes.length].id
-          : graph.nodes[graph.nodes.length - 1].id;
+          ? collection[(index - 1) % collection.length].id
+          : collection[collection.length - 1].id;
 
     dispatch({
       type: AppActionType.setActiveNodeID,
@@ -149,61 +149,43 @@ export function NotesPanelContent({
           <AnimatedList
             data={
               collection.length > 0
-                ? collection
-                    .slice()
-                    .sort((a, b) => {
-                      // if (!a.dateLastModified || !b.dateLastModified) return 0;
-                      const dateA = a.dateCreated ?? a.dateLastModified;
-                      const dateB = b.dateCreated ?? b.dateLastModified;
-                      if (!dateA) {
-                        return 1;
-                      }
-
-                      if (!dateB) {
-                        return -1;
-                      }
-
-                      return (
-                        new Date(dateB).getTime() - new Date(dateA).getTime()
-                      );
-                    })
-                    .map((node) => {
-                      return {
-                        node: (
-                          <ListItem
-                            text={node.title}
-                            boldText={true}
-                            active={node.id === state.activeNodeID}
-                            optionalText={buildOptionalText(node)}
-                            style={{
-                              // height: "3rem",
-                              // border: "1px solid",
-                              marginBottom: ".4rem",
-                              borderBottom: ".7px solid grey",
-                            }}
-                            icon={
-                              <span
-                                className="material-symbols-outlined"
-                                style={
-                                  {
-                                    // fontSize: "2rem",
-                                  }
+                ? collection.map((node) => {
+                    return {
+                      node: (
+                        <ListItem
+                          text={node.title}
+                          boldText={true}
+                          active={node.id === state.activeNodeID}
+                          optionalText={buildOptionalText(node)}
+                          style={{
+                            // height: "3rem",
+                            // border: "1px solid",
+                            marginBottom: ".4rem",
+                            borderBottom: ".7px solid grey",
+                          }}
+                          icon={
+                            <span
+                              className="material-symbols-outlined"
+                              style={
+                                {
+                                  // fontSize: "2rem",
                                 }
-                              >
-                                article
-                              </span>
-                            }
-                            onClick={() =>
-                              dispatch({
-                                type: AppActionType.setActiveNodeID,
-                                id: node.id,
-                              })
-                            }
-                          />
-                        ),
-                        id: node.id,
-                      };
-                    })
+                              }
+                            >
+                              article
+                            </span>
+                          }
+                          onClick={() =>
+                            dispatch({
+                              type: AppActionType.setActiveNodeID,
+                              id: node.id,
+                            })
+                          }
+                        />
+                      ),
+                      id: node.id,
+                    };
+                  })
                 : [
                     {
                       node: (

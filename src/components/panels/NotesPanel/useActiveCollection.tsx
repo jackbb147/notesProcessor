@@ -47,7 +47,20 @@ export function useActiveCollection() {
      *                       else return -1;
      *                     })
      */
-    return collection;
+    return collection.slice().sort((a, b) => {
+      // if (!a.dateLastModified || !b.dateLastModified) return 0;
+      const dateA = a.dateCreated ?? a.dateLastModified;
+      const dateB = b.dateCreated ?? b.dateLastModified;
+      if (!dateA) {
+        return 1;
+      }
+
+      if (!dateB) {
+        return -1;
+      }
+
+      return new Date(dateB).getTime() - new Date(dateA).getTime();
+    });
   }, [state, graph]);
 
   const [activeCollection, setActiveCollection] = useState(
