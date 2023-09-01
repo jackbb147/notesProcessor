@@ -22,9 +22,11 @@ import { ReferenceStateDispatchContext } from "./Reference/ReferenceStateContext
 export function TiptapBoxComponent({
   note,
   width,
+  focusRequested,
 }: {
   note: GraphNode;
   width?: string;
+  focusRequested?: number;
 }) {
   const setReferenceMap = useContext(ReferenceStateDispatchContext);
   const AppState = useAppState();
@@ -45,7 +47,7 @@ export function TiptapBoxComponent({
     <Scrollbars
       style={{
         width: width ?? "100%",
-        // border: "1px solid red",
+
         flexGrow: "1",
         height: "100%",
         // overflowX: "hidden",
@@ -53,7 +55,11 @@ export function TiptapBoxComponent({
       }}
       autoHide
     >
-      <TiptapEditor note={note} handleBlur={handleBlur} />
+      <TiptapEditor
+        note={note}
+        handleBlur={handleBlur}
+        focusRequested={focusRequested}
+      />
       {/*<Tiptap note={note} />*/}
     </Scrollbars>
     // <div

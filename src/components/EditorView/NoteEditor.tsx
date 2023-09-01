@@ -103,6 +103,7 @@ export function NoteEditor({
   const appState = useAppState();
   const dispatch = useDispatch();
   const [infoPanelWidth, setInfoPanelWidth] = useState("");
+  const [focusRequested, setFocusRequested] = useState(0);
 
   // const [referenceMap, setReferenceMap] = useState(new Map());
 
@@ -207,6 +208,10 @@ export function NoteEditor({
       }}
     >
       <div
+        onClick={() => {
+          // alert("hey");
+          setFocusRequested(focusRequested + 1);
+        }}
         style={{
           height: "95%",
           // border: darkModeOn ? "1px solid red" : "1px solid #ccc",
@@ -221,6 +226,7 @@ export function NoteEditor({
           <TiptapBoxComponent
             note={note}
             width={`calc(100% - ${infoPanelWidth})`}
+            focusRequested={focusRequested}
             // updateReferences={(map: Map<string, number>) => {
             //   setReferenceMap(map);
             // }}

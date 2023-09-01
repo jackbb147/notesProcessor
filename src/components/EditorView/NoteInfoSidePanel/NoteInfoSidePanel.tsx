@@ -396,7 +396,8 @@ function NoteInfoSidePanelWrapper({
     <>
       <Mobile>
         <div //this div is the dark overlay that covers the rest of the screen when the side panel is open
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             dispatch({
               type: AppActionType.setShowNoteInfoPanel,
               show: false,
@@ -421,6 +422,9 @@ function NoteInfoSidePanelWrapper({
             height: "100%",
             zIndex: 100,
           }}
+          onClick={(e) => {
+            e.stopPropagation(); // this is to allow the editor, excluding the toolbar,  to be clicked on in order to focus the editor
+          }}
         >
           {children}
         </div>
@@ -432,6 +436,9 @@ function NoteInfoSidePanelWrapper({
           style={{
             width: width,
           }}
+          onClick={(e) => {
+            e.stopPropagation(); // this is to allow the editor, excluding the toolbar,  to be clicked on in order to focus the editor
+          }}
         >
           {children}
         </div>
@@ -442,6 +449,9 @@ function NoteInfoSidePanelWrapper({
           className={`flex flex-col ${styles.noteInfoSidePanel} `}
           style={{
             width: width,
+          }}
+          onClick={(e) => {
+            e.stopPropagation(); // this is to allow the editor, excluding the toolbar,  to be clicked on in order to focus the editor
           }}
         >
           {children}

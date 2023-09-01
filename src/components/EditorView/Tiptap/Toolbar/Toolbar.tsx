@@ -48,6 +48,9 @@ export const MyToolbar = ({ editor }: { editor: Editor | null }) => (
     style={{
       paddingBottom: "2px",
     }}
+    onClick={(e) => {
+      e.stopPropagation(); // this is to allow the editor, excluding the toolbar,  to be clicked on in order to focus the editor
+    }}
   >
     <ScrollAreaDemo>
       <ToggleGroup type="multiple" aria-label="History">

@@ -45,15 +45,22 @@ export default forwardRef(
     {
       note,
       handleBlur,
+      focusRequested,
     }: {
       note: GraphNode;
       handleBlur?: (title: string, content: string) => any;
+      focusRequested?: number;
     },
     ref,
   ) => {
     const Graph = useGraph();
 
     const referenceMapDispatch = useContext(ReferenceStateDispatchContext);
+    useEffect(() => {
+      // alert("hey focus requested");
+      console.debug("[tiptapEditor] focus requested");
+      editor?.commands.focus();
+    }, [focusRequested]);
 
     useEffect(() => {
       if (!editor) return;
@@ -251,7 +258,14 @@ export default forwardRef(
         {/*  /!*</button>*!/*/}
         {/*</div>*/}
 
-        <EditorContent editor={editor} />
+        <EditorContent
+          editor={editor}
+          style={{
+            // border: "1px solid red",
+            minHeight: "95vh",
+            cursor: "text",
+          }}
+        />
       </div>
     );
   },
