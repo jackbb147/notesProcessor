@@ -5,7 +5,7 @@ import {
   GraphActionType,
   graphReducer,
   GraphState,
-  Node,
+  GraphNode,
 } from "../reducers/GraphReducer";
 import {
   AppAction,
@@ -41,6 +41,7 @@ import { EditorPage } from "./EditorView/EditorPage";
 import { Register } from "./RegisterAndLogin/Register/Register";
 import { useAppState } from "../hooks/AppStateAndGraphhooks";
 import { Login } from "./RegisterAndLogin/Login/Login";
+import { UserContext, SetUserContext} from "./RegisterAndLogin/AuthContext";
 
 export function ensure<T>(
   argument: T | undefined | null,
@@ -74,6 +75,7 @@ function Container({ children }: { children: React.ReactNode }) {
 }
 
 function App() {
+
   return (
     <>
       <AppStateProvider>
