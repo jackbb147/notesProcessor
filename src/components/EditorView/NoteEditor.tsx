@@ -2,8 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import "./Quill/quillModules/quillStyle.css";
 
 import styles from "./NoteEditorStyle.module.css";
-import { Desktop } from "../../hooks/useMediaQuery";
-import { Mobile } from "../../hooks/useMediaQuery";
 
 import { ReferenceMapProvider } from "./Tiptap/Reference/ReferenceStateContext";
 
@@ -22,16 +20,8 @@ import {
 } from "../../hooks/AppStateAndGraphhooks";
 import { NoteInfoSidePanel } from "./NoteInfoSidePanel/NoteInfoSidePanel";
 import { Button } from "../ui/Button";
-import { AppActionType } from "../../reducers/AppStateReducer";
+import { AppActionType, Collections } from "../../reducers/AppStateReducer";
 import { TiptapBoxComponent } from "./Tiptap/Tiptap";
-import { countReferences } from "./Tiptap/Reference/countReferences";
-import { generateJSON } from "@tiptap/core";
-import Document from "@tiptap/extension-document";
-import Paragraph from "@tiptap/extension-paragraph";
-import Bold from "@tiptap/extension-bold";
-import Text from "@tiptap/extension-text";
-import MathExtension from "./Tiptap/MathEditor/Extension";
-import { Mention } from "@tiptap/extension-mention";
 
 function ToggleSideInfoPanelButton() {
   const appState = useAppState();
@@ -231,11 +221,13 @@ export function NoteEditor({
             //   setReferenceMap(map);
             // }}
           />
-          <NoteInfoSidePanel
-            note={note}
-            width={infoPanelWidth}
-            // referenceMap={new Map(referenceMap.entries())}
-          />
+          {appState.activeCollection !== Collections.RecentlyDeleted && (
+            <NoteInfoSidePanel
+              note={note}
+              width={infoPanelWidth}
+              // referenceMap={new Map(referenceMap.entries())}
+            />
+          )}
         </ReferenceMapProvider>
       </div>
 
