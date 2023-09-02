@@ -23,7 +23,7 @@ import { Button } from "../ui/Button";
 import { AppActionType, Collections } from "../../reducers/AppStateReducer";
 import { TiptapBoxComponent } from "./Tiptap/Tiptap";
 
-function ToggleSideInfoPanelButton() {
+function ToggleSideInfoPanelButton({ disabled }: { disabled: boolean }) {
   const appState = useAppState();
   const dispatch = useDispatch();
   const [color, setColor] = useState("");
@@ -49,6 +49,7 @@ function ToggleSideInfoPanelButton() {
       rootStyles={{
         color: color,
         cursor: "pointer",
+        visibility: disabled ? "hidden" : "visible",
       }}
       onClick={(e) => {
         e.preventDefault();
@@ -258,7 +259,9 @@ export function NoteEditor({
             marginLeft: "1rem",
           }}
         >
-          <ToggleSideInfoPanelButton />
+          <ToggleSideInfoPanelButton
+            disabled={appState.activeCollection === Collections.RecentlyDeleted}
+          />
           {/*<span className="material-symbols-outlined">info</span>*/}
           {/*<LastEditedWhen />*/}
         </div>
