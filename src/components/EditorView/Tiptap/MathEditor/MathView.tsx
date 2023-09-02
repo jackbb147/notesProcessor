@@ -12,6 +12,8 @@ export default ({
     <MathJaxContext>
       {/*<div>hello</div>*/}
       <MathJax
+        inline
+        dynamic
         style={{
           ...styles,
         }}
