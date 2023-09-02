@@ -127,6 +127,11 @@ export function FolderPanelContent() {
             }
             onClick={() => handleLabelClick(s)}
             icon={<span className="material-symbols-outlined">label</span>}
+            style={{
+              marginBottom: "0.5rem",
+              cursor: "pointer",
+            }}
+            rootClassName={`hover:bg-selectedItem-2 dark:hover:bg-dark_selectedItem_2 dark:hover:text-dark_primary`}
           />
         ))}
       </Scrollbars>
