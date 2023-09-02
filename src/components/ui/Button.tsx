@@ -8,12 +8,13 @@ export function Button({
 }: {
   icon?: React.ReactNode;
   rootClassName?: string;
-  onClick?: (e: React.MouseEvent) => any;
+  onClick?: (e: React.MouseEvent | React.TouchEvent) => any;
   rootStyles?: React.CSSProperties;
 }) {
   return (
     <div
-      onClick={onClick}
+      onMouseDown={onClick}
+      onTouchStart={onClick}
       className={
         " overflow-hidden flex items-center  ml-1 cursor-default cursor-pointer " +
         rootClassName
