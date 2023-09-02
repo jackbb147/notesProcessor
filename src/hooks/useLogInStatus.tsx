@@ -14,13 +14,17 @@ export function useLogInStatus():[boolean, string|null]
         async function checkLogin()
         {
             // const envi= process.env;
-            const response = await api.get("/isLoggedIn");
-            if(response.status !== 200) throw new Error("[useLogInStatus] Failed to check login status; got status code: " + response.status);
+            try{
+                const response = await api.get("/isLoggedIn");
+                if(response.status !== 200) throw new Error("[useLogInStatus] Failed to check login status; got status code: " + response.status);
 
-            setIsLoggedIn(response.data);
-            if(response.data === false) return;
-            const userName = await api.get("/GetCurrentUser");
-            setLoggedInUserName(userName.data);
+                setIsLoggedIn(response.data);
+                if(response.data === false) return;
+                const userName = await api.get("/GetCurrentUser");
+                setLoggedInUserName(userName.data);
+            }catch (e) {
+                alert(JSON.stringify(e, null, 2))
+            }
         }
         checkLogin();
 
