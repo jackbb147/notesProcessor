@@ -5,8 +5,11 @@
     color: rgba(0, 0, 0, 0.8);
     font-size: 0.9rem;
     overflow: hidden;
+    overflow-y: scroll;
+    max-height: 30rem;
     padding: 0.2rem;
     position: relative;
+    /*border: 2px solid red;*/
 }
 .item {
     background: transparent;
