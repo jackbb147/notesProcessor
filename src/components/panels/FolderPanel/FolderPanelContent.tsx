@@ -22,7 +22,7 @@ import { useMediaQuery } from "react-responsive";
 import { Desktop, Mobile, Tablet } from "../../../hooks/useMediaQuery";
 import { All } from "../../Buttons/All";
 import { RecentlyDeleted } from "../../Buttons/RecentlyDeleted";
-import {useLogInStatus} from "../../RegisterAndLogin/Login/useLogInStatus";
+import {useLogInStatus} from "../../../hooks/useLogInStatus";
 
 function SettingsPanelWrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -133,7 +133,7 @@ export function FolderPanelContent() {
       <div className={"mt-auto"}>
         <EditLabelsButton />
         {
-            activeUser ? "you are logged in!" : <AccountButton />
+            activeUser ? activeUser : <AccountButton />
         }
         <SettingsButton ref={settingsButtonRef} />
         <OutsideAlerter

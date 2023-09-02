@@ -23,7 +23,8 @@ import { EditorPage } from "./EditorView/EditorPage";
 import { Register } from "./RegisterAndLogin/Register/Register";
 import { useAppState } from "../hooks/AppStateAndGraphAndUserhooks";
 import { Login } from "./RegisterAndLogin/Login/Login";
-import {UserContext, SetUserContext, ActiveUserProvider} from "./RegisterAndLogin/AuthContext";
+import {UserContext, SetUserContext} from "./RegisterAndLogin/AuthContext";
+import {ActiveUserProvider} from "./RegisterAndLogin/ActiveUserProvider";
 
 export function ensure<T>(
   argument: T | undefined | null,
