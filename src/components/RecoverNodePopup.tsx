@@ -4,7 +4,7 @@ import {
   AppStateContext,
   AppStateDispatchContext,
 } from "../reducers/AppStateContext";
-import { AppActionType } from "../reducers/AppStateReducer";
+import { AppActionType, Collections } from "../reducers/AppStateReducer";
 import { GraphActionType } from "../reducers/GraphReducer";
 import { GraphContext, GraphDispatchContext } from "../reducers/GraphContext";
 
@@ -63,14 +63,18 @@ export function RecoverNodePopup() {
                     show: false,
                   });
                   if (!state.activeNodeID) throw Error("No active node id.");
+                  dispatch({
+                    type: AppActionType.setActiveCollection,
+                    activeCollection: Collections.All,
+                  });
                   graphDispatch({
                     type: GraphActionType.recoverNode,
                     id: state.activeNodeID,
                   });
-                  dispatch({
-                    type: AppActionType.setActiveNodeID,
-                    id: undefined,
-                  });
+                  // dispatch({
+                  //   type: AppActionType.setActiveNodeID,
+                  //   id: undefined,
+                  // });
                 }}
                 className="text-white bg-green-500 hover:bg-green-600 focus:shadow-green-600 inline-flex h-[35px] items-center justify-center rounded-[4px] px-[15px] font-medium leading-none outline-none focus:shadow-[0_0_0_2px] w-fit"
               >
