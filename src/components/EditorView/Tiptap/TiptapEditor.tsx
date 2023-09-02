@@ -10,17 +10,19 @@ import { Mention } from "@tiptap/extension-mention";
 import suggestion from "./Reference/suggestion";
 import Placeholder from "@tiptap/extension-placeholder";
 
-import { useGraph } from "../../../hooks/AppStateAndGraphhooks";
+import {
+  useAppState,
+  useDispatch,
+  useGraph,
+} from "../../../hooks/AppStateAndGraphhooks";
 import { GraphNode } from "../../../reducers/GraphReducer";
 import { ReferenceStateDispatchContext } from "./Reference/ReferenceStateContext";
 import { ReferenceStateActionType } from "./Reference/ReferenceStateReducer";
-import { Editor } from "@tiptap/core";
 import { TextAlign } from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
-import { History } from "@tiptap/extension-history";
-import { Heading } from "@tiptap/extension-heading";
 
 import MyToolbar from "./Toolbar/Toolbar";
+import { AppActionType, Collections } from "../../../reducers/AppStateReducer";
 
 function getFirstLine(json: JSONContent): string {
   let res: string = "";
@@ -54,12 +56,25 @@ export default forwardRef(
     ref,
   ) => {
     const Graph = useGraph();
+    const appState = useAppState();
+    const dispatch = useDispatch();
 
     const referenceMapDispatch = useContext(ReferenceStateDispatchContext);
     useEffect(() => {
       // alert("hey focus requested");
       console.debug("[tiptapEditor] focus requested");
-      editor?.commands.focus();
+      if (appState.activeCollection === Collections.RecentlyDeleted) {
+        //   TODO
+        // debugger;
+        if (focusRequested && focusRequested > 0) {
+          dispatch({
+            type: AppActionType.setShowRecoverNodePopup,
+            show: true,
+          });
+        }
+      } else {
+        editor?.commands.focus();
+      }
     }, [focusRequested]);
 
     useEffect(() => {
