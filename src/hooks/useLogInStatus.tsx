@@ -19,10 +19,12 @@ export function useLogInStatus():[boolean, string|null]
                 if(response.status !== 200) throw new Error("[useLogInStatus] Failed to check login status; got status code: " + response.status);
 
                 setIsLoggedIn(response.data);
+                // debugger;
                 if(response.data === false) return;
                 const userName = await api.get("/GetCurrentUser");
                 setLoggedInUserName(userName.data);
             }catch (e) {
+                // debugger;
                 alert(JSON.stringify(e, null, 2))
             }
         }
