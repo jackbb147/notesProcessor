@@ -8,9 +8,13 @@ export function Login() {
         <Login_Desktop />
       </Desktop>
 
-      {/*<Tablet></Tablet>*/}
+      <Tablet>
+          <Login_Desktop />
+      </Tablet>
 
-      {/*<Mobile></Mobile>*/}
+      <Mobile>
+          <Login_Desktop />
+      </Mobile>
     </>
   );
 }

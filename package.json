@@ -51,7 +51,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "build-and-deploy": "npm run build && cp -r build/* /opt/homebrew/etc/nginx/build && sudo nginx -s reload"
   },
   "eslintConfig": {
     "extends": [

@@ -122,7 +122,7 @@ export function LoginForm() {
         const endpoint = "http://localhost:5046/Authenticate/Login";
         const shortEndpoint  = "/Authenticate/Login";
         // const endpoint = "http://name5-dev.eba-zcpkbqup.us-west-2.elasticbeanstalk.com/isLoggedIn";
-        const response = await axios.post(
+        const response = await api.post(
             shortEndpoint,null,
             {
                 withCredentials: true,
