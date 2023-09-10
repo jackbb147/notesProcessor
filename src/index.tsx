@@ -4,8 +4,10 @@ import "./index.css";
 import App from "./components/App";
 import reportWebVitals from "./reportWebVitals";
 import { ApiProvider } from "@reduxjs/toolkit/dist/query/react";
+import { Provider } from "react-redux";
 import { AppStateProvider } from "./reducers/AppStateContext";
 import { apiSlice } from "./api/apiSlice";
+import { store } from "./store";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -14,11 +16,12 @@ root.render(
   // <React.StrictMode>
   // <App />,
 
-  <ApiProvider api={apiSlice}>
+  // <ApiProvider api={apiSlice}>
+  <Provider store={store}>
     <AppStateProvider>
       <App />
     </AppStateProvider>
-  </ApiProvider>,
+  </Provider>,
   // </React.StrictMode>,
 );
 
