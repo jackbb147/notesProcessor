@@ -16,6 +16,10 @@ export function useActiveCollection() {
     throw JSON.stringify(error, null, 2);
   }
 
+  useEffect(() => {
+    console.log("[useActiveCollection]", JSON.stringify(data, null, 2));
+  }, [data]);
+
   debugger;
   //
   // const graph = useGraph();
@@ -83,6 +87,6 @@ export function useActiveCollection() {
   //   // alert("hey! active collection changed")
   //   setActiveCollection(getActiveCollection());
   // }, [state.activeCollection, graph.nodes, state.activeLabel]);
-  return [];
+  return data ?? [];
   // return activeCollection;
 }

@@ -28,6 +28,7 @@ export const ListItem = forwardRef(
     },
     ref: React.ForwardedRef<any>,
   ) => {
+    debugger;
     const [hovered, setHovered] = useState(false);
     useEffect(() => {
       return () => {

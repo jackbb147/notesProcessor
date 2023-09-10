@@ -16,7 +16,10 @@ import {
 import { animated, useTransition } from "@react-spring/web";
 import { AnimatedListItem } from "../../Buttons/AnimatedListItem";
 import { useSpring, Transition } from "@react-spring/web";
-import { useDispatch, useAppState } from "../../../hooks/AppStateAndGraphAndUserhooks";
+import {
+  useDispatch,
+  useAppState,
+} from "../../../hooks/AppStateAndGraphAndUserhooks";
 import { DeleteButton } from "../../Buttons/DeleteButton";
 
 const NoNotesDisplayID = "none";
@@ -150,6 +153,7 @@ export function NotesPanelContent({
             data={
               collection.length > 0
                 ? collection.map((node) => {
+                    debugger;
                     return {
                       node: (
                         <ListItem
