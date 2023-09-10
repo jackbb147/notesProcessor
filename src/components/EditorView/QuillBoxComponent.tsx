@@ -61,7 +61,7 @@ export function QuillBoxComponent({
 
   function cleanUp() {
     if (ref.current) {
-      // debugger;
+      //
       ref.current.innerHTML = "";
       ref.current.className = "";
       // wrapperRef.current.className = ""
@@ -116,7 +116,7 @@ export function QuillBoxComponent({
     setQuillNode(quillNode);
 
     // quillNode.on("text-change", ()=>{
-    //     // debugger;
+    //     //
     //     let contentDelta = quillNode.getContents();
     //     console.log(`calling onChange with contentDelta: ${JSON.stringify(contentDelta)}`)
     //     setSelection(prev=>quillNode.getSelection())
@@ -166,7 +166,7 @@ export function QuillBoxComponent({
     let value = val;
 
     const delta = quillNode.clipboard.convert(value);
-    // debugger;
+    //
     quillNode.setContents(delta, "silent");
   }
 

@@ -20,7 +20,6 @@ export function useActiveCollection() {
     console.log("[useActiveCollection]", JSON.stringify(data, null, 2));
   }, [data]);
 
-  debugger;
   //
   // const graph = useGraph();
   // const graphDispatch = useGraphDispatch();
@@ -30,7 +29,7 @@ export function useActiveCollection() {
   //
   // const getActiveCollection = useCallback(() => {
   //   var collection: GraphNode[];
-  //   debugger;
+  //
   //   switch (state.activeCollection) {
   //     case Collections.All: {
   //       // collection = data.
@@ -53,7 +52,7 @@ export function useActiveCollection() {
   //
   //   /**
   //    * .sort((note1: GraphNode, note2: GraphNode) => {
-  //    *                       // debugger;
+  //    *                       //
   //    *                       if (!note1.dateLastModified || !note2.dateLastModified)
   //    *                         return 1; // if one of the notes has no date, return a random value for now...
   //    *                       const date1 = new Date(note1.dateLastModified);

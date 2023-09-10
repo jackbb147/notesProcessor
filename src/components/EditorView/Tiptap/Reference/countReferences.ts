@@ -6,12 +6,12 @@ export function countReferences(
   var res = new Map();
   function visit(root: Record<string, any>) {
     if (!root) return;
-    // debugger;
+    //
     if (root.type === "mention") {
-      // debugger;
+      //
       const note = JSON.parse(root.attrs.id);
       const id = note.Id;
-      // debugger;
+      //
       if (res.has(id)) {
         res.set(id, res.get(id) + 1);
       } else {
@@ -23,7 +23,7 @@ export function countReferences(
   }
 
   visit(contentJSON);
-  // debugger;
+  //
 
   return res;
 }

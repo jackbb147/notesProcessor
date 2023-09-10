@@ -65,7 +65,7 @@ export default forwardRef(
       console.debug("[tiptapEditor] focus requested");
       if (appState.activeCollection === Collections.RecentlyDeleted) {
         //   TODO
-        // debugger;
+        //
         if (focusRequested && focusRequested > 0) {
           dispatch({
             type: AppActionType.setShowRecoverNodePopup,
@@ -89,7 +89,7 @@ export default forwardRef(
           console.log("onblur");
           const content = props.editor.getHTML();
           let firstLine: string = getFirstLine(props.editor.getJSON());
-          // debugger;
+          //
           handleBlur?.(firstLine, content);
         },
         extensions: [
@@ -142,7 +142,7 @@ export default forwardRef(
 
                         const parsedNote = JSON.parse(node.attrs.id);
                         const id = parsedNote.Id;
-                        // debugger;
+                        //
 
                         referenceMapDispatch({
                           type: ReferenceStateActionType.removeReference,
@@ -193,7 +193,7 @@ export default forwardRef(
                     ...graph.nodes,
                   ]
                     .filter((item) => {
-                      // debugger;
+                      //
                       return (
                         item.title.toLowerCase() !== note.Title.toLowerCase() &&
                         item.title.toLowerCase().startsWith(query.toLowerCase())

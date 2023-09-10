@@ -8,7 +8,7 @@ export function ReactHookRegistrationForm() {
     formState: { errors },
   } = useForm();
   const onSubmit = (data: any) => {
-    // debugger;
+    //
   };
   console.log(errors);
 

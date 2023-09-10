@@ -32,7 +32,7 @@ export default Node.create({
 
             if (text === "$$") {
               if (e.key === "Backspace") {
-                // debugger;
+                //
                 e.preventDefault();
 
                 view.dispatch(
@@ -53,7 +53,7 @@ export default Node.create({
           },
           handleTextInput(view, from, to, textInput) {
             try {
-              // debugger;
+              //
               const editorInstance = that.editor;
 
               const cursorPos = view.state.selection.$anchor.pos;
@@ -63,7 +63,7 @@ export default Node.create({
               );
 
               if (text === "$$") {
-                // debugger;
+                //
                 // TODO: insert a node
                 // editorInstance.commands.insertContentAt(cursorPos, "nihao");
                 editorInstance.commands.deleteRange({
@@ -77,7 +77,7 @@ export default Node.create({
                     type: "reactComponent",
                   },
                 );
-                // debugger;
+                //
 
                 return true; // this is to prevent the default behavior of inserting the text: https://prosemirror.net/docs/ref/
               }
@@ -97,7 +97,7 @@ export default Node.create({
         const selection = editor.state.selection;
         const cursorPos = selection.$anchor.pos;
         editor.commands.setTextSelection(cursorPos - 1);
-        // debugger;
+        //
         return true;
       },
     };

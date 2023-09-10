@@ -235,9 +235,7 @@ export function graphReducer(draft: GraphState, action: GraphAction): void {
       //     TODO
       console.log(`merge fired with: ${JSON.stringify(action.other, null, 4)}`);
       let d = draft;
-      const customizer = (oV: any, sV: any) => {
-        debugger;
-      };
+      const customizer = (oV: any, sV: any) => {};
 
       // let newDraft = _.mergeWith(draft, action.other, customizer)
       draft.nodes = _.unionBy(action.other.nodes, draft.nodes, "id");

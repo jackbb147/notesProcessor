@@ -114,22 +114,22 @@ export function NoteEditor({
   }, [note]);
 
   function handleBlur(s: string, firstLine: string = "") {
-    // debugger;
+    //
     var newNode: GraphNode = {
       ...noteRef.current,
       Content: s,
       Title: firstLine,
       DateLastModified: new Date().toJSON(),
     };
-    // debugger;
+    //
     onBlur(newNode);
   }
 
   function handleChange(value: Options<any>, action: ActionMeta<any>) {
-    // debugger
+    //
     switch (action.action) {
       case "create-option": {
-        // debugger;
+        //
         graphDispatch({
           type: GraphActionType.addLabel,
           label: action.option.label,
@@ -157,7 +157,7 @@ export function NoteEditor({
 
       case "deselect-option": {
         console.log("Deselect option fired");
-        // debugger;
+        //
         // graphDispatch({
         //     type: GraphActionType.updateNode,
         //     node: {
@@ -169,9 +169,9 @@ export function NoteEditor({
       }
 
       case "remove-value": {
-        // debugger;
+        //
         console.log("remove value fired");
-        // debugger;
+        //
         // graphDispatch({
         //   type: GraphActionType.updateNode,
         //   node: {

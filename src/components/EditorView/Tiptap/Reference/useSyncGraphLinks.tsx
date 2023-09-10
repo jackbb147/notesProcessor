@@ -13,11 +13,11 @@ export function useSyncGraphLinks({ sourceID }: { sourceID: string }) {
   useEffect(() => {
     const entriesArray = Array.from(referenceState.referenceMap.entries());
 
-    // debugger;
+    //
     const additions = entriesArray.filter((pair) => pair[1] >= 1);
     const deletions = entriesArray.filter((pair) => pair[1] < 1);
 
-    // debugger;
+    //
     additions.forEach((pair) => {
       graphDispatch({
         type: GraphActionType.addLink,

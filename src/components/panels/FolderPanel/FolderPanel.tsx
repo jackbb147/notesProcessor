@@ -8,7 +8,7 @@ export function FolderPanel({ children }: { children: React.ReactNode }) {
   const [graphology, updated] = useGraphology();
   useEffect(() => {
     const g = graphology;
-    // debugger;
+    //
     console.debug(`[FolderPanel] graphology: ${JSON.stringify(g.export())}`);
   }, [graphology.nodes()]);
   return (

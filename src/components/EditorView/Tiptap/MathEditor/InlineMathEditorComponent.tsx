@@ -242,7 +242,7 @@ export function MyCustomACEEditor({
     renderer: Ace.VirtualRenderer,
   ) {
     // console.log(`[updateSize] fired`);
-    // debugger;
+    //
     // https://stackoverflow.com/a/57279878/21646295
 
     // var text = renderer.session.getLine(0);
@@ -276,7 +276,7 @@ export function MyCustomACEEditor({
     if (completerConfigured) return;
     console.log(`[useEffect] fired`);
     const editor = reactAceRef.current.editor;
-    // debugger;
+    //
     const completionOptions = MATHJAXCOMMANDS.map(function (word) {
       return {
         caption: word,
@@ -297,16 +297,16 @@ export function MyCustomACEEditor({
       ) {
         // var wordList = [String.raw `\foo`, "bar", "baz"];
 
-        // debugger;
+        //
         callback(null, completionOptions);
       },
     };
 
-    // debugger;
+    //
     editor.completers.push(staticWordCompleter);
     // https://stackoverflow.com/a/38437098
     editor.on("change", (obj: Delta) => {
-      // debugger;
+      //
       switch (obj.action) {
         case "insert":
           let lines = obj.lines;
@@ -405,7 +405,7 @@ export function MyCustomACEEditor({
         //         // editor.destroy();
         //
         //         // setDestroyed(true);
-        //         // debugger;
+        //         //
         //         const cursorPos = getCursorPos(p.editor);
         //         p.deleteNode();
         //         setCursorPos(props.editor, cursorPos);
@@ -429,7 +429,7 @@ export function MyCustomACEEditor({
         //
         //       if (cursorPosition.column === 0) {
         //         //
-        //         // debugger;
+        //         //
         //         let p = props;
         //         setCursorPos(p.editor, getCursorPos(p.editor) - 1);
         //
@@ -465,7 +465,7 @@ export function MyCustomACEEditor({
           setTimeout(() => {
             // focusAndOpenKeyboard(editor);
             // let d = document;
-            // debugger;
+            //
             // editor.focus();
           }, 0);
         }}

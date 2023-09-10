@@ -1367,5 +1367,5 @@ const _MATHJAXCOMMANDS = [
 ];
 
 const MATHJAXCOMMANDS = _MATHJAXCOMMANDS;
-// debugger;
+//
 export { MATHJAXCOMMANDS };

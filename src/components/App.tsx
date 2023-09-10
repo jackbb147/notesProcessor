@@ -84,27 +84,25 @@ function App() {
   const [isLoggedIn, userName] = useLogInStatus();
   return (
     <>
-      <AppStateProvider>
-        <GraphProvider>
-          <ActiveUserProvider>
-            <Container>
-              <div className="bg-grey dark:bg-dark_secondary w-full h-full flex flex-row overflow-hidden dark:text-white">
-                <RecoverNodePopup />
-                <LabelSelectorPopUp />
-                <Register />
-                <Login />
-                {/*<FolderPanel>*/}
-                {/*  <div className={"App__main bg-white h-full grow w-full"}>*/}
-                {/*    <NotesPanel>*/}
-                {/*      <EditorPage />*/}
-                {/*    </NotesPanel>*/}
-                {/*  </div>*/}
-                {/*</FolderPanel>*/}
-              </div>
-            </Container>
-          </ActiveUserProvider>
-        </GraphProvider>
-      </AppStateProvider>
+      <GraphProvider>
+        <ActiveUserProvider>
+          <Container>
+            <div className="bg-grey dark:bg-dark_secondary w-full h-full flex flex-row overflow-hidden dark:text-white">
+              <RecoverNodePopup />
+              <LabelSelectorPopUp />
+              <Register />
+              <Login />
+              <FolderPanel>
+                <div className={"App__main bg-white h-full grow w-full"}>
+                  <NotesPanel>
+                    <EditorPage />
+                  </NotesPanel>
+                </div>
+              </FolderPanel>
+            </div>
+          </Container>
+        </ActiveUserProvider>
+      </GraphProvider>
     </>
   );
 }

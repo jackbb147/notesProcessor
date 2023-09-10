@@ -41,7 +41,7 @@ export function EditorSwitch() {
       darkModeOn={state.darkModeOn}
       note={note} //https://stackoverflow.com/a/54738437/21646295
       onBlur={(note: GraphNode) => {
-        // debugger;
+        //
         if (note.Content.length !== 0) {
           graphDispatch({
             type: GraphActionType.updateNode,

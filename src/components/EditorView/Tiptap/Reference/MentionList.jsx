@@ -28,7 +28,7 @@ export default forwardRef((props, ref) => {
   const selectItem = (index) => {
     const item = props.items[index];
     const node = JSON.parse(item);
-    // debugger;
+    //
     if (node) {
       props.command({ id: item });
       const sourceNode = props.editor.storage.mention.note;
@@ -51,7 +51,7 @@ export default forwardRef((props, ref) => {
       //
       //   return newMap;
       // });
-      // debugger;
+      //
       //   // TODO  : get the current node id from the graph state and then link the current node to the selected node
 
       //

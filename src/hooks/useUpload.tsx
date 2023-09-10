@@ -40,7 +40,7 @@ async function getParsedObject() {
     input.click();
 
     reader.onload = (e) => {
-      // debugger;
+      //
       if (typeof reader.result !== "string") {
         alert(" There's something wrong with the file you uploaded :( ");
         return;

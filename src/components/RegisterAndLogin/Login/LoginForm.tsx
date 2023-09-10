@@ -1,9 +1,12 @@
 import * as Form from "@radix-ui/react-form";
-import {PasswordFormField} from "../Forms/PasswordFormField";
+import { PasswordFormField } from "../Forms/PasswordFormField";
 import React from "react";
-import {axiosCustomInstance} from "../../../api/AxiosCustomInstance";
-import {useDispatch, useSetUser} from "../../../hooks/AppStateAndGraphAndUserhooks";
-import {AppActionType} from "../../../reducers/AppStateReducer";
+import { axiosCustomInstance } from "../../../api/AxiosCustomInstance";
+import {
+  useDispatch,
+  useSetUser,
+} from "../../../hooks/AppStateAndGraphAndUserhooks";
+import { AppActionType } from "../../../reducers/AppStateReducer";
 import axios from "axios";
 
 function EmailFormField() {
@@ -108,68 +111,57 @@ function UsernameFormField() {
   );
 }
 
-
 interface loginInfo {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
 }
 export function LoginForm() {
+  const dispatch = useDispatch();
+  const setUser = useSetUser();
+  async function login(info: loginInfo) {
+    // const endpoint = "http://localhost:5046/isLoggedIn";
+    const endpoint = "http://localhost:5046/Authenticate/Login";
+    const shortEndpoint = "/Authenticate/Login";
+    // const endpoint = "http://name5-dev.eba-zcpkbqup.us-west-2.elasticbeanstalk.com/isLoggedIn";
+    const response = await axiosCustomInstance.post(shortEndpoint, null, {
+      withCredentials: true,
+      params: {
+        Email: info.email,
+        Password: info.password,
+      },
+    });
 
-    const dispatch = useDispatch()
-    const setUser = useSetUser();
-    async function login(info: loginInfo) {
-        // const endpoint = "http://localhost:5046/isLoggedIn";
-        const endpoint = "http://localhost:5046/Authenticate/Login";
-        const shortEndpoint  = "/Authenticate/Login";
-        // const endpoint = "http://name5-dev.eba-zcpkbqup.us-west-2.elasticbeanstalk.com/isLoggedIn";
-        const response = await axiosCustomInstance.post(
-            shortEndpoint,null,
-            {
-                withCredentials: true,
-                params: {
-                    Email: info.email,
-                    Password: info.password,
-                }
-            }
-        );
-
-
-        return response;
-    }
+    return response;
+  }
   const handleSubmit = async (event: any) => {
+    //
+    event.preventDefault();
+    try {
+      const response = await login({
+        email: event.target[0].value,
+        password: event.target[1].value,
+      });
+      if (response?.status === 200) {
+        setUser(response.data);
+        dispatch({
+          type: AppActionType.setShowLoginPage,
+          show: false,
+        });
+      } else if (response?.status === 400) {
+        alert(`Login failed: ${response.data}}`);
+      }
+    } catch (e: any) {
+      const resp = e.response;
+      if (resp?.status === 400) {
+        alert(resp.data);
+      } else {
+        alert(`Login failed: ${e}`);
+      }
 
-        // debugger;
-        event.preventDefault();
-        try {
-            const response = await login({
-                email: event.target[0].value,
-                password: event.target[1].value,
-            });
-            if(response?.status === 200){
-                setUser(response.data);
-                dispatch({
-                    type: AppActionType.setShowLoginPage,
-                    show: false
-                })
-            } else if(response?.status === 400){
-                alert(`Login failed: ${response.data}}`)
-            }
-        }catch (e: any) {
-            const resp = e.response;
-            if(resp?.status === 400){
-                alert(resp.data);
-            }else{
-                alert(`Login failed: ${e}`)
-            }
+      console.dir(e);
+    }
 
-
-            console.dir(e);
-        }
-
-
-
-      // debugger; //TODO
-
+    //  //TODO
   };
   return (
     <Form.Root onSubmit={handleSubmit} className="w-full">

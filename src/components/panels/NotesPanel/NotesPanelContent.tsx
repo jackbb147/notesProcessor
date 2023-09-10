@@ -153,7 +153,6 @@ export function NotesPanelContent({
             data={
               collection.length > 0
                 ? collection.map((node) => {
-                    debugger;
                     return {
                       node: (
                         <ListItem
