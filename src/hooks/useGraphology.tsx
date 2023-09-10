@@ -28,7 +28,7 @@ export function useGraphology(): [Graph, number] {
     let graphology = graphologyRef.current;
     graphology.clear();
     graph.nodes.forEach((node) => {
-      graphology.addNode(node.id);
+      graphology.addNode(node.Id);
     });
     graph.links.forEach((link) => {
       if (link.undirected) {

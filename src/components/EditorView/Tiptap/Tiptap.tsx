@@ -41,9 +41,9 @@ export function TiptapBoxComponent({
       type: GraphActionType.updateNode,
       node: {
         ...note,
-        title: title,
-        content: content,
-        dateLastModified: new Date().toJSON(),
+        Title: title,
+        Content: content,
+        DateLastModified: new Date().toJSON(),
       },
     });
   }

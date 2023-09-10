@@ -34,8 +34,8 @@ function getFirstLine(json: JSONContent): string {
       res = node.text ?? "";
       break;
     }
-    if (node.content) {
-      q.push(...node.content);
+    if (node.Content) {
+      q.push(...node.Content);
     }
   }
   if (res.length < 1) res = "New Note";
@@ -141,13 +141,13 @@ export default forwardRef(
                         const st = storage;
 
                         const parsedNote = JSON.parse(node.attrs.id);
-                        const id = parsedNote.id;
+                        const id = parsedNote.Id;
                         // debugger;
 
                         referenceMapDispatch({
                           type: ReferenceStateActionType.removeReference,
                           reference: {
-                            sourceID: note.id,
+                            sourceID: note.Id,
                             targetID: id,
                           },
                         });
@@ -175,7 +175,7 @@ export default forwardRef(
             renderLabel({ options, node }) {
               const parsedNode: GraphNode = JSON.parse(node.attrs.id); //TODO this is a hack. It works but it's not the right way to do it
               // const Node: GraphNode = JSON.parse(node);
-              return `${parsedNode.title}`;
+              return `${parsedNode.Title}`;
               // return `hello world ...`;
             },
 
@@ -195,7 +195,7 @@ export default forwardRef(
                     .filter((item) => {
                       // debugger;
                       return (
-                        item.title.toLowerCase() !== note.title.toLowerCase() &&
+                        item.title.toLowerCase() !== note.Title.toLowerCase() &&
                         item.title.toLowerCase().startsWith(query.toLowerCase())
                       );
                     })
@@ -208,9 +208,9 @@ export default forwardRef(
             // suggestion,
           }),
         ],
-        content: note.content,
+        content: note.Content,
       },
-      [note.id],
+      [note.Id],
     );
 
     return (

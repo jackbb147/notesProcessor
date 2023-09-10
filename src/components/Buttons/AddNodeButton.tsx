@@ -11,7 +11,10 @@ import {
   AppStateDispatchContext,
 } from "../../reducers/AppStateContext";
 import { AppActionType, Collections } from "../../reducers/AppStateReducer";
-import { useAppState, useDispatch } from "../../hooks/AppStateAndGraphAndUserhooks";
+import {
+  useAppState,
+  useDispatch,
+} from "../../hooks/AppStateAndGraphAndUserhooks";
 
 export function AddNodeButton({
   rootClassName = "",
@@ -36,16 +39,16 @@ export function AddNodeButton({
 
     let newID = uuid();
 
-    graphDispatch({
-      type: GraphActionType.addNode,
-      node: {
-        id: newID,
-        title: "New Note",
-        content: "",
-        labels: tags,
-        dateCreated: new Date().toJSON(),
-      },
-    });
+    // graphDispatch({
+    //   type: GraphActionType.addNode,
+    //   node: {
+    //     id: newID,
+    //     title: "New Note",
+    //     content: "",
+    //     labels: tags,
+    //     dateCreated: new Date().toJSON(),
+    //   },
+    // });
 
     dispatch({
       type: AppActionType.setActiveNodeID,

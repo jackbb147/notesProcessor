@@ -81,16 +81,16 @@ export function NotesPanelContent({
 
     if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
 
-    let index = collection.findIndex((node) => node.id === state.activeNodeID);
+    let index = collection.findIndex((node) => node.Id === state.activeNodeID);
 
     let nextID;
     if (e.key === "ArrowDown")
-      nextID = collection[(index + 1) % collection.length].id;
+      nextID = collection[(index + 1) % collection.length].Id;
     else
       nextID =
         index - 1 >= 0
-          ? collection[(index - 1) % collection.length].id
-          : collection[collection.length - 1].id;
+          ? collection[(index - 1) % collection.length].Id
+          : collection[collection.length - 1].Id;
 
     dispatch({
       type: AppActionType.setActiveNodeID,
@@ -99,8 +99,8 @@ export function NotesPanelContent({
   }
 
   function buildOptionalText(node: GraphNode): string {
-    if (!node.dateLastModified) return "";
-    const dateLastModified = new Date(node.dateLastModified);
+    if (!node.DateLastModified) return "";
+    const dateLastModified = new Date(node.DateLastModified);
 
     let hour = dateLastModified.getHours();
     let minute = dateLastModified.getMinutes();
@@ -157,9 +157,9 @@ export function NotesPanelContent({
                     return {
                       node: (
                         <ListItem
-                          text={node.title}
+                          text={node.Title}
                           boldText={true}
-                          active={node.id === state.activeNodeID}
+                          active={node.Id === state.activeNodeID}
                           optionalText={buildOptionalText(node)}
                           style={{
                             // height: "3rem",
@@ -182,12 +182,12 @@ export function NotesPanelContent({
                           onClick={() =>
                             dispatch({
                               type: AppActionType.setActiveNodeID,
-                              id: node.id,
+                              id: node.Id,
                             })
                           }
                         />
                       ),
-                      id: node.id,
+                      id: node.Id,
                     };
                   })
                 : [

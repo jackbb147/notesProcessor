@@ -57,7 +57,7 @@ let MathDisplayBlot = (Base) =>
   class extends Base {
     static create(latex, isInline = false) {
       let node = super.create();
-      node.contentEditable = "false";
+      node.ContentEditable = "false";
       node.setAttribute("latex", latex);
 
       var mjx = window.MathJax.tex2svg(latex);

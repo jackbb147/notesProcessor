@@ -10,7 +10,7 @@ export function countReferences(
     if (root.type === "mention") {
       // debugger;
       const note = JSON.parse(root.attrs.id);
-      const id = note.id;
+      const id = note.Id;
       // debugger;
       if (res.has(id)) {
         res.set(id, res.get(id) + 1);

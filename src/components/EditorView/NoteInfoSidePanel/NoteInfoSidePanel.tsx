@@ -63,7 +63,7 @@ function NoteItem({
   function onClick() {
     dispatch({
       type: AppActionType.setActiveNodeID,
-      id: note.id,
+      id: note.Id,
     });
     dispatch({
       type: AppActionType.setActiveCollection,
@@ -84,8 +84,8 @@ function NoteItem({
     >
       <ListItem
         onClick={onClick}
-        key={note.id}
-        text={note.title}
+        key={note.Id}
+        text={note.Title}
         icon={<span className="material-symbols-outlined">article</span>}
         style={{
           opacity: 0.7,
@@ -129,7 +129,7 @@ function SeeAlso({ note }: { note: GraphNode }) {
   useEffect(() => {
     try {
       console.log("SeeAlso");
-      setUndirectedNeighbors((v) => graphology.undirectedNeighbors(note.id));
+      setUndirectedNeighbors((v) => graphology.undirectedNeighbors(note.Id));
       console.log("neighbors", undirectedNeighbors);
     } catch (e) {
       console.error(e);
@@ -143,7 +143,7 @@ function SeeAlso({ note }: { note: GraphNode }) {
         <Title text={"See also"} />
         <div>
           {undirectedNeighbors.map((id) => {
-            const node = GraphState.nodes.find((node) => node.id === id);
+            const node = GraphState.nodes.find((node) => node.Id === id);
             if (node) {
               return (
                 <NoteItem
@@ -152,9 +152,9 @@ function SeeAlso({ note }: { note: GraphNode }) {
                   onDelete={() => {
                     const link = GraphState.links.find((link) => {
                       return (
-                        ((link.source === note.id && link.target === node.id) ||
-                          (link.source === node.id &&
-                            link.target === note.id)) &&
+                        ((link.source === note.Id && link.target === node.Id) ||
+                          (link.source === node.Id &&
+                            link.target === note.Id)) &&
                         link.undirected
                       );
                     });
@@ -187,7 +187,7 @@ function ReferencedBy({ note }: { note: GraphNode }) {
   useEffect(() => {
     try {
       console.log("LinksToThisNote");
-      setInNeighbors((v) => graphology.inNeighbors(note.id));
+      setInNeighbors((v) => graphology.inNeighbors(note.Id));
       console.log("InNeighbors", InNeighbors);
     } catch (e) {
       console.error(e);
@@ -202,7 +202,7 @@ function ReferencedBy({ note }: { note: GraphNode }) {
         <Title text={"Referenced By"} />
         <div>
           {InNeighbors.map((id) => {
-            const node = GraphState.nodes.find((node) => node.id === id);
+            const node = GraphState.nodes.find((node) => node.Id === id);
             if (node) {
               return <NoteItem note={node} />;
             } else {
@@ -229,7 +229,7 @@ function References({
   useEffect(() => {
     try {
       console.log("LinksFromThisNote");
-      setOutNeighbors((v) => graphology.outNeighbors(note.id));
+      setOutNeighbors((v) => graphology.outNeighbors(note.Id));
       console.log("OutNeighbors", OutNeighbors);
     } catch (e) {
       console.error(e);
@@ -244,7 +244,7 @@ function References({
         <div>
           {Array.from(referenceMap.entries()).map(([id, count]) => {
             if (count < 1) return null;
-            const node = GraphState.nodes.find((node) => node.id === id);
+            const node = GraphState.nodes.find((node) => node.Id === id);
             if (node) {
               return <NoteItem note={node} />;
             } else {
@@ -272,16 +272,16 @@ function Selector({ note }: { note: GraphNode }) {
     try {
       console.log("Selector");
       const allNotes = graphology.nodes();
-      const undirectedNeighbors = graphology.undirectedNeighbors(note.id);
+      const undirectedNeighbors = graphology.undirectedNeighbors(note.Id);
       const options = allNotes
         .filter((id) => {
-          return note.id !== id && !undirectedNeighbors.includes(id);
+          return note.Id !== id && !undirectedNeighbors.includes(id);
         })
         .map((id) => {
           return {
             value: id,
             label:
-              GraphState.nodes.find((node) => node.id === id)?.title ?? "ERROR",
+              GraphState.nodes.find((node) => node.Id === id)?.Title ?? "ERROR",
           };
         });
       setOptions(options);
@@ -296,7 +296,7 @@ function Selector({ note }: { note: GraphNode }) {
     graphDispatch({
       type: GraphActionType.addLink,
       link: {
-        source: note.id,
+        source: note.Id,
         target: id,
         undirected: true,
       },
@@ -470,7 +470,7 @@ export function NoteInfoSidePanel({
 }) {
   const referenceState = useContext(ReferenceStateContext);
 
-  useSyncGraphLinks({ sourceID: note.id });
+  useSyncGraphLinks({ sourceID: note.Id });
   return (
     <NoteInfoSidePanelWrapper width={width}>
       <References note={note} referenceMap={referenceState.referenceMap} />

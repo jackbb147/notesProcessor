@@ -46,7 +46,7 @@ export function ReferenceMapProvider({
     ReferenceState,
     ReferenceStateAction
   >(ReferenceStateReducer, {
-    sourceID: note.id,
+    sourceID: note.Id,
     referenceMap: new Map(),
   });
 
@@ -54,9 +54,9 @@ export function ReferenceMapProvider({
     dispatch({
       type: ReferenceStateActionType.setReferenceState,
       referenceState: {
-        sourceID: note.id,
+        sourceID: note.Id,
         referenceMap: countReferences(
-          generateJSON(note.content, [
+          generateJSON(note.Content, [
             Document,
             Paragraph,
             Bold,
@@ -67,7 +67,7 @@ export function ReferenceMapProvider({
         ),
       },
     });
-  }, [note.id]);
+  }, [note.Id]);
 
   return (
     <ReferenceStateContext.Provider value={referenceState}>

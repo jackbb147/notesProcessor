@@ -36,17 +36,17 @@ export default forwardRef((props, ref) => {
       referenceMapDispatch({
         type: ReferenceStateActionType.addReference,
         reference: {
-          sourceID: sourceNode.id, //TODO : get the current node id somehow
-          targetID: node.id,
+          sourceID: sourceNode.Id, //TODO : get the current node id somehow
+          targetID: node.Id,
         },
       });
 
       // setReferenceMap((previousMap) => {
       //   var newMap = new Map(previousMap);
-      //   if (!newMap.has(node.id)) {
-      //     newMap.set(node.id, 1);
+      //   if (!newMap.has(node.Id)) {
+      //     newMap.set(node.Id, 1);
       //   } else {
-      //     newMap.set(node.id, 1 + newMap.get(node.id));
+      //     newMap.set(node.Id, 1 + newMap.get(node.Id));
       //   }
       //
       //   return newMap;
@@ -60,7 +60,7 @@ export default forwardRef((props, ref) => {
       //   type: GraphActionType.addLink,
       //   link: {
       //     source: AppState.activeNodeID,
-      //     target: node.id,
+      //     target: node.Id,
       //   },
       // });
     }

@@ -117,9 +117,9 @@ export function NoteEditor({
     // debugger;
     var newNode: GraphNode = {
       ...noteRef.current,
-      content: s,
-      title: firstLine,
-      dateLastModified: new Date().toJSON(),
+      Content: s,
+      Title: firstLine,
+      DateLastModified: new Date().toJSON(),
     };
     // debugger;
     onBlur(newNode);
@@ -138,7 +138,7 @@ export function NoteEditor({
         graphDispatch({
           type: GraphActionType.addLabelToNode,
           label: action.option.label,
-          id: note.id,
+          id: note.Id,
         });
 
         break;
@@ -149,7 +149,7 @@ export function NoteEditor({
           type: GraphActionType.updateNode,
           node: {
             ...note,
-            labels: [...note.labels, action.option.label],
+            // labels: [...note.labels, action.option.label],
           },
         });
         break;
@@ -172,15 +172,13 @@ export function NoteEditor({
         // debugger;
         console.log("remove value fired");
         // debugger;
-        graphDispatch({
-          type: GraphActionType.updateNode,
-          node: {
-            ...note,
-            labels: note.labels.filter(
-              (s: string) => s !== action.removedValue.label,
-            ),
-          },
-        });
+        // graphDispatch({
+        //   type: GraphActionType.updateNode,
+        //   node: {
+        //     ...note,
+        //     labels: [].filter((s: string) => s !== action.removedValue.label),
+        //   },
+        // });
         break;
       }
     }
@@ -247,7 +245,7 @@ export function NoteEditor({
             width: "95%",
           }}
         >
-          <LabelSelector handleChange={handleChange} labels={note.labels} />
+          <LabelSelector handleChange={handleChange} labels={[]} />
         </div>
 
         <div

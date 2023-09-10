@@ -27,11 +27,11 @@ export function EditorSwitch() {
 
   switch (state.activeCollection) {
     case Collections.RecentlyDeleted: {
-      note = graph.deletedNodes.find((node) => node.id === state.activeNodeID);
+      note = graph.deletedNodes.find((node) => node.Id === state.activeNodeID);
       break;
     }
     default: {
-      note = graph.nodes.find((node) => node.id === state.activeNodeID);
+      note = graph.nodes.find((node) => node.Id === state.activeNodeID);
       break;
     }
   }
@@ -42,7 +42,7 @@ export function EditorSwitch() {
       note={note} //https://stackoverflow.com/a/54738437/21646295
       onBlur={(note: GraphNode) => {
         // debugger;
-        if (note.content.length !== 0) {
+        if (note.Content.length !== 0) {
           graphDispatch({
             type: GraphActionType.updateNode,
             node: note,
@@ -54,7 +54,7 @@ export function EditorSwitch() {
           });
           graphDispatch({
             type: GraphActionType.removeNode,
-            id: note.id,
+            id: note.Id,
           });
         }
       }}

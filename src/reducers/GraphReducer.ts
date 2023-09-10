@@ -43,12 +43,13 @@ export type GraphAction =
 // }
 
 const GraphNode = z.object({
-  id: z.string(),
-  title: z.string(),
-  content: z.string(),
-  labels: z.array(z.string()),
-  dateCreated: z.string().optional(),
-  dateLastModified: z.string().optional(),
+  Id: z.string(),
+  Title: z.string(),
+  Content: z.string(),
+  DateCreated: z.string().optional(),
+  DateLastModified: z.string().optional(),
+  Deleted: z.boolean().optional(),
+  DeletionDate: z.string().optional(),
 });
 
 export type GraphNode = z.infer<typeof GraphNode>;
@@ -94,13 +95,13 @@ export function graphReducer(draft: GraphState, action: GraphAction): void {
     case GraphActionType.addNode: {
       console.log(`Graph is adding a new node. `);
       let newNode = action.node;
-      if (draft.nodes.some((node) => node.id === newNode.id)) return;
+      if (draft.nodes.some((node) => node.Id === newNode.Id)) return;
       draft.nodes.push(newNode);
       break;
     }
 
     case GraphActionType.removeNode: {
-      let index = draft.nodes.findIndex((node) => node.id === action.id);
+      let index = draft.nodes.findIndex((node) => node.Id === action.id);
       if (index < 0) return;
       draft.deletedNodes.push(draft.nodes[index]);
       draft.nodes.splice(index, 1);
@@ -116,7 +117,7 @@ export function graphReducer(draft: GraphState, action: GraphAction): void {
     }
 
     case GraphActionType.updateNode: {
-      let index = draft.nodes.findIndex((node) => node.id === action.node.id);
+      let index = draft.nodes.findIndex((node) => node.Id === action.node.Id);
       if (index < 0) return;
       console.log(`updateNode dispatched: ${JSON.stringify(action.node)}`);
 
@@ -129,9 +130,9 @@ export function graphReducer(draft: GraphState, action: GraphAction): void {
 
     case GraphActionType.recoverNode: {
       console.log(`trying to recover: ${action.id}`);
-      let index = draft.deletedNodes.findIndex((node) => node.id === action.id);
+      let index = draft.deletedNodes.findIndex((node) => node.Id === action.id);
       if (index < 0) return;
-      if (draft.nodes.findIndex((node) => node.id === action.id) < 0) {
+      if (draft.nodes.findIndex((node) => node.Id === action.id) < 0) {
         draft.nodes.push(draft.deletedNodes[index]);
         draft.deletedNodes.splice(index, 1);
         // recover links that are related to this node
@@ -200,27 +201,27 @@ export function graphReducer(draft: GraphState, action: GraphAction): void {
 
       draft.labels.splice(index, 1);
       draft.nodes.forEach((node) => {
-        let index = node.labels.indexOf(action.label);
+        // let index = node.labels.indexOf(action.label);
         if (index < 0) return;
-        node.labels.splice(index, 1);
+        // node.labels.splice(index, 1);
       });
       break;
     }
 
     case GraphActionType.addLabelToNode: {
       // TODO
-      let index = draft.nodes.findIndex((node) => node.id === action.id);
+      let index = draft.nodes.findIndex((node) => node.Id === action.id);
       if (index < 0) return;
-      if (draft.nodes[index].labels.includes(action.label)) return;
+      // if (draft.nodes[index].labels.includes(action.label)) return;
       if (!draft.labels.includes(action.label)) return;
-      draft.nodes[index].labels.push(action.label);
+      // draft.nodes[index].labels.push(action.label);
       break;
     }
 
     case GraphActionType.permanentRemoveNode: {
-      const index1 = draft.nodes.findIndex((node) => node.id === action.id);
+      const index1 = draft.nodes.findIndex((node) => node.Id === action.id);
       const index2 = draft.deletedNodes.findIndex(
-        (node) => node.id === action.id,
+        (node) => node.Id === action.id,
       );
       if (index1 >= 0) {
         draft.nodes.splice(index1, 1);

@@ -42,8 +42,8 @@ import { Register } from "./RegisterAndLogin/Register/Register";
 import { useAppState } from "../hooks/AppStateAndGraphAndUserhooks";
 import { Login } from "./RegisterAndLogin/Login/Login";
 import { MathJax, MathJaxContext } from "better-react-mathjax";
-import {UserContext, SetUserContext} from "./RegisterAndLogin/AuthContext";
-import {ActiveUserProvider} from "./RegisterAndLogin/ActiveUserProvider";
+import { UserContext, SetUserContext } from "./RegisterAndLogin/AuthContext";
+import { ActiveUserProvider } from "./RegisterAndLogin/ActiveUserProvider";
 
 export function ensure<T>(
   argument: T | undefined | null,
@@ -77,7 +77,6 @@ function Container({ children }: { children: React.ReactNode }) {
 }
 
 function App() {
-
   return (
     <>
       <AppStateProvider>
@@ -89,13 +88,13 @@ function App() {
                 <LabelSelectorPopUp />
                 <Register />
                 <Login />
-                <FolderPanel>
-                  <div className={"App__main bg-white h-full grow w-full"}>
-                    <NotesPanel>
-                      <EditorPage />
-                    </NotesPanel>
-                  </div>
-                </FolderPanel>
+                {/*<FolderPanel>*/}
+                {/*  <div className={"App__main bg-white h-full grow w-full"}>*/}
+                {/*    <NotesPanel>*/}
+                {/*      <EditorPage />*/}
+                {/*    </NotesPanel>*/}
+                {/*  </div>*/}
+                {/*</FolderPanel>*/}
               </div>
             </Container>
           </ActiveUserProvider>
