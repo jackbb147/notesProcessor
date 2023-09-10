@@ -39,11 +39,15 @@ import { TopBar } from "./ui/TopBar";
 import { LabelSelectorPopUp } from "./LabelSelectorPopUp";
 import { EditorPage } from "./EditorView/EditorPage";
 import { Register } from "./RegisterAndLogin/Register/Register";
-import { useAppState } from "../hooks/AppStateAndGraphAndUserhooks";
+import {
+  useAppState,
+  useDispatch,
+} from "../hooks/AppStateAndGraphAndUserhooks";
 import { Login } from "./RegisterAndLogin/Login/Login";
 import { MathJax, MathJaxContext } from "better-react-mathjax";
 import { UserContext, SetUserContext } from "./RegisterAndLogin/AuthContext";
 import { ActiveUserProvider } from "./RegisterAndLogin/ActiveUserProvider";
+import { useLogInStatus } from "../hooks/useLogInStatus";
 
 export function ensure<T>(
   argument: T | undefined | null,
@@ -77,6 +81,7 @@ function Container({ children }: { children: React.ReactNode }) {
 }
 
 function App() {
+  const [isLoggedIn, userName] = useLogInStatus();
   return (
     <>
       <AppStateProvider>
