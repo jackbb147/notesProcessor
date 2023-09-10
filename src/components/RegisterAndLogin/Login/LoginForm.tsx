@@ -1,7 +1,7 @@
 import * as Form from "@radix-ui/react-form";
 import {PasswordFormField} from "../Forms/PasswordFormField";
 import React from "react";
-import {api} from "../../../Api/Api";
+import {axiosCustomInstance} from "../../../api/AxiosCustomInstance";
 import {useDispatch, useSetUser} from "../../../hooks/AppStateAndGraphAndUserhooks";
 import {AppActionType} from "../../../reducers/AppStateReducer";
 import axios from "axios";
@@ -122,7 +122,7 @@ export function LoginForm() {
         const endpoint = "http://localhost:5046/Authenticate/Login";
         const shortEndpoint  = "/Authenticate/Login";
         // const endpoint = "http://name5-dev.eba-zcpkbqup.us-west-2.elasticbeanstalk.com/isLoggedIn";
-        const response = await api.post(
+        const response = await axiosCustomInstance.post(
             shortEndpoint,null,
             {
                 withCredentials: true,
