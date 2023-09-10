@@ -55,3 +55,10 @@ export const apiSlice = createApi({
     }),
   }),
 });
+
+export const {
+  useGetNotesQuery,
+  useAddNoteMutation,
+  useRecoverNoteMutation,
+  useDeleteNoteMutation,
+} = apiSlice;

@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
  * This hook is used to join a SignalR room.
  * @param userName The username.
  * @param roomName The room name. Note that users with the same room name will be in the same room.
- * If room name is the same as user name, then a user logged in on multiple devices will be in the same room.
+ * If room name is the same as username, then a user logged in on multiple devices will be in the same room.
  */
 export function useRoom({
   userName,
@@ -45,6 +45,8 @@ export function useRoom({
         // apiSlice.endpoints.getNotes.invalidateTags(["notes"]);
         setUpdateNeeded((updateNeeded) => updateNeeded + 1);
       });
+
+      // TODO
 
       await connection.start();
       await connection.invoke("JoinRoom", { user, room });
