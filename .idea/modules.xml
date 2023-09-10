@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file:///opt/homebrew/etc/nginx/.idea/nginx.iml" filepath="/opt/homebrew/etc/nginx/.idea/nginx.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/notesapp.iml" filepath="$PROJECT_DIR$/.idea/notesapp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../rtkquery/.idea/rtkquery.iml" filepath="$PROJECT_DIR$/../rtkquery/.idea/rtkquery.iml" />
     </modules>
   </component>
 </project>
