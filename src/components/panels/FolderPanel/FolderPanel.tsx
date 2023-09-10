@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Desktop, Mobile, Tablet } from "../../../hooks/useMediaQuery";
 import { Desktop_FolderPanel } from "./Desktop_FolderPanel";
 import { Tablet_FolderPanel } from "./Tablet_FolderPanel";
 import { Mobile_FolderPanel } from "./Mobile_FolderPanel";
+import { useGraphology } from "../../../hooks/useGraphology";
 export function FolderPanel({ children }: { children: React.ReactNode }) {
+  const [graphology, updated] = useGraphology();
+  useEffect(() => {
+    const g = graphology;
+    // debugger;
+    console.debug(`[FolderPanel] graphology: ${JSON.stringify(g.export())}`);
+  }, [graphology.nodes()]);
   return (
     <>
       <Desktop>

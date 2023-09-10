@@ -3,7 +3,7 @@ import { AddNodeButton } from "../../Buttons/AddNodeButton";
 import { EditorSwitch } from "../../EditorView/EditorSwitch";
 import { Desktop_SidePanel } from "../../ui/SidePanel/Desktop/Desktop_SidePanel";
 import React from "react";
-import { Node } from "../../../reducers/GraphReducer";
+import { GraphNode } from "../../../reducers/GraphReducer";
 import { Collections } from "../../../reducers/AppStateReducer";
 import {
   useDispatch,

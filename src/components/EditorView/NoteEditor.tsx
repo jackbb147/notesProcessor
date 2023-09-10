@@ -1,203 +1,64 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Quill } from "react-quill";
-import "./quillModules/quillStyle.css";
-import style from "../ScrollableButHiddenScrollBar.module.css";
+import "./Quill/quillModules/quillStyle.css";
+
+import styles from "./NoteEditorStyle.module.css";
+
+import { ReferenceMapProvider } from "./Tiptap/Reference/ReferenceStateContext";
 
 //@ts-ignore
-import { MathEditorModule } from "./quillModules/Quill-MathJax/MathEditorModule";
-import "./quillModules/Quill-MathJax/quill.bubble.css";
-import "./quillModules/Quill-MathJax/quill.snow.css";
-import { GraphActionType, Node } from "../../reducers/GraphReducer";
-import { RangeStatic } from "quill";
+import { MathEditorModule } from "./Quill/quillModules/Quill-MathJax/MathEditorModule";
+import "./Quill/quillModules/Quill-MathJax/quill.bubble.css";
+import "./Quill/quillModules/Quill-MathJax/quill.snow.css";
+import { GraphActionType, GraphNode } from "../../reducers/GraphReducer";
 import { LabelSelector } from "./LabelSelector";
-import { LastEditedWhen } from "./LastEditedWhen";
 import { ActionMeta, Options } from "react-select";
-import { useGraph, useGraphDispatch } from "../../hooks/AppStateAndGraphAndUserhooks";
+import {
+  useAppState,
+  useDispatch,
+  useGraph,
+  useGraphDispatch,
+} from "../../hooks/AppStateAndGraphAndUserhooks";
+import { NoteInfoSidePanel } from "./NoteInfoSidePanel/NoteInfoSidePanel";
+import { Button } from "../ui/Button";
+import { AppActionType, Collections } from "../../reducers/AppStateReducer";
+import { TiptapBoxComponent } from "./Tiptap/Tiptap";
 
-function QuillBoxComponent({
-  val,
-  handleBlur,
-  onFinishSetup,
-  onTouchStart,
-  isReadOnly = false,
-  onEditAttempt = () => {},
-  darkModeOn = false,
-}: {
-  val: string;
-  handleBlur: (s: string, firstLine?: string) => any;
-  onFinishSetup: () => any;
-  onTouchStart: () => any;
-  isReadOnly?: boolean | undefined;
-  onEditAttempt?: () => any;
-  darkModeOn?: boolean;
-}) {
-  const wrapperRef = useRef<any>(null);
-  const ref = useRef<any>(null);
-  const [finishedSetup, setFinishedSetup] = useState(false);
-  const [quillNode, setQuillNode] = useState<any>(undefined);
-  const [selection, setSelection] = useState<RangeStatic | null>(null);
-
+function ToggleSideInfoPanelButton({ disabled }: { disabled: boolean }) {
+  const appState = useAppState();
+  const dispatch = useDispatch();
+  const [color, setColor] = useState("");
   useEffect(() => {
-    if (!ref.current) {
-      console.log("ref current not ready");
-      return;
-    }
-    console.log("Setting up!!!");
-
-    if (finishedSetup) return;
-    var container = ref.current;
-    if (container.previousSibling)
-      wrapperRef.current.removeChild(container.previousSibling);
-
-    setUpQuill(container);
-    return cleanUp;
-  }, []);
-
-  useEffect(() => {
-    document.querySelectorAll(".ql-container.ql-snow").forEach((val) => {
-      val.classList.add("noBorder");
-    });
-
-    if (darkModeOn) {
-      document.querySelectorAll(".ql-toolbar").forEach((val) => {
-        val.classList.add("onlyBorderBottom");
-      });
-    } else {
-      document.querySelectorAll(".ql-toolbar").forEach((val) => {
-        val.classList.remove("noBorder");
-      });
-    }
-  }, [darkModeOn]);
-
-  function cleanUp() {
-    if (ref.current) {
-      // debugger;
-      ref.current.innerHTML = "";
-      ref.current.className = "";
-      // wrapperRef.current.className = ""
-      console.log(`-------- quill clean up finished ----------`);
-    }
-  }
-
-  useEffect(() => {
-    console.log("=============VAL CHANGED: " + val + " ==================");
-    let q = quillNode;
-    if (q !== undefined) {
-      setVal(val, q);
-      setQuillSelection(selection);
-    }
-  }, [val]);
-
-  function setUpQuill(container: HTMLElement) {
-    const toolbarOptions: any = [
-      ["bold", "italic"],
-      ["underline", "strike"], // toggled buttons
-      ["blockquote", "code-block"],
-
-      [{ header: 1 }, { header: 2 }], // custom button values
-      [{ list: "ordered" }, { list: "bullet" }],
-      [{ script: "sub" }, { script: "super" }], // superscript/subscript
-      [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
-      [{ direction: "rtl" }], // text direction
-
-      [{ size: ["small", false, "large", "huge"] }], // custom dropdown
-      [{ header: [1, 2, 3, 4, 5, 6, false] }],
-
-      [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-      [{ font: [] }],
-      [{ align: [] }],
-
-      ["clean"], // remove formatting button
-    ];
-
-    var quillNode = new Quill(container, {
-      theme: "snow",
-      placeholder: "Type something...",
-      modules: {
-        toolbar: toolbarOptions,
-        // MathEditorModule: {},
-        // keyboard: {
-        //     bindings: MathEditorModule.getBindings()
-        // }
-      },
-      readOnly: isReadOnly,
-    });
-
-    setQuillNode(quillNode);
-
-    // quillNode.on("text-change", ()=>{
-    //     // debugger;
-    //     let contentDelta = quillNode.getContents();
-    //     console.log(`calling onChange with contentDelta: ${JSON.stringify(contentDelta)}`)
-    //     setSelection(prev=>quillNode.getSelection())
-    //     onChange(quillNode.root.innerHTML)
-    // })
-
-    // when user finishes editing this node.
-
-    var wrapper = wrapperRef.current;
-
-    quillNode.root.addEventListener("blur", (e: FocusEvent) => {
-      if (!wrapper.contains(e.relatedTarget)) {
-        let lengthOfFirstLine = quillNode.getLine(0)[0].cache.length - 1;
-        console.log(`quill node is handling blur!! `);
-        handleBlur(
-          quillNode.getLength() > 1 ? quillNode.root.innerHTML : "",
-          quillNode.getText(0, lengthOfFirstLine),
-        ); //TODO
+    if (appState.darkModeOn) {
+      if (appState.showNoteInfoPanel) {
+        setColor("#FFC700");
+      } else {
+        setColor("white");
       }
-    });
-
-    if (isReadOnly) {
-      quillNode.root.addEventListener("mousedown", (e) => {
-        e.stopPropagation(); // this is to prevent dragging when user is editing.
-        onEditAttempt();
-      });
-
-      // quillNode.root.addEventListener("touchstart", e=>{
-      //     e.stopPropagation()
-      // })
+    } else {
+      if (appState.showNoteInfoPanel) {
+        setColor("#FFC700");
+      } else {
+        setColor("black");
+      }
     }
-
-    if (onTouchStart) {
-      quillNode.root.addEventListener("touchstart", (e) => {
-        onTouchStart();
-      });
-      // quillNode.root.addEventListener("touchstart", onTouchStart)
-      // quillNode.root.addEventListener("mousedown", onTouchStart)
-    }
-
-    setVal(val, quillNode);
-    setFinishedSetup(true);
-    onFinishSetup();
-  }
-
-  function setVal(val: string, quillNode: any) {
-    let value = val;
-
-    const delta = quillNode.clipboard.convert(value);
-    // debugger;
-    quillNode.setContents(delta, "silent");
-  }
-
-  function setQuillSelection(selection: RangeStatic | null) {
-    quillNode.setSelection(selection);
-  }
+  }, [appState.showNoteInfoPanel, appState.darkModeOn]);
 
   return (
-    <div
-      ref={wrapperRef}
-      // className={style.ScrollableButHiddenScrollBar}
-      tabIndex={0}
-      style={{
-        // width: "100%",
-        flexGrow: "1",
-        height: "100%",
-        overflow: "hidden",
+    <Button
+      icon={<span className="material-symbols-outlined">info</span>}
+      rootStyles={{
+        color: color,
+        cursor: "pointer",
+        visibility: disabled ? "hidden" : "visible",
       }}
-    >
-      <div ref={ref}></div>
-    </div>
+      onClick={(e) => {
+        e.preventDefault();
+        dispatch({
+          type: AppActionType.setShowNoteInfoPanel,
+          show: !appState.showNoteInfoPanel,
+        });
+      }}
+    />
   );
 }
 
@@ -212,7 +73,7 @@ function QuillBoxComponent({
  */
 export function NoteEditor({
   note,
-  onBlur = (note: Node) => {},
+  onBlur = (note: GraphNode) => {},
   onFinishSetUp = () => {},
   locked = false,
   onEditAttempt = () => {
@@ -220,8 +81,8 @@ export function NoteEditor({
   },
   darkModeOn = true,
 }: {
-  note: Node;
-  onBlur?: (note: Node) => any;
+  note: GraphNode;
+  onBlur?: (note: GraphNode) => any;
   onFinishSetUp?: () => any;
   locked?: boolean | undefined;
   onEditAttempt?: () => any;
@@ -230,79 +91,35 @@ export function NoteEditor({
   const graph = useGraph();
   const graphDispatch = useGraphDispatch();
 
-  const appState = useState();
+  const appState = useAppState();
+  const dispatch = useDispatch();
+  const [infoPanelWidth, setInfoPanelWidth] = useState("");
+  const [focusRequested, setFocusRequested] = useState(0);
 
-  const noteRef = useRef<Node>(note); //https://stackoverflow.com/questions/57847594/react-hooks-accessing-up-to-date-state-from-within-a-callback
+  // const [referenceMap, setReferenceMap] = useState(new Map());
+
+  useEffect(() => {
+    if (appState.showNoteInfoPanel) {
+      setInfoPanelWidth("25%");
+    } else {
+      setInfoPanelWidth("0%");
+    }
+  }, [appState.showNoteInfoPanel]);
+
+  const noteRef = useRef<GraphNode>(note); //https://stackoverflow.com/questions/57847594/react-hooks-accessing-up-to-date-state-from-within-a-callback
   noteRef.current = note;
 
   useEffect(() => {
     console.log(`note changed: ${JSON.stringify(note)}`);
   }, [note]);
 
-  useEffect(() => {
-    console.log("HEY! CHANGING COLOR");
-    if (darkModeOn) {
-      document
-        .querySelectorAll(".ql-toolbar .ql-stroke")
-        .forEach((val: Element) => {
-          val.classList.add("fill-none", "stroke-fff");
-        });
-
-      document
-        .querySelectorAll(".ql-toolbar .ql-fill")
-        .forEach((val: Element) => {
-          val.classList.add("fill-fff", "stroke-none");
-        });
-
-      document
-        .querySelectorAll(".ql-toolbar .ql-picker")
-        .forEach((val: Element) => {
-          // val.classList.add("color-fff");
-        });
-
-      document.querySelectorAll(".ql-picker-label").forEach((val) => {
-        val.classList.add("color-white");
-      });
-
-      document.querySelectorAll(".ql-quillModules.ql-blank").forEach((val) => {
-        val.classList.add("placeholderWhite");
-      });
-    } else {
-      document
-        .querySelectorAll(".ql-toolbar .ql-stroke")
-        .forEach((val: Element) => {
-          val.classList.remove("fill-none", "stroke-fff");
-        });
-
-      document
-        .querySelectorAll(".ql-toolbar .ql-fill")
-        .forEach((val: Element) => {
-          val.classList.remove("fill-fff", "stroke-none");
-        });
-
-      document
-        .querySelectorAll(".ql-toolbar .ql-picker")
-        .forEach((val: Element) => {
-          // val.classList.remove("color-fff");
-        });
-
-      document.querySelectorAll(".ql-picker-label").forEach((val) => {
-        val.classList.remove("color-white");
-      });
-
-      document.querySelectorAll(".ql-quillModules.ql-blank").forEach((val) => {
-        val.classList.remove("placeholderWhite");
-      });
-    }
-  }, [darkModeOn]);
-
   function handleBlur(s: string, firstLine: string = "") {
     // debugger;
-    var newNode: Node = {
+    var newNode: GraphNode = {
       ...noteRef.current,
       content: s,
       title: firstLine,
-      dateLastModified: new Date(),
+      dateLastModified: new Date().toJSON(),
     };
     // debugger;
     onBlur(newNode);
@@ -371,32 +188,48 @@ export function NoteEditor({
 
   return (
     <div
+      className={`${styles.noteEditorContainer}`}
       style={{
         // width: "100%",
-        flexGrow: "1",
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
+        overflowX: "hidden",
+        // ensures no selection
+        userSelect: "none",
+        // disable browser handling of all panning and zooming gestures on touch devices
+        touchAction: "none",
       }}
     >
       <div
+        onClick={() => {
+          // alert("hey");
+          setFocusRequested(focusRequested + 1);
+        }}
         style={{
           height: "95%",
-          border: darkModeOn ? "1px solid white" : "1px solid #ccc",
+          // border: darkModeOn ? "1px solid red" : "1px solid #ccc",
           marginBottom: ".2rem",
+          display: "flex",
+          flexDirection: "row",
+          position: "relative",
+          paddingLeft: "2px",
         }}
       >
-        <QuillBoxComponent
-          val={note.content}
-          handleBlur={(s: string, firstLine?: string) => {
-            handleBlur(s, firstLine);
-          }}
-          onFinishSetup={onFinishSetUp}
-          isReadOnly={locked}
-          onEditAttempt={onEditAttempt}
-          darkModeOn={darkModeOn}
-          onTouchStart={() => {}}
-        />
+        <ReferenceMapProvider note={note}>
+          <TiptapBoxComponent
+            note={note}
+            width={`calc(100% - ${infoPanelWidth})`}
+            focusRequested={focusRequested}
+            // updateReferences={(map: Map<string, number>) => {
+            //   setReferenceMap(map);
+            // }}
+          />
+          {appState.activeCollection !== Collections.RecentlyDeleted && (
+            <NoteInfoSidePanel
+              note={note}
+              width={infoPanelWidth}
+              // referenceMap={new Map(referenceMap.entries())}
+            />
+          )}
+        </ReferenceMapProvider>
       </div>
 
       <div
@@ -411,7 +244,7 @@ export function NoteEditor({
       >
         <div
           style={{
-            width: "65%",
+            width: "95%",
           }}
         >
           <LabelSelector handleChange={handleChange} labels={note.labels} />
@@ -420,9 +253,17 @@ export function NoteEditor({
         <div
           style={{
             flexGrow: "1",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            marginLeft: "1rem",
           }}
         >
-          <LastEditedWhen />
+          <ToggleSideInfoPanelButton
+            disabled={appState.activeCollection === Collections.RecentlyDeleted}
+          />
+          {/*<span className="material-symbols-outlined">info</span>*/}
+          {/*<LastEditedWhen />*/}
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { GraphState, Node } from "../../../reducers/GraphReducer";
+import { GraphState, GraphNode } from "../../../reducers/GraphReducer";
 import { AppState, Collections } from "../../../reducers/AppStateReducer";
 import {
   useAppState,
@@ -16,7 +16,7 @@ export function useActiveCollection() {
   const dispatch = useDispatch();
 
   const getActiveCollection = useCallback(() => {
-    var collection: Node[];
+    var collection: GraphNode[];
     switch (state.activeCollection) {
       case Collections.All: {
         collection = graph.nodes;
@@ -36,16 +36,40 @@ export function useActiveCollection() {
       }
     }
 
-    return collection;
+    /**
+     * .sort((note1: GraphNode, note2: GraphNode) => {
+     *                       // debugger;
+     *                       if (!note1.dateLastModified || !note2.dateLastModified)
+     *                         return 1; // if one of the notes has no date, return a random value for now...
+     *                       const date1 = new Date(note1.dateLastModified);
+     *                       const date2 = new Date(note2.dateLastModified);
+     *                       if (date1 < date2) return 1;
+     *                       else return -1;
+     *                     })
+     */
+    return collection.slice().sort((a, b) => {
+      // if (!a.dateLastModified || !b.dateLastModified) return 0;
+      const dateA = a.dateCreated ?? a.dateLastModified;
+      const dateB = b.dateCreated ?? b.dateLastModified;
+      if (!dateA) {
+        return 1;
+      }
+
+      if (!dateB) {
+        return -1;
+      }
+
+      return new Date(dateB).getTime() - new Date(dateA).getTime();
+    });
   }, [state, graph]);
 
   const [activeCollection, setActiveCollection] = useState(
     getActiveCollection(),
   );
 
-  // function getActiveCollection():Node[]
+  // function getActiveCollection():GraphNode[]
   // {
-  //     var collection:Node[];
+  //     var collection:GraphNode[];
   //     switch (state.activeCollection) {
   //         case Collections.All: {
   //             collection = graph.nodes

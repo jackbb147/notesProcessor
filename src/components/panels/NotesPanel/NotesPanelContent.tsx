@@ -5,7 +5,7 @@ import {
   AppStateDispatchContext,
 } from "../../../reducers/AppStateContext";
 import { Button } from "../../ui/Button";
-import { GraphActionType, Node } from "../../../reducers/GraphReducer";
+import { GraphActionType, GraphNode } from "../../../reducers/GraphReducer";
 import { AppActionType, Collections } from "../../../reducers/AppStateReducer";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { ListItem } from "../../Buttons/ListItem";
@@ -58,7 +58,7 @@ export function NotesPanelContent({
   collection,
   topBarButtons,
 }: {
-  collection: Node[];
+  collection: GraphNode[];
   topBarButtons?: React.ReactNode[];
 }) {
   const state = useContext(AppStateContext);
@@ -74,20 +74,20 @@ export function NotesPanelContent({
     if (graph === null) return;
     if (dispatch === null) return;
     if (state === null) return;
-    if (graph.nodes.length < 2) return;
+    if (collection.length < 2) return;
 
     if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
 
-    let index = graph.nodes.findIndex((node) => node.id === state.activeNodeID);
+    let index = collection.findIndex((node) => node.id === state.activeNodeID);
 
     let nextID;
     if (e.key === "ArrowDown")
-      nextID = graph.nodes[(index + 1) % graph.nodes.length].id;
+      nextID = collection[(index + 1) % collection.length].id;
     else
       nextID =
         index - 1 >= 0
-          ? graph.nodes[(index - 1) % graph.nodes.length].id
-          : graph.nodes[graph.nodes.length - 1].id;
+          ? collection[(index - 1) % collection.length].id
+          : collection[collection.length - 1].id;
 
     dispatch({
       type: AppActionType.setActiveNodeID,
@@ -95,16 +95,15 @@ export function NotesPanelContent({
     });
   }
 
-  function buildOptionalText(node: Node): string {
-    if (
-      !node.dateLastModified ||
-      !node.dateLastModified.getHours ||
-      !node.dateLastModified.getMinutes
-    ) {
-      return "";
-    }
-    let hour = node.dateLastModified.getHours();
-    let minute = node.dateLastModified.getMinutes();
+  function buildOptionalText(node: GraphNode): string {
+    if (!node.dateLastModified) return "";
+    const dateLastModified = new Date(node.dateLastModified);
+
+    let hour = dateLastModified.getHours();
+    let minute = dateLastModified.getMinutes();
+    const date = dateLastModified.getDate();
+    const month = dateLastModified.getMonth() + 1;
+    const year = dateLastModified.getFullYear();
     let PM = false;
     var res = "";
 
@@ -118,6 +117,8 @@ export function NotesPanelContent({
     if (minute < 10) res += "0";
     res += minute.toString();
     if (PM) res += "PM";
+    else res += "AM";
+    res += ` ${month}/${date}/${year}`;
     return res;
   }
 
@@ -153,8 +154,27 @@ export function NotesPanelContent({
                       node: (
                         <ListItem
                           text={node.title}
+                          boldText={true}
                           active={node.id === state.activeNodeID}
                           optionalText={buildOptionalText(node)}
+                          style={{
+                            // height: "3rem",
+                            // border: "1px solid",
+                            marginBottom: ".4rem",
+                            borderBottom: ".7px solid grey",
+                          }}
+                          icon={
+                            <span
+                              className="material-symbols-outlined"
+                              style={
+                                {
+                                  // fontSize: "2rem",
+                                }
+                              }
+                            >
+                              article
+                            </span>
+                          }
                           onClick={() =>
                             dispatch({
                               type: AppActionType.setActiveNodeID,

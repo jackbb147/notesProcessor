@@ -43,7 +43,7 @@ export function AddNodeButton({
         title: "New Note",
         content: "",
         labels: tags,
-        dateCreated: new Date(),
+        dateCreated: new Date().toJSON(),
       },
     });
 

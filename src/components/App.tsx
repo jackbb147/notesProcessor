@@ -1,5 +1,23 @@
 import React, { useContext, useEffect } from "react";
 import "../App.css";
+import {
+  GraphAction,
+  GraphActionType,
+  graphReducer,
+  GraphState,
+  GraphNode,
+} from "../reducers/GraphReducer";
+import {
+  AppAction,
+  AppActionType,
+  AppState,
+  AppStateReducer,
+  Collections,
+} from "../reducers/AppStateReducer";
+import { useImmerReducer } from "use-immer";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { v4 as uuid } from "uuid";
+import { NoteEditor } from "./EditorView/NoteEditor";
 import { RecoverNodePopup } from "./RecoverNodePopup";
 import {
   AppStateContext,
@@ -23,6 +41,7 @@ import { EditorPage } from "./EditorView/EditorPage";
 import { Register } from "./RegisterAndLogin/Register/Register";
 import { useAppState } from "../hooks/AppStateAndGraphAndUserhooks";
 import { Login } from "./RegisterAndLogin/Login/Login";
+import { MathJax, MathJaxContext } from "better-react-mathjax";
 import {UserContext, SetUserContext} from "./RegisterAndLogin/AuthContext";
 import {ActiveUserProvider} from "./RegisterAndLogin/ActiveUserProvider";
 

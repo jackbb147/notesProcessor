@@ -1,5 +1,5 @@
 import { ImmerReducer } from "use-immer";
-
+import { z } from "zod";
 const _ = require("lodash");
 
 export enum GraphActionType {
@@ -7,38 +7,86 @@ export enum GraphActionType {
   updateNode,
   removeNode,
   recoverNode,
+  addLink,
+  removeLink,
+  recoverLink,
   addLabel,
   removeLabel,
   addLabelToNode,
   merge,
   permanentRemoveNode,
+  set,
 }
 
 export type GraphAction =
-  | { type: GraphActionType.addNode; node: Node }
+  | { type: GraphActionType.addNode; node: GraphNode }
   | { type: GraphActionType.removeNode; id: string }
-  | { type: GraphActionType.updateNode; node: Node }
+  | { type: GraphActionType.updateNode; node: GraphNode }
   | { type: GraphActionType.recoverNode; id: string }
   | { type: GraphActionType.addLabel; label: string }
   | { type: GraphActionType.removeLabel; label: string }
   | { type: GraphActionType.addLabelToNode; label: string; id: string }
   | { type: GraphActionType.merge; other: GraphState }
-  | { type: GraphActionType.permanentRemoveNode; id: string };
+  | { type: GraphActionType.permanentRemoveNode; id: string }
+  | { type: GraphActionType.addLink; link: GraphLink }
+  | { type: GraphActionType.removeLink; link: GraphLink }
+  | { type: GraphActionType.recoverLink; link: GraphLink }
+  | { type: GraphActionType.set; state: GraphState };
 
-export interface Node {
-  id: string;
-  title: string;
-  content: string;
-  labels: string[];
-  dateCreated?: Date;
-  dateLastModified?: Date;
-}
+// export interface GraphNode {
+//   id: string;
+//   title: string;
+//   content: string;
+//   labels: string[];
+//   dateCreated?: string;
+//   dateLastModified?: string;
+// }
 
-export interface GraphState {
-  nodes: Node[];
-  deletedNodes: Node[];
-  labels: string[];
-}
+const GraphNode = z.object({
+  id: z.string(),
+  title: z.string(),
+  content: z.string(),
+  labels: z.array(z.string()),
+  dateCreated: z.string().optional(),
+  dateLastModified: z.string().optional(),
+});
+
+export type GraphNode = z.infer<typeof GraphNode>;
+
+// export interface GraphLink {
+//   source: string;
+//   target: string;
+//   undirected?: boolean;
+// }
+
+const GraphLink = z.object({
+  source: z.string(),
+
+  target: z.string(),
+  undirected: z.boolean().optional(),
+});
+
+export type GraphLink = z.infer<typeof GraphLink>;
+
+export const GraphState = z.object({
+  version: z.string(),
+  nodes: z.array(GraphNode),
+  links: z.array(GraphLink),
+  deletedNodes: z.array(GraphNode),
+  deletedLinks: z.array(GraphLink),
+  labels: z.array(z.string()),
+});
+
+export type GraphState = z.infer<typeof GraphState>;
+
+// export interface GraphState {
+//   version: string;
+//   nodes: GraphNode[];
+//   links: GraphLink[];
+//   deletedNodes: GraphNode[];
+//   deletedLinks: GraphLink[];
+//   labels: string[];
+// }
 
 export function graphReducer(draft: GraphState, action: GraphAction): void {
   // console.log(`dispatched: ${JSON.stringify(action)}`)
@@ -56,6 +104,14 @@ export function graphReducer(draft: GraphState, action: GraphAction): void {
       if (index < 0) return;
       draft.deletedNodes.push(draft.nodes[index]);
       draft.nodes.splice(index, 1);
+      draft.links.forEach((link) => {
+        if (link.source === action.id || link.target === action.id) {
+          draft.deletedLinks.push(link);
+        }
+      });
+      draft.links = draft.links.filter((link) => {
+        return link.source !== action.id && link.target !== action.id;
+      });
       break;
     }
 
@@ -78,9 +134,56 @@ export function graphReducer(draft: GraphState, action: GraphAction): void {
       if (draft.nodes.findIndex((node) => node.id === action.id) < 0) {
         draft.nodes.push(draft.deletedNodes[index]);
         draft.deletedNodes.splice(index, 1);
+        // recover links that are related to this node
+        draft.deletedLinks.forEach((link) => {
+          if (link.source === action.id || link.target === action.id) {
+            draft.links.push(link);
+          }
+        });
+        draft.deletedLinks = draft.deletedLinks.filter((link) => {
+          return link.source !== action.id && link.target !== action.id;
+        });
       } else {
-        alert("Node with specified ID already exists. ");
+        alert("GraphNode with specified ID already exists. ");
       }
+      break;
+    }
+
+    case GraphActionType.addLink: {
+      let newLink = action.link;
+      if (
+        draft.links.some(
+          (link) =>
+            link.source === newLink.source &&
+            link.target === newLink.target &&
+            link.undirected === newLink.undirected,
+        )
+      ) {
+        return;
+      }
+      draft.links.push(newLink);
+      break;
+    }
+
+    case GraphActionType.removeLink: {
+      let link = action.link;
+      let index = draft.links.findIndex(
+        (l) => l.source === link.source && l.target === link.target,
+      );
+      if (index < 0) return;
+      draft.deletedLinks.push(draft.links[index]);
+      draft.links.splice(index, 1);
+      break;
+    }
+
+    case GraphActionType.recoverLink: {
+      let link = action.link;
+      let index = draft.deletedLinks.findIndex(
+        (l) => l.source === link.source && l.target === link.target,
+      );
+      if (index < 0) return;
+      draft.links.push(draft.deletedLinks[index]);
+      draft.deletedLinks.splice(index, 1);
       break;
     }
 
@@ -143,6 +246,16 @@ export function graphReducer(draft: GraphState, action: GraphAction): void {
         action.other.deletedNodes,
         "id",
       );
+
+      break;
+    }
+
+    case GraphActionType.set: {
+      if (draft.version !== action.state.version) {
+        throw new Error("Graph state version mismatch.");
+        return;
+      }
+      _.assign(draft, action.state);
     }
   }
 }
