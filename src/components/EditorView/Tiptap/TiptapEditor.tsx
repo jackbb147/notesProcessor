@@ -90,6 +90,7 @@ export default forwardRef(
           const content = props.editor.getHTML();
           let firstLine: string = getFirstLine(props.editor.getJSON());
           //
+          // debugger;
           handleBlur?.(firstLine, content);
         },
         extensions: [

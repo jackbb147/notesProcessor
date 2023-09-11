@@ -10,6 +10,8 @@ import {
   useAppState,
   useGraphDispatch,
 } from "../../../hooks/AppStateAndGraphAndUserhooks";
+import { useAppDispatch } from "../../../hooks/AppStateAndGraphAndUserhooks";
+import { AppActionType } from "../../../reducers/AppStateReducer";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { GraphActionType, GraphNode } from "../../../reducers/GraphReducer";
 import TiptapEditor from "./TiptapEditor";
@@ -22,7 +24,10 @@ import Bold from "@tiptap/extension-bold";
 import MathExtension from "./MathEditor/Extension";
 import { Mention } from "@tiptap/extension-mention";
 import { ReferenceStateDispatchContext } from "./Reference/ReferenceStateContext";
-import { useUpdateNoteMutation } from "../../../api/apiSlice";
+import {
+  useUpdateNoteMutation,
+  useDeleteNoteMutation,
+} from "../../../api/apiSlice";
 
 export function TiptapBoxComponent({
   note,
@@ -33,42 +38,38 @@ export function TiptapBoxComponent({
   width?: string;
   focusRequested?: number;
 }) {
+  const appDispatch = useAppDispatch();
   const [
     updateNote,
     { isLoading: isUpdating, isError: isUpdateError, error: updateError },
   ] = useUpdateNoteMutation();
+
+  const [
+    deleteNote,
+    { isLoading: isDeleting, isError: isDeleteError, error: deleteError },
+  ] = useDeleteNoteMutation();
   const setReferenceMap = useContext(ReferenceStateDispatchContext);
   const AppState = useAppState();
   const GraphDispatch = useGraphDispatch();
 
   async function handleUpdateNode(title: string, content: string) {
     //   TODO
-    // debugger;
-    if (note.Content.length !== 0) {
-      // graphDispatch({
-      //   type: GraphActionType.updateNode,
-      //   node: note,
-      // });
-      // debugger;
-      await updateNote({
-        ...note,
-        Title: title,
-        Content: content,
-        DateLastModified: new Date().toJSON(),
-      });
-      if (isUpdateError) throw new Error(JSON.stringify(updateError, null, 2));
-      // else alert("Note updated!");
-    } else {
-      // dispatch({
-      //   type: AppActionType.setActiveNodeID,
-      //   id: undefined,
-      // });
-      // graphDispatch({
-      //   type: GraphActionType.removeNode,
-      //   id: note.Id,
-      // });
-    }
+    await updateNote({
+      ...note,
+      Title: title,
+      Content: content,
+      DateLastModified: new Date().toJSON(),
+    });
+    if (isUpdateError) throw new Error(JSON.stringify(updateError, null, 2));
   }
+
+  // useEffect(() => {
+  //   if (isDeleteError) throw new Error(JSON.stringify(deleteError, null, 2));
+  //   appDispatch({
+  //     type: AppActionType.setActiveNodeID,
+  //     id: undefined,
+  //   });
+  // }, [isDeleting]);
 
   // function handleBlur(title: string, content: string) {
   //   GraphDispatch({

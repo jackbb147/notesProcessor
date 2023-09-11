@@ -49,6 +49,16 @@ export function useRoom({
         });
       });
 
+      connection.on("UpdatedNote", (user, noteId) => {
+        // alert(`Deleted note: ${noteId}`);
+        console.log(`updated note: ${noteId}`);
+        // apiSlice.endpoints.getNotes.invalidateTags(["notes"]);
+        // setUpdateNeeded((updateNeeded) => updateNeeded + 1);
+        dispatch({
+          type: SignalRActionTypes.incrementUpdateNeeded,
+        });
+      });
+
       connection.on("AddedNote", (user, noteId) => {
         // alert(`Deleted note: ${noteId}`);
         console.log(`added note: ${noteId}`);
