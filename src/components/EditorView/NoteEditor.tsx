@@ -113,18 +113,6 @@ export function NoteEditor({
     console.log(`note changed: ${JSON.stringify(note)}`);
   }, [note]);
 
-  function handleBlur(s: string, firstLine: string = "") {
-    //
-    var newNode: GraphNode = {
-      ...noteRef.current,
-      Content: s,
-      Title: firstLine,
-      DateLastModified: new Date().toJSON(),
-    };
-    //
-    onBlur(newNode);
-  }
-
   function handleChange(value: Options<any>, action: ActionMeta<any>) {
     //
     switch (action.action) {

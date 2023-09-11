@@ -15,15 +15,17 @@ export const apiSlice = createApi({
       //     return response.sort((a, b) => Number(a.id) - Number(b.id))
       // }
     }),
-    updateNote: builder.mutation<unknown, GraphNode>({
+    updateNote: builder.mutation<string, GraphNode>({
       query: (GraphNode) => ({
         url: `/Notes/Update`,
         method: "POST",
         params: {
           noteId: GraphNode.Id,
-          note: GraphNode,
+          // note: GraphNode,
+          ...GraphNode,
         },
       }),
+
       invalidatesTags: ["notes"],
     }),
     addNote: builder.mutation<unknown, GraphNode>({
