@@ -10,12 +10,14 @@ export enum SignalRActionTypes {
   setConnection,
   setUpdateNeeded,
   setRoomName,
+  incrementUpdateNeeded,
 }
 
 export type SignalRAction =
   | { type: SignalRActionTypes.setConnection; payload: HubConnection }
   | { type: SignalRActionTypes.setUpdateNeeded; payload: number }
-  | { type: SignalRActionTypes.setRoomName; payload: string };
+  | { type: SignalRActionTypes.setRoomName; payload: string }
+  | { type: SignalRActionTypes.incrementUpdateNeeded };
 
 const initialState: SignalRState = {
   connection: null as HubConnection | null,
@@ -35,6 +37,12 @@ export function SignalrReducer(state = initialState, action: any) {
       return {
         ...state,
         updateNeeded: action.payload,
+      };
+    }
+    case SignalRActionTypes.incrementUpdateNeeded: {
+      return {
+        ...state,
+        updateNeeded: state.updateNeeded + 1,
       };
     }
 

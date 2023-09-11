@@ -45,8 +45,7 @@ export function useRoom({
         // apiSlice.endpoints.getNotes.invalidateTags(["notes"]);
         // setUpdateNeeded((updateNeeded) => updateNeeded + 1);
         dispatch({
-          type: SignalRActionTypes.setUpdateNeeded,
-          updateNeeded: updatedNeeded + 1,
+          type: SignalRActionTypes.incrementUpdateNeeded,
         });
       });
 
@@ -56,8 +55,7 @@ export function useRoom({
         // apiSlice.endpoints.getNotes.invalidateTags(["notes"]);
         // setUpdateNeeded((updateNeeded) => updateNeeded + 1);
         dispatch({
-          type: SignalRActionTypes.setUpdateNeeded,
-          updateNeeded: updatedNeeded + 1,
+          type: SignalRActionTypes.incrementUpdateNeeded,
         });
       });
 
