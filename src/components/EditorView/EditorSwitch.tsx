@@ -11,9 +11,13 @@ import { GraphActionType, GraphNode } from "../../reducers/GraphReducer";
 import { AppActionType, Collections } from "../../reducers/AppStateReducer";
 import { NoteEditor } from "./NoteEditor";
 import { ensure } from "../App";
-import { useGetNotesQuery } from "../../api/apiSlice";
+import { useGetNotesQuery, useUpdateNoteMutation } from "../../api/apiSlice";
 
 export function EditorSwitch() {
+  const [
+    updateNote,
+    { isLoading: isUpdating, isError: isUpdateError, error: updateError },
+  ] = useUpdateNoteMutation();
   const graph = useContext(GraphContext);
   const graphDispatch = useContext(GraphDispatchContext);
   const state = useContext(AppStateContext);
@@ -41,28 +45,34 @@ export function EditorSwitch() {
   );
   if (note === undefined) return <></>;
 
+  async function handleUpdateNode(note: GraphNode) {
+    //   TODO
+    if (note.Content.length !== 0) {
+      // graphDispatch({
+      //   type: GraphActionType.updateNode,
+      //   node: note,
+      // });
+      debugger;
+      await updateNote(note);
+      if (isUpdateError) alert("Error updating note: " + updateError);
+      else alert("Note updated!");
+    } else {
+      // dispatch({
+      //   type: AppActionType.setActiveNodeID,
+      //   id: undefined,
+      // });
+      // graphDispatch({
+      //   type: GraphActionType.removeNode,
+      //   id: note.Id,
+      // });
+    }
+  }
+
   return (
     <NoteEditor
       darkModeOn={state.darkModeOn}
       note={note} //https://stackoverflow.com/a/54738437/21646295
-      onBlur={(note: GraphNode) => {
-        //
-        if (note.Content.length !== 0) {
-          graphDispatch({
-            type: GraphActionType.updateNode,
-            node: note,
-          });
-        } else {
-          dispatch({
-            type: AppActionType.setActiveNodeID,
-            id: undefined,
-          });
-          graphDispatch({
-            type: GraphActionType.removeNode,
-            id: note.Id,
-          });
-        }
-      }}
+      onBlur={handleUpdateNode}
       onEditAttempt={
         state.activeCollection === Collections.RecentlyDeleted
           ? () => {
