@@ -49,6 +49,16 @@ export function useRoom({
         });
       });
 
+      connection.on("AddedNote", (user, noteId) => {
+        // alert(`Deleted note: ${noteId}`);
+        console.log(`added note: ${noteId}`);
+        // apiSlice.endpoints.getNotes.invalidateTags(["notes"]);
+        // setUpdateNeeded((updateNeeded) => updateNeeded + 1);
+        dispatch({
+          type: SignalRActionTypes.incrementUpdateNeeded,
+        });
+      });
+
       connection.on("RecoveredNote", (user, noteId) => {
         // alert(`Recovered note: ${noteId}`);
         console.log(`Recovered note: ${noteId}`);
