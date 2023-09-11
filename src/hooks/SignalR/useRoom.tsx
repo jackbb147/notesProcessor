@@ -21,6 +21,7 @@ export function useRoom({
   userName: string | null;
   roomName: string | null;
 }) {
+  const [connection, setConnection] = useState<HubConnection | null>(null);
   const updatedNeeded = useSelector(
     (state: RootState) => state.signalr.updateNeeded,
   );
@@ -37,6 +38,15 @@ export function useRoom({
       connection.on("ReceiveMessage", (user, message) => {
         // alert(`Message received: ${message}`);
         console.log(`Message received: ${message}`);
+      });
+
+      connection.on("ReceiveText", (user: string, text: string) => {
+        // alert(`Message received: ${message}`);
+        console.log(`Text received: ${text}`);
+        dispatch({
+          type: SignalRActionTypes.setActiveNoteContent,
+          payload: text,
+        });
       });
 
       connection.on("DeletedNote", (user, noteId) => {
@@ -84,10 +94,11 @@ export function useRoom({
       await connection.start();
       await connection.invoke("JoinRoom", { user, room });
       // setConnection(connection);
-      dispatch({
-        type: SignalRActionTypes.setConnection,
-        connection: connection,
-      });
+      // dispatch({
+      //   type: SignalRActionTypes.setConnection,
+      //   payload: connection,
+      // });
+      setConnection(connection);
     } catch (e) {
       alert(JSON.stringify(e, null, 2));
     }
@@ -100,4 +111,5 @@ export function useRoom({
   }, [userName, roomName]);
 
   // return [connection, updateNeeded];
+  return connection;
 }

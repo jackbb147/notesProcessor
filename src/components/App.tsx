@@ -49,6 +49,7 @@ import { UserContext, SetUserContext } from "./RegisterAndLogin/AuthContext";
 import { ActiveUserProvider } from "./RegisterAndLogin/ActiveUserProvider";
 import { useLogInStatus } from "../hooks/useLogInStatus";
 import { useRoom } from "../hooks/SignalR/useRoom";
+import { SignalrConnectionProvider } from "../reducers/SignalrConnectionContext";
 
 export function ensure<T>(
   argument: T | undefined | null,
@@ -83,34 +84,31 @@ function Container({ children }: { children: React.ReactNode }) {
 
 function App() {
   const [isLoggedIn, userName] = useLogInStatus();
-  useRoom({
-    userName: userName,
-    roomName: userName,
-  });
-
   return (
     <>
       <GraphProvider>
         <ActiveUserProvider>
-          <Container>
-            <div className="bg-grey dark:bg-dark_secondary w-full h-full flex flex-row overflow-hidden dark:text-white">
-              <RecoverNodePopup />
-              <LabelSelectorPopUp />
-              {!isLoggedIn && (
-                <>
-                  <Register />
-                  <Login />
-                </>
-              )}
-              <FolderPanel>
-                <div className={"App__main bg-white h-full grow w-full"}>
-                  <NotesPanel>
-                    <EditorPage />
-                  </NotesPanel>
-                </div>
-              </FolderPanel>
-            </div>
-          </Container>
+          <SignalrConnectionProvider>
+            <Container>
+              <div className="bg-grey dark:bg-dark_secondary w-full h-full flex flex-row overflow-hidden dark:text-white">
+                <RecoverNodePopup />
+                <LabelSelectorPopUp />
+                {!isLoggedIn && (
+                  <>
+                    <Register />
+                    <Login />
+                  </>
+                )}
+                <FolderPanel>
+                  <div className={"App__main bg-white h-full grow w-full"}>
+                    <NotesPanel>
+                      <EditorPage />
+                    </NotesPanel>
+                  </div>
+                </FolderPanel>
+              </div>
+            </Container>
+          </SignalrConnectionProvider>
         </ActiveUserProvider>
       </GraphProvider>
     </>

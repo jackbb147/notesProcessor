@@ -23,6 +23,11 @@ import Underline from "@tiptap/extension-underline";
 
 import MyToolbar from "./Toolbar/Toolbar";
 import { AppActionType, Collections } from "../../../reducers/AppStateReducer";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
+import { useLogInStatus } from "../../../hooks/useLogInStatus";
+import { SignalrConnectionContext } from "../../../reducers/SignalrConnectionContext";
+import { HubConnection } from "@microsoft/signalr";
 
 function getFirstLine(json: JSONContent): string {
   let res: string = "";
@@ -47,10 +52,12 @@ export default forwardRef(
     {
       note,
       handleBlur,
+      handleUpdate,
       focusRequested,
     }: {
       note: GraphNode;
       handleBlur?: (title: string, content: string) => any;
+      handleUpdate?: (title: string, content: string) => any;
       focusRequested?: number;
     },
     ref,
@@ -58,6 +65,18 @@ export default forwardRef(
     const Graph = useGraph();
     const appState = useAppState();
     const dispatch = useAppDispatch();
+    const updateNeeded = useSelector(
+      (state: RootState) => state.signalr.updateNeeded,
+    );
+    const activeNoteContent = useSelector(
+      (state: RootState) => state.signalr.activeNoteContent,
+    );
+
+    const connection: HubConnection | null = useContext(
+      SignalrConnectionContext,
+    );
+
+    const [isLoggedIn, loggedInUser] = useLogInStatus();
 
     const referenceMapDispatch = useContext(ReferenceStateDispatchContext);
     useEffect(() => {
@@ -76,6 +95,11 @@ export default forwardRef(
         editor?.commands.focus();
       }
     }, [focusRequested]);
+    //
+    // useEffect(() => {
+    //   if (!connection) return;
+    //
+    // }, [connection]);
 
     useEffect(() => {
       if (!editor) return;
@@ -83,8 +107,31 @@ export default forwardRef(
       editor.storage.mention.note = note;
       editor.storage.mention.graph = Graph;
     }, [note, Graph]);
+
+    useEffect(() => {
+      if (!editor) return;
+      let { from, to } = editor.state.selection;
+      editor.commands.setContent(activeNoteContent, false, {
+        preserveWhitespace: "full",
+      });
+      editor.commands.setTextSelection({ from, to });
+    }, [activeNoteContent]);
     const editor = useEditor(
       {
+        onUpdate: (props) => {
+          console.log("onupdate");
+          if (!isLoggedIn) return;
+          const content = props.editor.getHTML();
+          if (!connection) alert("no connection");
+          connection?.invoke(
+            "BroadcastText",
+            {
+              User: loggedInUser,
+              Room: loggedInUser,
+            },
+            content,
+          );
+        },
         onBlur: (props) => {
           console.log("onblur");
           const content = props.editor.getHTML();
