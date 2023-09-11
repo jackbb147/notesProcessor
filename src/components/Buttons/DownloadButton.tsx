@@ -1,7 +1,7 @@
 import { ListItem } from "./ListItem";
 import React from "react";
 import {
-  useDispatch,
+  useAppDispatch,
   useAppState,
   useGraph,
 } from "../../hooks/AppStateAndGraphAndUserhooks";
@@ -9,7 +9,7 @@ import { useDownload } from "../../hooks/useDownload";
 
 export function DownloadButton() {
   const state = useAppState();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const graph = useGraph();
   const download = useDownload();
 

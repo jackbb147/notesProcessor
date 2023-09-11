@@ -1,15 +1,18 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross2Icon } from "@radix-ui/react-icons";
-import { useAppState, useDispatch } from "../../../hooks/AppStateAndGraphAndUserhooks";
+import {
+  useAppState,
+  useAppDispatch,
+} from "../../../hooks/AppStateAndGraphAndUserhooks";
 import { AppActionType } from "../../../reducers/AppStateReducer";
 import { LoginForm } from "./LoginForm";
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { ToRegister } from "../RegisterLoginRedirect/Redirect";
 import axios from "axios";
 
 export function Login_Desktop() {
   const AppState = useAppState();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleOpenChange = (openStatus: boolean) => {
     dispatch({
@@ -17,10 +20,6 @@ export function Login_Desktop() {
       show: openStatus,
     });
   };
-
-
-
-
 
   return (
     <Dialog.Root open={AppState.showLoginPage} onOpenChange={handleOpenChange}>

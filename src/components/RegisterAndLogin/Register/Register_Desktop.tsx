@@ -1,7 +1,10 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import * as Form from "@radix-ui/react-form";
 import { Cross2Icon } from "@radix-ui/react-icons";
-import { useAppState, useDispatch } from "../../../hooks/AppStateAndGraphAndUserhooks";
+import {
+  useAppState,
+  useAppDispatch,
+} from "../../../hooks/AppStateAndGraphAndUserhooks";
 import { AppActionType } from "../../../reducers/AppStateReducer";
 import { RegistrationForm } from "./RegistrationForm";
 import { ToLogin } from "../RegisterLoginRedirect/Redirect";
@@ -10,7 +13,7 @@ import { ReactHookRegistrationForm } from "../Forms/ReactHookRegistrationForm";
 
 export function Register_Desktop() {
   const AppState = useAppState();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   function handleOpenChange(openStatus: boolean) {
     dispatch({

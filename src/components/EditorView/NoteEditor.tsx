@@ -14,7 +14,7 @@ import { LabelSelector } from "./LabelSelector";
 import { ActionMeta, Options } from "react-select";
 import {
   useAppState,
-  useDispatch,
+  useAppDispatch,
   useGraph,
   useGraphDispatch,
 } from "../../hooks/AppStateAndGraphAndUserhooks";
@@ -25,7 +25,7 @@ import { TiptapBoxComponent } from "./Tiptap/Tiptap";
 
 function ToggleSideInfoPanelButton({ disabled }: { disabled: boolean }) {
   const appState = useAppState();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [color, setColor] = useState("");
   useEffect(() => {
     if (appState.darkModeOn) {
@@ -92,7 +92,7 @@ export function NoteEditor({
   const graphDispatch = useGraphDispatch();
 
   const appState = useAppState();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [infoPanelWidth, setInfoPanelWidth] = useState("");
   const [focusRequested, setFocusRequested] = useState(0);
 

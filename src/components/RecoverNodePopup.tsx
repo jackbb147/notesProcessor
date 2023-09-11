@@ -7,6 +7,7 @@ import {
 import { AppActionType, Collections } from "../reducers/AppStateReducer";
 import { GraphActionType } from "../reducers/GraphReducer";
 import { GraphContext, GraphDispatchContext } from "../reducers/GraphContext";
+import { useRecoverNoteMutation } from "../api/apiSlice";
 
 export function RecoverNodePopup() {
   const state = useContext(AppStateContext);
@@ -15,6 +16,7 @@ export function RecoverNodePopup() {
     throw Error("state or dispatch is null. ");
   const graph = useContext(GraphContext);
   const graphDispatch = useContext(GraphDispatchContext);
+  const [recoverNote] = useRecoverNoteMutation();
   if (graph === null || graphDispatch === null)
     throw Error("graph or graphDispatch is null. ");
 
@@ -67,8 +69,11 @@ export function RecoverNodePopup() {
                     type: AppActionType.setActiveCollection,
                     activeCollection: Collections.All,
                   });
-                  graphDispatch({
-                    type: GraphActionType.recoverNode,
+                  // graphDispatch({
+                  //   type: GraphActionType.recoverNode,
+                  //   id: state.activeNodeID,
+                  // });
+                  recoverNote({
                     id: state.activeNodeID,
                   });
                   // dispatch({

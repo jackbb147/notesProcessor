@@ -1,7 +1,7 @@
 import { LabelSelector } from "./EditorView/LabelSelector";
 import { Overlay } from "./Overlay";
 import {
-  useDispatch,
+  useAppDispatch,
   useGraph,
   useGraphDispatch,
   useAppState,
@@ -12,7 +12,7 @@ import { GraphActionType } from "../reducers/GraphReducer";
 
 export function LabelSelectorPopUp() {
   const state = useAppState();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const graph = useGraph();
   const graphDispatch = useGraphDispatch();

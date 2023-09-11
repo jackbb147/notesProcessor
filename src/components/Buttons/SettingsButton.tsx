@@ -1,11 +1,14 @@
-import { useDispatch, useAppState } from "../../hooks/AppStateAndGraphAndUserhooks";
+import {
+  useAppDispatch,
+  useAppState,
+} from "../../hooks/AppStateAndGraphAndUserhooks";
 import { ListItem } from "./ListItem";
 import React, { forwardRef } from "react";
 import { AppActionType } from "../../reducers/AppStateReducer";
 
 export const SettingsButton = forwardRef((props, ref) => {
   const state = useAppState();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   function handleClick() {
     dispatch({

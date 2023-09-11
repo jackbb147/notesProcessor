@@ -41,7 +41,7 @@ import { EditorPage } from "./EditorView/EditorPage";
 import { Register } from "./RegisterAndLogin/Register/Register";
 import {
   useAppState,
-  useDispatch,
+  useAppDispatch,
 } from "../hooks/AppStateAndGraphAndUserhooks";
 import { Login } from "./RegisterAndLogin/Login/Login";
 import { MathJax, MathJaxContext } from "better-react-mathjax";

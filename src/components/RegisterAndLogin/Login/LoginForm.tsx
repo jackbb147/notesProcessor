@@ -3,7 +3,7 @@ import { PasswordFormField } from "../Forms/PasswordFormField";
 import React from "react";
 import { axiosCustomInstance } from "../../../api/AxiosCustomInstance";
 import {
-  useDispatch,
+  useAppDispatch,
   useSetUser,
 } from "../../../hooks/AppStateAndGraphAndUserhooks";
 import { AppActionType } from "../../../reducers/AppStateReducer";
@@ -116,7 +116,7 @@ interface loginInfo {
   password: string;
 }
 export function LoginForm() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const setUser = useSetUser();
   async function login(info: loginInfo) {
     // const endpoint = "http://localhost:5046/isLoggedIn";

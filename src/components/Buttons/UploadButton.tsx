@@ -1,6 +1,6 @@
 import {
   useAppState,
-  useDispatch,
+  useAppDispatch,
   useGraphDispatch,
 } from "../../hooks/AppStateAndGraphAndUserhooks";
 import { ListItem } from "./ListItem";
@@ -12,7 +12,7 @@ import { Version } from "../../Version";
 
 export function UploadButton() {
   const state = useAppState();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const graphDispatch = useGraphDispatch();
   const ref = useRef<any>(null);
   const upload = useUpload();

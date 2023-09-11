@@ -1,11 +1,14 @@
 import React from "react";
 import { ListItem } from "./ListItem";
-import { useAppState, useDispatch } from "../../hooks/AppStateAndGraphAndUserhooks";
+import {
+  useAppState,
+  useAppDispatch,
+} from "../../hooks/AppStateAndGraphAndUserhooks";
 import { AppActionType } from "../../reducers/AppStateReducer";
 
 export function AccountButton() {
   const AppState = useAppState();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   function handleClick() {
     if (AppState.isLoggedIn) {

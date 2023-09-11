@@ -1,9 +1,12 @@
-import { useAppState, useDispatch } from "../../../hooks/AppStateAndGraphAndUserhooks";
+import {
+  useAppState,
+  useAppDispatch,
+} from "../../../hooks/AppStateAndGraphAndUserhooks";
 import React from "react";
 import { AppActionType } from "../../../reducers/AppStateReducer";
 
 function ToLoginBtn() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const handleClick = (e: React.MouseEvent) => {
     //     TODO
     dispatch({
@@ -31,7 +34,7 @@ function ToLoginBtn() {
 }
 
 function ToRegisterBtn() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const handleClick = (e: React.MouseEvent) => {
     //     TODO
     dispatch({

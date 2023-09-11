@@ -1,11 +1,14 @@
 import { Button } from "../ui/Button";
 import React from "react";
-import { useAppState, useDispatch } from "../../hooks/AppStateAndGraphAndUserhooks";
+import {
+  useAppState,
+  useAppDispatch,
+} from "../../hooks/AppStateAndGraphAndUserhooks";
 import { AppActionType } from "../../reducers/AppStateReducer";
 
 export function BackButton() {
   const state = useAppState();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   function handleClick() {
     dispatch({

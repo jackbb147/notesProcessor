@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { ListItem } from "../../Buttons/ListItem";
 import {
   useAppState,
-  useDispatch,
+  useAppDispatch,
   useGraph,
   useGraphDispatch,
 } from "../../../hooks/AppStateAndGraphAndUserhooks";
@@ -59,7 +59,7 @@ function NoteItem({
   deletable?: boolean;
   onDelete?: () => void;
 }) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   function onClick() {
     dispatch({
       type: AppActionType.setActiveNodeID,
@@ -391,7 +391,7 @@ function NoteInfoSidePanelWrapper({
   children: React.ReactNode;
 }) {
   const AppState = useAppState();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   return (
     <>
       <Mobile>

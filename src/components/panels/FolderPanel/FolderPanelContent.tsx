@@ -1,10 +1,11 @@
 import { Button } from "../../ui/Button";
 import { ListItem } from "../../Buttons/ListItem";
 import {
-  useDispatch,
+  useAppDispatch,
   useGraph,
   useGraphDispatch,
-  useAppState, useUser,
+  useAppState,
+  useUser,
 } from "../../../hooks/AppStateAndGraphAndUserhooks";
 import { AppActionType, Collections } from "../../../reducers/AppStateReducer";
 import React, { useContext, useRef } from "react";
@@ -23,7 +24,7 @@ import { Desktop, Mobile, Tablet } from "../../../hooks/useMediaQuery";
 import { All } from "../../Buttons/All";
 import { RecentlyDeleted } from "../../Buttons/RecentlyDeleted";
 import { Scrollbars } from "react-custom-scrollbars-2";
-import {useLogInStatus} from "../../../hooks/useLogInStatus";
+import { useLogInStatus } from "../../../hooks/useLogInStatus";
 
 function SettingsPanelWrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -61,7 +62,7 @@ function SettingsPanelWrapper({ children }: { children: React.ReactNode }) {
 
 export function FolderPanelContent() {
   const state = useAppState();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const graph = useGraph();
   const graphDispatch = useGraphDispatch();
@@ -141,9 +142,7 @@ export function FolderPanelContent() {
 
       <div className={"mt-auto"}>
         <EditLabelsButton />
-        {
-            activeUser ? activeUser : <AccountButton />
-        }
+        {activeUser ? activeUser : <AccountButton />}
         <SettingsButton ref={settingsButtonRef} />
         <OutsideAlerter
           condition={SettingPanelOutsideClickCondition}

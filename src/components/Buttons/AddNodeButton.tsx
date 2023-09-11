@@ -13,7 +13,7 @@ import {
 import { AppActionType, Collections } from "../../reducers/AppStateReducer";
 import {
   useAppState,
-  useDispatch,
+  useAppDispatch,
 } from "../../hooks/AppStateAndGraphAndUserhooks";
 
 export function AddNodeButton({
@@ -22,7 +22,7 @@ export function AddNodeButton({
   rootClassName?: string;
 }) {
   const state = useAppState();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const graph = useContext(GraphContext);
   const graphDispatch = useContext(GraphDispatchContext);

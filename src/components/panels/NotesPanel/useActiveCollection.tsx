@@ -2,14 +2,20 @@ import { GraphState, GraphNode } from "../../../reducers/GraphReducer";
 import { AppState, Collections } from "../../../reducers/AppStateReducer";
 import {
   useAppState,
-  useDispatch,
+  useAppDispatch,
   useGraph,
   useGraphDispatch,
 } from "../../../hooks/AppStateAndGraphAndUserhooks";
 import { useGetNotesQuery } from "../../../api/apiSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
 import { useCallback, useEffect, useState } from "react";
 
 export function useActiveCollection() {
+  const appState = useAppState();
+  const updateNeeded = useSelector(
+    (state: RootState) => state.signalr.updateNeeded,
+  );
   const { data, isLoading, isSuccess, isError, error, refetch } =
     useGetNotesQuery();
   if (isError) {
@@ -19,6 +25,11 @@ export function useActiveCollection() {
   useEffect(() => {
     console.log("[useActiveCollection]", JSON.stringify(data, null, 2));
   }, [data]);
+
+  useEffect(() => {
+    console.log("[useActiveCollection] refetching");
+    refetch();
+  }, [updateNeeded]);
 
   //
   // const graph = useGraph();
@@ -86,6 +97,20 @@ export function useActiveCollection() {
   //   // alert("hey! active collection changed")
   //   setActiveCollection(getActiveCollection());
   // }, [state.activeCollection, graph.nodes, state.activeLabel]);
-  return data ?? [];
+  if (!data) return [];
+  switch (appState.activeCollection) {
+    case Collections.All: {
+      return data.filter((note) => !note.Deleted);
+    }
+    case Collections.RecentlyDeleted: {
+      return data.filter((note) => note.Deleted);
+    }
+    case Collections.Label: {
+      // TODO
+      return [];
+      // return data.filter((note) => note.Labels.includes(appState.activeLabel));
+    }
+  }
+  // return data ?? [];
   // return activeCollection;
 }

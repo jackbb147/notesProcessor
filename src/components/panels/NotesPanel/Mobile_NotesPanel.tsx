@@ -6,7 +6,7 @@ import React from "react";
 import { GraphNode } from "../../../reducers/GraphReducer";
 import { Collections } from "../../../reducers/AppStateReducer";
 import {
-  useDispatch,
+  useAppDispatch,
   useGraph,
   useGraphDispatch,
   useAppState,
@@ -33,7 +33,7 @@ export function Mobile_NotesPanel({ children }: { children: React.ReactNode }) {
   const graph = useGraph();
   const graphDispatch = useGraphDispatch();
   const state = useAppState();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   return (
     <>

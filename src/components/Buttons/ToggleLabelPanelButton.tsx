@@ -1,10 +1,10 @@
 import { AppActionType } from "../../reducers/AppStateReducer";
 import { Button } from "../ui/Button";
 import React from "react";
-import { useDispatch } from "../../hooks/AppStateAndGraphAndUserhooks";
+import { useAppDispatch } from "../../hooks/AppStateAndGraphAndUserhooks";
 
 export function ToggleLabelPanelButton() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   console.log("toggle label panel clicked");
   return (
     <Button

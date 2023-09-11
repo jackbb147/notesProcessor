@@ -1,10 +1,10 @@
 import { Button } from "../ui/Button";
 import React from "react";
-import { useDispatch } from "../../hooks/AppStateAndGraphAndUserhooks";
+import { useAppDispatch } from "../../hooks/AppStateAndGraphAndUserhooks";
 import { AppActionType } from "../../reducers/AppStateReducer";
 
 export function CloseSettingsPanelButton() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   function handleClick() {
     dispatch({

@@ -12,7 +12,7 @@ import Placeholder from "@tiptap/extension-placeholder";
 
 import {
   useAppState,
-  useDispatch,
+  useAppDispatch,
   useGraph,
 } from "../../../hooks/AppStateAndGraphAndUserhooks";
 import { GraphNode } from "../../../reducers/GraphReducer";
@@ -57,7 +57,7 @@ export default forwardRef(
   ) => {
     const Graph = useGraph();
     const appState = useAppState();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const referenceMapDispatch = useContext(ReferenceStateDispatchContext);
     useEffect(() => {
