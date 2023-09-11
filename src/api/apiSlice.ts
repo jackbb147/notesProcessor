@@ -33,7 +33,11 @@ export const apiSlice = createApi({
         url: `/Notes/Create`,
         method: "POST",
         // body: todo,
-        params: GraphNode,
+        params: {
+          ...GraphNode,
+          Content:
+            GraphNode.Content.trim() === "" ? undefined : GraphNode.Content, // this is a hack.  I don't know why the server is not accepting empty strings
+        },
       }),
       invalidatesTags: ["notes"],
     }),

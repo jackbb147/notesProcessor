@@ -1,7 +1,7 @@
 import { GraphActionType } from "../../reducers/GraphReducer";
 import { v4 as uuid } from "uuid";
 import { Button } from "../ui/Button";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   GraphContext,
   GraphDispatchContext,
@@ -15,6 +15,7 @@ import {
   useAppState,
   useAppDispatch,
 } from "../../hooks/AppStateAndGraphAndUserhooks";
+import { useAddNoteMutation } from "../../api/apiSlice";
 
 export function AddNodeButton({
   rootClassName = "",
@@ -26,10 +27,14 @@ export function AddNodeButton({
 
   const graph = useContext(GraphContext);
   const graphDispatch = useContext(GraphDispatchContext);
+
+  const [addNote, { isLoading: isAddingNote, isSuccess, data }] =
+    useAddNoteMutation();
   if (graph === null || graphDispatch === null)
     throw Error("graph or graphDispatch is null. ");
 
-  function handleClick() {
+  async function handleClick() {
+    // alert("hey clicked");
     if (graphDispatch === null || state === null)
       throw Error("graphDispatch or state is null");
     let tags = [];
@@ -38,6 +43,14 @@ export function AddNodeButton({
     }
 
     let newID = uuid();
+
+    addNote({
+      //
+      Id: newID,
+      Title: "New Note",
+      Content: "",
+      // DateCreated: new Date().toJSON(),
+    });
 
     // graphDispatch({
     //   type: GraphActionType.addNode,
@@ -49,12 +62,18 @@ export function AddNodeButton({
     //     dateCreated: new Date().toJSON(),
     //   },
     // });
-
-    dispatch({
-      type: AppActionType.setActiveNodeID,
-      id: newID,
-    });
   }
+
+  useEffect(() => {
+    if (isSuccess) {
+      let id = data as string;
+      // debugger;
+      dispatch({
+        type: AppActionType.setActiveNodeID,
+        id: id,
+      });
+    }
+  }, [isAddingNote]);
 
   return (
     <Button
