@@ -142,35 +142,35 @@ function SeeAlso({ note }: { note: GraphNode }) {
       >
         <Title text={"See also"} />
         <div>
-          {undirectedNeighbors.map((id) => {
-            const node = GraphState.nodes.find((node) => node.Id === id);
-            if (node) {
-              return (
-                <NoteItem
-                  note={node}
-                  deletable={true}
-                  onDelete={() => {
-                    const link = GraphState.links.find((link) => {
-                      return (
-                        ((link.source === note.Id && link.target === node.Id) ||
-                          (link.source === node.Id &&
-                            link.target === note.Id)) &&
-                        link.undirected
-                      );
-                    });
-                    if (link) {
-                      graphDispatch({
-                        type: GraphActionType.removeLink,
-                        link,
-                      });
-                    }
-                  }}
-                />
-              );
-            } else {
-              return null;
-            }
-          })}
+          {/*{undirectedNeighbors.map((id) => {*/}
+          {/*  const node = GraphState.nodes.find((node) => node.Id === id);*/}
+          {/*  if (node) {*/}
+          {/*    return (*/}
+          {/*      <NoteItem*/}
+          {/*        note={node}*/}
+          {/*        deletable={true}*/}
+          {/*        onDelete={() => {*/}
+          {/*          const link = GraphState.links.find((link) => {*/}
+          {/*            return (*/}
+          {/*              ((link.source === note.Id && link.target === node.Id) ||*/}
+          {/*                (link.source === node.Id &&*/}
+          {/*                  link.target === note.Id)) &&*/}
+          {/*              link.undirected*/}
+          {/*            );*/}
+          {/*          });*/}
+          {/*          if (link) {*/}
+          {/*            graphDispatch({*/}
+          {/*              type: GraphActionType.removeLink,*/}
+          {/*              link,*/}
+          {/*            });*/}
+          {/*          }*/}
+          {/*        }}*/}
+          {/*      />*/}
+          {/*    );*/}
+          {/*  } else {*/}
+          {/*    return null;*/}
+          {/*  }*/}
+          {/*})}*/}
           <Selector note={note} />
         </div>
       </div>
@@ -182,13 +182,13 @@ function SeeAlso({ note }: { note: GraphNode }) {
 function ReferencedBy({ note }: { note: GraphNode }) {
   const [graphology, updated] = useGraphology();
   const GraphState = useGraph();
-  const [InNeighbors, setInNeighbors] = useState<string[]>([]);
+  // const [InNeighbors, setInNeighbors] = useState<string[]>([]);
 
   useEffect(() => {
     try {
       console.log("LinksToThisNote");
-      setInNeighbors((v) => graphology.inNeighbors(note.Id));
-      console.log("InNeighbors", InNeighbors);
+      // setInNeighbors((v) => graphology.inNeighbors(note.Id));
+      // console.log("InNeighbors", InNeighbors);
     } catch (e) {
       console.error(e);
     }
@@ -200,16 +200,16 @@ function ReferencedBy({ note }: { note: GraphNode }) {
         className={`${styles.flexItem} ${ScrollableButHiddenScrollBar.ScrollableButHiddenScrollBar}`}
       >
         <Title text={"Referenced By"} />
-        <div>
-          {InNeighbors.map((id) => {
-            const node = GraphState.nodes.find((node) => node.Id === id);
-            if (node) {
-              return <NoteItem note={node} />;
-            } else {
-              return null;
-            }
-          })}
-        </div>
+        {/*<div>*/}
+        {/*  {InNeighbors.map((id) => {*/}
+        {/*    const node = GraphState.nodes.find((node) => node.Id === id);*/}
+        {/*    if (node) {*/}
+        {/*      return <NoteItem note={node} />;*/}
+        {/*    } else {*/}
+        {/*      return null;*/}
+        {/*    }*/}
+        {/*  })}*/}
+        {/*</div>*/}
       </div>
       <Separator />
     </>
@@ -225,12 +225,12 @@ function References({
 }) {
   const [graphology, updated] = useGraphology();
   const GraphState = useGraph();
-  const [OutNeighbors, setOutNeighbors] = useState<string[]>([]);
+  // const [OutNeighbors, setOutNeighbors] = useState<string[]>([]);
   useEffect(() => {
     try {
       console.log("LinksFromThisNote");
-      setOutNeighbors((v) => graphology.outNeighbors(note.Id));
-      console.log("OutNeighbors", OutNeighbors);
+      // setOutNeighbors((v) => graphology.outNeighbors(note.Id));
+      // console.log("OutNeighbors", OutNeighbors);
     } catch (e) {
       console.error(e);
     }
@@ -241,18 +241,18 @@ function References({
         className={`${styles.flexItem} ${ScrollableButHiddenScrollBar.ScrollableButHiddenScrollBar}`}
       >
         <Title text={"References"} />
-        <div>
-          {Array.from(referenceMap.entries()).map(([id, count]) => {
-            if (count < 1) return null;
-            const node = GraphState.nodes.find((node) => node.Id === id);
-            if (node) {
-              return <NoteItem note={node} />;
-            } else {
-              return null;
-            }
-            return <div></div>;
-          })}
-        </div>
+        {/*<div>*/}
+        {/*  {Array.from(referenceMap.entries()).map(([id, count]) => {*/}
+        {/*    if (count < 1) return null;*/}
+        {/*    const node = GraphState.nodes.find((node) => node.Id === id);*/}
+        {/*    if (node) {*/}
+        {/*      return <NoteItem note={node} />;*/}
+        {/*    } else {*/}
+        {/*      return null;*/}
+        {/*    }*/}
+        {/*    return <div></div>;*/}
+        {/*  })}*/}
+        {/*</div>*/}
       </div>
       <Separator />
     </>
@@ -272,19 +272,19 @@ function Selector({ note }: { note: GraphNode }) {
     try {
       console.log("Selector");
       const allNotes = graphology.nodes();
-      const undirectedNeighbors = graphology.undirectedNeighbors(note.Id);
-      const options = allNotes
-        .filter((id) => {
-          return note.Id !== id && !undirectedNeighbors.includes(id);
-        })
-        .map((id) => {
-          return {
-            value: id,
-            label:
-              GraphState.nodes.find((node) => node.Id === id)?.Title ?? "ERROR",
-          };
-        });
-      setOptions(options);
+      // const undirectedNeighbors = graphology.undirectedNeighbors(note.Id);
+      // const options = allNotes
+      //   .filter((id) => {
+      //     return note.Id !== id && !undirectedNeighbors.includes(id);
+      //   })
+      //   .map((id) => {
+      //     return {
+      //       value: id,
+      //       label:
+      //         GraphState.nodes.find((node) => node.Id === id)?.Title ?? "ERROR",
+      //     };
+      //   });
+      // setOptions(options);
     } catch (e) {
       console.error(e);
     }
