@@ -3,7 +3,10 @@ import {
   HubConnectionBuilder,
   LogLevel,
 } from "@microsoft/signalr";
-import { useEffect, useState } from "react";
+import { Dispatch, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { SignalRActionTypes } from "../../reducers/SignalR";
+import { RootState, AppDispatch } from "../../store";
 
 /**
  * This hook is used to join a SignalR room.
@@ -15,11 +18,15 @@ export function useRoom({
   userName,
   roomName,
 }: {
-  userName: string;
-  roomName: string;
+  userName: string | null;
+  roomName: string | null;
 }) {
-  const [connection, setConnection] = useState<HubConnection>();
-  const [updateNeeded, setUpdateNeeded] = useState<number>(0);
+  const updatedNeeded = useSelector(
+    (state: RootState) => state.signalr.updateNeeded,
+  );
+  const dispatch: AppDispatch = useDispatch();
+  // const [connection, setConnection] = useState<HubConnection>();
+  // const [updateNeeded, setUpdateNeeded] = useState<number>(0);
   const joinRoom = async (user: string, room: string) => {
     try {
       const connection = new HubConnectionBuilder()
@@ -36,21 +43,33 @@ export function useRoom({
         // alert(`Deleted note: ${noteId}`);
         console.log(`Deleted note: ${noteId}`);
         // apiSlice.endpoints.getNotes.invalidateTags(["notes"]);
-        setUpdateNeeded((updateNeeded) => updateNeeded + 1);
+        // setUpdateNeeded((updateNeeded) => updateNeeded + 1);
+        dispatch({
+          type: SignalRActionTypes.setUpdateNeeded,
+          updateNeeded: updatedNeeded + 1,
+        });
       });
 
       connection.on("RecoveredNote", (user, noteId) => {
         // alert(`Recovered note: ${noteId}`);
         console.log(`Recovered note: ${noteId}`);
         // apiSlice.endpoints.getNotes.invalidateTags(["notes"]);
-        setUpdateNeeded((updateNeeded) => updateNeeded + 1);
+        // setUpdateNeeded((updateNeeded) => updateNeeded + 1);
+        dispatch({
+          type: SignalRActionTypes.setUpdateNeeded,
+          updateNeeded: updatedNeeded + 1,
+        });
       });
 
       // TODO
 
       await connection.start();
       await connection.invoke("JoinRoom", { user, room });
-      setConnection(connection);
+      // setConnection(connection);
+      dispatch({
+        type: SignalRActionTypes.setConnection,
+        connection: connection,
+      });
     } catch (e) {
       alert(JSON.stringify(e, null, 2));
     }
@@ -62,5 +81,5 @@ export function useRoom({
     }
   }, [userName, roomName]);
 
-  return [connection, updateNeeded];
+  // return [connection, updateNeeded];
 }

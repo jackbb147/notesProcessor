@@ -48,6 +48,7 @@ import { MathJax, MathJaxContext } from "better-react-mathjax";
 import { UserContext, SetUserContext } from "./RegisterAndLogin/AuthContext";
 import { ActiveUserProvider } from "./RegisterAndLogin/ActiveUserProvider";
 import { useLogInStatus } from "../hooks/useLogInStatus";
+import { useRoom } from "../hooks/SignalR/useRoom";
 
 export function ensure<T>(
   argument: T | undefined | null,
@@ -82,6 +83,11 @@ function Container({ children }: { children: React.ReactNode }) {
 
 function App() {
   const [isLoggedIn, userName] = useLogInStatus();
+  useRoom({
+    userName: userName,
+    roomName: userName,
+  });
+
   return (
     <>
       <GraphProvider>
@@ -90,8 +96,12 @@ function App() {
             <div className="bg-grey dark:bg-dark_secondary w-full h-full flex flex-row overflow-hidden dark:text-white">
               <RecoverNodePopup />
               <LabelSelectorPopUp />
-              <Register />
-              <Login />
+              {!isLoggedIn && (
+                <>
+                  <Register />
+                  <Login />
+                </>
+              )}
               <FolderPanel>
                 <div className={"App__main bg-white h-full grow w-full"}>
                   <NotesPanel>
