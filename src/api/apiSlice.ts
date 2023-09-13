@@ -1,16 +1,27 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { GraphNode } from "../reducers/GraphReducer";
 
+enum tags {
+  notes = "notes",
+  labels = "labels",
+  links = "links",
+}
+
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl: "/",
   }),
-  tagTypes: ["notes"],
+  tagTypes: [tags.notes, tags.labels],
   endpoints: (builder) => ({
+    getLabels: builder.query<string[], void>({
+      query: () => `/Labels/GetAllLabels`,
+      providesTags: [tags.labels],
+    }),
+
     getNotes: builder.query<GraphNode[], void>({
       query: () => `/Notes/GetAll`,
-      providesTags: ["notes"],
+      providesTags: [tags.notes],
       // transformResponse: (response: Todo[]) => {
       //     return response.sort((a, b) => Number(a.id) - Number(b.id))
       // }
@@ -26,7 +37,7 @@ export const apiSlice = createApi({
         },
       }),
 
-      invalidatesTags: ["notes"],
+      invalidatesTags: [tags.notes],
     }),
     addNote: builder.mutation<unknown, GraphNode>({
       query: (GraphNode) => ({
@@ -39,7 +50,7 @@ export const apiSlice = createApi({
             GraphNode.Content.trim() === "" ? undefined : GraphNode.Content, // this is a hack.  I don't know why the server is not accepting empty strings
         },
       }),
-      invalidatesTags: ["notes"],
+      invalidatesTags: [tags.notes],
     }),
     recoverNote: builder.mutation<unknown, { id: string }>({
       query: ({ id }: { id: string }) => ({
@@ -49,7 +60,7 @@ export const apiSlice = createApi({
           noteId: id,
         },
       }),
-      invalidatesTags: ["notes"],
+      invalidatesTags: [tags.notes],
     }),
     // updateTodo: builder.mutation<unknown, Todo>({
     //     query: (todo) => ({
@@ -68,7 +79,7 @@ export const apiSlice = createApi({
           permanent: false,
         },
       }),
-      invalidatesTags: ["notes"],
+      invalidatesTags: [tags.notes],
     }),
   }),
 });
@@ -79,4 +90,5 @@ export const {
   useRecoverNoteMutation,
   useDeleteNoteMutation,
   useUpdateNoteMutation,
+  useGetLabelsQuery,
 } = apiSlice;
