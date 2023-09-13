@@ -22,7 +22,7 @@ import { NoteInfoSidePanel } from "./NoteInfoSidePanel/NoteInfoSidePanel";
 import { Button } from "../ui/Button";
 import { AppActionType, Collections } from "../../reducers/AppStateReducer";
 import { TiptapBoxComponent } from "./Tiptap/Tiptap";
-import { useGetNoteLabelsQuery } from "../../api/apiSlice";
+import { useGetLabelsQuery, useGetNoteLabelsQuery } from "../../api/apiSlice";
 
 function ToggleSideInfoPanelButton({ disabled }: { disabled: boolean }) {
   const appState = useAppState();
@@ -99,6 +99,15 @@ export function NoteEditor({
   const { data: noteLabels, error } = useGetNoteLabelsQuery({
     id: note.Id,
   });
+
+  const { data: labels, error: LabelFetchError } = useGetLabelsQuery();
+
+  useEffect(() => {
+    if (LabelFetchError) {
+      throw JSON.stringify(LabelFetchError, null, 2);
+    }
+  }, [LabelFetchError]);
+
   useEffect(() => {
     if (error) {
       throw JSON.stringify(error, null, 2);
@@ -242,10 +251,10 @@ export function NoteEditor({
             width: "95%",
           }}
         >
-          {noteLabels && (
+          {labels && (
             <LabelSelector
               handleChange={handleChange}
-              options={noteLabels.map((s: string) => {
+              options={labels.map((s: string) => {
                 return {
                   value: s,
                   label: s,
