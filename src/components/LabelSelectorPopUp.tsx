@@ -64,6 +64,9 @@ export function LabelSelectorPopUp() {
           options={labels.map((s: string) => {
             return { value: s, label: s };
           })}
+          values={labels.map((s: string) => {
+            return { value: s, label: s };
+          })}
         />
       </div>
     </Overlay>

@@ -33,10 +33,17 @@ export const apiSlice = createApi({
     }),
 
     // add a label to a note
-    // setLabel: builder.mutation<string, { id: string; label: string }>({
-    //   query: ({ id, label }) => ({}),
-    //   invalidatesTags: [tags.notes],
-    // }),
+    setLabel: builder.mutation<string, { noteId: string; label: string }>({
+      query: ({ noteId, label }) => ({
+        url: `/Notes/AddLabelToNote`,
+        method: "POST",
+        params: {
+          noteId: noteId,
+          labelName: label,
+        },
+      }),
+      invalidatesTags: [tags.noteLabels],
+    }),
 
     getNotes: builder.query<GraphNode[], void>({
       query: () => `/Notes/GetAll`,
@@ -111,4 +118,5 @@ export const {
   useUpdateNoteMutation,
   useGetLabelsQuery,
   useGetNoteLabelsQuery,
+  useSetLabelMutation,
 } = apiSlice;

@@ -18,11 +18,13 @@ export function LabelSelector({
   handleChange,
   showDropDown = true,
   options,
+  values,
 }: {
   handleChange: (value: Options<any>, action: ActionMeta<any>) => any;
 
   showDropDown?: boolean;
   options: { value: string; label: string }[];
+  values: { value: string; label: string }[];
 }) {
   // useEffect(() => {
   //   if (isError) {
@@ -93,6 +95,7 @@ export function LabelSelector({
         isMulti
         isClearable
         // onCreateOption={handleCreateOption}
+        value={values}
         onChange={handleChange}
         options={options}
       />

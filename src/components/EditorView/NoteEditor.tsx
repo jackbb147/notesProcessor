@@ -22,7 +22,11 @@ import { NoteInfoSidePanel } from "./NoteInfoSidePanel/NoteInfoSidePanel";
 import { Button } from "../ui/Button";
 import { AppActionType, Collections } from "../../reducers/AppStateReducer";
 import { TiptapBoxComponent } from "./Tiptap/Tiptap";
-import { useGetLabelsQuery, useGetNoteLabelsQuery } from "../../api/apiSlice";
+import {
+  useGetLabelsQuery,
+  useGetNoteLabelsQuery,
+  useSetLabelMutation,
+} from "../../api/apiSlice";
 
 function ToggleSideInfoPanelButton({ disabled }: { disabled: boolean }) {
   const appState = useAppState();
@@ -101,7 +105,7 @@ export function NoteEditor({
   });
 
   const { data: labels, error: LabelFetchError } = useGetLabelsQuery();
-
+  const [setLabelMutation, { data: setLabelData }] = useSetLabelMutation();
   useEffect(() => {
     if (LabelFetchError) {
       throw JSON.stringify(LabelFetchError, null, 2);
@@ -151,13 +155,17 @@ export function NoteEditor({
       }
 
       case "select-option": {
-        graphDispatch({
-          type: GraphActionType.updateNode,
-          node: {
-            ...note,
-            // labels: [...note.labels, action.option.label],
-          },
+        setLabelMutation({
+          noteId: note.Id,
+          label: action.option.label,
         });
+        // graphDispatch({
+        //   type: GraphActionType.updateNode,
+        //   node: {
+        //     ...note,
+        //     // labels: [...note.labels, action.option.label],
+        //   },
+        // });
         break;
       }
 
@@ -251,8 +259,14 @@ export function NoteEditor({
             width: "95%",
           }}
         >
-          {labels && (
+          {labels && noteLabels && (
             <LabelSelector
+              values={noteLabels.map((s: string) => {
+                return {
+                  value: s,
+                  label: s,
+                };
+              })}
               handleChange={handleChange}
               options={labels.map((s: string) => {
                 return {
