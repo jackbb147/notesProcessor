@@ -9,29 +9,26 @@ import { GraphActionType } from "../../../reducers/GraphReducer";
 import { ValueType } from "tailwindcss/types/config";
 import { ComponentProps, useEffect } from "react";
 import { DropdownIndicator } from "react-select/dist/declarations/src/components/indicators";
-import { useGetLabelsQuery } from "../../../api/apiSlice";
+import {
+  useGetLabelsQuery,
+  useGetNoteLabelsQuery,
+} from "../../../api/apiSlice";
 
 export function LabelSelector({
   handleChange,
-
   showDropDown = true,
+  options,
 }: {
   handleChange: (value: Options<any>, action: ActionMeta<any>) => any;
 
   showDropDown?: boolean;
+  options: { value: string; label: string }[];
 }) {
-  const {
-    data: labels,
-    isLoading,
-    isSuccess,
-    isError,
-    error,
-  } = useGetLabelsQuery();
-  useEffect(() => {
-    if (isError) {
-      throw JSON.stringify(error, null, 2);
-    }
-  }, [isError]);
+  // useEffect(() => {
+  //   if (isError) {
+  //     throw JSON.stringify(error, null, 2);
+  //   }
+  // }, [isError]);
 
   const graph = useGraph();
   const graphDispatch = useGraphDispatch();
@@ -48,7 +45,6 @@ export function LabelSelector({
     return res;
   }
 
-  if (!labels) return <></>;
   return (
     <div style={{ color: "black" }}>
       <CreatableSelect
@@ -97,13 +93,8 @@ export function LabelSelector({
         isMulti
         isClearable
         // onCreateOption={handleCreateOption}
-        // onChange={handleChange}
-        options={labels.map((s) => {
-          return {
-            value: s,
-            label: s,
-          };
-        })}
+        onChange={handleChange}
+        options={options}
       />
     </div>
   );

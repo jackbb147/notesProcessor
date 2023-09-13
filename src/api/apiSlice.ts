@@ -5,6 +5,7 @@ enum tags {
   notes = "notes",
   labels = "labels",
   links = "links",
+  noteLabels = "noteLabels",
 }
 
 export const apiSlice = createApi({
@@ -12,12 +13,30 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "/",
   }),
-  tagTypes: [tags.notes, tags.labels],
+  tagTypes: [tags.notes, tags.labels, tags.noteLabels],
   endpoints: (builder) => ({
     getLabels: builder.query<string[], void>({
       query: () => `/Labels/GetAllLabels`,
       providesTags: [tags.labels],
     }),
+
+    // get labels for a note
+    getNoteLabels: builder.query<string[], { id: string }>({
+      query: ({ id }: { id: string }) => ({
+        url: "/Notes/GetAllLabelsOfNote",
+        method: "GET",
+        params: {
+          noteId: id,
+        },
+      }),
+      providesTags: [tags.noteLabels],
+    }),
+
+    // add a label to a note
+    // setLabel: builder.mutation<string, { id: string; label: string }>({
+    //   query: ({ id, label }) => ({}),
+    //   invalidatesTags: [tags.notes],
+    // }),
 
     getNotes: builder.query<GraphNode[], void>({
       query: () => `/Notes/GetAll`,
@@ -91,4 +110,5 @@ export const {
   useDeleteNoteMutation,
   useUpdateNoteMutation,
   useGetLabelsQuery,
+  useGetNoteLabelsQuery,
 } = apiSlice;

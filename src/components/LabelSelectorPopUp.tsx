@@ -1,14 +1,15 @@
-import { LabelSelector } from "./LabelSelector";
-import { Overlay } from "../../Overlay";
+import { LabelSelector } from "./EditorView/LabelSelector/LabelSelector";
+import { Overlay } from "./Overlay";
 import {
   useAppDispatch,
   useGraph,
   useGraphDispatch,
   useAppState,
-} from "../../../hooks/AppStateAndGraphAndUserhooks";
+} from "../hooks/AppStateAndGraphAndUserhooks";
 import { ActionMeta, Options } from "react-select";
-import { AppActionType } from "../../../reducers/AppStateReducer";
-import { GraphActionType } from "../../../reducers/GraphReducer";
+import { AppActionType } from "../reducers/AppStateReducer";
+import { GraphActionType } from "../reducers/GraphReducer";
+import { useGetLabelsQuery } from "../api/apiSlice";
 
 export function LabelSelectorPopUp() {
   const state = useAppState();
@@ -16,6 +17,7 @@ export function LabelSelectorPopUp() {
 
   const graph = useGraph();
   const graphDispatch = useGraphDispatch();
+  const { data: labels } = useGetLabelsQuery();
   function handleChange(value: Options<any>, action: ActionMeta<any>) {
     switch (action.action) {
       // TODO
@@ -44,7 +46,7 @@ export function LabelSelectorPopUp() {
     });
   }
 
-  return !state.showLabelSelectorPopup ? (
+  return !state.showLabelSelectorPopup || !labels ? (
     <></>
   ) : (
     <Overlay handleClick={handleOverlayClick}>
@@ -56,7 +58,13 @@ export function LabelSelectorPopUp() {
                 
             `}
       >
-        <LabelSelector handleChange={handleChange} showDropDown={false} />
+        <LabelSelector
+          handleChange={handleChange}
+          showDropDown={false}
+          options={labels.map((s: string) => {
+            return { value: s, label: s };
+          })}
+        />
       </div>
     </Overlay>
   );

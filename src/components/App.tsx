@@ -36,7 +36,7 @@ import { AddNodeButton } from "./Buttons/AddNodeButton";
 import { FolderPanel } from "./panels/FolderPanel/FolderPanel";
 import { NotesPanel } from "./panels/NotesPanel/NotesPanel";
 import { TopBar } from "./ui/TopBar";
-import { LabelSelectorPopUp } from "./EditorView/LabelSelector/LabelSelectorPopUp";
+import { LabelSelectorPopUp } from "./LabelSelectorPopUp";
 import { EditorPage } from "./EditorView/EditorPage";
 import { Register } from "./RegisterAndLogin/Register/Register";
 import {
