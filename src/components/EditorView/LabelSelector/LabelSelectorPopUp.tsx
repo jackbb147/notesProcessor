@@ -1,14 +1,14 @@
-import { LabelSelector } from "./EditorView/LabelSelector";
-import { Overlay } from "./Overlay";
+import { LabelSelector } from "./LabelSelector";
+import { Overlay } from "../../Overlay";
 import {
   useAppDispatch,
   useGraph,
   useGraphDispatch,
   useAppState,
-} from "../hooks/AppStateAndGraphAndUserhooks";
+} from "../../../hooks/AppStateAndGraphAndUserhooks";
 import { ActionMeta, Options } from "react-select";
-import { AppActionType } from "../reducers/AppStateReducer";
-import { GraphActionType } from "../reducers/GraphReducer";
+import { AppActionType } from "../../../reducers/AppStateReducer";
+import { GraphActionType } from "../../../reducers/GraphReducer";
 
 export function LabelSelectorPopUp() {
   const state = useAppState();
@@ -56,11 +56,7 @@ export function LabelSelectorPopUp() {
                 
             `}
       >
-        <LabelSelector
-          handleChange={handleChange}
-          labels={graph.labels}
-          showDropDown={false}
-        />
+        <LabelSelector handleChange={handleChange} showDropDown={false} />
       </div>
     </Overlay>
   );

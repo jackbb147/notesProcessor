@@ -10,7 +10,7 @@ import { MathEditorModule } from "./Quill/quillModules/Quill-MathJax/MathEditorM
 import "./Quill/quillModules/Quill-MathJax/quill.bubble.css";
 import "./Quill/quillModules/Quill-MathJax/quill.snow.css";
 import { GraphActionType, GraphNode } from "../../reducers/GraphReducer";
-import { LabelSelector } from "./LabelSelector";
+import { LabelSelector } from "./LabelSelector/LabelSelector";
 import { ActionMeta, Options } from "react-select";
 import {
   useAppState,
@@ -233,7 +233,7 @@ export function NoteEditor({
             width: "95%",
           }}
         >
-          <LabelSelector handleChange={handleChange} labels={[]} />
+          <LabelSelector handleChange={handleChange} />
         </div>
 
         <div

@@ -2,23 +2,37 @@ import {
   useGraph,
   useGraphDispatch,
   useAppState,
-} from "../../hooks/AppStateAndGraphAndUserhooks";
+} from "../../../hooks/AppStateAndGraphAndUserhooks";
 import CreatableSelect from "react-select/creatable";
 import { ActionMeta, CSSObjectWithLabel, Options } from "react-select";
-import { GraphActionType } from "../../reducers/GraphReducer";
+import { GraphActionType } from "../../../reducers/GraphReducer";
 import { ValueType } from "tailwindcss/types/config";
-import { ComponentProps } from "react";
+import { ComponentProps, useEffect } from "react";
 import { DropdownIndicator } from "react-select/dist/declarations/src/components/indicators";
+import { useGetLabelsQuery } from "../../../api/apiSlice";
 
 export function LabelSelector({
   handleChange,
-  labels = [],
+
   showDropDown = true,
 }: {
   handleChange: (value: Options<any>, action: ActionMeta<any>) => any;
-  labels: string[];
+
   showDropDown?: boolean;
 }) {
+  const {
+    data: labels,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetLabelsQuery();
+  useEffect(() => {
+    if (isError) {
+      throw JSON.stringify(error, null, 2);
+    }
+  }, [isError]);
+
   const graph = useGraph();
   const graphDispatch = useGraphDispatch();
 
@@ -34,6 +48,7 @@ export function LabelSelector({
     return res;
   }
 
+  if (!labels) return <></>;
   return (
     <div style={{ color: "black" }}>
       <CreatableSelect
@@ -78,15 +93,12 @@ export function LabelSelector({
           }),
         }}
         components={getComponents()}
-        value={labels.map((s: string) => {
-          return { label: s, value: s };
-        })}
         menuPlacement={"top"}
         isMulti
         isClearable
         // onCreateOption={handleCreateOption}
-        onChange={handleChange}
-        options={graph.labels.map((s) => {
+        // onChange={handleChange}
+        options={labels.map((s) => {
           return {
             value: s,
             label: s,
