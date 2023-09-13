@@ -108,30 +108,30 @@ export default forwardRef(
       editor.storage.mention.graph = Graph;
     }, [note, Graph]);
 
-    useEffect(() => {
-      if (!editor) return;
-      let { from, to } = editor.state.selection;
-      editor.commands.setContent(activeNoteContent, false, {
-        preserveWhitespace: "full",
-      });
-      editor.commands.setTextSelection({ from, to });
-    }, [activeNoteContent]);
+    // useEffect(() => {
+    //   if (!editor) return;
+    //   let { from, to } = editor.state.selection;
+    //   editor.commands.setContent(activeNoteContent, false, {
+    //     preserveWhitespace: "full",
+    //   });
+    //   editor.commands.setTextSelection({ from, to });
+    // }, [activeNoteContent]);
     const editor = useEditor(
       {
-        onUpdate: (props) => {
-          console.log("onupdate");
-          if (!isLoggedIn) return;
-          const content = props.editor.getHTML();
-          if (!connection) alert("no connection");
-          connection?.invoke(
-            "BroadcastText",
-            {
-              User: loggedInUser,
-              Room: loggedInUser,
-            },
-            content,
-          );
-        },
+        // onUpdate: (props) => {
+        //   console.log("onupdate");
+        //   if (!isLoggedIn) return;
+        //   const content = props.editor.getHTML();
+        //   if (!connection) alert("no connection");
+        //   connection?.invoke(
+        //     "BroadcastText",
+        //     {
+        //       User: loggedInUser,
+        //       Room: loggedInUser,
+        //     },
+        //     content,
+        //   );
+        // },
         onBlur: (props) => {
           console.log("onblur");
           const content = props.editor.getHTML();
@@ -258,7 +258,7 @@ export default forwardRef(
         ],
         content: note.Content,
       },
-      [note.Id],
+      [note.Id, note.Content],
     );
 
     return (
