@@ -65,6 +65,16 @@ export const apiSlice = createApi({
       //     return response.sort((a, b) => Number(a.id) - Number(b.id))
       // }
     }),
+
+    getNoteById: builder.query<GraphNode, { id: string }>({
+      query: ({ id }: { id: string }) => ({
+        url: `/Notes/GetById`,
+        method: "GET",
+        params: {
+          noteId: id,
+        },
+      }),
+    }),
     updateNote: builder.mutation<string, GraphNode>({
       query: (GraphNode) => ({
         url: `/Notes/Update`,

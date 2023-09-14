@@ -103,6 +103,7 @@ export default forwardRef((props, ref) => {
     },
   }));
 
+  // console.debug("items", JSON.stringify(props.items, null, 2));
   return (
     <div className="items">
       {props.items.length ? (
@@ -115,7 +116,7 @@ export default forwardRef((props, ref) => {
             {/*TODO  change this to the actual name of the node
              */}
             {/*{"hello world!"}*/}
-            {JSON.parse(stringifiedNode).title}
+            {JSON.parse(stringifiedNode).Title}
           </button>
         ))
       ) : (

@@ -28,6 +28,7 @@ import { RootState } from "../../../store";
 import { useLogInStatus } from "../../../hooks/useLogInStatus";
 import { SignalrConnectionContext } from "../../../reducers/SignalrConnectionContext";
 import { HubConnection } from "@microsoft/signalr";
+import { useGetNotesQuery } from "../../../api/apiSlice";
 
 function getFirstLine(json: JSONContent): string {
   let res: string = "";
@@ -62,6 +63,12 @@ export default forwardRef(
     },
     ref,
   ) => {
+    const {
+      data: notes,
+      isError: notesFetchError,
+      isLoading: notesFetchLoading,
+      isSuccess: notesFetchSuccess,
+    } = useGetNotesQuery();
     const Graph = useGraph();
     const appState = useAppState();
     const dispatch = useAppDispatch();
@@ -106,7 +113,41 @@ export default forwardRef(
       // https://tiptap.dev/guide/custom-extensions#storage
       editor.storage.mention.note = note;
       editor.storage.mention.graph = Graph;
-    }, [note, Graph]);
+      let n = notes;
+      // debugger;
+
+      if (notesFetchSuccess) {
+        console.debug("[useEffect] notes fetched: " + notes.length);
+        editor.storage.mention.notes = notes.filter(
+          (note) => note.Deleted == false,
+        );
+        console.debug(
+          "[tiptapEditor] editor.storage.mention.notes length: " +
+            editor.storage.mention.notes.length,
+        );
+      }
+
+      // debugger;
+    }, [note, Graph, notesFetchLoading, notes]);
+
+    function itemsQuery({ query, editor }: { query: string; editor: any }) {
+      console.debug("[itemsQuery] " + notes?.length);
+      const note = editor.storage.mention.note;
+      if (!notes)
+        if (!notes) {
+          console.warn("NO NOTES!");
+          return [];
+        }
+
+      const res: GraphNode[] = notes.filter(
+        (item: GraphNode) =>
+          !item.Deleted &&
+          item.Id !== note.Id &&
+          item.Title.toLowerCase().startsWith(query.toLowerCase()),
+      );
+      console.debug("[itemsQuery] " + JSON.stringify(res, null, 2));
+      return res.map((node) => JSON.stringify(node));
+    }
 
     // useEffect(() => {
     //   if (!editor) return;
@@ -231,26 +272,7 @@ export default forwardRef(
               ...suggestion,
               char: "[[",
 
-              items: ({ query, editor }) => {
-                const note = editor.storage.mention.note;
-                const graph = editor.storage.mention.graph;
-                return (
-                  [
-                    // "Lea Thompson",
-                    // "Oliver Feng",
-                    ...graph.nodes,
-                  ]
-                    .filter((item) => {
-                      //
-                      return (
-                        item.title.toLowerCase() !== note.Title.toLowerCase() &&
-                        item.title.toLowerCase().startsWith(query.toLowerCase())
-                      );
-                    })
-                    // .map((item) => "hello world");
-                    .map((node) => JSON.stringify(node))
-                );
-              },
+              items: itemsQuery,
             },
 
             // suggestion,
@@ -258,7 +280,7 @@ export default forwardRef(
         ],
         content: note.Content,
       },
-      [note.Id, note.Content],
+      [note.Id, note.Content, notesFetchLoading, notes],
     );
 
     return (
