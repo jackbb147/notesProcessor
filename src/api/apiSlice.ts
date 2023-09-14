@@ -13,7 +13,7 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "/",
   }),
-  tagTypes: [tags.notes, tags.labels, tags.noteLabels],
+  tagTypes: [tags.notes, tags.labels, tags.noteLabels, tags.links],
   endpoints: (builder) => ({
     getLabels: builder.query<string[], void>({
       query: () => `/Labels/GetAllLabels`,
@@ -129,6 +129,11 @@ export const apiSlice = createApi({
         },
       }),
       invalidatesTags: [tags.notes],
+    }),
+
+    getLinks: builder.query<GraphNode[], void>({
+      query: () => `/Links/GetAll`,
+      providesTags: [tags.links],
     }),
   }),
 });
