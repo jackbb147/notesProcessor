@@ -25,6 +25,7 @@ import { All } from "../../Buttons/All";
 import { RecentlyDeleted } from "../../Buttons/RecentlyDeleted";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { useLogInStatus } from "../../../hooks/useLogInStatus";
+import { useGetLabelsQuery } from "../../../api/apiSlice";
 
 function SettingsPanelWrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -71,6 +72,7 @@ export function FolderPanelContent() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   // const isLoggedIn = useLogInStatus();
   const activeUser = useUser();
+  const { data: labels, error } = useGetLabelsQuery();
   function handleSettingPanelOutsideClick() {
     if (!isMobile) {
       dispatch({
@@ -120,7 +122,7 @@ export function FolderPanelContent() {
 
       {/*https://www.npmjs.com/package/react-custom-scrollbars-2*/}
       <Scrollbars autoHide>
-        {graph.labels.map((s: string) => (
+        {labels?.map((s: string) => (
           <ListItem
             text={s}
             iconOnly={state.LabelPanelClosed}
