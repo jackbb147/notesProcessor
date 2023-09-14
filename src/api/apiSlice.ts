@@ -135,6 +135,36 @@ export const apiSlice = createApi({
       query: () => `/Links/GetAll`,
       providesTags: [tags.links],
     }),
+
+    addLink: builder.mutation<unknown, GraphLink>({
+      query: (link: GraphLink) => ({
+        url: `/Links/Create`,
+        method: "POST",
+        params: {
+          link: link,
+        },
+      }),
+    }),
+
+    deleteLink: builder.mutation<
+      unknown,
+      { sourceId: string; targetId: string }
+    >({
+      query: ({
+        sourceId,
+        targetId,
+      }: {
+        sourceId: string;
+        targetId: string;
+      }) => ({
+        url: `/Links/Delete`,
+        method: "POST",
+        params: {
+          sourceId: sourceId,
+          targetId: targetId,
+        },
+      }),
+    }),
   }),
 });
 
@@ -149,4 +179,6 @@ export const {
   useSetLabelMutation,
   useRemoveLabelMutation,
   useGetLinksQuery,
+  useAddLinkMutation,
+  useDeleteLinkMutation,
 } = apiSlice;

@@ -2,6 +2,11 @@ import { useContext, useEffect } from "react";
 import { ReferenceStateContext } from "./ReferenceStateContext";
 import { useGraphDispatch } from "../../../../hooks/AppStateAndGraphAndUserhooks";
 import { GraphActionType } from "../../../../reducers/GraphReducer";
+import {
+  useGetLinksQuery,
+  useAddLinkMutation,
+  useDeleteLinkMutation,
+} from "../../../../api/apiSlice";
 
 /**
  * This hook is used to keep the Graph links in sync with the reference map.
