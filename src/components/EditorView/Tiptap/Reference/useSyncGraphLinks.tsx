@@ -19,23 +19,23 @@ export function useSyncGraphLinks({ sourceID }: { sourceID: string }) {
 
     //
     additions.forEach((pair) => {
-      graphDispatch({
-        type: GraphActionType.addLink,
-        link: {
-          source: sourceID,
-          target: pair[0],
-        },
-      });
+      // graphDispatch({
+      //   type: GraphActionType.addLink,
+      //   link: {
+      //     SourceId: sourceID,
+      //     TargetId: pair[0],
+      //   },
+      // });
     });
 
     deletions.forEach((pair) => {
-      graphDispatch({
-        type: GraphActionType.removeLink,
-        link: {
-          source: sourceID,
-          target: pair[0],
-        },
-      });
+      // graphDispatch({
+      //   type: GraphActionType.removeLink,
+      //   link: {
+      //     SourceId: sourceID,
+      //     TargetId: pair[0],
+      //   },
+      // });
     });
   }, [referenceState]);
 }

@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { GraphNode } from "../reducers/GraphReducer";
+import { GraphLink, GraphNode } from "../reducers/GraphReducer";
 
 enum tags {
   notes = "notes",
@@ -131,7 +131,7 @@ export const apiSlice = createApi({
       invalidatesTags: [tags.notes],
     }),
 
-    getLinks: builder.query<GraphNode[], void>({
+    getLinks: builder.query<GraphLink[], void>({
       query: () => `/Links/GetAll`,
       providesTags: [tags.links],
     }),

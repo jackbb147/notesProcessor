@@ -47,14 +47,14 @@ function Selector({ note }: { note: GraphNode }) {
   function handleChange(option: any, actionMeta: ActionMeta<any>) {
     if (actionMeta.action !== "select-option") return;
     const id = option.value;
-    graphDispatch({
-      type: GraphActionType.addLink,
-      link: {
-        source: note.Id,
-        target: id,
-        undirected: true,
-      },
-    });
+    // graphDispatch({
+    //   type: GraphActionType.addLink,
+    //   link: {
+    //     source: note.Id,
+    //     target: id,
+    //     undirected: true,
+    //   },
+    // });
   }
 
   return (

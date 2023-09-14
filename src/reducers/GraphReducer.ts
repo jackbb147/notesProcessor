@@ -54,16 +54,12 @@ const GraphNode = z.object({
 
 export type GraphNode = z.infer<typeof GraphNode>;
 
-// export interface GraphLink {
-//   source: string;
-//   target: string;
-//   undirected?: boolean;
-// }
-
 const GraphLink = z.object({
-  source: z.string(),
-
-  target: z.string(),
+  Id: z.string(),
+  SourceId: z.string(),
+  TargetId: z.string(),
+  Deleted: z.boolean().optional(),
+  DeletionDate: z.string().optional(),
   undirected: z.boolean().optional(),
 });
 
@@ -106,12 +102,12 @@ export function graphReducer(draft: GraphState, action: GraphAction): void {
       draft.deletedNodes.push(draft.nodes[index]);
       draft.nodes.splice(index, 1);
       draft.links.forEach((link) => {
-        if (link.source === action.id || link.target === action.id) {
+        if (link.SourceId === action.id || link.TargetId === action.id) {
           draft.deletedLinks.push(link);
         }
       });
       draft.links = draft.links.filter((link) => {
-        return link.source !== action.id && link.target !== action.id;
+        return link.SourceId !== action.id && link.TargetId !== action.id;
       });
       break;
     }
@@ -137,12 +133,12 @@ export function graphReducer(draft: GraphState, action: GraphAction): void {
         draft.deletedNodes.splice(index, 1);
         // recover links that are related to this node
         draft.deletedLinks.forEach((link) => {
-          if (link.source === action.id || link.target === action.id) {
+          if (link.SourceId === action.id || link.TargetId === action.id) {
             draft.links.push(link);
           }
         });
         draft.deletedLinks = draft.deletedLinks.filter((link) => {
-          return link.source !== action.id && link.target !== action.id;
+          return link.SourceId !== action.id && link.TargetId !== action.id;
         });
       } else {
         alert("GraphNode with specified ID already exists. ");
@@ -155,8 +151,8 @@ export function graphReducer(draft: GraphState, action: GraphAction): void {
       if (
         draft.links.some(
           (link) =>
-            link.source === newLink.source &&
-            link.target === newLink.target &&
+            link.SourceId === newLink.SourceId &&
+            link.TargetId === newLink.TargetId &&
             link.undirected === newLink.undirected,
         )
       ) {
@@ -169,7 +165,7 @@ export function graphReducer(draft: GraphState, action: GraphAction): void {
     case GraphActionType.removeLink: {
       let link = action.link;
       let index = draft.links.findIndex(
-        (l) => l.source === link.source && l.target === link.target,
+        (l) => l.SourceId === link.SourceId && l.TargetId === link.TargetId,
       );
       if (index < 0) return;
       draft.deletedLinks.push(draft.links[index]);
@@ -180,7 +176,7 @@ export function graphReducer(draft: GraphState, action: GraphAction): void {
     case GraphActionType.recoverLink: {
       let link = action.link;
       let index = draft.deletedLinks.findIndex(
-        (l) => l.source === link.source && l.target === link.target,
+        (l) => l.SourceId === link.SourceId && l.TargetId === link.TargetId,
       );
       if (index < 0) return;
       draft.links.push(draft.deletedLinks[index]);

@@ -7,7 +7,7 @@ import {
 } from "./GraphReducer";
 import React, { createContext, useEffect } from "react";
 import { useLocalStorage } from "usehooks-ts";
-import { graph1 } from "./Test/graph1";
+// import { graph1 } from "./Test/graph1";
 import * as localforage from "localforage";
 import { Version } from "../Version";
 

@@ -12,7 +12,7 @@ export function useGraphology(): [Graph, number] {
 
   const { data: links } = useGetLinksQuery();
 
-  const graph: GraphState = useGraph();
+  // const graph: GraphState = useGraph();
   const graphologyRef = useRef<Graph>(new Graph());
   const [updated, setUpdated] = useState(0);
 
@@ -37,14 +37,14 @@ export function useGraphology(): [Graph, number] {
     let graphology = graphologyRef.current;
     graphology.clear();
     debugger;
-    graph.nodes.forEach((node) => {
+    notes.forEach((node) => {
       graphology.addNode(node.Id);
     });
-    graph.links.forEach((link) => {
+    links.forEach((link) => {
       if (link.undirected) {
-        graphology.addUndirectedEdge(link.source, link.target);
+        graphology.addUndirectedEdge(link.SourceId, link.TargetId);
       } else {
-        graphology.addDirectedEdge(link.source, link.target);
+        graphology.addDirectedEdge(link.SourceId, link.TargetId);
       }
     });
 
