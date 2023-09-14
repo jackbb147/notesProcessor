@@ -45,6 +45,19 @@ export const apiSlice = createApi({
       invalidatesTags: [tags.noteLabels],
     }),
 
+    // remove a label from a note
+    removeLabel: builder.mutation<string, { noteId: string; label: string }>({
+      query: ({ noteId, label }) => ({
+        url: `/Notes/RemoveLabelFromNote`,
+        method: "POST",
+        params: {
+          noteId: noteId,
+          labelName: label,
+        },
+      }),
+      invalidatesTags: [tags.noteLabels],
+    }),
+
     getNotes: builder.query<GraphNode[], void>({
       query: () => `/Notes/GetAll`,
       providesTags: [tags.notes],
@@ -119,4 +132,5 @@ export const {
   useGetLabelsQuery,
   useGetNoteLabelsQuery,
   useSetLabelMutation,
+  useRemoveLabelMutation,
 } = apiSlice;

@@ -26,6 +26,7 @@ import {
   useGetLabelsQuery,
   useGetNoteLabelsQuery,
   useSetLabelMutation,
+  useRemoveLabelMutation,
 } from "../../api/apiSlice";
 
 function ToggleSideInfoPanelButton({ disabled }: { disabled: boolean }) {
@@ -106,6 +107,10 @@ export function NoteEditor({
 
   const { data: labels, error: LabelFetchError } = useGetLabelsQuery();
   const [setLabelMutation, { data: setLabelData }] = useSetLabelMutation();
+  const [
+    removeLabelMutation,
+    { data: removeLabelData, isSuccess: removeLabelSuccess },
+  ] = useRemoveLabelMutation();
   useEffect(() => {
     if (LabelFetchError) {
       throw JSON.stringify(LabelFetchError, null, 2);
@@ -136,7 +141,7 @@ export function NoteEditor({
 
   function handleChange(value: Options<any>, action: ActionMeta<any>) {
     //
-    debugger;
+    // debugger;
     switch (action.action) {
       case "create-option": {
         //
@@ -171,6 +176,7 @@ export function NoteEditor({
 
       case "deselect-option": {
         console.log("Deselect option fired");
+
         //
         // graphDispatch({
         //     type: GraphActionType.updateNode,
@@ -183,8 +189,14 @@ export function NoteEditor({
       }
 
       case "remove-value": {
-        //
+        //\
+
         console.log("remove value fired");
+
+        removeLabelMutation({
+          noteId: note.Id,
+          label: action.removedValue.label,
+        });
         //
         // graphDispatch({
         //   type: GraphActionType.updateNode,
