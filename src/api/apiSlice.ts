@@ -148,4 +148,5 @@ export const {
   useGetNoteLabelsQuery,
   useSetLabelMutation,
   useRemoveLabelMutation,
+  useGetLinksQuery,
 } = apiSlice;
