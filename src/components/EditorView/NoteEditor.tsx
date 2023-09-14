@@ -246,13 +246,13 @@ export function NoteEditor({
             //   setReferenceMap(map);
             // }}
           />
-          {/*{appState.activeCollection !== Collections.RecentlyDeleted && (*/}
-          {/*  <NoteInfoSidePanel*/}
-          {/*    note={note}*/}
-          {/*    width={infoPanelWidth}*/}
-          {/*    // referenceMap={new Map(referenceMap.entries())}*/}
-          {/*  />*/}
-          {/*)}*/}
+          {appState.activeCollection !== Collections.RecentlyDeleted && (
+            <NoteInfoSidePanel
+              note={note}
+              width={infoPanelWidth}
+              // referenceMap={new Map(referenceMap.entries())}
+            />
+          )}
         </ReferenceMapProvider>
       </div>
 

@@ -2,6 +2,7 @@ import Graph from "graphology";
 import { useGraph } from "./AppStateAndGraphAndUserhooks";
 import { GraphState } from "../reducers/GraphReducer";
 import { useEffect, useRef, useState } from "react";
+import { useGetNotesQuery } from "../api/apiSlice";
 
 export function useGraphology(): [Graph, number] {
   const graph: GraphState = useGraph();
