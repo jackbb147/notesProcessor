@@ -8,9 +8,9 @@ import { useGetNotesQuery, useGetLinksQuery } from "../api/apiSlice";
  * This hook returns a graphology graph that is kept in sync with the graph state.
  */
 export function useGraphology(): [Graph, number] {
-  const { data: notes } = useGetNotesQuery();
+  const { data: notes, isLoading: loadingNotes } = useGetNotesQuery();
 
-  const { data: links } = useGetLinksQuery();
+  const { data: links, isLoading: loadingLinks } = useGetLinksQuery();
 
   // const graph: GraphState = useGraph();
   const graphologyRef = useRef<Graph>(new Graph());
@@ -33,10 +33,19 @@ export function useGraphology(): [Graph, number] {
   }, []);
   // TODO this might be slow because it's O(n) ...
   useEffect(() => {
-    if (!notes || !links) return;
+    // debugger;
+    if (!notes) {
+      console.warn("[useGraphology] no notes available");
+      return;
+    }
+    if (!links) {
+      console.warn("[useGraphology] no links available");
+      return;
+    }
+
     let graphology = graphologyRef.current;
     graphology.clear();
-    debugger;
+    // debugger;
     notes.forEach((node) => {
       graphology.addNode(node.Id);
     });
@@ -49,7 +58,7 @@ export function useGraphology(): [Graph, number] {
     });
 
     setUpdated((updated) => updated + 1);
-  }, [notes?.length, links?.length]); //TODO
+  }, [notes?.length, links?.length, loadingLinks, loadingNotes]); //TODO
 
   return [graphologyRef.current, updated];
 }
