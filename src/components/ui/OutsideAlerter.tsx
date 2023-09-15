@@ -20,7 +20,7 @@ function useOutsideAlerter(
         !ref.current.contains(event.target) &&
         condition(ref.current, event.target)
       ) {
-        console.log("You clicked outside of me!");
+        // console.log("You clicked outside of me!");
         callback(event);
       }
     }

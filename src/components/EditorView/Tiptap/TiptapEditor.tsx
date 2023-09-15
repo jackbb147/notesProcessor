@@ -31,17 +31,18 @@ import { HubConnection } from "@microsoft/signalr";
 import { useGetNotesQuery } from "../../../api/apiSlice";
 
 function getFirstLine(json: JSONContent): string {
+  // debugger;
   let res: string = "";
-  var q = [json];
+  var q: JSONContent[] = [json];
   while (q.length > 0) {
-    var node = q.shift();
+    var node: JSONContent | undefined = q.shift();
     if (!node) continue;
     if (node.type === "text") {
       res = node.text ?? "";
       break;
     }
-    if (node.Content) {
-      q.push(...node.Content);
+    if (node.content) {
+      q.push(...node.content);
     }
   }
   if (res.length < 1) res = "New Note";
@@ -88,7 +89,7 @@ export default forwardRef(
     const referenceMapDispatch = useContext(ReferenceStateDispatchContext);
     useEffect(() => {
       // alert("hey focus requested");
-      console.debug("[tiptapEditor] focus requested");
+      // console.debug("[tiptapEditor] focus requested");
       if (appState.activeCollection === Collections.RecentlyDeleted) {
         //   TODO
         //

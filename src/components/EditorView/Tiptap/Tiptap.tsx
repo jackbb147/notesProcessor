@@ -54,6 +54,7 @@ export function TiptapBoxComponent({
 
   async function handleUpdateNode(title: string, content: string) {
     //   TODO
+    console.debug("[handleUpdateNode] title: " + title, " content: " + content);
     await updateNote({
       ...note,
       Title: title,
