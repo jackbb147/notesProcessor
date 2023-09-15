@@ -21,13 +21,18 @@ import {
 import { NoteItem } from "../NoteItem";
 import { v4 as uuid } from "uuid";
 
+/**
+ *
+ * @param note
+ * @constructor
+ */
 function Selector({ note }: { note: GraphNode }) {
   //   TODO options should be all undirected neighbors of this note that are not already listed in the SeeAlso section
   const { data: notes } = useGetNotesQuery();
   const { data: links } = useGetLinksQuery();
   const [addLink, { isLoading: isAddingLink }] = useAddLinkMutation();
   const [options, setOptions] = useState<any[]>([]);
-  const [graphology, updated] = useGraphology();
+  // const [graphology, updated] = useGraphology();
   const [listed, setListed] = useState<string[]>([]);
   const AppState = useAppState();
   const GraphState = useGraph();
@@ -44,12 +49,13 @@ function Selector({ note }: { note: GraphNode }) {
     }
     try {
       console.log("Selector");
-      const allNotes = graphology.nodes();
+
       // const undirectedNeighbors = graphology.undirectedNeighbors(note.Id);
       const undirectedNeighbors = links
         .filter((link) => {
           return (
             link.Undirected &&
+            !link.Deleted &&
             (link.SourceId === note.Id || link.TargetId === note.Id)
           );
         })
@@ -60,14 +66,19 @@ function Selector({ note }: { note: GraphNode }) {
             return link.SourceId;
           }
         });
-      const options = allNotes
-        .filter((id) => {
-          return note.Id !== id && !undirectedNeighbors.includes(id);
+      const id = note.Id;
+      const options = notes
+        .filter((note: GraphNode) => {
+          return (
+            !note.Deleted &&
+            note.Id !== id &&
+            !undirectedNeighbors.includes(note.Id)
+          );
         })
-        .map((id) => {
+        .map((note: GraphNode) => {
           return {
-            value: id,
-            label: notes.find((node) => node.Id === id)?.Title ?? "ERROR",
+            value: note.Id,
+            label: note.Title,
           };
         });
       setOptions(options);
@@ -227,7 +238,7 @@ export function SeeAlso({ note }: { note: GraphNode }) {
     setUndirectedNeighbors(neighborIds);
   }, [notes, links]);
 
-  function handleDelete() {}
+  function handleDelete() {} //TODO
   if (!notes) return null;
   if (!links) return null;
   return (
