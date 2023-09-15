@@ -18,11 +18,13 @@ import {
   useAddLinkMutation,
 } from "../../../../api/apiSlice";
 import { NoteItem } from "../NoteItem";
+import { v4 as uuid } from "uuid";
 
 function Selector({ note }: { note: GraphNode }) {
   //   TODO options should be all undirected neighbors of this note that are not already listed in the SeeAlso section
   const { data: notes } = useGetNotesQuery();
   const { data: links } = useGetLinksQuery();
+  const [addLink, { isLoading: isAddingLink }] = useAddLinkMutation();
   const [options, setOptions] = useState<any[]>([]);
   const [graphology, updated] = useGraphology();
   const [listed, setListed] = useState<string[]>([]);
@@ -76,6 +78,13 @@ function Selector({ note }: { note: GraphNode }) {
   function handleChange(option: any, actionMeta: ActionMeta<any>) {
     if (actionMeta.action !== "select-option") return;
     const id = option.value;
+    addLink({
+      Id: uuid(),
+      SourceId: note.Id,
+      TargetId: id,
+      Undirected: true,
+    });
+
     // graphDispatch({
     //   type: GraphActionType.addLink,
     //   link: {
