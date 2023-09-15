@@ -9,7 +9,7 @@ import ReactComponent from "./MathEditor/Extension.js";
 import { Mention } from "@tiptap/extension-mention";
 import suggestion from "./Reference/suggestion";
 import Placeholder from "@tiptap/extension-placeholder";
-
+import { Plugin } from "@tiptap/pm/state";
 import {
   useAppState,
   useAppDispatch,
@@ -29,6 +29,8 @@ import { useLogInStatus } from "../../../hooks/useLogInStatus";
 import { SignalrConnectionContext } from "../../../reducers/SignalrConnectionContext";
 import { HubConnection } from "@microsoft/signalr";
 import { useGetNotesQuery, useDeleteLinkMutation } from "../../../api/apiSlice";
+import { mergeAttributes } from "@tiptap/core";
+import Suggestion from "@tiptap/suggestion";
 
 function getFirstLine(json: JSONContent): string {
   // debugger;
@@ -267,6 +269,7 @@ export default forwardRef(
             HTMLAttributes: {
               class: "mention",
             },
+
             renderLabel({ options, node }) {
               const parsedNode: GraphNode = JSON.parse(node.attrs.id); //TODO this is a hack. It works but it's not the right way to do it
               // const Node: GraphNode = JSON.parse(node);
