@@ -50,7 +50,7 @@ export function useGraphology(): [Graph, number] {
       graphology.addNode(node.Id);
     });
     links.forEach((link) => {
-      if (link.undirected) {
+      if (link.Undirected) {
         graphology.addUndirectedEdge(link.SourceId, link.TargetId);
       } else {
         graphology.addDirectedEdge(link.SourceId, link.TargetId);

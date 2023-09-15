@@ -27,7 +27,7 @@ const GraphLink = z.object({
   TargetId: z.string(),
   Deleted: z.boolean().optional(),
   DeletionDate: z.string().optional(),
-  undirected: z.boolean().optional(),
+  Undirected: z.boolean().optional(),
 });
 export type GraphLink = z.infer<typeof GraphLink>;
 

@@ -60,7 +60,7 @@ const GraphLink = z.object({
   TargetId: z.string(),
   Deleted: z.boolean().optional(),
   DeletionDate: z.string().optional(),
-  undirected: z.boolean().optional(),
+  Undirected: z.boolean().optional(),
 });
 
 export type GraphLink = z.infer<typeof GraphLink>;
@@ -153,7 +153,7 @@ export function graphReducer(draft: GraphState, action: GraphAction): void {
           (link) =>
             link.SourceId === newLink.SourceId &&
             link.TargetId === newLink.TargetId &&
-            link.undirected === newLink.undirected,
+            link.Undirected === newLink.Undirected,
         )
       ) {
         return;
@@ -245,12 +245,12 @@ export function graphReducer(draft: GraphState, action: GraphAction): void {
       break;
     }
 
-    case GraphActionType.set: {
-      if (draft.version !== action.state.version) {
-        throw new Error("Graph state version mismatch.");
-        return;
-      }
-      _.assign(draft, action.state);
-    }
+    // case GraphActionType.set: {
+    //   if (draft.version !== action.state.version) {
+    //     throw new Error("Graph state version mismatch.");
+    //     return;
+    //   }
+    //   _.assign(draft, action.state);
+    // }
   }
 }
