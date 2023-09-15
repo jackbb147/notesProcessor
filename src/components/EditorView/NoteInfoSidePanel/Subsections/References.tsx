@@ -16,7 +16,7 @@ export function References({
   note: GraphNode;
   referenceMap: Map<string, number>;
 }) {
-  const [graphology, updated] = useGraphology();
+  // const [graphology, updated] = useGraphology();
   const { data: notes } = useGetNotesQuery();
   // const GraphState = useGraph();
   // const [OutNeighbors, setOutNeighbors] = useState<string[]>([]);
@@ -28,7 +28,7 @@ export function References({
     } catch (e) {
       console.error(e);
     }
-  }, [updated, note]);
+  }, [note]);
   console.log(
     "[References] Reference map: " + Array.from(referenceMap.entries()),
   );

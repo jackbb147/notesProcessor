@@ -20,6 +20,7 @@ export function useSyncGraphLinks({ sourceID }: { sourceID: string }) {
   const [addLink] = useAddLinkMutation();
   const [deleteLink] = useDeleteLinkMutation();
   useEffect(() => {
+    console.debug("[useSyncGraphLinks] sourceID: " + sourceID);
     if (!links) return;
     const entriesArray = Array.from(referenceState.referenceMap.entries());
 

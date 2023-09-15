@@ -23,7 +23,7 @@ export function useActiveCollection() {
   }
 
   useEffect(() => {
-    console.log("[useActiveCollection]", JSON.stringify(data, null, 2));
+    // console.log("[useActiveCollection]", JSON.stringify(data, null, 2));
   }, [data]);
 
   useEffect(() => {
