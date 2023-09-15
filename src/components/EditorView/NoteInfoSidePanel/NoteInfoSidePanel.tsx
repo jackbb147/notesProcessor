@@ -113,7 +113,7 @@ export function NoteInfoSidePanel({
   useSyncGraphLinks({ sourceID: note.Id });
   return (
     <NoteInfoSidePanelWrapper width={width}>
-      <References note={note} referenceMap={referenceState.referenceMap} />
+      <References noteId={note.Id} />
       <ReferencedBy note={note} />
       <SeeAlso note={note} />
     </NoteInfoSidePanelWrapper>

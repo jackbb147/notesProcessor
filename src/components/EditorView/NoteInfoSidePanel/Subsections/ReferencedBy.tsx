@@ -38,7 +38,7 @@ export function ReferencedBy({ note }: { note: GraphNode }) {
       // }
       // console.log("InNeighbors", InNeighbors);
       var inNeighbors = links
-        .filter((link) => link.TargetId === note.Id)
+        .filter((link) => link.TargetId === note.Id && !link.Deleted)
         .map((link) => link.SourceId);
     } catch (e) {
       console.error(e);
