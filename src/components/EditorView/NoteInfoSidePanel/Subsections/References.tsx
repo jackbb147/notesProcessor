@@ -7,6 +7,7 @@ import ScrollableButHiddenScrollBar from "../../../ScrollableButHiddenScrollBar.
 import { Title } from "../Title";
 import { Separator } from "../Separator";
 import { NoteItem } from "../NoteItem";
+import { useGetNotesQuery } from "../../../../api/apiSlice";
 
 export function References({
   note,
@@ -16,7 +17,8 @@ export function References({
   referenceMap: Map<string, number>;
 }) {
   const [graphology, updated] = useGraphology();
-  const GraphState = useGraph();
+  const { data: notes } = useGetNotesQuery();
+  // const GraphState = useGraph();
   // const [OutNeighbors, setOutNeighbors] = useState<string[]>([]);
   useEffect(() => {
     try {
@@ -30,6 +32,8 @@ export function References({
   console.log(
     "[References] Reference map: " + Array.from(referenceMap.entries()),
   );
+  // console.log("[References] GraphState: " + GraphState)
+  if (!notes) return null;
   return (
     <>
       <div
@@ -39,7 +43,7 @@ export function References({
         <div>
           {Array.from(referenceMap.entries()).map(([id, count]) => {
             if (count < 1) return null;
-            const node = GraphState.nodes.find((node) => node.Id === id);
+            const node = notes.find((node) => node.Id === id);
             if (node) {
               return <NoteItem note={node} />;
             } else {
