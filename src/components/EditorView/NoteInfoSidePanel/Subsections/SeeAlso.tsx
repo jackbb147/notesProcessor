@@ -85,7 +85,7 @@ function Selector({ note }: { note: GraphNode }) {
     } catch (e) {
       console.error(e);
     }
-  }, [notes, links]);
+  }, [notes, links, note]);
 
   function handleChange(option: any, actionMeta: ActionMeta<any>) {
     if (actionMeta.action !== "select-option") return;
@@ -96,15 +96,6 @@ function Selector({ note }: { note: GraphNode }) {
       TargetId: id,
       Undirected: true,
     });
-
-    // graphDispatch({
-    //   type: GraphActionType.addLink,
-    //   link: {
-    //     source: note.Id,
-    //     target: id,
-    //     undirected: true,
-    //   },
-    // });
   }
 
   return (
@@ -187,26 +178,10 @@ function Selector({ note }: { note: GraphNode }) {
   );
 }
 export function SeeAlso({ note }: { note: GraphNode }) {
-  const [graphology, updated] = useGraphology();
   const { data: notes } = useGetNotesQuery();
   const { data: links } = useGetLinksQuery();
-  const GraphState = useGraph();
-  const graphDispatch = useGraphDispatch();
   const [deleteLink, { isLoading: isDeletingLink }] = useDeleteLinkMutation();
   const [undirectedNeighbors, setUndirectedNeighbors] = useState<string[]>([]);
-  // useEffect(() => {
-  //   try {
-  //     console.log("SeeAlso");
-  //     if (!graphology.hasNode(note.Id)) {
-  //       console.warn("[SeeAlso] graphology does not have node", note.Id);
-  //     } else {
-  //       setUndirectedNeighbors((v) => graphology.undirectedNeighbors(note.Id));
-  //       console.log("neighbors", undirectedNeighbors);
-  //     }
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // }, [updated, note]);
 
   useEffect(() => {
     if (!notes) {
@@ -236,7 +211,7 @@ export function SeeAlso({ note }: { note: GraphNode }) {
     });
 
     setUndirectedNeighbors(neighborIds);
-  }, [notes, links]);
+  }, [notes, links, note]);
 
   function handleDelete() {} //TODO
   if (!notes) return null;
