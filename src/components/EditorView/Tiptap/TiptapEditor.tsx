@@ -28,7 +28,7 @@ import { RootState } from "../../../store";
 import { useLogInStatus } from "../../../hooks/useLogInStatus";
 import { SignalrConnectionContext } from "../../../reducers/SignalrConnectionContext";
 import { HubConnection } from "@microsoft/signalr";
-import { useGetNotesQuery } from "../../../api/apiSlice";
+import { useGetNotesQuery, useDeleteLinkMutation } from "../../../api/apiSlice";
 
 function getFirstLine(json: JSONContent): string {
   // debugger;
@@ -70,6 +70,7 @@ export default forwardRef(
       isLoading: notesFetchLoading,
       isSuccess: notesFetchSuccess,
     } = useGetNotesQuery();
+    const [deleteLink] = useDeleteLinkMutation();
     const Graph = useGraph();
     const appState = useAppState();
     const dispatch = useAppDispatch();
@@ -233,14 +234,18 @@ export default forwardRef(
                         const parsedNote = JSON.parse(node.attrs.id);
                         const id = parsedNote.Id;
                         //
-
-                        referenceMapDispatch({
-                          type: ReferenceStateActionType.removeReference,
-                          reference: {
-                            sourceID: note.Id,
-                            targetID: id,
-                          },
+                        deleteLink({
+                          sourceId: note.Id,
+                          targetId: id,
                         });
+
+                        // referenceMapDispatch({
+                        //   type: ReferenceStateActionType.removeReference,
+                        //   reference: {
+                        //     sourceID: note.Id,
+                        //     targetID: id,
+                        //   },
+                        // });
 
                         isMention = true;
                         tr.insertText(

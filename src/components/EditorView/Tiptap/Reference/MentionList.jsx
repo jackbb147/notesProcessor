@@ -18,12 +18,14 @@ import {
   ReferenceStateDispatchContext,
 } from "./ReferenceStateContext";
 import { ReferenceStateActionType } from "./ReferenceStateReducer";
+import { useAddLinkMutation } from "../../../../api/apiSlice";
 
 export default forwardRef((props, ref) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const referenceMap = useContext(ReferenceStateContext);
   const referenceMapDispatch = useContext(ReferenceStateDispatchContext);
+  const [addLink] = useAddLinkMutation();
 
   const selectItem = (index) => {
     const item = props.items[index];
@@ -32,14 +34,18 @@ export default forwardRef((props, ref) => {
     if (node) {
       props.command({ id: item });
       const sourceNode = props.editor.storage.mention.note;
-
-      referenceMapDispatch({
-        type: ReferenceStateActionType.addReference,
-        reference: {
-          sourceID: sourceNode.Id, //TODO : get the current node id somehow
-          targetID: node.Id,
-        },
+      addLink({
+        sourceID: sourceNode.Id,
+        targetID: node.Id,
       });
+
+      // referenceMapDispatch({
+      //   type: ReferenceStateActionType.addReference,
+      //   reference: {
+      //     sourceID: sourceNode.Id, //TODO : get the current node id somehow
+      //     targetID: node.Id,
+      //   },
+      // });
 
       // setReferenceMap((previousMap) => {
       //   var newMap = new Map(previousMap);

@@ -140,10 +140,9 @@ export const apiSlice = createApi({
       query: (link: GraphLink) => ({
         url: `/Links/Create`,
         method: "POST",
-        params: {
-          link: link,
-        },
+        params: link,
       }),
+      invalidatesTags: [tags.links],
     }),
 
     deleteLink: builder.mutation<
@@ -164,6 +163,7 @@ export const apiSlice = createApi({
           targetId: targetId,
         },
       }),
+      invalidatesTags: [tags.links],
     }),
   }),
 });
