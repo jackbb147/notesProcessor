@@ -16,8 +16,8 @@ import { useGetLinksQuery, useGetNotesQuery } from "../../../../api/apiSlice";
  */
 export function References({
   noteId, // note,
-} // referenceMap,
-: {
+  // referenceMap,
+}: {
   noteId: string;
   // note: GraphNode;
   // referenceMap: Map<string, number>;
@@ -50,7 +50,10 @@ export function References({
         <Title text={"References"} />
         <div>
           {links
-            .filter((link) => !link.Deleted && link.SourceId === noteId)
+            .filter(
+              (link) =>
+                !link.Deleted && !link.Undirected && link.SourceId === noteId,
+            )
             .map((link) => {
               const node = notes.find((node) => node.Id === link.TargetId);
               if (node) {

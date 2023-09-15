@@ -16,6 +16,7 @@ import {
   useGetNotesQuery,
   useGetLinksQuery,
   useAddLinkMutation,
+  useDeleteLinkMutation,
 } from "../../../../api/apiSlice";
 import { NoteItem } from "../NoteItem";
 import { v4 as uuid } from "uuid";
@@ -180,6 +181,7 @@ export function SeeAlso({ note }: { note: GraphNode }) {
   const { data: links } = useGetLinksQuery();
   const GraphState = useGraph();
   const graphDispatch = useGraphDispatch();
+  const [deleteLink, { isLoading: isDeletingLink }] = useDeleteLinkMutation();
   const [undirectedNeighbors, setUndirectedNeighbors] = useState<string[]>([]);
   // useEffect(() => {
   //   try {
@@ -218,8 +220,16 @@ export function SeeAlso({ note }: { note: GraphNode }) {
         }
       }
     });
+    neighborIds = neighborIds.filter((id) => {
+      return notes.some((note) => note.Id === id && note.Deleted === false);
+    });
+
     setUndirectedNeighbors(neighborIds);
   }, [notes, links]);
+
+  function handleDelete() {}
+  if (!notes) return null;
+  if (!links) return null;
   return (
     <>
       <div
@@ -228,29 +238,29 @@ export function SeeAlso({ note }: { note: GraphNode }) {
         <Title text={"See also"} />
         <div>
           {undirectedNeighbors.map((id) => {
-            const node = GraphState.nodes.find((node) => node.Id === id);
-            if (node) {
+            const neighborNode = notes.find((node) => node.Id === id);
+            if (neighborNode) {
               return (
                 <NoteItem
-                  note={node}
+                  note={neighborNode}
                   deletable={true}
                   onDelete={() => {
                     // TODO
-                    // const link = GraphState.links.find((link) => {
-                    //   return (
-                    //     ((link.SourceId === note.Id &&
-                    //       link.TargetId === node.Id) ||
-                    //       (link.SourceId === node.Id &&
-                    //         link.TargetId === note.Id)) &&
-                    //     link.Undirected
-                    //   );
-                    // });
-                    // if (link) {
-                    //   graphDispatch({
-                    //     type: GraphActionType.removeLink,
-                    //     link,
-                    //   });
-                    // }
+                    const link = links.find((link) => {
+                      return (
+                        ((link.SourceId === note.Id &&
+                          link.TargetId === neighborNode.Id) ||
+                          (link.SourceId === neighborNode.Id &&
+                            link.TargetId === note.Id)) &&
+                        link.Undirected
+                      );
+                    });
+                    if (link) {
+                      deleteLink({
+                        sourceId: link.SourceId,
+                        targetId: link.TargetId,
+                      });
+                    }
                   }}
                 />
               );
