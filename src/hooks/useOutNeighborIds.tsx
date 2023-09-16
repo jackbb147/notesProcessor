@@ -19,11 +19,15 @@ export function useOutNeighborIds(id: string): string[] {
       console.warn("[useOutNeighbors] links not available");
       return;
     }
-    const outNeighborIds = links
-      .filter(
-        (link) => !link.Deleted && !link.Undirected && link.SourceId === id,
-      )
-      .map((link) => link.TargetId);
+    const outNeighborIds = Array.from(
+      new Set(
+        links
+          .filter(
+            (link) => !link.Deleted && !link.Undirected && link.SourceId === id,
+          )
+          .map((link) => link.TargetId),
+      ),
+    );
 
     setOutNeighbors(outNeighborIds);
   }, [notes, links, id]);
