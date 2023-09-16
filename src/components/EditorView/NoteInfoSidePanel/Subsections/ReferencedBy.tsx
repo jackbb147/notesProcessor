@@ -8,20 +8,14 @@ import { Title } from "../Title";
 import { Separator } from "../Separator";
 import { useGetNotesQuery, useGetLinksQuery } from "../../../../api/apiSlice";
 import { NoteItem } from "../NoteItem";
+import { useInNeighborIds } from "../../../../hooks/useInNeighborIds";
 
 export function ReferencedBy({ note }: { note: GraphNode }) {
   const { data: notes } = useGetNotesQuery();
   const { data: links } = useGetLinksQuery();
+  const inNeighborIds = useInNeighborIds(note.Id);
   if (!notes) return null;
   if (!links) return null;
-  const inNeighborIds = Array.from(
-    new Set(
-      links
-        .filter((link) => link.TargetId === note.Id && !link.Deleted)
-        .map((link) => link.SourceId)
-        .filter((id) => notes.some((note) => note.Id === id)),
-    ),
-  );
 
   const inNeighbors: GraphNode[] = inNeighborIds.map(
     (id) => notes.find((note) => note.Id === id)!,
