@@ -47,6 +47,13 @@ export function ReferencedBy({ note }: { note: GraphNode }) {
 
   if (!notes) return null;
   if (!links) return null;
+  const inNeighborIds = Array.from(
+    new Set(
+      links
+        .filter((link) => link.TargetId === note.Id && !link.Deleted)
+        .map((link) => link.SourceId),
+    ),
+  );
   return (
     <>
       <div
@@ -55,13 +62,7 @@ export function ReferencedBy({ note }: { note: GraphNode }) {
         <Title text={"Referenced By"} />
         <div>
           {/*  THIS IS TO AVOID DUPLICATES */}
-          {Array.from(
-            new Set(
-              links
-                .filter((link) => link.TargetId === note.Id && !link.Deleted)
-                .map((link) => link.SourceId),
-            ),
-          ).map((id) => {
+          {inNeighborIds.map((id) => {
             const node = notes.find((node) => node.Id === id);
             if (node) {
               return <NoteItem note={node} />;
