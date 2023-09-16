@@ -13,7 +13,7 @@ import {
 } from "../../../hooks/AppStateAndGraphAndUserhooks";
 import { Mobile_SidePanel } from "../../ui/SidePanel/Mobile/Mobile_SidePanel";
 import { Mobile } from "../../../hooks/useMediaQuery";
-import { useActiveCollection } from "./useActiveCollection";
+import { useActiveCollection } from "../../../hooks/useActiveCollection";
 import { ToggleLabelPanelButton } from "../../Buttons/ToggleLabelPanelButton";
 
 function PanelContent() {

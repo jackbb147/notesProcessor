@@ -130,6 +130,15 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: [tags.notes],
     }),
+    getLabelsOfNote: builder.query<string[], { id: string }>({
+      query: ({ id }: { id: string }) => ({
+        url: `/Notes/GetAllLabelsOfNote`,
+        method: "GET",
+        params: {
+          noteId: id,
+        },
+      }),
+    }),
 
     getLinks: builder.query<GraphLink[], void>({
       query: () => `/Links/GetAll`,

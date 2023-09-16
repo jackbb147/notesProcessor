@@ -11,7 +11,7 @@ import {
   useGraphDispatch,
   useAppState,
 } from "../../../hooks/AppStateAndGraphAndUserhooks";
-import { useActiveCollection } from "./useActiveCollection";
+import { useActiveCollection } from "../../../hooks/useActiveCollection";
 
 export function Desktop_NotesPanel({
   children,

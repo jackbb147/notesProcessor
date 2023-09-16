@@ -1,30 +1,35 @@
-import { GraphState, GraphNode } from "../../../reducers/GraphReducer";
-import { AppState, Collections } from "../../../reducers/AppStateReducer";
+import { GraphState, GraphNode } from "../reducers/GraphReducer";
+import { AppState, Collections } from "../reducers/AppStateReducer";
 import {
   useAppState,
   useAppDispatch,
   useGraph,
   useGraphDispatch,
-} from "../../../hooks/AppStateAndGraphAndUserhooks";
-import { useGetNotesQuery } from "../../../api/apiSlice";
+} from "./AppStateAndGraphAndUserhooks";
+import { useGetNotesQuery } from "../api/apiSlice";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../store";
+import { RootState } from "../store";
 import { useCallback, useEffect, useState } from "react";
 
+/**
+ * This hook returns the active collection of notes.
+ */
 export function useActiveCollection() {
   const appState = useAppState();
   const updateNeeded = useSelector(
     (state: RootState) => state.signalr.updateNeeded,
   );
-  const { data, isLoading, isSuccess, isError, error, refetch } =
-    useGetNotesQuery();
+  const {
+    data: notes,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+    refetch,
+  } = useGetNotesQuery();
   if (isError) {
     throw JSON.stringify(error, null, 2);
   }
-
-  useEffect(() => {
-    // console.log("[useActiveCollection]", JSON.stringify(data, null, 2));
-  }, [data]);
 
   useEffect(() => {
     console.log("[useActiveCollection] refetching");
@@ -97,20 +102,18 @@ export function useActiveCollection() {
   //   // alert("hey! active collection changed")
   //   setActiveCollection(getActiveCollection());
   // }, [state.activeCollection, graph.nodes, state.activeLabel]);
-  if (!data) return [];
+  if (!notes) return [];
   switch (appState.activeCollection) {
     case Collections.All: {
-      return data.filter((note) => !note.Deleted);
+      return notes.filter((note) => !note.Deleted);
     }
     case Collections.RecentlyDeleted: {
-      return data.filter((note) => note.Deleted);
+      return notes.filter((note) => note.Deleted);
     }
     case Collections.Label: {
       // TODO
+
       return [];
-      // return data.filter((note) => note.Labels.includes(appState.activeLabel));
     }
   }
-  // return data ?? [];
-  // return activeCollection;
 }

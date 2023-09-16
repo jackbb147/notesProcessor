@@ -10,7 +10,7 @@ import {
   useGraphDispatch,
   useAppState,
 } from "../../../hooks/AppStateAndGraphAndUserhooks";
-import { useActiveCollection } from "./useActiveCollection";
+import { useActiveCollection } from "../../../hooks/useActiveCollection";
 
 export function Tablet_NotesPanel({ children }: { children: React.ReactNode }) {
   const graph = useGraph();
