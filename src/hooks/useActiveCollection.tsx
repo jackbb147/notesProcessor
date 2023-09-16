@@ -117,6 +117,7 @@ export function useActiveCollection() {
   if (!notes) return [];
   switch (appState.activeCollection) {
     case Collections.All: {
+      // debugger;
       return notes.filter((note) => !note.Deleted);
     }
     case Collections.RecentlyDeleted: {
@@ -137,15 +138,15 @@ export function useActiveCollection() {
         }
       }
 
-      debugger;
-      const notes: GraphNode[] = [];
+      // debugger;
+      const activeNotes: GraphNode[] = [];
       for (let noteID of noteIDs) {
         const note = notes.find((note) => note.Id === noteID);
         if (note) {
-          notes.push(note);
+          activeNotes.push(note);
         }
       }
-      return notes;
+      return activeNotes;
     }
   }
 }
