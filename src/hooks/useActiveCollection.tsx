@@ -6,7 +6,10 @@ import {
   useGraph,
   useGraphDispatch,
 } from "./AppStateAndGraphAndUserhooks";
-import { useGetNotesQuery } from "../api/apiSlice";
+import {
+  useGetNotesQuery,
+  useGetLabelsForEveryNoteQuery,
+} from "../api/apiSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import { useCallback, useEffect, useState } from "react";
@@ -19,6 +22,8 @@ export function useActiveCollection() {
   const updateNeeded = useSelector(
     (state: RootState) => state.signalr.updateNeeded,
   );
+
+  const { data: labels } = useGetLabelsForEveryNoteQuery();
   const {
     data: notes,
     isLoading,
@@ -36,6 +41,11 @@ export function useActiveCollection() {
     console.log("[useActiveCollection] refetching");
     refetch();
   }, [updateNeeded]);
+
+  useEffect(() => {
+    let l = labels;
+    debugger;
+  }, [labels]);
 
   //
   // const graph = useGraph();

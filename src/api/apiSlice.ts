@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { GraphLink, GraphNode } from "../reducers/GraphReducer";
+import { z } from "zod";
 
 enum tags {
   notes = "notes",
@@ -8,7 +9,8 @@ enum tags {
   noteLabels = "noteLabels",
 }
 
-// interface NoteLabelDictionary {}
+const labelsSchema = z.record(z.array(z.string()));
+// const labelsSchema = z.record(z.array(z.number()));
 
 export const apiSlice = createApi({
   reducerPath: "api",
@@ -36,6 +38,14 @@ export const apiSlice = createApi({
 
     getLabelsForEveryNote: builder.query<any, void>({
       query: () => `/Labels/GetLabelsForAllNotes`,
+      transformResponse: (response: any) => {
+        try {
+          labelsSchema.parse(response);
+          return response;
+        } catch (e) {
+          throw e;
+        }
+      },
     }),
 
     // add a label to a note
@@ -186,4 +196,5 @@ export const {
   useGetLinksQuery,
   useAddLinkMutation,
   useDeleteLinkMutation,
+  useGetLabelsForEveryNoteQuery,
 } = apiSlice;
