@@ -54,17 +54,21 @@ export function ReferencedBy({ note }: { note: GraphNode }) {
       >
         <Title text={"Referenced By"} />
         <div>
-          {links
-            .filter((link) => link.TargetId === note.Id && !link.Deleted)
-            .map((link) => link.SourceId)
-            .map((id) => {
-              const node = notes.find((node) => node.Id === id);
-              if (node) {
-                return <NoteItem note={node} />;
-              } else {
-                return null;
-              }
-            })}
+          {/*  THIS IS TO AVOID DUPLICATES */}
+          {Array.from(
+            new Set(
+              links
+                .filter((link) => link.TargetId === note.Id && !link.Deleted)
+                .map((link) => link.SourceId),
+            ),
+          ).map((id) => {
+            const node = notes.find((node) => node.Id === id);
+            if (node) {
+              return <NoteItem note={node} />;
+            } else {
+              return null;
+            }
+          })}
         </div>
       </div>
       <Separator />

@@ -32,11 +32,8 @@ function Selector({ note }: { note: GraphNode }) {
   const { data: links } = useGetLinksQuery();
   const [addLink, { isLoading: isAddingLink }] = useAddLinkMutation();
   const [options, setOptions] = useState<any[]>([]);
-  // const [graphology, updated] = useGraphology();
   const [listed, setListed] = useState<string[]>([]);
   const AppState = useAppState();
-  const GraphState = useGraph();
-  const graphDispatch = useGraphDispatch();
   const [isFocused, setIsFocused] = useState(false);
   useEffect(() => {
     if (!notes) {
