@@ -10,6 +10,7 @@ enum tags {
 }
 
 const labelsSchema = z.record(z.array(z.string()));
+export type labelsSchemaType = z.infer<typeof labelsSchema>;
 // const labelsSchema = z.record(z.array(z.number()));
 
 export const apiSlice = createApi({

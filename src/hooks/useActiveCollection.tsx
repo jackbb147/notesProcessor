@@ -13,6 +13,7 @@ import {
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import { useCallback, useEffect, useState } from "react";
+import { labelsSchemaType } from "../api/apiSlice";
 
 /**
  * This hook returns the active collection of notes.
@@ -23,7 +24,7 @@ export function useActiveCollection() {
     (state: RootState) => state.signalr.updateNeeded,
   );
 
-  const { data: labels } = useGetLabelsForEveryNoteQuery();
+  const { data: labelRecords } = useGetLabelsForEveryNoteQuery();
   const {
     data: notes,
     isLoading,
@@ -42,10 +43,10 @@ export function useActiveCollection() {
     refetch();
   }, [updateNeeded]);
 
-  useEffect(() => {
-    let l = labels;
-    debugger;
-  }, [labels]);
+  // useEffect(() => {
+  //   let l = labelRecords;
+  //   debugger;
+  // }, [labelRecords]);
 
   //
   // const graph = useGraph();
@@ -123,8 +124,28 @@ export function useActiveCollection() {
     }
     case Collections.Label: {
       // TODO
+      const label = appState.activeLabel;
+      if (!label) {
+        return [];
+      }
+      //   TODO
+      var noteIDs = [];
+      const entries: [string, string[]][] = Object.entries(labelRecords);
+      for (let [noteID, labels] of entries) {
+        if (labels.includes(label)) {
+          noteIDs.push(noteID);
+        }
+      }
 
-      return [];
+      debugger;
+      const notes: GraphNode[] = [];
+      for (let noteID of noteIDs) {
+        const note = notes.find((note) => note.Id === noteID);
+        if (note) {
+          notes.push(note);
+        }
+      }
+      return notes;
     }
   }
 }
