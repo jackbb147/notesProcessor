@@ -8,6 +8,7 @@ import { Title } from "../Title";
 import { Separator } from "../Separator";
 import { NoteItem } from "../NoteItem";
 import { useGetLinksQuery, useGetNotesQuery } from "../../../../api/apiSlice";
+import { useOutNeighborIds } from "../../../../hooks/useOutNeighborIds";
 
 /**
  * This component displays all the notes that the given note references.
@@ -16,32 +17,19 @@ import { useGetLinksQuery, useGetNotesQuery } from "../../../../api/apiSlice";
  */
 export function References({
   noteId, // note,
-  // referenceMap,
 }: {
   noteId: string;
-  // note: GraphNode;
-  // referenceMap: Map<string, number>;
 }) {
-  // // const [graphology, updated] = useGraphology();
   const { data: notes } = useGetNotesQuery();
   const { data: links } = useGetLinksQuery();
-  // // const GraphState = useGraph();
-  // // const [OutNeighbors, setOutNeighbors] = useState<string[]>([]);
-  // useEffect(() => {
-  //   try {
-  //     console.log("LinksFromThisNote");
-  //     // setOutNeighbors((v) => graphology.outNeighbors(note.Id));
-  //     // console.log("OutNeighbors", OutNeighbors);
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // }, [note]);
-  // console.log(
-  //   "[References] Reference map: " + Array.from(referenceMap.entries()),
-  // );
-  // // console.log("[References] GraphState: " + GraphState)
+  const outNeighborIds = useOutNeighborIds(noteId);
   if (!notes) return null;
   if (!links) return null;
+  const outNeighbors: GraphNode[] = outNeighborIds
+    .filter((id) => notes.some((node) => node.Id === id))
+    .map((id) => {
+      return notes.find((node) => node.Id === id)!;
+    });
   return (
     <>
       <div
@@ -49,30 +37,9 @@ export function References({
       >
         <Title text={"References"} />
         <div>
-          {links
-            .filter(
-              (link) =>
-                !link.Deleted && !link.Undirected && link.SourceId === noteId,
-            )
-            .map((link) => {
-              const node = notes.find((node) => node.Id === link.TargetId);
-              if (node) {
-                return <NoteItem note={node} />;
-              } else {
-                console.warn("[References] Node not found: " + link.TargetId);
-                return null;
-              }
-            })}
-          {/*{Array.from(referenceMap.entries()).map(([id, count]) => {*/}
-          {/*  if (count < 1) return null;*/}
-          {/*  const node = notes.find((node) => node.Id === id);*/}
-          {/*  if (node) {*/}
-          {/*    return <NoteItem note={node} />;*/}
-          {/*  } else {*/}
-          {/*    console.warn("[References] Node not found: " + id);*/}
-          {/*    return null;*/}
-          {/*  }*/}
-          {/*})}*/}
+          {outNeighbors.map((node) => (
+            <NoteItem note={node} />
+          ))}
         </div>
       </div>
       <Separator />
