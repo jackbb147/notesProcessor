@@ -27,6 +27,7 @@ export function useActiveCollection() {
     error,
     refetch,
   } = useGetNotesQuery();
+
   if (isError) {
     throw JSON.stringify(error, null, 2);
   }

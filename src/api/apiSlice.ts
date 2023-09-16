@@ -8,6 +8,8 @@ enum tags {
   noteLabels = "noteLabels",
 }
 
+// interface NoteLabelDictionary {}
+
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
@@ -30,6 +32,10 @@ export const apiSlice = createApi({
         },
       }),
       providesTags: [tags.noteLabels],
+    }),
+
+    getLabelsForEveryNote: builder.query<any, void>({
+      query: () => `/Labels/GetLabelsForAllNotes`,
     }),
 
     // add a label to a note
@@ -130,16 +136,6 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: [tags.notes],
     }),
-    getLabelsOfNote: builder.query<string[], { id: string }>({
-      query: ({ id }: { id: string }) => ({
-        url: `/Notes/GetAllLabelsOfNote`,
-        method: "GET",
-        params: {
-          noteId: id,
-        },
-      }),
-    }),
-
     getLinks: builder.query<GraphLink[], void>({
       query: () => `/Links/GetAll`,
       providesTags: [tags.links],
