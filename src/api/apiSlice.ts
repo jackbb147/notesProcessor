@@ -31,11 +31,16 @@ export const apiSlice = createApi({
   endpoints: (builder) => ({
     isLoggedIn: builder.query<boolean, void>({
       query: () => `isLoggedIn`,
+
       providesTags: [tags.loginStatus],
     }),
 
     getUsername: builder.query<string, void>({
-      query: () => `/GetCurrentUser`,
+      query: () => ({
+        url: `/GetCurrentUser`,
+        method: "GET",
+        credentials: "include",
+      }),
       providesTags: [tags.username],
     }),
 

@@ -49,6 +49,7 @@ import { UserContext, SetUserContext } from "./RegisterAndLogin/AuthContext";
 import { useLogInStatus } from "../hooks/useLogInStatus";
 import { useRoom } from "../hooks/SignalR/useRoom";
 import { SignalrConnectionProvider } from "../reducers/SignalrConnectionContext";
+import { useGetUsernameQuery } from "../api/apiSlice";
 
 export function ensure<T>(
   argument: T | undefined | null,
@@ -84,9 +85,11 @@ function Container({ children }: { children: React.ReactNode }) {
 function App() {
   const [isLoggedIn, userName] = useLogInStatus();
   const dispatch = useAppDispatch();
+  const { data, error, isLoading } = useGetUsernameQuery();
   if (!isLoggedIn) {
     dispatch({ type: AppActionType.setShowLoginPage, show: true });
   }
+
   return (
     <>
       <GraphProvider>

@@ -6,8 +6,27 @@ import { useIsLoggedInQuery, useGetUsernameQuery } from "../api/apiSlice";
 
 export function useLogInStatus(): [boolean, string | null] {
   const { data: loginStatus, error, isLoading } = useIsLoggedInQuery();
-  const { data: userName } = useGetUsernameQuery();
-  if (!userName) debugger;
+  const {
+    data: userName,
+    isLoading: loadingUserName,
+    isSuccess: userNameSuccess,
+  } = useGetUsernameQuery();
+  // if (loginStatus && !userName) console.warn("userName is null. ");
+  // useEffect(() => {
+  //   if (isLoading || !userNameSuccess) return;
+  //   let usern = userName;
+  //   debugger;
+  // }, [loadingUserName]);
+  useEffect(() => {
+    if (!loginStatus) return;
+    // debugger;
 
+    async function login() {
+      // var res = await axios.get("/GetCurrentUser");
+      const u = userName;
+      // debugger;
+    }
+    login();
+  }, [loginStatus]);
   return [loginStatus ?? false, userName ?? null];
 }

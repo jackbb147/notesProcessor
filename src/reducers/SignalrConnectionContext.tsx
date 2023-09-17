@@ -13,6 +13,7 @@ export function SignalrConnectionProvider({
   children: React.ReactNode;
 }) {
   const [isLoggedIn, userName] = useLogInStatus();
+
   const connection = useRoom({
     userName: userName,
     roomName: userName,
