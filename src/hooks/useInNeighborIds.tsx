@@ -24,6 +24,7 @@ export function useInNeighborIds(id: string): string[] {
         links
           .filter(
             (link) =>
+              !link.Undirected &&
               link.TargetId === id &&
               !link.Deleted &&
               notes.some((note) => note.Id === id),

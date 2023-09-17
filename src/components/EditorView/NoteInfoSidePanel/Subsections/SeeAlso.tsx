@@ -225,6 +225,7 @@ export function SeeAlso({ note }: { note: GraphNode }) {
             if (neighborNode) {
               return (
                 <NoteItem
+                  key={id}
                   note={neighborNode}
                   deletable={true}
                   onDelete={() => {
