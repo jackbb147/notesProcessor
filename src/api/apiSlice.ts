@@ -7,6 +7,8 @@ enum tags {
   labels = "labels",
   links = "links",
   noteLabels = "noteLabels",
+  loginStatus = "loginStatus",
+  username = "username",
 }
 
 const labelsSchema = z.record(z.array(z.string()));
@@ -18,10 +20,36 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "/",
   }),
-  tagTypes: [tags.notes, tags.labels, tags.noteLabels, tags.links],
+  tagTypes: [
+    tags.notes,
+    tags.labels,
+    tags.noteLabels,
+    tags.links,
+    tags.loginStatus,
+    tags.username,
+  ],
   endpoints: (builder) => ({
     isLoggedIn: builder.query<boolean, void>({
       query: () => `isLoggedIn`,
+      providesTags: [tags.loginStatus],
+    }),
+
+    getUsername: builder.query<string, void>({
+      query: () => `/GetCurrentUser`,
+      providesTags: [tags.username],
+    }),
+
+    login: builder.mutation<boolean, { Email: string; Password: string }>({
+      query: ({ Email, Password }) => ({
+        url: `/Authenticate/Login`,
+        method: "POST",
+        credentials: "include",
+        params: {
+          Email: Email,
+          Password: Password,
+        },
+      }),
+      invalidatesTags: [tags.loginStatus, tags.username],
     }),
     getLabels: builder.query<string[], void>({
       query: () => `/Labels/GetAllLabels`,
@@ -202,4 +230,7 @@ export const {
   useAddLinkMutation,
   useDeleteLinkMutation,
   useGetLabelsForEveryNoteQuery,
+  useLoginMutation,
+  useIsLoggedInQuery,
+  useGetUsernameQuery,
 } = apiSlice;

@@ -7,6 +7,8 @@ import {
   useSetUser,
 } from "../../../hooks/AppStateAndGraphAndUserhooks";
 import { AppActionType } from "../../../reducers/AppStateReducer";
+import { useLoginMutation, useIsLoggedInQuery } from "../../../api/apiSlice";
+
 import axios from "axios";
 
 function EmailFormField() {
@@ -118,6 +120,7 @@ interface loginInfo {
 export function LoginForm() {
   const dispatch = useAppDispatch();
   const setUser = useSetUser();
+  const [loginMutation, { data, error, isLoading }] = useLoginMutation();
   async function login(info: loginInfo) {
     // const endpoint = "http://localhost:5046/isLoggedIn";
     const endpoint = "http://localhost:5046/Authenticate/Login";
@@ -137,19 +140,12 @@ export function LoginForm() {
     //
     event.preventDefault();
     try {
-      const response = await login({
-        email: event.target[0].value,
-        password: event.target[1].value,
+      const Email = event.target[0].value;
+      const Password = event.target[1].value;
+      loginMutation({
+        Email,
+        Password,
       });
-      if (response?.status === 200) {
-        setUser(response.data);
-        dispatch({
-          type: AppActionType.setShowLoginPage,
-          show: false,
-        });
-      } else if (response?.status === 400) {
-        alert(`Login failed: ${response.data}}`);
-      }
     } catch (e: any) {
       const resp = e.response;
       if (resp?.status === 400) {
@@ -160,8 +156,6 @@ export function LoginForm() {
 
       console.dir(e);
     }
-
-    //  //TODO
   };
   return (
     <Form.Root onSubmit={handleSubmit} className="w-full">
