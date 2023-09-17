@@ -38,7 +38,7 @@ export function References({
         <Title text={"References"} />
         <div>
           {outNeighbors.map((node) => (
-            <NoteItem note={node} />
+            <NoteItem key={node.Id} note={node} />
           ))}
         </div>
       </div>
