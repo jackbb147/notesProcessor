@@ -94,8 +94,7 @@ export function NoteEditor({
   onEditAttempt?: () => any;
   darkModeOn?: boolean;
 }) {
-  const graph = useGraph();
-  const graphDispatch = useGraphDispatch();
+  const [setLabel, { isLoading: isSettingLabel }] = useSetLabelMutation();
 
   const appState = useAppState();
   const dispatch = useAppDispatch();
@@ -145,17 +144,20 @@ export function NoteEditor({
     switch (action.action) {
       case "create-option": {
         //
-        graphDispatch({
-          type: GraphActionType.addLabel,
-          label: action.option.label,
+        if (!appState.activeNodeID) {
+          console.warn("No active node");
+          return;
+        }
+        // debugger;
+        const label = action.option.label;
+        setLabel({
+          noteId: appState.activeNodeID,
+          label: label,
         });
-
-        graphDispatch({
-          type: GraphActionType.addLabelToNode,
-          label: action.option.label,
-          id: note.Id,
-        });
-
+        // setLabel({
+        //   noteId: appState.activeNodeID,
+        //   label: inputValue,
+        // });
         break;
       }
 

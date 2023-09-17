@@ -47,6 +47,7 @@ export const apiSlice = createApi({
           throw e;
         }
       },
+      providesTags: [tags.noteLabels, tags.labels],
     }),
 
     // add a label to a note
@@ -59,7 +60,7 @@ export const apiSlice = createApi({
           labelName: label,
         },
       }),
-      invalidatesTags: [tags.noteLabels],
+      invalidatesTags: [tags.noteLabels, tags.labels, tags.notes],
     }),
 
     // remove a label from a note

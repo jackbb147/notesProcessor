@@ -9,10 +9,8 @@ import { GraphActionType } from "../../../reducers/GraphReducer";
 import { ValueType } from "tailwindcss/types/config";
 import { ComponentProps, useEffect } from "react";
 import { DropdownIndicator } from "react-select/dist/declarations/src/components/indicators";
-import {
-  useGetLabelsQuery,
-  useGetNoteLabelsQuery,
-} from "../../../api/apiSlice";
+
+import { useSetLabelMutation } from "../../../api/apiSlice";
 
 export function LabelSelector({
   handleChange,
@@ -32,8 +30,7 @@ export function LabelSelector({
   //   }
   // }, [isError]);
 
-  const graph = useGraph();
-  const graphDispatch = useGraphDispatch();
+  const [setLabel, { isLoading: isSettingLabel }] = useSetLabelMutation();
 
   const appState = useAppState();
 
@@ -94,7 +91,6 @@ export function LabelSelector({
         menuPlacement={"top"}
         isMulti
         isClearable
-        // onCreateOption={handleCreateOption}
         value={values}
         onChange={handleChange}
         options={options}
