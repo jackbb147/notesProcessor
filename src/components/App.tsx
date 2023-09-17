@@ -84,6 +84,10 @@ function Container({ children }: { children: React.ReactNode }) {
 
 function App() {
   const [isLoggedIn, userName] = useLogInStatus();
+  const dispatch = useAppDispatch();
+  if (!isLoggedIn) {
+    dispatch({ type: AppActionType.setShowLoginPage, show: true });
+  }
   return (
     <>
       <GraphProvider>
@@ -93,12 +97,12 @@ function App() {
               <div className="bg-grey dark:bg-dark_secondary w-full h-full flex flex-row overflow-hidden dark:text-white">
                 <RecoverNodePopup />
                 <LabelSelectorPopUp />
-                {!isLoggedIn && (
-                  <>
-                    <Register />
-                    <Login />
-                  </>
-                )}
+
+                <>
+                  <Register />
+                  <Login />
+                </>
+
                 <FolderPanel>
                   <div className={"App__main bg-white h-full grow w-full"}>
                     <NotesPanel>

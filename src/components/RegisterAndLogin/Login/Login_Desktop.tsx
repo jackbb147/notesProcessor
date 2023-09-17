@@ -9,12 +9,15 @@ import { LoginForm } from "./LoginForm";
 import React, { useEffect } from "react";
 import { ToRegister } from "../RegisterLoginRedirect/Redirect";
 import axios from "axios";
+import { useLogInStatus } from "../../../hooks/useLogInStatus";
 
 export function Login_Desktop() {
   const AppState = useAppState();
   const dispatch = useAppDispatch();
+  const [isLoggedIn, userName] = useLogInStatus();
 
   const handleOpenChange = (openStatus: boolean) => {
+    // debugger;
     dispatch({
       type: AppActionType.setShowLoginPage,
       show: openStatus,
@@ -22,7 +25,13 @@ export function Login_Desktop() {
   };
 
   return (
-    <Dialog.Root open={AppState.showLoginPage} onOpenChange={handleOpenChange}>
+    <Dialog.Root
+      open={
+        // AppState.showLoginPage
+        !isLoggedIn
+      }
+      onOpenChange={handleOpenChange}
+    >
       <Dialog.Portal>
         <Dialog.Overlay className="bg-blackA9 data-[state=open]:animate-overlayShow fixed inset-0" />
         <Dialog.Content

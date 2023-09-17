@@ -34,10 +34,6 @@ export function useActiveCollection() {
     refetch,
   } = useGetNotesQuery();
 
-  if (isError) {
-    throw JSON.stringify(error, null, 2);
-  }
-
   useEffect(() => {
     console.log("[useActiveCollection] refetching");
     refetch();
@@ -114,6 +110,12 @@ export function useActiveCollection() {
   //   // alert("hey! active collection changed")
   //   setActiveCollection(getActiveCollection());
   // }, [state.activeCollection, graph.nodes, state.activeLabel]);
+  if (isError) {
+    return [];
+    // let e;
+    // debugger;
+    // throw JSON.stringify(error, null, 2);
+  }
   if (!notes) return [];
   switch (appState.activeCollection) {
     case Collections.All: {

@@ -11,8 +11,8 @@ export function Login() {
   const AppState = useAppState();
   const dispatch = useAppDispatch();
   const [isLoggedIn, loggedInUserName] = useLogInStatus();
-  if (!isLoggedIn)
-    dispatch({ type: AppActionType.setShowLoginPage, show: true });
+  // if (!isLoggedIn)
+  //   dispatch({ type: AppActionType.setShowLoginPage, show: true });
   return (
     <>
       <Desktop>

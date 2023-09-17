@@ -20,6 +20,9 @@ export const apiSlice = createApi({
   }),
   tagTypes: [tags.notes, tags.labels, tags.noteLabels, tags.links],
   endpoints: (builder) => ({
+    isLoggedIn: builder.query<boolean, void>({
+      query: () => `isLoggedIn`,
+    }),
     getLabels: builder.query<string[], void>({
       query: () => `/Labels/GetAllLabels`,
       providesTags: [tags.labels],
