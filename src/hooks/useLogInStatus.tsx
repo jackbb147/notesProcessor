@@ -7,32 +7,7 @@ import { useIsLoggedInQuery, useGetUsernameQuery } from "../api/apiSlice";
 export function useLogInStatus(): [boolean, string | null] {
   const { data: loginStatus, error, isLoading } = useIsLoggedInQuery();
   const { data: userName } = useGetUsernameQuery();
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [loggedInUserName, setLoggedInUserName] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function checkLogin() {
-      // const envi= process.env;
-      try {
-        const response = await axiosCustomInstance.get("/isLoggedIn");
-        if (response.status !== 200)
-          throw new Error(
-            "[useLogInStatus] Failed to check login status; got status code: " +
-              response.status,
-          );
-
-        setIsLoggedIn(response.data);
-        //
-        if (response.data === false) return;
-        const userName = await axiosCustomInstance.get("/GetCurrentUser");
-        setLoggedInUserName(userName.data);
-      } catch (e) {
-        //
-        alert(JSON.stringify(e, null, 2));
-      }
-    }
-    checkLogin();
-  }, []);
+  if (!userName) debugger;
 
   return [loginStatus ?? false, userName ?? null];
 }

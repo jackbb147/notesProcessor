@@ -72,7 +72,8 @@ export function FolderPanelContent() {
   const settingsButtonRef = useRef<any>(null);
   const isMobile = useMediaQuery({ maxWidth: 767 });
   // const isLoggedIn = useLogInStatus();
-  const activeUser = useUser();
+  // const activeUser = useUser();
+  const [loginStatus, activeUser] = useLogInStatus();
   const { data: labels, error } = useGetLabelsQuery();
   function handleSettingPanelOutsideClick() {
     if (!isMobile) {
@@ -113,6 +114,8 @@ export function FolderPanelContent() {
     }
   }
 
+  // const a = activeUser;
+  // debugger;
   return (
     <>
       <div className={"top-bar h-12 flex items-center"}>
@@ -123,8 +126,9 @@ export function FolderPanelContent() {
 
       {/*https://www.npmjs.com/package/react-custom-scrollbars-2*/}
       <Scrollbars autoHide>
-        {labels?.map((s: string) => (
+        {labels?.map((s: string, i) => (
           <ListItem
+            key={i}
             text={s}
             iconOnly={state.LabelPanelClosed}
             active={

@@ -46,7 +46,6 @@ import {
 import { Login } from "./RegisterAndLogin/Login/Login";
 import { MathJax, MathJaxContext } from "better-react-mathjax";
 import { UserContext, SetUserContext } from "./RegisterAndLogin/AuthContext";
-import { ActiveUserProvider } from "./RegisterAndLogin/ActiveUserProvider";
 import { useLogInStatus } from "../hooks/useLogInStatus";
 import { useRoom } from "../hooks/SignalR/useRoom";
 import { SignalrConnectionProvider } from "../reducers/SignalrConnectionContext";
@@ -91,29 +90,27 @@ function App() {
   return (
     <>
       <GraphProvider>
-        <ActiveUserProvider>
-          <SignalrConnectionProvider>
-            <Container>
-              <div className="bg-grey dark:bg-dark_secondary w-full h-full flex flex-row overflow-hidden dark:text-white">
-                <RecoverNodePopup />
-                <LabelSelectorPopUp />
+        <SignalrConnectionProvider>
+          <Container>
+            <div className="bg-grey dark:bg-dark_secondary w-full h-full flex flex-row overflow-hidden dark:text-white">
+              <RecoverNodePopup />
+              <LabelSelectorPopUp />
 
-                <>
-                  <Register />
-                  <Login />
-                </>
+              <>
+                <Register />
+                <Login />
+              </>
 
-                <FolderPanel>
-                  <div className={"App__main bg-white h-full grow w-full"}>
-                    <NotesPanel>
-                      <EditorPage />
-                    </NotesPanel>
-                  </div>
-                </FolderPanel>
-              </div>
-            </Container>
-          </SignalrConnectionProvider>
-        </ActiveUserProvider>
+              <FolderPanel>
+                <div className={"App__main bg-white h-full grow w-full"}>
+                  <NotesPanel>
+                    <EditorPage />
+                  </NotesPanel>
+                </div>
+              </FolderPanel>
+            </div>
+          </Container>
+        </SignalrConnectionProvider>
       </GraphProvider>
     </>
   );

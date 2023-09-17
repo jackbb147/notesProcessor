@@ -119,23 +119,7 @@ interface loginInfo {
 }
 export function LoginForm() {
   const dispatch = useAppDispatch();
-  const setUser = useSetUser();
   const [loginMutation, { data, error, isLoading }] = useLoginMutation();
-  async function login(info: loginInfo) {
-    // const endpoint = "http://localhost:5046/isLoggedIn";
-    const endpoint = "http://localhost:5046/Authenticate/Login";
-    const shortEndpoint = "/Authenticate/Login";
-    // const endpoint = "http://name5-dev.eba-zcpkbqup.us-west-2.elasticbeanstalk.com/isLoggedIn";
-    const response = await axiosCustomInstance.post(shortEndpoint, null, {
-      withCredentials: true,
-      params: {
-        Email: info.email,
-        Password: info.password,
-      },
-    });
-
-    return response;
-  }
   const handleSubmit = async (event: any) => {
     //
     event.preventDefault();
