@@ -26,6 +26,7 @@ import { RecentlyDeleted } from "../../Buttons/RecentlyDeleted";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { useLogInStatus } from "../../../hooks/useLogInStatus";
 import { useGetLabelsQuery } from "../../../api/apiSlice";
+import { UserButton } from "../../Buttons/UserButton";
 
 function SettingsPanelWrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -144,7 +145,7 @@ export function FolderPanelContent() {
 
       <div className={"mt-auto"}>
         <EditLabelsButton />
-        {activeUser ? activeUser : <AccountButton />}
+        {activeUser ? <UserButton /> : <AccountButton />}
         <SettingsButton ref={settingsButtonRef} />
         <OutsideAlerter
           condition={SettingPanelOutsideClickCondition}
