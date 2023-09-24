@@ -115,9 +115,16 @@ export const apiSlice = createApi({
     getNotes: builder.query<GraphNode[], void>({
       query: () => `/Notes/GetAll`,
       providesTags: [tags.notes],
-      // transformResponse: (response: Todo[]) => {
-      //     return response.sort((a, b) => Number(a.id) - Number(b.id))
-      // }
+      transformResponse: (response: GraphNode[]) => {
+        // debugger;
+        return response.sort((note1, note2) => {
+          if (!note1.DateLastModified || !note2.DateLastModified) return 0;
+          const date1 = new Date(note1.DateLastModified);
+          const date2 = new Date(note2.DateLastModified);
+          return date2.getTime() - date1.getTime();
+        });
+        // return response.sort((a, b) => Number(a.id) - Number(b.id));
+      },
     }),
 
     getNoteById: builder.query<GraphNode, { id: string }>({
