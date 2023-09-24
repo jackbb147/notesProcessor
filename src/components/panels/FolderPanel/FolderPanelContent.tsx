@@ -27,6 +27,7 @@ import { Scrollbars } from "react-custom-scrollbars-2";
 import { useLogInStatus } from "../../../hooks/useLogInStatus";
 import { useGetLabelsQuery } from "../../../api/apiSlice";
 import { UserButton } from "../../Buttons/UserButton";
+import { SettingsPanelContent } from "../SettingsPanel/SettingsPanelContent";
 
 function SettingsPanelWrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -156,7 +157,9 @@ export function FolderPanelContent() {
           callback={handleSettingPanelOutsideClick}
         >
           <SettingsPanelWrapper>
-            <SettingsPanel />
+            <SettingsPanel>
+              <SettingsPanelContent />
+            </SettingsPanel>
           </SettingsPanelWrapper>
         </OutsideAlerter>
       </div>

@@ -2,8 +2,13 @@ import { useAppState } from "../../../hooks/AppStateAndGraphAndUserhooks";
 import { LightModeButton } from "../../Buttons/LightModeButton";
 import { UploadButton } from "../../Buttons/UploadButton";
 import { DownloadButton } from "../../Buttons/DownloadButton";
+import React from "react";
 
-export function Desktop_SettingsPanel() {
+export function Desktop_SettingsPanel({
+  children,
+}: {
+  children?: React.ReactNode;
+}) {
   const state = useAppState();
   if (state.showSettingsPanel) {
     return (
@@ -19,9 +24,7 @@ export function Desktop_SettingsPanel() {
                 border-opacity-25
             `}
       >
-        <LightModeButton />
-        <UploadButton />
-        <DownloadButton />
+        {children}
       </div>
     );
   } else {

@@ -5,7 +5,11 @@ import { DownloadButton } from "../../Buttons/DownloadButton";
 import { CloseSettingsPanelButton } from "../../Buttons/CloseSettingsPanelButton";
 import { Close } from "@radix-ui/react-popover";
 
-export function Mobile_SettingsPanel() {
+export function Mobile_SettingsPanel({
+  children,
+}: {
+  children?: React.ReactNode;
+}) {
   const state = useAppState();
   if (state.showSettingsPanel) {
     return (
@@ -30,14 +34,15 @@ export function Mobile_SettingsPanel() {
                 z-30
             `}
       >
-        <div className={"flex flex-col  h-full"}>
-          <CloseSettingsPanelButton />
-          <LightModeButton />
-          <div className={"mt-auto flex flex-col justify-center w-full"}>
-            <UploadButton />
-            <DownloadButton />
-          </div>
-        </div>
+        {children}
+        {/*<div className={"flex flex-col  h-full"}>*/}
+        {/*  <CloseSettingsPanelButton />*/}
+        {/*  <LightModeButton />*/}
+        {/*  <div className={"mt-auto flex flex-col justify-center w-full"}>*/}
+        {/*    <UploadButton />*/}
+        {/*    <DownloadButton />*/}
+        {/*  </div>*/}
+        {/*</div>*/}
       </div>
     );
   } else {

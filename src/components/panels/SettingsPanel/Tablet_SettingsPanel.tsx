@@ -3,7 +3,11 @@ import { LightModeButton } from "../../Buttons/LightModeButton";
 import { UploadButton } from "../../Buttons/UploadButton";
 import { DownloadButton } from "../../Buttons/DownloadButton";
 
-export function Tablet_SettingsPanel() {
+export function Tablet_SettingsPanel({
+  children,
+}: {
+  children?: React.ReactNode;
+}) {
   const state = useAppState();
   if (state.showSettingsPanel) {
     return (
@@ -19,9 +23,7 @@ export function Tablet_SettingsPanel() {
                 border-opacity-25
             `}
       >
-        <LightModeButton />
-        <UploadButton />
-        <DownloadButton />
+        {children}
       </div>
     );
   } else {

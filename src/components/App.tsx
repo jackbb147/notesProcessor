@@ -5,7 +5,6 @@ import {
   GraphActionType,
   graphReducer,
   GraphState,
-  GraphNode,
 } from "../reducers/GraphReducer";
 import {
   AppAction,
