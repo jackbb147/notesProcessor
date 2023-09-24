@@ -35,14 +35,6 @@ export function Mobile_SettingsPanel({
             `}
       >
         {children}
-        {/*<div className={"flex flex-col  h-full"}>*/}
-        {/*  <CloseSettingsPanelButton />*/}
-        {/*  <LightModeButton />*/}
-        {/*  <div className={"mt-auto flex flex-col justify-center w-full"}>*/}
-        {/*    <UploadButton />*/}
-        {/*    <DownloadButton />*/}
-        {/*  </div>*/}
-        {/*</div>*/}
       </div>
     );
   } else {
