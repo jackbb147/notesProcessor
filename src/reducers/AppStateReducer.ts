@@ -9,6 +9,7 @@ export enum AppActionType {
   setActiveLabel,
   setShowLabelSelectorPopup,
   setShowSettingsPanel,
+  setShowUserSettingsPanel,
   setShowRegisterPage,
   setShowLoginPage,
   setIsLoggedIn,
@@ -26,6 +27,7 @@ export type AppAction =
   | { type: AppActionType.setActiveLabel; label: string }
   | { type: AppActionType.setShowLabelSelectorPopup; show: boolean }
   | { type: AppActionType.setShowSettingsPanel; show: boolean }
+  | { type: AppActionType.setShowUserSettingsPanel; show: boolean }
   | { type: AppActionType.setShowRegisterPage; show: boolean }
   | { type: AppActionType.setShowLoginPage; show: boolean }
   | { type: AppActionType.setIsLoggedIn; isLoggedIn: boolean }
@@ -47,6 +49,7 @@ export interface AppState {
   darkModeOn: boolean;
   showLabelSelectorPopup: boolean;
   showSettingsPanel: boolean;
+  showUserSettingsPanel: boolean;
   showRegisterPage: boolean;
   showLoginPage: boolean;
   isLoggedIn: boolean;
@@ -121,6 +124,11 @@ export function AppStateReducer(draft: AppState, action: AppAction) {
 
     case AppActionType.setShowNoteInfoPanel: {
       draft.showNoteInfoPanel = action.show;
+      break;
+    }
+
+    case AppActionType.setShowUserSettingsPanel: {
+      draft.showUserSettingsPanel = action.show;
       break;
     }
   }

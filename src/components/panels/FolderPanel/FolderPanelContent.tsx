@@ -16,7 +16,7 @@ import {
 import { EditLabelsButton } from "../../Buttons/EditLabelsButton";
 import { SettingsButton } from "../../Buttons/SettingsButton";
 import { AccountButton } from "../../Buttons/AccountButton";
-import { SettingsPanel } from "../SettingsPanel/SettingsPanel";
+import { SettingsPanel } from "../SettingsPanel/panel/SettingsPanel";
 import OutsideAlerter from "../../ui/OutsideAlerter";
 import { ToggleLabelPanelButton } from "../../Buttons/ToggleLabelPanelButton";
 import { useMediaQuery } from "react-responsive";
@@ -27,7 +27,7 @@ import { Scrollbars } from "react-custom-scrollbars-2";
 import { useLogInStatus } from "../../../hooks/useLogInStatus";
 import { useGetLabelsQuery } from "../../../api/apiSlice";
 import { UserButton } from "../../Buttons/UserButton";
-import { SettingsPanelContent } from "../SettingsPanel/SettingsPanelContent";
+import { SettingsPanelContent } from "../SettingsPanel/content/SettingsPanelContent";
 
 function SettingsPanelWrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -150,7 +150,23 @@ export function FolderPanelContent() {
 
       <div className={"mt-auto"}>
         <EditLabelsButton />
-        {activeUser ? <UserButton /> : <AccountButton />}
+        {activeUser ? (
+          <>
+            <UserButton />
+            <OutsideAlerter
+              condition={SettingPanelOutsideClickCondition}
+              callback={handleSettingPanelOutsideClick}
+            >
+              <SettingsPanelWrapper>
+                <SettingsPanel>
+                  <SettingsPanelContent />
+                </SettingsPanel>
+              </SettingsPanelWrapper>
+            </OutsideAlerter>
+          </>
+        ) : (
+          <AccountButton />
+        )}
         <SettingsButton ref={settingsButtonRef} />
         <OutsideAlerter
           condition={SettingPanelOutsideClickCondition}

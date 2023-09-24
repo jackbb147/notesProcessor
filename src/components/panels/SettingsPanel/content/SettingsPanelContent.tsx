@@ -1,10 +1,10 @@
-import { LightModeButton } from "../../Buttons/LightModeButton";
-import { UploadButton } from "../../Buttons/UploadButton";
-import { DownloadButton } from "../../Buttons/DownloadButton";
+import { LightModeButton } from "../../../Buttons/LightModeButton";
+import { UploadButton } from "../../../Buttons/UploadButton";
+import { DownloadButton } from "../../../Buttons/DownloadButton";
 import React from "react";
-import { Desktop, Mobile, Tablet } from "../../../hooks/useMediaQuery";
+import { Desktop, Mobile, Tablet } from "../../../../hooks/useMediaQuery";
 
-import { CloseSettingsPanelButton } from "../../Buttons/CloseSettingsPanelButton";
+import { CloseSettingsPanelButton } from "../../../Buttons/CloseSettingsPanelButton";
 
 export function SettingsPanelContent() {
   return (

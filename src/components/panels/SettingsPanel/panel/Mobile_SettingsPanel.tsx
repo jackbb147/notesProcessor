@@ -1,8 +1,8 @@
-import { useAppState } from "../../../hooks/AppStateAndGraphAndUserhooks";
-import { LightModeButton } from "../../Buttons/LightModeButton";
-import { UploadButton } from "../../Buttons/UploadButton";
-import { DownloadButton } from "../../Buttons/DownloadButton";
-import { CloseSettingsPanelButton } from "../../Buttons/CloseSettingsPanelButton";
+import { useAppState } from "../../../../hooks/AppStateAndGraphAndUserhooks";
+import { LightModeButton } from "../../../Buttons/LightModeButton";
+import { UploadButton } from "../../../Buttons/UploadButton";
+import { DownloadButton } from "../../../Buttons/DownloadButton";
+import { CloseSettingsPanelButton } from "../../../Buttons/CloseSettingsPanelButton";
 import { Close } from "@radix-ui/react-popover";
 
 export function Mobile_SettingsPanel({
