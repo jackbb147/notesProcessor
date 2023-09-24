@@ -5,12 +5,14 @@ import { DownloadButton } from "../../../Buttons/DownloadButton";
 import React from "react";
 
 export function Desktop_SettingsPanel({
+  show,
   children,
 }: {
+  show: boolean;
   children?: React.ReactNode;
 }) {
   const state = useAppState();
-  if (state.showSettingsPanel || state.showUserSettingsPanel) {
+  if (show) {
     return (
       <div
         className={`

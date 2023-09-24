@@ -4,12 +4,14 @@ import { UploadButton } from "../../../Buttons/UploadButton";
 import { DownloadButton } from "../../../Buttons/DownloadButton";
 
 export function Tablet_SettingsPanel({
+  show,
   children,
 }: {
+  show: boolean;
   children?: React.ReactNode;
 }) {
   const state = useAppState();
-  if (state.showSettingsPanel) {
+  if (show) {
     return (
       <div
         className={`

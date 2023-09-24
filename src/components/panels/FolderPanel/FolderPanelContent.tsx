@@ -181,7 +181,7 @@ export function FolderPanelContent() {
               callback={handleUserSettingPanelOutsideClick}
             >
               <SettingsPanelWrapper>
-                <SettingsPanel>
+                <SettingsPanel show={state.showUserSettingsPanel}>
                   <UserSettingsPanelContent />
                 </SettingsPanel>
               </SettingsPanelWrapper>
@@ -196,7 +196,7 @@ export function FolderPanelContent() {
           callback={handleSettingPanelOutsideClick}
         >
           <SettingsPanelWrapper>
-            <SettingsPanel>
+            <SettingsPanel show={state.showSettingsPanel}>
               <SettingsPanelContent />
             </SettingsPanel>
           </SettingsPanelWrapper>

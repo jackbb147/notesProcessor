@@ -6,12 +6,14 @@ import { CloseSettingsPanelButton } from "../../../Buttons/CloseSettingsPanelBut
 import { Close } from "@radix-ui/react-popover";
 
 export function Mobile_SettingsPanel({
+  show,
   children,
 }: {
+  show: boolean;
   children?: React.ReactNode;
 }) {
   const state = useAppState();
-  if (state.showSettingsPanel) {
+  if (show) {
     return (
       <div
         className={`
