@@ -5,8 +5,9 @@ import {
 } from "../../hooks/AppStateAndGraphAndUserhooks";
 import { useLogInStatus } from "../../hooks/useLogInStatus";
 import { AppActionType } from "../../reducers/AppStateReducer";
+import { forwardRef } from "react";
 
-export function UserButton() {
+export const UserButton = forwardRef((props, ref) => {
   // const activeUser = useUser();
   const AppDispatch = useAppDispatch();
   const [loginStatus, userName] = useLogInStatus();
@@ -23,10 +24,11 @@ export function UserButton() {
 
   return (
     <ListItem
+      ref={ref}
       text={userName}
       icon={<span className="material-symbols-outlined">account_circle</span>}
       iconOnly={AppState.LabelPanelClosed}
       onClick={handleClick}
     />
   );
-}
+});

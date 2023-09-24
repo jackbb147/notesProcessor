@@ -10,7 +10,7 @@ export function Desktop_SettingsPanel({
   children?: React.ReactNode;
 }) {
   const state = useAppState();
-  if (state.showSettingsPanel) {
+  if (state.showSettingsPanel || state.showUserSettingsPanel) {
     return (
       <div
         className={`

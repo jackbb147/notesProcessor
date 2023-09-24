@@ -1,3 +1,3 @@
 export function UserSettingsPanelContent() {
-  return <></>;
+  return <>hello world</>;
 }

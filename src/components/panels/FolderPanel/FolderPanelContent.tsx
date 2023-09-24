@@ -28,6 +28,7 @@ import { useLogInStatus } from "../../../hooks/useLogInStatus";
 import { useGetLabelsQuery } from "../../../api/apiSlice";
 import { UserButton } from "../../Buttons/UserButton";
 import { SettingsPanelContent } from "../SettingsPanel/content/SettingsPanelContent";
+import { UserSettingsPanelContent } from "../SettingsPanel/content/UserSettingsPanelContent";
 
 function SettingsPanelWrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -71,6 +72,7 @@ export function FolderPanelContent() {
   const graphDispatch = useGraphDispatch();
 
   const settingsButtonRef = useRef<any>(null);
+  const userSettingsButtonRef = useRef<any>(null);
   const isMobile = useMediaQuery({ maxWidth: 767 });
   // const isLoggedIn = useLogInStatus();
   // const activeUser = useUser();
@@ -85,12 +87,33 @@ export function FolderPanelContent() {
     }
   }
 
+  function handleUserSettingPanelOutsideClick() {
+    if (!isMobile) {
+      dispatch({
+        type: AppActionType.setShowUserSettingsPanel,
+        show: false,
+      });
+    }
+  }
+
   function SettingPanelOutsideClickCondition(
     me: Element,
     target: EventTarget | null,
   ) {
     if (target === null) return;
     let settingsButton = settingsButtonRef.current;
+
+    if (settingsButton !== null && settingsButton.contains(target))
+      return false;
+    return true;
+  }
+
+  function UserSettingPanelOutsideClickCondition(
+    me: Element,
+    target: EventTarget | null,
+  ) {
+    if (target === null) return;
+    let settingsButton = userSettingsButtonRef.current;
 
     if (settingsButton !== null && settingsButton.contains(target))
       return false;
@@ -152,14 +175,14 @@ export function FolderPanelContent() {
         <EditLabelsButton />
         {activeUser ? (
           <>
-            <UserButton />
+            <UserButton ref={userSettingsButtonRef} />
             <OutsideAlerter
-              condition={SettingPanelOutsideClickCondition}
-              callback={handleSettingPanelOutsideClick}
+              condition={UserSettingPanelOutsideClickCondition}
+              callback={handleUserSettingPanelOutsideClick}
             >
               <SettingsPanelWrapper>
                 <SettingsPanel>
-                  <SettingsPanelContent />
+                  <UserSettingsPanelContent />
                 </SettingsPanel>
               </SettingsPanelWrapper>
             </OutsideAlerter>
