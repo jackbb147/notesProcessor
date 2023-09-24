@@ -56,6 +56,16 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: [tags.loginStatus, tags.username],
     }),
+
+    logout: builder.mutation<boolean, void>({
+      query: () => ({
+        url: `/Authenticate/Logout`,
+        method: "POST",
+        credentials: "include",
+      }),
+      invalidatesTags: [tags.loginStatus, tags.username],
+    }),
+
     getLabels: builder.query<string[], void>({
       query: () => `/Labels/GetAllLabels`,
       providesTags: [tags.labels],
@@ -243,6 +253,7 @@ export const {
   useDeleteLinkMutation,
   useGetLabelsForEveryNoteQuery,
   useLoginMutation,
+  useLogoutMutation,
   useIsLoggedInQuery,
   useGetUsernameQuery,
 } = apiSlice;

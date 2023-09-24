@@ -5,13 +5,26 @@ import {
   useAppDispatch,
 } from "../../hooks/AppStateAndGraphAndUserhooks";
 import { AppActionType } from "../../reducers/AppStateReducer";
+import { useLogoutMutation } from "../../api/apiSlice";
+import { refreshPage } from "../../hooks/Refreshpage";
 
 export function LogOutButton() {
+  const [
+    logout,
+    { isLoading: logoutIsLoading, isError: logoutIsError, error: logoutError },
+  ] = useLogoutMutation();
   const AppState = useAppState();
   const dispatch = useAppDispatch();
 
-  function handleClick() {
+  async function handleClick() {
     //   TODO
+    await logout();
+    if (logoutIsError) {
+      console.error("logout error", logoutError);
+    } else {
+      //   success
+      refreshPage();
+    }
   }
 
   return (

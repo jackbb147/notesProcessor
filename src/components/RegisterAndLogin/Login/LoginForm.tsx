@@ -10,6 +10,7 @@ import { AppActionType } from "../../../reducers/AppStateReducer";
 import { useLoginMutation, useIsLoggedInQuery } from "../../../api/apiSlice";
 
 import axios from "axios";
+import { refreshPage } from "../../../hooks/Refreshpage";
 
 function EmailFormField() {
   return (
@@ -126,10 +127,11 @@ export function LoginForm() {
     try {
       const Email = event.target[0].value;
       const Password = event.target[1].value;
-      loginMutation({
+      await loginMutation({
         Email,
         Password,
       });
+      refreshPage();
     } catch (e: any) {
       const resp = e.response;
       if (resp?.status === 400) {
