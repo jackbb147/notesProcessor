@@ -129,22 +129,45 @@ export function LoginForm() {
     event.preventDefault();
     const Email = event.target[0].value;
     const Password = event.target[1].value;
-    loginMutation({
-      Email,
-      Password,
-    })
-      .unwrap()
-      .then((payload) => {
-        console.log("fulfilled", payload);
-        alert("hey!");
-        debugger;
-        refreshPage();
-      })
-      .catch((error) => {
-        console.error("rejected", error.data);
+
+    try {
+      await loginMutation({
+        Email,
+        Password,
+      }).unwrap();
+      refreshPage();
+    } catch (error: any) {
+      if (error.hasOwnProperty("data")) {
         setErrorDescriptions(error.data);
-      });
+      } else {
+        setErrorDescriptions("Unknown error");
+      }
+      // debugger;
+      // setErrorDescriptions(error.data);
+    }
+
+    // debugger;
+    // if (error) {
+    //   debugger;
+    //   // setErrorDescriptions(error.data)
+    // } else {
+    //   console.log("fulfilled", data);
+    //   refreshPage();
+    // }
   };
+
+  // .unwrap()
+  // .then((payload) => {
+  //   console.log("fulfilled", payload);
+  //   alert("hey!");
+  //   debugger;
+  //   refreshPage();
+  // })
+  // .catch((error) => {
+  //   console.error("rejected", error.data);
+  //   setErrorDescriptions(error.data);
+  // });
+
   return (
     <Form.Root onSubmit={handleSubmit} className="w-full">
       <EmailFormField />
