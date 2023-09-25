@@ -1,6 +1,6 @@
 import * as Form from "@radix-ui/react-form";
 import { PasswordFormField } from "../Forms/PasswordFormField";
-import React from "react";
+import React, { useState } from "react";
 import { axiosCustomInstance } from "../../../api/AxiosCustomInstance";
 import {
   useAppDispatch,
@@ -121,32 +121,41 @@ interface loginInfo {
 export function LoginForm() {
   const dispatch = useAppDispatch();
   const [loginMutation, { data, error, isLoading }] = useLoginMutation();
+  const [errorDescriptions, setErrorDescriptions] = useState<string | null>(
+    null,
+  );
   const handleSubmit = async (event: any) => {
     //
     event.preventDefault();
-    try {
-      const Email = event.target[0].value;
-      const Password = event.target[1].value;
-      await loginMutation({
-        Email,
-        Password,
+    const Email = event.target[0].value;
+    const Password = event.target[1].value;
+    loginMutation({
+      Email,
+      Password,
+    })
+      .unwrap()
+      .then((payload) => {
+        console.log("fulfilled", payload);
+        refreshPage();
+      })
+      .catch((error) => {
+        console.error("rejected", error.data);
+        setErrorDescriptions(error.data);
+        // debugger;
+        // setErrorDescriptions(
+        //   error.data.map(
+        //     (o: { Code: string; Description: string }) => o.Description,
+        //   ),
+        // );
       });
-      refreshPage();
-    } catch (e: any) {
-      const resp = e.response;
-      if (resp?.status === 400) {
-        alert(resp.data);
-      } else {
-        alert(`Login failed: ${e}`);
-      }
-
-      console.dir(e);
-    }
   };
   return (
     <Form.Root onSubmit={handleSubmit} className="w-full">
       <EmailFormField />
       <PasswordFormField />
+      {errorDescriptions && (
+        <div className="text-red-500">{errorDescriptions}</div>
+      )}
       <Form.Submit asChild>
         <button
           className={`bg-button box-border w-full text-white shadow-blackA7 inline-flex h-[35px] items-center justify-center rounded-[4px]  px-[15px] font-medium leading-none shadow-[0_2px_10px] focus:shadow-[0_0_0_2px] focus:shadow-black focus:outline-none mt-[10px]`}
