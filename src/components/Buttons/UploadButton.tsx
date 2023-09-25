@@ -45,6 +45,7 @@ export function UploadButton() {
 
   const [addLink, { isLoading: addLinkIsLoading, isError: addLinkIsError }] =
     useAddLinkMutation();
+  const [uploadedNoteCount, setUploadedNoteCount] = React.useState<number>(0);
 
   async function handleClick() {
     let obj = await upload();
@@ -60,16 +61,30 @@ export function UploadButton() {
       // debugger;
       // TODO
       const migratedGraphState: Version1_0 = parseResult.data;
+      // TODO clear data first before uploading
+
       for (const node of migratedGraphState.nodes) {
         const nodeToUpload: GraphNode = {
           Id: node.id,
-          Content: node.content,
-          Title: node.title,
+          Content: node.content.length < 1 ? "Empty" : node.content,
+          Title: node.title.length < 1 ? "No Title" : node.title,
           DateCreated: node.dateCreated,
           DateLastModified: node.dateLastModified,
           Deleted: false,
         };
         await addNote(nodeToUpload).unwrap();
+        setUploadedNoteCount((prev) => {
+          console.log(
+            `added ${prev + 1}/${
+              migratedGraphState.nodes.length
+            } notes so far `,
+          );
+          return prev + 1;
+        });
+      }
+      debugger;
+
+      for (const node of migratedGraphState.nodes) {
         for (const label of node.labels) {
           await setLabel({
             noteId: node.id,
