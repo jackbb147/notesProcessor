@@ -9,9 +9,22 @@ import {
 import { ActionMeta, Options } from "react-select";
 import { AppActionType } from "../reducers/AppStateReducer";
 import { GraphActionType } from "../reducers/GraphReducer";
-import { useGetLabelsQuery } from "../api/apiSlice";
+import {
+  useGetLabelsQuery,
+  useRemoveLabelMutation,
+  useAddLabelMutation,
+} from "../api/apiSlice";
 
 export function LabelSelectorPopUp() {
+  const [removeLabel, { isLoading, isError, error }] = useRemoveLabelMutation();
+  const [
+    addLabel,
+    {
+      isLoading: addLabelIsLoading,
+      isError: addLabelIsError,
+      error: addLabelError,
+    },
+  ] = useAddLabelMutation();
   const state = useAppState();
   const dispatch = useAppDispatch();
 
@@ -22,18 +35,24 @@ export function LabelSelectorPopUp() {
     switch (action.action) {
       // TODO
       case "create-option": {
-        graphDispatch({
-          type: GraphActionType.addLabel,
+        addLabel({
           label: action.option.label,
         });
+        // graphDispatch({
+        //   type: GraphActionType.addLabel,
+        //   label: action.option.label,
+        // });
         break;
       }
 
       case "remove-value": {
-        graphDispatch({
-          type: GraphActionType.removeLabel,
+        removeLabel({
           label: action.removedValue.label,
         });
+        // graphDispatch({
+        //   type: GraphActionType.removeLabel,
+        //   label: action.removedValue.label,
+        // });
         break;
       }
     }

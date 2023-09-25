@@ -139,6 +139,27 @@ export const apiSlice = createApi({
       invalidatesTags: [tags.noteLabels],
     }),
 
+    removeLabel: builder.mutation<string, { label: string }>({
+      query: ({ label }) => ({
+        url: `/Labels/DeleteLabel`,
+        method: "POST",
+        params: {
+          labelName: label,
+        },
+      }),
+      invalidatesTags: [tags.noteLabels, tags.labels],
+    }),
+    addLabel: builder.mutation<string, { label: string }>({
+      query: ({ label }) => ({
+        url: `/Labels/CreateLabel`,
+        method: "POST",
+        params: {
+          labelName: label,
+        },
+      }),
+      invalidatesTags: [tags.noteLabels, tags.labels],
+    }),
+
     getNotes: builder.query<GraphNode[], void>({
       query: () => `/Notes/GetAll`,
       providesTags: [tags.notes],
@@ -265,6 +286,8 @@ export const {
   useGetNoteLabelsQuery,
   useSetLabelMutation,
   useRemoveLabelFromNoteMutation,
+  useRemoveLabelMutation,
+  useAddLabelMutation,
   useGetLinksQuery,
   useAddLinkMutation,
   useDeleteLinkMutation,
