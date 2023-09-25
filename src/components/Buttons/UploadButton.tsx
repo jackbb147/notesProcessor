@@ -50,14 +50,14 @@ export function UploadButton() {
     let obj = await upload();
     try {
       const migratedObj = migrate(obj, "1.0");
-      debugger;
+      // debugger;
       let parseResult = Version1_0.safeParse(migratedObj);
       if (!parseResult.success) {
         debugger;
         console.error(parseResult.error);
         return;
       }
-      debugger;
+      // debugger;
       // TODO
       const migratedGraphState: Version1_0 = parseResult.data;
       for (const node of migratedGraphState.nodes) {
@@ -69,12 +69,12 @@ export function UploadButton() {
           DateLastModified: node.dateLastModified,
           Deleted: false,
         };
-        await addNote(nodeToUpload);
+        await addNote(nodeToUpload).unwrap();
         for (const label of node.labels) {
           await setLabel({
             noteId: node.id,
             label: label,
-          });
+          }).unwrap();
         }
       }
 
@@ -87,7 +87,7 @@ export function UploadButton() {
           DateLastModified: node.dateLastModified,
           Deleted: true,
         };
-        await addNote(nodeToUpload);
+        await addNote(nodeToUpload).unwrap();
       }
 
       for (const link of migratedGraphState.links) {
@@ -98,8 +98,9 @@ export function UploadButton() {
           TargetId: link.target,
         };
 
-        await addLink(linkToUpload);
+        await addLink(linkToUpload).unwrap();
       }
+      alert("upload successful!");
 
       // upload all the notes, labels, links to the server.
       // graphDispatch({
