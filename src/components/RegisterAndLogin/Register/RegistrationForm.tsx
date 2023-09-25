@@ -2,7 +2,7 @@ import * as Form from "@radix-ui/react-form";
 import { PasswordFormField } from "../Forms/PasswordFormField";
 import { InputComponent } from "../Forms/InputComponent";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRegisterMutation } from "../../../api/apiSlice";
 
 function EmailFormField() {
@@ -123,6 +123,7 @@ async function checkLogin() {
 
 export function RegistrationForm() {
   const [register, { data, error, isLoading }] = useRegisterMutation();
+  const [errorDescriptions, setErrorDescriptions] = useState<string[]>([]);
   async function handleSubmit(v: any) {
     //
     v.preventDefault();
@@ -130,17 +131,21 @@ export function RegistrationForm() {
       const email = v.target[0].value,
         username = v.target[1].value,
         password = v.target[2].value;
-      var status = await register({
+      register({
         Email: email,
         UserName: username,
         Password: password,
-      });
-      if (!error) {
-        // success
-        debugger;
-      } else {
-        alert(`Registration failed: ${JSON.stringify(error, null, 2)}`);
-      }
+      })
+        .unwrap()
+        .then((payload) => console.log("fulfilled", payload))
+        .catch((error) => {
+          console.error("rejected", error.data);
+          setErrorDescriptions(
+            error.data.map(
+              (o: { Code: string; Description: string }) => o.Description,
+            ),
+          );
+        });
     } catch (e) {
       console.error(e);
     }
@@ -150,7 +155,9 @@ export function RegistrationForm() {
       <EmailFormField />
       <UsernameFormField />
       <PasswordFormField />
-
+      {errorDescriptions.map((str) => (
+        <div className="text-red-500">{str}</div>
+      ))}
       <Form.Submit asChild>
         <button
           className={`bg-button box-border w-full text-white shadow-blackA7 inline-flex h-[35px] items-center justify-center rounded-[4px]  px-[15px] font-medium leading-none shadow-[0_2px_10px] focus:shadow-[0_0_0_2px] focus:shadow-black focus:outline-none mt-[10px]`}
