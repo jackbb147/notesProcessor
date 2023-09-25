@@ -43,6 +43,20 @@ export const apiSlice = createApi({
       }),
       providesTags: [tags.username],
     }),
+    register: builder.mutation<
+      boolean,
+      { Email: string; UserName: string; Password: string }
+    >({
+      query: ({ Email, UserName, Password }) => ({
+        url: `/Authenticate/Register`,
+        method: "POST",
+        params: {
+          Email: Email,
+          Name: UserName,
+          Password: Password,
+        },
+      }),
+    }),
 
     login: builder.mutation<boolean, { Email: string; Password: string }>({
       query: ({ Email, Password }) => ({
