@@ -14,7 +14,11 @@ import {
 import { migrate } from "../../_migration/GraphStateMigration";
 import { Version1_0 } from "../../_migration/GraphStates/V1_0";
 import { Version } from "../../Version";
-import { useAddNoteMutation } from "../../api/apiSlice";
+import {
+  useAddNoteMutation,
+  useAddLabelMutation,
+  useSetLabelMutation,
+} from "../../api/apiSlice";
 
 export function UploadButton() {
   const state = useAppState();
@@ -30,6 +34,11 @@ export function UploadButton() {
       error: addNoteError,
     },
   ] = useAddNoteMutation();
+  const [addLabel, { isLoading: addLabelIsLoading, isError: addLabelIsError }] =
+    useAddLabelMutation();
+
+  const [setLabel, { isLoading: setLabelIsLoading, isError: setLabelIsError }] =
+    useSetLabelMutation();
 
   async function handleClick() {
     let obj = await upload();
@@ -55,6 +64,12 @@ export function UploadButton() {
           Deleted: false,
         };
         await addNote(nodeToUpload);
+        for (const label of node.labels) {
+          await setLabel({
+            noteId: node.id,
+            label: label,
+          });
+        }
       }
 
       for (const node of migratedGraphState.deletedNodes) {
@@ -67,6 +82,13 @@ export function UploadButton() {
           Deleted: true,
         };
         await addNote(nodeToUpload);
+      }
+
+      for (const label of migratedGraphState.labels) {
+        // TODO
+        await addLabel({
+          label: label,
+        });
       }
 
       // upload all the notes, labels, links to the server.
