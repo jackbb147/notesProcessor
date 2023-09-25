@@ -44,6 +44,7 @@ export const ListItem = forwardRef(
         style={{
           ...(style ?? {}),
           ...(hovered && hoverStyle ? hoverStyle : {}),
+          cursor: "pointer",
         }}
         className={`flex flex-row ${
           active && "bg-selectedItem-2 dark:bg-dark_selectedItem_2"
