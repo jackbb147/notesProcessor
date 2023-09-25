@@ -124,7 +124,10 @@ export const apiSlice = createApi({
     }),
 
     // remove a label from a note
-    removeLabel: builder.mutation<string, { noteId: string; label: string }>({
+    removeLabelFromNote: builder.mutation<
+      string,
+      { noteId: string; label: string }
+    >({
       query: ({ noteId, label }) => ({
         url: `/Notes/RemoveLabelFromNote`,
         method: "POST",
@@ -261,7 +264,7 @@ export const {
   useGetLabelsQuery,
   useGetNoteLabelsQuery,
   useSetLabelMutation,
-  useRemoveLabelMutation,
+  useRemoveLabelFromNoteMutation,
   useGetLinksQuery,
   useAddLinkMutation,
   useDeleteLinkMutation,
