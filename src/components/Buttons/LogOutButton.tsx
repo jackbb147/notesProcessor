@@ -32,7 +32,7 @@ export function LogOutButton() {
       text={"Log Out"} //todo show the username here if logged in ...
       onClick={handleClick}
       iconOnly={AppState.LabelPanelClosed}
-      icon={<span className="material-symbols-outlined">account_circle</span>}
+      icon={<span className="material-symbols-outlined">logout</span>}
     />
   );
 }
