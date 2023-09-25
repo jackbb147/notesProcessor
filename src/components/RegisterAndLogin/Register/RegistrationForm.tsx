@@ -4,6 +4,7 @@ import { InputComponent } from "../Forms/InputComponent";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRegisterMutation } from "../../../api/apiSlice";
+import { refreshPage } from "../../../hooks/Refreshpage";
 
 function EmailFormField() {
   return (
@@ -137,7 +138,11 @@ export function RegistrationForm() {
         Password: password,
       })
         .unwrap()
-        .then((payload) => console.log("fulfilled", payload))
+        .then((payload) => {
+          console.log("fulfilled", payload);
+          refreshPage();
+          // debugger;
+        })
         .catch((error) => {
           console.error("rejected", error.data);
           setErrorDescriptions(

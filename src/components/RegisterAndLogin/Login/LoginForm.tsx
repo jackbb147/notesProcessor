@@ -136,17 +136,13 @@ export function LoginForm() {
       .unwrap()
       .then((payload) => {
         console.log("fulfilled", payload);
+        alert("hey!");
+        debugger;
         refreshPage();
       })
       .catch((error) => {
         console.error("rejected", error.data);
         setErrorDescriptions(error.data);
-        // debugger;
-        // setErrorDescriptions(
-        //   error.data.map(
-        //     (o: { Code: string; Description: string }) => o.Description,
-        //   ),
-        // );
       });
   };
   return (
