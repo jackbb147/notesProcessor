@@ -48,7 +48,7 @@ export const apiSlice = createApi({
       { Email: string; UserName: string; Password: string }
     >({
       query: ({ Email, UserName, Password }) => ({
-        url: `/Authenticate/Register`,
+        url: `/create`,
         method: "POST",
         params: {
           Email: Email,
@@ -266,6 +266,7 @@ export const {
   useAddLinkMutation,
   useDeleteLinkMutation,
   useGetLabelsForEveryNoteQuery,
+  useRegisterMutation,
   useLoginMutation,
   useLogoutMutation,
   useIsLoggedInQuery,

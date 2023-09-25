@@ -3,6 +3,7 @@ import { PasswordFormField } from "../Forms/PasswordFormField";
 import { InputComponent } from "../Forms/InputComponent";
 import axios from "axios";
 import { useEffect } from "react";
+import { useRegisterMutation } from "../../../api/apiSlice";
 
 function EmailFormField() {
   return (
@@ -119,30 +120,9 @@ async function checkLogin() {
 //   // const endpoint = "http://localhost:5046/isLoggedIn";
 //
 // }, [])
-async function register(info: registrationInfo) {
-  const endpoint = "http://localhost:5046/create";
-  try {
-    // const response = await axios.get("http://localhost:5046/getUsers");
-    const response = await checkLogin();
-    // const response = await axios.post(
-    //   endpoint,
-    //   {},
-    //   {
-    //     params: {
-    //       Name: info.username,
-    //       Email: info.email,
-    //       Password: info.password,
-    //     },
-    //   },
-    // );
-
-    return response;
-  } catch (e) {
-    console.error(e);
-  }
-}
 
 export function RegistrationForm() {
+  const [register, { data, error, isLoading }] = useRegisterMutation();
   async function handleSubmit(v: any) {
     //
     v.preventDefault();
@@ -150,11 +130,17 @@ export function RegistrationForm() {
       const email = v.target[0].value,
         username = v.target[1].value,
         password = v.target[2].value;
-      var status = await register({ email, username, password });
-      // var status = await checkLogin();
-      //
-
-      //
+      var status = await register({
+        Email: email,
+        UserName: username,
+        Password: password,
+      });
+      if (!error) {
+        // success
+        debugger;
+      } else {
+        alert(`Registration failed: ${JSON.stringify(error, null, 2)}`);
+      }
     } catch (e) {
       console.error(e);
     }
