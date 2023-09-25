@@ -8,6 +8,7 @@ import React, { useRef } from "react";
 import { useUpload } from "../../hooks/useUpload";
 import {
   GraphActionType,
+  GraphLink,
   GraphNode,
   GraphState,
 } from "../../reducers/GraphReducer";
@@ -18,7 +19,9 @@ import {
   useAddNoteMutation,
   useAddLabelMutation,
   useSetLabelMutation,
+  useAddLinkMutation,
 } from "../../api/apiSlice";
+import { v4 as uuidv4 } from "uuid";
 
 export function UploadButton() {
   const state = useAppState();
@@ -39,6 +42,9 @@ export function UploadButton() {
 
   const [setLabel, { isLoading: setLabelIsLoading, isError: setLabelIsError }] =
     useSetLabelMutation();
+
+  const [addLink, { isLoading: addLinkIsLoading, isError: addLinkIsError }] =
+    useAddLinkMutation();
 
   async function handleClick() {
     let obj = await upload();
@@ -84,11 +90,15 @@ export function UploadButton() {
         await addNote(nodeToUpload);
       }
 
-      for (const label of migratedGraphState.labels) {
+      for (const link of migratedGraphState.links) {
         // TODO
-        await addLabel({
-          label: label,
-        });
+        const linkToUpload: GraphLink = {
+          Id: uuidv4(),
+          SourceId: link.source,
+          TargetId: link.target,
+        };
+
+        await addLink(linkToUpload);
       }
 
       // upload all the notes, labels, links to the server.
