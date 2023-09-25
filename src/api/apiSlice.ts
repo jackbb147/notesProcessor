@@ -202,6 +202,7 @@ export const apiSlice = createApi({
         url: `/Notes/Create`,
         method: "POST",
         // body: todo,
+        // TODO use [FromBody] in the controller ...
         params: {
           ...GraphNode,
           Content:

@@ -63,34 +63,44 @@ export function UploadButton() {
       const migratedGraphState: Version1_0 = parseResult.data;
       // TODO clear data first before uploading
 
-      for (const node of migratedGraphState.nodes) {
-        const nodeToUpload: GraphNode = {
-          Id: node.id,
-          Content: node.content.length < 1 ? "Empty" : node.content,
-          Title: node.title.length < 1 ? "No Title" : node.title,
-          DateCreated: node.dateCreated,
-          DateLastModified: node.dateLastModified,
-          Deleted: false,
-        };
-        await addNote(nodeToUpload).unwrap();
-        setUploadedNoteCount((prev) => {
-          console.log(
-            `added ${prev + 1}/${
-              migratedGraphState.nodes.length
-            } notes so far `,
-          );
-          return prev + 1;
-        });
+      try {
+        for (const node of migratedGraphState.nodes) {
+          const nodeToUpload: GraphNode = {
+            Id: node.id,
+            Content: node.content.length < 1 ? "Empty" : node.content,
+            Title: node.title.length < 1 ? "No Title" : node.title,
+            DateCreated: node.dateCreated,
+            DateLastModified: node.dateLastModified,
+            Deleted: false,
+          };
+          await addNote(nodeToUpload).unwrap();
+          setUploadedNoteCount((prev) => {
+            console.log(
+              `added ${prev + 1}/${
+                migratedGraphState.nodes.length
+              } notes so far `,
+            );
+            return prev + 1;
+          });
+        }
+      } catch (e) {
+        console.error(e);
+        debugger;
       }
       debugger;
 
-      for (const node of migratedGraphState.nodes) {
-        for (const label of node.labels) {
-          await setLabel({
-            noteId: node.id,
-            label: label,
-          }).unwrap();
+      try {
+        for (const node of migratedGraphState.nodes) {
+          for (const label of node.labels) {
+            await setLabel({
+              noteId: node.id,
+              label: label,
+            }).unwrap();
+          }
         }
+      } catch (e) {
+        console.error(e);
+        debugger;
       }
 
       for (const node of migratedGraphState.deletedNodes) {
