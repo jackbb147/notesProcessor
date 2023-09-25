@@ -68,7 +68,7 @@ export const apiSlice = createApi({
           Password: Password,
         },
       }),
-      invalidatesTags: [tags.loginStatus, tags.username],
+      // invalidatesTags: [tags.loginStatus, tags.username],
     }),
 
     logout: builder.mutation<boolean, void>({
