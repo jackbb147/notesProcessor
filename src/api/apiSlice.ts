@@ -191,8 +191,9 @@ export const apiSlice = createApi({
         params: {
           noteId: GraphNode.Id,
           // note: GraphNode,
-          ...GraphNode,
+          // ...GraphNode,
         },
+        body: GraphNode,
       }),
 
       invalidatesTags: [tags.notes],
@@ -203,7 +204,7 @@ export const apiSlice = createApi({
         method: "POST",
         // body: todo,
         // TODO use [FromBody] in the controller ...
-        params: {
+        body: {
           ...GraphNode,
           Content:
             GraphNode.Content.trim() === "" ? undefined : GraphNode.Content, // this is a hack.  I don't know why the server is not accepting empty strings
