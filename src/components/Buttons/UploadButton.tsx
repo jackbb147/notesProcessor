@@ -63,6 +63,9 @@ export function UploadButton() {
       const migratedGraphState: Version1_0 = parseResult.data;
       // TODO clear data first before uploading
 
+      /**
+       * upload notes first, then labels, then links
+       */
       try {
         for (const node of migratedGraphState.nodes) {
           const nodeToUpload: GraphNode = {
@@ -89,6 +92,9 @@ export function UploadButton() {
       }
       debugger;
 
+      /**
+       * upload labels
+       */
       try {
         for (const node of migratedGraphState.nodes) {
           for (const label of node.labels) {
