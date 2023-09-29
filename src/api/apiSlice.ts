@@ -43,6 +43,20 @@ export const apiSlice = createApi({
       }),
       providesTags: [tags.username],
     }),
+    register: builder.mutation<
+      boolean,
+      { Email: string; UserName: string; Password: string }
+    >({
+      query: ({ Email, UserName, Password }) => ({
+        url: `/create`,
+        method: "POST",
+        params: {
+          Email: Email,
+          Name: UserName,
+          Password: Password,
+        },
+      }),
+    }),
 
     login: builder.mutation<boolean, { Email: string; Password: string }>({
       query: ({ Email, Password }) => ({
@@ -54,8 +68,18 @@ export const apiSlice = createApi({
           Password: Password,
         },
       }),
+      // invalidatesTags: [tags.loginStatus, tags.username],
+    }),
+
+    logout: builder.mutation<boolean, void>({
+      query: () => ({
+        url: `/Authenticate/Logout`,
+        method: "POST",
+        credentials: "include",
+      }),
       invalidatesTags: [tags.loginStatus, tags.username],
     }),
+
     getLabels: builder.query<string[], void>({
       query: () => `/Labels/GetAllLabels`,
       providesTags: [tags.labels],
@@ -100,7 +124,10 @@ export const apiSlice = createApi({
     }),
 
     // remove a label from a note
-    removeLabel: builder.mutation<string, { noteId: string; label: string }>({
+    removeLabelFromNote: builder.mutation<
+      string,
+      { noteId: string; label: string }
+    >({
       query: ({ noteId, label }) => ({
         url: `/Notes/RemoveLabelFromNote`,
         method: "POST",
@@ -110,6 +137,27 @@ export const apiSlice = createApi({
         },
       }),
       invalidatesTags: [tags.noteLabels],
+    }),
+
+    removeLabel: builder.mutation<string, { label: string }>({
+      query: ({ label }) => ({
+        url: `/Labels/DeleteLabel`,
+        method: "POST",
+        params: {
+          labelName: label,
+        },
+      }),
+      invalidatesTags: [tags.noteLabels, tags.labels],
+    }),
+    addLabel: builder.mutation<string, { label: string }>({
+      query: ({ label }) => ({
+        url: `/Labels/CreateLabel`,
+        method: "POST",
+        params: {
+          labelName: label,
+        },
+      }),
+      invalidatesTags: [tags.noteLabels, tags.labels],
     }),
 
     getNotes: builder.query<GraphNode[], void>({
@@ -143,8 +191,9 @@ export const apiSlice = createApi({
         params: {
           noteId: GraphNode.Id,
           // note: GraphNode,
-          ...GraphNode,
+          // ...GraphNode,
         },
+        body: GraphNode,
       }),
 
       invalidatesTags: [tags.notes],
@@ -154,7 +203,8 @@ export const apiSlice = createApi({
         url: `/Notes/Create`,
         method: "POST",
         // body: todo,
-        params: {
+        // TODO use [FromBody] in the controller ...
+        body: {
           ...GraphNode,
           Content:
             GraphNode.Content.trim() === "" ? undefined : GraphNode.Content, // this is a hack.  I don't know why the server is not accepting empty strings
@@ -237,12 +287,16 @@ export const {
   useGetLabelsQuery,
   useGetNoteLabelsQuery,
   useSetLabelMutation,
+  useRemoveLabelFromNoteMutation,
   useRemoveLabelMutation,
+  useAddLabelMutation,
   useGetLinksQuery,
   useAddLinkMutation,
   useDeleteLinkMutation,
   useGetLabelsForEveryNoteQuery,
+  useRegisterMutation,
   useLoginMutation,
+  useLogoutMutation,
   useIsLoggedInQuery,
   useGetUsernameQuery,
 } = apiSlice;

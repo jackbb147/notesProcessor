@@ -1,6 +1,6 @@
 import * as Form from "@radix-ui/react-form";
 import { PasswordFormField } from "../Forms/PasswordFormField";
-import React from "react";
+import React, { useState } from "react";
 import { axiosCustomInstance } from "../../../api/AxiosCustomInstance";
 import {
   useAppDispatch,
@@ -10,6 +10,7 @@ import { AppActionType } from "../../../reducers/AppStateReducer";
 import { useLoginMutation, useIsLoggedInQuery } from "../../../api/apiSlice";
 
 import axios from "axios";
+import { refreshPage } from "../../../hooks/Refreshpage";
 
 function EmailFormField() {
   return (
@@ -120,31 +121,61 @@ interface loginInfo {
 export function LoginForm() {
   const dispatch = useAppDispatch();
   const [loginMutation, { data, error, isLoading }] = useLoginMutation();
+  const [errorDescriptions, setErrorDescriptions] = useState<string | null>(
+    null,
+  );
   const handleSubmit = async (event: any) => {
     //
     event.preventDefault();
+    const Email = event.target[0].value;
+    const Password = event.target[1].value;
+
     try {
-      const Email = event.target[0].value;
-      const Password = event.target[1].value;
-      loginMutation({
+      await loginMutation({
         Email,
         Password,
-      });
-    } catch (e: any) {
-      const resp = e.response;
-      if (resp?.status === 400) {
-        alert(resp.data);
+      }).unwrap();
+      refreshPage();
+    } catch (error: any) {
+      // debugger;
+      if (error.hasOwnProperty("data")) {
+        setErrorDescriptions(error.data);
       } else {
-        alert(`Login failed: ${e}`);
+        setErrorDescriptions("Unknown error");
       }
-
-      console.dir(e);
+      // debugger;
+      // setErrorDescriptions(error.data);
     }
+
+    // debugger;
+    // if (error) {
+    //   debugger;
+    //   // setErrorDescriptions(error.data)
+    // } else {
+    //   console.log("fulfilled", data);
+    //   refreshPage();
+    // }
   };
+
+  // .unwrap()
+  // .then((payload) => {
+  //   console.log("fulfilled", payload);
+  //   alert("hey!");
+  //   debugger;
+  //   refreshPage();
+  // })
+  // .catch((error) => {
+  //   console.error("rejected", error.data);
+  //   setErrorDescriptions(error.data);
+  // });
+
   return (
     <Form.Root onSubmit={handleSubmit} className="w-full">
       <EmailFormField />
       <PasswordFormField />
+      {errorDescriptions && (
+        <div className="text-red-500">{errorDescriptions}</div>
+      )}
       <Form.Submit asChild>
         <button
           className={`bg-button box-border w-full text-white shadow-blackA7 inline-flex h-[35px] items-center justify-center rounded-[4px]  px-[15px] font-medium leading-none shadow-[0_2px_10px] focus:shadow-[0_0_0_2px] focus:shadow-black focus:outline-none mt-[10px]`}

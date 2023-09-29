@@ -26,7 +26,7 @@ import {
   useGetLabelsQuery,
   useGetNoteLabelsQuery,
   useSetLabelMutation,
-  useRemoveLabelMutation,
+  useRemoveLabelFromNoteMutation,
 } from "../../api/apiSlice";
 
 function ToggleSideInfoPanelButton({ disabled }: { disabled: boolean }) {
@@ -109,7 +109,7 @@ export function NoteEditor({
   const [
     removeLabelMutation,
     { data: removeLabelData, isSuccess: removeLabelSuccess },
-  ] = useRemoveLabelMutation();
+  ] = useRemoveLabelFromNoteMutation();
   useEffect(() => {
     if (LabelFetchError) {
       throw JSON.stringify(LabelFetchError, null, 2);
