@@ -54,8 +54,9 @@ export function UploadButton() {
       // debugger;
       let parseResult = Version1_0.safeParse(migratedObj);
       if (!parseResult.success) {
-        debugger;
+        // debugger;
         console.error(parseResult.error);
+        alert("Failed to parse uploaded notes. Incompatible format. ");
         return;
       }
       // debugger;
@@ -88,9 +89,12 @@ export function UploadButton() {
         }
       } catch (e) {
         console.error(e);
-        debugger;
+        // debugger;
+        alert(
+          "An unknown error occurred while uploading. Please email jackhou147@berkeley.edu for help.",
+        );
       }
-      debugger;
+      // debugger;
 
       /**
        * upload labels
@@ -106,7 +110,10 @@ export function UploadButton() {
         }
       } catch (e) {
         console.error(e);
-        debugger;
+        // debugger;
+        alert(
+          "An unknown error occurred while uploading. Please email jackhou147@berkeley.edu for help.",
+        );
       }
 
       for (const node of migratedGraphState.deletedNodes) {
