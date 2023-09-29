@@ -125,6 +125,7 @@ async function checkLogin() {
 export function RegistrationForm() {
   const [register, { data, error, isLoading }] = useRegisterMutation();
   const [errorDescriptions, setErrorDescriptions] = useState<string[]>([]);
+  const [message, setMessage] = useState<string>("");
   async function handleSubmit(v: any) {
     //
     v.preventDefault();
@@ -140,7 +141,14 @@ export function RegistrationForm() {
         .unwrap()
         .then((payload) => {
           console.log("fulfilled", payload);
-          refreshPage();
+          // TODO let the user know they've successfully registered
+          setErrorDescriptions([]);
+          setMessage(
+            "Registration successful! Sending you to the login page now. ",
+          );
+          setTimeout(() => {
+            refreshPage();
+          }, 2500);
           // debugger;
         })
         .catch((error) => {
@@ -163,6 +171,8 @@ export function RegistrationForm() {
       {errorDescriptions.map((str) => (
         <div className="text-red-500">{str}</div>
       ))}
+      {message.length > 0 && <div className="text-green-500">{message}</div>}
+
       <Form.Submit asChild>
         <button
           className={`bg-button box-border w-full text-white shadow-blackA7 inline-flex h-[35px] items-center justify-center rounded-[4px]  px-[15px] font-medium leading-none shadow-[0_2px_10px] focus:shadow-[0_0_0_2px] focus:shadow-black focus:outline-none mt-[10px]`}
