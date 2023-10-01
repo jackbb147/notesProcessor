@@ -5,6 +5,7 @@ export enum AppActionType {
   openLabelPanel,
   toggleLabelPanel,
   setShowRecoverNodePopup,
+  setShowClearDataPopup,
   toggleDarkMode,
   setActiveLabel,
   setShowLabelSelectorPopup,
@@ -23,6 +24,7 @@ export type AppAction =
   | { type: AppActionType.toggleLabelPanel }
   | { type: AppActionType.setActiveCollection; activeCollection: Collections }
   | { type: AppActionType.setShowRecoverNodePopup; show: boolean }
+  | { type: AppActionType.setShowClearDataPopup; show: boolean }
   | { type: AppActionType.toggleDarkMode }
   | { type: AppActionType.setActiveLabel; label: string }
   | { type: AppActionType.setShowLabelSelectorPopup; show: boolean }
@@ -46,6 +48,7 @@ export interface AppState {
   activeLabel: string | undefined;
   LabelPanelClosed: boolean;
   showRecoverNodePopup: boolean;
+  showClearDataPopup: boolean;
   darkModeOn: boolean;
   showLabelSelectorPopup: boolean;
   showSettingsPanel: boolean;
@@ -129,6 +132,11 @@ export function AppStateReducer(draft: AppState, action: AppAction) {
 
     case AppActionType.setShowUserSettingsPanel: {
       draft.showUserSettingsPanel = action.show;
+      break;
+    }
+
+    case AppActionType.setShowClearDataPopup: {
+      draft.showClearDataPopup = action.show;
       break;
     }
   }

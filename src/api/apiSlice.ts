@@ -275,6 +275,17 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: [tags.links],
     }),
+
+    /**
+     * This is a dangerous mutation that will delete all data belonging to the user from the database
+     */
+    clearData: builder.mutation<unknown, void>({
+      query: () => ({
+        url: `/clearData`,
+        method: "POST",
+      }),
+      invalidatesTags: [tags.notes, tags.labels, tags.links, tags.noteLabels],
+    }),
   }),
 });
 
@@ -299,4 +310,5 @@ export const {
   useLogoutMutation,
   useIsLoggedInQuery,
   useGetUsernameQuery,
+  useClearDataMutation,
 } = apiSlice;
