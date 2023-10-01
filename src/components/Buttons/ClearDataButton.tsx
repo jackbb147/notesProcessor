@@ -14,16 +14,21 @@ export function ClearDataButton() {
       error: clearDataError,
     },
   ] = useClearDataMutation();
+
   async function handleClick() {
     //   TODO
-    await clearData();
-    // await logout();
-    // if (logoutIsError) {
-    //   console.error("logout error", logoutError);
-    // } else {
-    //   //   success
-    //   refreshPage();
-    // }
+    // await clearData();
+    clearData()
+      .unwrap()
+      .then((payload) => {
+        console.log("fulfilled", payload);
+        refreshPage();
+      })
+      .catch((error) => {
+        console.error("rejected", error.data);
+        alert("Failed to clear data. An unknown error occurred.");
+        console.error("clearData error", clearDataError);
+      });
   }
   return (
     <ListItem
