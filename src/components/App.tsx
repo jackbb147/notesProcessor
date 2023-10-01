@@ -49,6 +49,7 @@ import { useLogInStatus } from "../hooks/useLogInStatus";
 import { useRoom } from "../hooks/SignalR/useRoom";
 import { SignalrConnectionProvider } from "../reducers/SignalrConnectionContext";
 import { useGetUsernameQuery } from "../api/apiSlice";
+import { ClearDataPopup } from "./ClearDataPopup";
 
 export function ensure<T>(
   argument: T | undefined | null,
@@ -96,6 +97,7 @@ function App() {
           <Container>
             <div className="bg-grey dark:bg-dark_secondary w-full h-full flex flex-row overflow-hidden dark:text-white">
               <RecoverNodePopup />
+              <ClearDataPopup />
               <LabelSelectorPopUp />
 
               <>
