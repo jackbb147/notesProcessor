@@ -1,24 +1,46 @@
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import {
   AppStateContext,
   AppStateDispatchContext,
 } from "../reducers/AppStateContext";
 import { AppActionType, Collections } from "../reducers/AppStateReducer";
-import { GraphActionType } from "../reducers/GraphReducer";
-import { GraphContext, GraphDispatchContext } from "../reducers/GraphContext";
-import { useRecoverNoteMutation } from "../api/apiSlice";
+
+import { useClearDataMutation } from "../api/apiSlice";
 import {
   useAppDispatch,
   useAppState,
 } from "../hooks/AppStateAndGraphAndUserhooks";
+import { refreshPage } from "../hooks/Refreshpage";
 
 export function ClearDataPopup() {
+  const [
+    clearData,
+    {
+      isLoading: clearDataIsLoading,
+      isError: clearDataIsError,
+      error: clearDataError,
+    },
+  ] = useClearDataMutation();
   const state = useAppState();
   const dispatch = useAppDispatch();
 
   // const [recoverNote] = useRecoverNoteMutation();
-
+  async function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
+    //   TODO
+    // await clearData();
+    clearData()
+      .unwrap()
+      .then((payload) => {
+        console.log("fulfilled", payload);
+        refreshPage();
+      })
+      .catch((error) => {
+        console.error("rejected", error.data);
+        alert("Failed to clear data. An unknown error occurred.");
+        console.error("clearData error", clearDataError);
+      });
+  }
   return (
     <AlertDialog.Root
       open={state.showClearDataPopup}
@@ -58,29 +80,7 @@ export function ClearDataPopup() {
             </AlertDialog.Cancel>
             <AlertDialog.Action asChild>
               <button
-                onClick={(event) => {
-                  event.preventDefault();
-                  dispatch({
-                    type: AppActionType.setShowRecoverNodePopup,
-                    show: false,
-                  });
-                  if (!state.activeNodeID) throw Error("No active node id.");
-                  dispatch({
-                    type: AppActionType.setActiveCollection,
-                    activeCollection: Collections.All,
-                  });
-                  // graphDispatch({
-                  //   type: GraphActionType.recoverNode,
-                  //   id: state.activeNodeID,
-                  // });
-                  // recoverNote({
-                  //   id: state.activeNodeID,
-                  // });
-                  // dispatch({
-                  //   type: AppActionType.setActiveNodeID,
-                  //   id: undefined,
-                  // });
-                }}
+                onClick={handleClick}
                 className="text-white bg-red-500 hover:bg-red-600 focus:shadow-green-600 inline-flex h-[35px] items-center justify-center rounded-[4px] px-[15px] font-medium leading-none outline-none focus:shadow-[0_0_0_2px] w-fit"
               >
                 Clear All My Data

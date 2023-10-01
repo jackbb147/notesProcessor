@@ -1,11 +1,15 @@
 import { ListItem } from "./ListItem";
 import React from "react";
-import { useAppState } from "../../hooks/AppStateAndGraphAndUserhooks";
-import { refreshPage } from "../../hooks/Refreshpage";
+import {
+  useAppDispatch,
+  useAppState,
+} from "../../hooks/AppStateAndGraphAndUserhooks";
 import { useClearDataMutation } from "../../api/apiSlice";
+import { AppActionType } from "../../reducers/AppStateReducer";
 
 export function ClearDataButton() {
   const AppState = useAppState();
+  const dispatch = useAppDispatch();
   const [
     clearData,
     {
@@ -16,19 +20,7 @@ export function ClearDataButton() {
   ] = useClearDataMutation();
 
   async function handleClick() {
-    //   TODO
-    // await clearData();
-    clearData()
-      .unwrap()
-      .then((payload) => {
-        console.log("fulfilled", payload);
-        refreshPage();
-      })
-      .catch((error) => {
-        console.error("rejected", error.data);
-        alert("Failed to clear data. An unknown error occurred.");
-        console.error("clearData error", clearDataError);
-      });
+    dispatch({ type: AppActionType.setShowClearDataPopup, show: true });
   }
   return (
     <ListItem
