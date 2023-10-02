@@ -9,6 +9,7 @@ import ReactComponent from "./MathEditor/Extension.js";
 import { Mention } from "@tiptap/extension-mention";
 import suggestion from "./Reference/suggestion";
 import Placeholder from "@tiptap/extension-placeholder";
+// import Link from "@tiptap/extension-link";
 import Link from "@tiptap/extension-link";
 import { Plugin } from "@tiptap/pm/state";
 import {
