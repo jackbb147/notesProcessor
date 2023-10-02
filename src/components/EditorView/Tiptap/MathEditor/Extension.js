@@ -76,7 +76,7 @@ export default Node.create({
                   {
                     type: "reactComponent",
                     attrs: {
-                      open: true,
+                      first: true,
                     },
                   },
                 );
@@ -116,6 +116,9 @@ export default Node.create({
         default: String.raw`\small{\textit{long press to edit:}} \; \hat{H} \ket{\psi} = E\ket{\psi} `,
       },
       open: {
+        default: false,
+      },
+      first: {
         default: false,
       },
     };
