@@ -1,6 +1,6 @@
 import "./MathEditor/styles.css";
 import "./placeholder.css";
-
+import "./link.css";
 import { EditorContent, JSONContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import React, { forwardRef, useContext, useEffect } from "react";
@@ -196,6 +196,9 @@ export default forwardRef(
           Link.configure({
             openOnClick: true,
             linkOnPaste: true,
+            HTMLAttributes: {
+              class: "tiptap__link",
+            },
           }),
           Placeholder.configure({
             // Use a placeholder:
