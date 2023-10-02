@@ -333,7 +333,12 @@ export default forwardRef(
         }}
         condition={(me, target) => {
           const t = target as HTMLElement;
-          if (t?.parentElement?.offsetParent?.id.includes("tippy")) {
+          // debugger;
+          // this is to make sure that a click on the tippy popup doesn't trigger the outside click handler
+          if (
+            t?.parentElement?.offsetParent?.id.includes("tippy") ||
+            t?.parentElement?.className.includes("ace")
+          ) {
             return false;
           }
           return true;
