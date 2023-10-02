@@ -124,8 +124,12 @@ export function InlineMathEditorComponent(props: NodeViewProps) {
   const [draggableKey, setDraggableKey] = useState(0); //changing this will achieve the effect of resetting the node position: https://github.com/react-grid-layout/react-draggable/issues/214#issuecomment-270021423
 
   const [nodeMoved, setNodeMoved] = useState(false);
+  // console.warn(props.node.attrs);
   const [showTooltip, setShowTooltip] = useState(false);
 
+  // useEffect(() => {
+  //   setShowTooltip(true);
+  // }, []);
   function resetNodePosition() {
     setDraggableKey(draggableKey + 1);
     setNodeMoved(false);
