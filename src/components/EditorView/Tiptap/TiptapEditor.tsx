@@ -181,11 +181,12 @@ export default forwardRef(
         // },
         onBlur: (props) => {
           console.log("onblur");
+          // debugger;
           const content = props.editor.getHTML();
           let firstLine: string = getFirstLine(props.editor.getJSON());
           //
           // debugger;
-          handleBlur?.(firstLine, content);
+          // handleBlur?.(firstLine, content);
         },
         extensions: [
           StarterKit,

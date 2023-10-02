@@ -12,7 +12,6 @@ export function AddReferenceBtn({ editor }: { editor: Editor | null }) {
     const currentPos = selection.$anchor.pos; // this is the current position of the cursor
     console.log("selection", selection);
     editor.chain().focus().insertContent("[[").run();
-    editor.chain().focus().run();
     // editor.chain().focus().toggleBold().run();
   }
 
