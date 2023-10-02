@@ -326,7 +326,20 @@ export default forwardRef(
 
     if (!editor) return null;
     return (
-      <OutsideAlerter callback={() => setClickedOutside((prev) => prev + 1)}>
+      <OutsideAlerter
+        callback={() => {
+          console.warn("outside click");
+          setClickedOutside((prev) => prev + 1);
+        }}
+        condition={(me, target) => {
+          const t = target as HTMLElement;
+          if (t?.parentElement?.offsetParent?.id.includes("tippy")) {
+            return false;
+          }
+          return true;
+          // debugger;
+        }}
+      >
         <div
           style={{
             textAlign: "initial",
