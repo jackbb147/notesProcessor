@@ -15,7 +15,7 @@ import {
   useAppState,
   useAppDispatch,
 } from "../../hooks/AppStateAndGraphAndUserhooks";
-import { useAddNoteMutation } from "../../api/apiSlice";
+import { useAddNoteMutation, useSetLabelMutation } from "../../api/apiSlice";
 
 export function AddNodeButton({
   rootClassName = "",
@@ -30,6 +30,8 @@ export function AddNodeButton({
 
   const [addNote, { isLoading: isAddingNote, isSuccess, data }] =
     useAddNoteMutation();
+
+  const [addLabel, { isLoading: isAddingLabel }] = useSetLabelMutation();
   if (graph === null || graphDispatch === null)
     throw Error("graph or graphDispatch is null. ");
 
@@ -44,13 +46,22 @@ export function AddNodeButton({
 
     let newID = uuid();
 
-    addNote({
+    await addNote({
       //
       Id: newID,
       Title: "New Note",
       Content: "",
       // DateCreated: new Date().toJSON(),
-    });
+    }).unwrap();
+
+    // TODO get the active collection from state, and add the new node to that collection
+    const activeLabel = state.activeLabel;
+    if (activeLabel) {
+      await addLabel({
+        noteId: newID,
+        label: activeLabel,
+      }).unwrap();
+    }
 
     // graphDispatch({
     //   type: GraphActionType.addNode,
