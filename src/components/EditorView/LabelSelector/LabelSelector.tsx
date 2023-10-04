@@ -56,7 +56,7 @@ export function LabelSelector({
             ...base,
             backgroundColor: appState.darkModeOn
               ? state.theme.colors.neutral80
-              : "transparent",
+              : "white",
           }),
 
           menuList: (base, state): CSSObjectWithLabel => ({
