@@ -106,10 +106,27 @@ export const apiSlice = createApi({
           const arr = labelsWithTimeStampsSchema.parse(response);
           return arr.sort((obj1, obj2) => {
             // debugger;
-            if (!obj1.timeStamp || !obj2.timeStamp) return 0;
-            const date1 = new Date(obj1.timeStamp);
-            const date2 = new Date(obj2.timeStamp);
-            return date2.getTime() - date1.getTime();
+            // if (!obj1.timeStamp || !obj2.timeStamp) return 0;
+            // both are not null
+            if (obj1.timeStamp && obj2.timeStamp) {
+              const date1 = new Date(obj1.timeStamp);
+              const date2 = new Date(obj2.timeStamp);
+              return date2.getTime() - date1.getTime();
+            }
+
+            // if one of them is null, the other one is greater
+            if (!obj1.timeStamp) {
+              // obj1 has no timestamp, so [ obj2, obj1 ]
+              return 1;
+            }
+
+            if (!obj2.timeStamp) {
+              // obj2 has no timestamp, so [ obj1, obj2 ]
+              return -1;
+            }
+
+            // if both are null, sort by label name
+            return obj1.labelName.localeCompare(obj2.labelName);
           });
         } catch (e) {
           throw e;
