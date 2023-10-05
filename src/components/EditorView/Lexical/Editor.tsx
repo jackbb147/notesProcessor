@@ -6,34 +6,9 @@ import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { useEffect } from "react";
 import { EditorState } from "lexical";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { $generateHtmlFromNodes } from "@lexical/html";
 
-function EmoticonPlugin() {
-  return null;
-}
-
-function HTMLPlugin() {
-  const [editor] = useLexicalComposerContext();
-
-  function onUpdate(editorState: EditorState) {
-    // debugger;
-
-    // const raw = $generateHtmlFromNodes(editor, null);
-    editorState.read(() => {
-      const rawHTML = $generateHtmlFromNodes(editor, null);
-      console.log("[onChange] fired. rawHTML: " + rawHTML);
-    });
-  }
-
-  useEffect(() => {
-    // most listeners return a teardown function that can be called to clean them up.
-    return editor.registerUpdateListener(({ editorState }) => {
-      // call onChange here to pass the latest state up to the parent.
-      onUpdate(editorState);
-    });
-  }, [editor]);
-  return null;
-}
+import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
+import { UpdateHandlerPlugin } from "./UpdateHandlerPlugin";
 
 export function Editor() {
   return (
@@ -52,9 +27,8 @@ export function Editor() {
           ErrorBoundary={LexicalErrorBoundary}
         />
         {/*<OnChangePlugin onChange={onChange} ignoreSelectionChange />*/}
-        <HTMLPlugin />
+        <UpdateHandlerPlugin />
         <HistoryPlugin />
-        <EmoticonPlugin />
       </div>
     </LexicalComposer>
   );
