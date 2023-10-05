@@ -25,7 +25,11 @@ import { All } from "../../Buttons/All";
 import { RecentlyDeleted } from "../../Buttons/RecentlyDeleted";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { useLogInStatus } from "../../../hooks/useLogInStatus";
-import { useGetLabelsQuery } from "../../../api/apiSlice";
+import {
+  labelsWithTimeStampsSchemaType,
+  useGetLabelsQuery,
+  useGetLabelsWithTimeStampsQuery,
+} from "../../../api/apiSlice";
 import { UserButton } from "../../Buttons/UserButton";
 import { SettingsPanelContent } from "../SettingsPanel/content/SettingsPanelContent";
 import { UserSettingsPanelContent } from "../SettingsPanel/content/UserSettingsPanelContent";
@@ -78,6 +82,8 @@ export function FolderPanelContent() {
   // const activeUser = useUser();
   const [loginStatus, activeUser] = useLogInStatus();
   const { data: labels, error } = useGetLabelsQuery();
+  const { data: labelsWithTimeStamps, error: error2 } =
+    useGetLabelsWithTimeStampsQuery();
   function handleSettingPanelOutsideClick() {
     if (!isMobile) {
       dispatch({
@@ -150,16 +156,16 @@ export function FolderPanelContent() {
 
       {/*https://www.npmjs.com/package/react-custom-scrollbars-2*/}
       <Scrollbars autoHide>
-        {labels?.map((s: string, i) => (
+        {labelsWithTimeStamps?.map((s, i) => (
           <ListItem
             key={i}
-            text={s}
+            text={s.labelName}
             iconOnly={state.LabelPanelClosed}
             active={
               state.activeCollection === Collections.Label &&
-              state.activeLabel === s
+              state.activeLabel === s.labelName
             }
-            onClick={() => handleLabelClick(s)}
+            onClick={() => handleLabelClick(s.labelName)}
             icon={<span className="material-symbols-outlined">label</span>}
             style={{
               marginBottom: "0.5rem",

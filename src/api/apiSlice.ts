@@ -15,6 +15,17 @@ const labelsSchema = z.record(z.array(z.string()));
 export type labelsSchemaType = z.infer<typeof labelsSchema>;
 // const labelsSchema = z.record(z.array(z.number()));
 
+const labelsWithTimeStampsSchema = z.array(
+  z.object({
+    labelName: z.string(),
+    timeStamp: z.string().nullable(),
+  }),
+);
+
+export type labelsWithTimeStampsSchemaType = z.infer<
+  typeof labelsWithTimeStampsSchema
+>;
+
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
@@ -82,6 +93,22 @@ export const apiSlice = createApi({
 
     getLabels: builder.query<string[], void>({
       query: () => `/Labels/GetAllLabels`,
+      providesTags: [tags.labels],
+    }),
+
+    getLabelsWithTimeStamps: builder.query<
+      labelsWithTimeStampsSchemaType,
+      void
+    >({
+      query: () => `/Labels/GetAllLabelsWithTimeStamps`,
+      transformResponse: (response: any) => {
+        try {
+          labelsWithTimeStampsSchema.parse(response);
+          return response;
+        } catch (e) {
+          throw e;
+        }
+      },
       providesTags: [tags.labels],
     }),
 
@@ -296,6 +323,7 @@ export const {
   useDeleteNoteMutation,
   useUpdateNoteMutation,
   useGetLabelsQuery,
+  useGetLabelsWithTimeStampsQuery,
   useGetNoteLabelsQuery,
   useSetLabelMutation,
   useRemoveLabelFromNoteMutation,
