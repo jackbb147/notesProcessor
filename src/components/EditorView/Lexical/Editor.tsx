@@ -11,6 +11,7 @@ import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import { UpdateHandlerPlugin } from "./UpdateHandlerPlugin";
 import { GraphNode } from "../../../reducers/GraphReducer";
 import { $generateNodesFromDOM } from "@lexical/html";
+import { InlineMathNode } from "./Math/InlineMathNode";
 
 function HTMLToLexicalPlugin({ html }: { html: string }) {
   const [editor] = useLexicalComposerContext();
@@ -36,6 +37,7 @@ export function Editor({ note }: { note: GraphNode }) {
     <LexicalComposer
       initialConfig={{
         namespace: "editor",
+        nodes: [InlineMathNode],
         onError: (error) => {
           console.log("error: ", error);
         },
