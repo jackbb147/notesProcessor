@@ -10,27 +10,9 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import { UpdateHandlerPlugin } from "./UpdateHandlerPlugin";
 import { GraphNode } from "../../../reducers/GraphReducer";
-import { $generateNodesFromDOM } from "@lexical/html";
+
 import { InlineMathNode } from "./Math/InlineMathNode";
-
-function HTMLToLexicalPlugin({ html }: { html: string }) {
-  const [editor] = useLexicalComposerContext();
-  useEffect(() => {
-    editor.update(() => {
-      const parser = new DOMParser();
-      const dom = parser.parseFromString(html, "text/html");
-      const nodes = $generateNodesFromDOM(editor, dom);
-      // Select the root
-      const root = $getRoot();
-      root.clear();
-      root.select();
-
-      // Insert them at a selection.
-      $insertNodes(nodes);
-    });
-  }, [html]);
-  return null;
-}
+import { HTMLToLexicalPlugin } from "./HTMLToLexicalPlugin";
 
 export function Editor({ note }: { note: GraphNode }) {
   return (
