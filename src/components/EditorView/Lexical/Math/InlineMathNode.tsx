@@ -8,6 +8,7 @@ import {
 import React, { ReactNode } from "react";
 import MathView from "../../MathView";
 import { TippedMath } from "../../TippedMath";
+import { ContentContainer } from "../../ContentContainer";
 
 export class InlineMathNode extends DecoratorNode<ReactNode> {
   __id: string;
@@ -52,24 +53,34 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
     });
   }
 
+  openToolTip(_editor: LexicalEditor) {
+    _editor.update(() => {
+      const node = $getNodeByKey(this.__key);
+      if (node !== null && $isInlineMathNode(node)) {
+        node.setShowToolTip(true);
+      }
+    });
+  }
+
   decorate(_editor: LexicalEditor): ReactNode {
     const showTooltip = this.__showToolTip;
     const setShowTooltip = this.setShowToolTip.bind(this);
     const _ = this;
-    // const closeToolTip = () => {
-    //   const self = _.getWritable();
-    //
-    //   self.__showToolTip = false;
-    // };
     return (
-      <TippedMath
-        value={"F = ma"}
-        onChange={() => {}}
-        showTooltip={this.getShowToolTip()}
-        requestClose={() => {
-          this.closeToolTip(_editor);
+      <ContentContainer
+        onLongPress={() => {
+          this.openToolTip(_editor);
         }}
-      />
+      >
+        <TippedMath
+          value={"F = ma"}
+          onChange={() => {}}
+          showTooltip={this.getShowToolTip()}
+          requestClose={() => {
+            this.closeToolTip(_editor);
+          }}
+        />
+      </ContentContainer>
     );
     // return <MathView value={"F = ma"} />;
     // return <div>Inline Math</div>;

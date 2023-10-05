@@ -13,7 +13,7 @@ import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/theme-xcode";
 import "ace-builds/src-noconflict/ext-language_tools";
-
+import { ContentContainer } from "../../ContentContainer";
 import { MATHJAXCOMMANDS } from "./mathjaxCommands";
 import { useAppState } from "../../../../hooks/AppStateAndGraphAndUserhooks";
 // import "react-tippy/dist/tippy.css";
@@ -48,76 +48,6 @@ interface Delta {
   start: Point;
   end: Point;
   lines: string[];
-}
-
-function ContentContainer({
-  onSingleClick,
-  onDoubleClick,
-  onLongPress,
-  onFinishLongPress,
-  children,
-}: {
-  onSingleClick?: (e: React.MouseEvent<Element, MouseEvent>) => void;
-  onDoubleClick?: (e: React.MouseEvent<Element, MouseEvent>) => void;
-  onLongPress?: () => void;
-  onFinishLongPress?: () => void;
-  children: React.ReactNode;
-}) {
-  const buttonRef = useRef<HTMLDivElement>(null);
-  const [className, setClassName] = useState<"NoPointerEvents" | "">("");
-  // useDoubleClick(
-  //     {
-  //       ref: buttonRef,
-  //   onSingleClick: onSingleClick??(()=>{}),
-  //   onDoubleClick: onDoubleClick??(()=>{}),
-  // })
-  const bind = useLongPress(
-    () => {
-      // alert('Long pressed!');
-      onLongPress?.();
-    },
-    {
-      threshold: 200,
-      cancelOnMovement: true,
-      onStart: () => {
-        setClassName("NoPointerEvents");
-      },
-      onFinish: () => {
-        // https://stackoverflow.com/a/20290312/21646295
-        window.addEventListener(
-          "click",
-          function captureClick(e) {
-            e.stopPropagation(); // Stop the click from being propagated.
-            console.log("click captured");
-            window.removeEventListener("click", captureClick, true); // cleanup
-          },
-          true,
-        );
-      },
-    },
-  );
-  return (
-    <div
-      className={`content`}
-      {...bind()}
-      ref={buttonRef}
-      tabIndex={1}
-      // onFocus={()=>{
-      //   alert("FOCUSED")
-      // }}
-      // onTouchStart={()=>{alert("touched")}}
-
-      // onDoubleClick={()=>{
-      //   alert("HEY!")
-      //   setDisableDraggable(true);
-      // }}
-      // onClick={()=>{
-      //      onSingleClick?.(null as any)
-      // }}
-    >
-      {children}
-    </div>
-  );
 }
 
 export function InlineMathEditorComponent(props: NodeViewProps) {
