@@ -103,8 +103,14 @@ export const apiSlice = createApi({
       query: () => `/Labels/GetAllLabelsWithTimeStamps`,
       transformResponse: (response: any) => {
         try {
-          labelsWithTimeStampsSchema.parse(response);
-          return response;
+          const arr = labelsWithTimeStampsSchema.parse(response);
+          return arr.sort((obj1, obj2) => {
+            // debugger;
+            if (!obj1.timeStamp || !obj2.timeStamp) return 0;
+            const date1 = new Date(obj1.timeStamp);
+            const date2 = new Date(obj2.timeStamp);
+            return date2.getTime() - date1.getTime();
+          });
         } catch (e) {
           throw e;
         }

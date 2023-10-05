@@ -13,6 +13,7 @@ import {
   useGetLabelsQuery,
   useRemoveLabelMutation,
   useAddLabelMutation,
+  useGetLabelsWithTimeStampsQuery,
 } from "../api/apiSlice";
 
 export function LabelSelectorPopUp() {
@@ -31,6 +32,7 @@ export function LabelSelectorPopUp() {
   const graph = useGraph();
   const graphDispatch = useGraphDispatch();
   const { data: labels } = useGetLabelsQuery();
+  const { data: labelsWithTimeStamps } = useGetLabelsWithTimeStampsQuery();
   function handleChange(value: Options<any>, action: ActionMeta<any>) {
     switch (action.action) {
       // TODO
@@ -65,7 +67,7 @@ export function LabelSelectorPopUp() {
     });
   }
 
-  return !state.showLabelSelectorPopup || !labels ? (
+  return !state.showLabelSelectorPopup || !labelsWithTimeStamps ? (
     <></>
   ) : (
     <Overlay handleClick={handleOverlayClick}>
@@ -80,12 +82,18 @@ export function LabelSelectorPopUp() {
         <LabelSelector
           handleChange={handleChange}
           showDropDown={false}
-          options={labels.map((s: string) => {
-            return { value: s, label: s };
-          })}
-          values={labels.map((s: string) => {
-            return { value: s, label: s };
-          })}
+          options={labelsWithTimeStamps
+            .slice()
+            .reverse()
+            .map((s) => {
+              return { value: s.labelName, label: s.labelName };
+            })}
+          values={labelsWithTimeStamps
+            .slice()
+            .reverse()
+            .map((s) => {
+              return { value: s.labelName, label: s.labelName };
+            })}
         />
       </div>
     </Overlay>
