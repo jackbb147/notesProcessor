@@ -92,9 +92,9 @@ export function EditorBoxComponent({
       autoHide
     >
       <Editor
-      // note={note}
-      // handleBlur={handleUpdateNode}
-      // focusRequested={focusRequested}
+        note={note}
+        // handleBlur={handleUpdateNode}
+        // focusRequested={focusRequested}
       />
       {/*<TiptapEditor*/}
       {/*  note={note}*/}
