@@ -1,11 +1,11 @@
 import { Tooltip } from "react-tippy";
 import AceEditor from "react-ace";
-import MathView from "../../MathView";
-import { MyCustomACEEditor } from "./InlineMathEditorComponent";
+import MathView from "./MathView";
+import { MyCustomACEEditor } from "./Tiptap/MathEditor/InlineMathEditorComponent";
 import {
   AppStateContext,
   AppStateProvider,
-} from "../../../../reducers/AppStateContext";
+} from "../../reducers/AppStateContext";
 
 export function TippedMath({ value, onChange, showTooltip, requestClose }) {
   return (

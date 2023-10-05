@@ -31,7 +31,7 @@ import { IAceEditor } from "react-ace/lib/types";
 import { Ace } from "ace-builds";
 import { VirtualRenderer } from "ace-builds/ace";
 import ReactFocusLock from "react-focus-lock";
-import { TippedMath } from "./TippedMath";
+import { TippedMath } from "../../TippedMath";
 import Draggable from "react-draggable"; // The default
 import useDoubleClick from "use-double-click";
 import { useLongPress } from "use-long-press";
