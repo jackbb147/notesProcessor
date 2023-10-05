@@ -147,6 +147,7 @@ export const apiSlice = createApi({
       providesTags: [tags.noteLabels],
     }),
 
+    // TODO this endpoint is astronomically slow.  It takes 20 seconds!
     getLabelsForEveryNote: builder.query<any, void>({
       query: () => `/Labels/GetLabelsForAllNotes`,
       transformResponse: (response: any) => {
@@ -170,7 +171,7 @@ export const apiSlice = createApi({
           labelName: label,
         },
       }),
-      invalidatesTags: [tags.noteLabels, tags.labels, tags.notes],
+      invalidatesTags: [tags.noteLabels, tags.labels, tags.notes], // TODO do not invalidate notes.. otherwise all notes will be refetched which will lag big time...
     }),
 
     // remove a label from a note
@@ -212,7 +213,10 @@ export const apiSlice = createApi({
 
     getNotes: builder.query<GraphNode[], void>({
       query: () => `/Notes/GetAll`,
-      providesTags: [tags.notes],
+      providesTags: (result = [], error) => [
+        tags.notes,
+        ...result.map((x) => ({ type: tags.notes, id: x.Id })),
+      ],
       transformResponse: (response: GraphNode[]) => {
         // debugger;
         return response.sort((note1, note2) => {
@@ -260,7 +264,7 @@ export const apiSlice = createApi({
             GraphNode.Content.trim() === "" ? undefined : GraphNode.Content, // this is a hack.  I don't know why the server is not accepting empty strings
         },
       }),
-      invalidatesTags: [tags.notes],
+      invalidatesTags: [tags.notes], // TODO try not to invalidate notes.. otherwise all notes will be refetched which will lag big time...
     }),
     recoverNote: builder.mutation<unknown, { id: string }>({
       query: ({ id }: { id: string }) => ({

@@ -133,7 +133,8 @@ export function useActiveCollection() {
       }
       //   TODO
       var noteIDs = [];
-      const entries: [string, string[]][] = Object.entries(labelRecords);
+      if (!labelRecords) return [];
+      const entries: [string, string[]][] = Object.entries(labelRecords); //TODO label records could be null! check for that
       for (let [noteID, labels] of entries) {
         if (labels.includes(label)) {
           noteIDs.push(noteID);
@@ -143,7 +144,7 @@ export function useActiveCollection() {
       // debugger;
       const activeNotes: GraphNode[] = [];
       for (let noteID of noteIDs) {
-        const note = notes.find((note) => note.Id === noteID);
+        const note = notes.find((note) => note.Id === noteID && !note.Deleted);
         if (note) {
           activeNotes.push(note);
         }
