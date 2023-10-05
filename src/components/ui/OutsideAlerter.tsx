@@ -39,7 +39,7 @@ function useOutsideAlerter(
 export default function OutsideAlerter({
   callback,
   children,
-  condition = () => {},
+  condition = () => true,
 }: {
   callback: (event: MouseEvent) => any;
   children: React.ReactNode;

@@ -25,6 +25,7 @@ import SelectDemo from "./Buttons/Select";
 import { ScrollAreaDemo } from "./ScrollArea";
 import { styled } from "@stitches/react";
 import { MathBtn } from "./Buttons/MathBtn";
+import { AddReferenceBtn } from "./Buttons/AddReferenceBtn";
 
 const ToggleGroup = styled(Toolbar.ToggleGroup, {
   display: "flex",
@@ -75,6 +76,7 @@ export const MyToolbar = ({ editor }: { editor: Editor | null }) => (
       <Separator className="w-[1px] bg-mauve6 mx-[10px]" />
       <ToggleGroup type="single" aria-label="Math">
         <MathBtn editor={editor} />
+        <AddReferenceBtn editor={editor} />
       </ToggleGroup>
     </ScrollAreaDemo>
   </Toolbar.Root>

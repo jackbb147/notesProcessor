@@ -1,14 +1,23 @@
 import "./MathEditor/styles.css";
 import "./placeholder.css";
-
+import "./link.css";
 import { EditorContent, JSONContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import React, { forwardRef, useContext, useEffect } from "react";
-
+import React, {
+  forwardRef,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import OutsideAlerter from "../../ui/OutsideAlerter";
 import ReactComponent from "./MathEditor/Extension.js";
 import { Mention } from "@tiptap/extension-mention";
 import suggestion from "./Reference/suggestion";
 import Placeholder from "@tiptap/extension-placeholder";
+// import Link from "@tiptap/extension-link";
+import Link from "@tiptap/extension-link";
 import { Plugin } from "@tiptap/pm/state";
 import {
   useAppState,
@@ -29,8 +38,9 @@ import { useLogInStatus } from "../../../hooks/useLogInStatus";
 import { SignalrConnectionContext } from "../../../reducers/SignalrConnectionContext";
 import { HubConnection } from "@microsoft/signalr";
 import { useGetNotesQuery, useDeleteLinkMutation } from "../../../api/apiSlice";
-import { mergeAttributes } from "@tiptap/core";
+import { Editor, mergeAttributes } from "@tiptap/core";
 import Suggestion from "@tiptap/suggestion";
+import { useOnClickOutside } from "usehooks-ts";
 
 function getFirstLine(json: JSONContent): string {
   // debugger;
@@ -72,6 +82,8 @@ export default forwardRef(
       isLoading: notesFetchLoading,
       isSuccess: notesFetchSuccess,
     } = useGetNotesQuery();
+    const [clickedOutside, setClickedOutside] = useState(0);
+    const [clickedInside, setClickedInside] = useState(0);
     const [deleteLink] = useDeleteLinkMutation();
     const Graph = useGraph();
     const appState = useAppState();
@@ -90,6 +102,7 @@ export default forwardRef(
     const [isLoggedIn, loggedInUser] = useLogInStatus();
 
     const referenceMapDispatch = useContext(ReferenceStateDispatchContext);
+
     useEffect(() => {
       // alert("hey focus requested");
       // console.debug("[tiptapEditor] focus requested");
@@ -163,33 +176,21 @@ export default forwardRef(
     // }, [activeNoteContent]);
     const editor = useEditor(
       {
-        // onUpdate: (props) => {
-        //   console.log("onupdate");
-        //   if (!isLoggedIn) return;
-        //   const content = props.editor.getHTML();
-        //   if (!connection) alert("no connection");
-        //   connection?.invoke(
-        //     "BroadcastText",
-        //     {
-        //       User: loggedInUser,
-        //       Room: loggedInUser,
-        //     },
-        //     content,
-        //   );
-        // },
-        onBlur: (props) => {
-          console.log("onblur");
-          const content = props.editor.getHTML();
-          let firstLine: string = getFirstLine(props.editor.getJSON());
-          //
-          // debugger;
-          handleBlur?.(firstLine, content);
+        onFocus: () => {
+          setClickedInside((prev) => prev + 1);
         },
         extensions: [
           StarterKit,
           TextAlign.configure({
             alignments: ["left", "right", "center", "justify"],
             types: ["heading", "paragraph"],
+          }),
+          Link.configure({
+            openOnClick: true,
+            linkOnPaste: true,
+            HTMLAttributes: {
+              class: "tiptap__link",
+            },
           }),
           Placeholder.configure({
             // Use a placeholder:
@@ -292,75 +293,75 @@ export default forwardRef(
       [note.Id, note.Content, notesFetchLoading, notes],
     );
 
+    useEffect(() => {
+      setClickedInside(0);
+    }, [note.Id]);
+    //
+    // const cb = useCallback(() => {
+    //   console.log("outside click");
+    //   if (!editor) {
+    //     console.warn("no editor");
+    //     return;
+    //   }
+    //   if (!handleBlur) {
+    //     console.warn("no handleBlur");
+    //     return;
+    //   }
+    //   console.log("About to call handleBlur");
+    //   const content = editor.getHTML();
+    //   let firstLine: string = getFirstLine(editor.getJSON());
+    //   handleBlur(firstLine, content);
+    // }, [editor, handleBlur]);
+
+    useEffect(() => {
+      if (!editor || !handleBlur || clickedInside === 0) return;
+      // debugger;
+      const content = editor.getHTML();
+      let firstLine: string = getFirstLine(editor.getJSON());
+      console.log("firstLine: " + firstLine);
+      console.log("content: " + content);
+      // if (!content || !title || !handleBlur) return;
+      handleBlur(firstLine, content);
+    }, [clickedOutside]);
+
+    if (!editor) return null;
     return (
-      <div
-        style={{
-          textAlign: "initial",
+      <OutsideAlerter
+        callback={() => {
+          console.warn("outside click");
+          setClickedOutside((prev) => prev + 1);
+        }}
+        condition={(me, target) => {
+          const t = target as HTMLElement;
+          // debugger;
+          // this is to make sure that a click on the tippy popup or the formula box doesn't trigger the outside click handler
+          if (
+            t?.parentElement?.offsetParent?.id.includes("tippy") ||
+            t?.parentElement?.className.includes("ace")
+          ) {
+            return false;
+          }
+          return true;
+          // debugger;
         }}
       >
-        <MyToolbar editor={editor} />
-        {/*<div>*/}
-        {/*  <button*/}
-        {/*    onClick={() => {*/}
-        {/*      alert("hey");*/}
-        {/*      editor?.chain().focus().setTextAlign("left").run();*/}
-        {/*    }}*/}
-        {/*    className={*/}
-        {/*      editor?.isActive({ textAlign: "left" }) ? "is-active" : ""*/}
-        {/*    }*/}
-        {/*  >*/}
-        {/*    left*/}
-        {/*  </button>*/}
-
-        {/*  <button*/}
-        {/*    onClick={() => {*/}
-        {/*      editor?.chain().focus().toggleBold().run();*/}
-        {/*    }}*/}
-        {/*  >*/}
-        {/*    Bold*/}
-        {/*  </button>*/}
-        {/*  <button*/}
-        {/*    onClick={() => editor?.chain().focus().setTextAlign("center").run()}*/}
-        {/*    className={*/}
-        {/*      editor?.isActive({ textAlign: "center" }) ? "is-active" : ""*/}
-        {/*    }*/}
-        {/*  >*/}
-        {/*    center*/}
-        {/*  </button>*/}
-        {/*  /!*<button*!/*/}
-        {/*  /!*  onClick={() => editor.chain().focus().setTextAlign("right").run()}*!/*/}
-        {/*  /!*  className={*!/*/}
-        {/*  /!*    editor.isActive({ textAlign: "right" }) ? "is-active" : ""*!/*/}
-        {/*  /!*  }*!/*/}
-        {/*  /!*>*!/*/}
-        {/*  /!*  right*!/*/}
-        {/*  /!*</button>*!/*/}
-        {/*  /!*<button*!/*/}
-        {/*  /!*  onClick={() =>*!/*/}
-        {/*  /!*    editor.chain().focus().setTextAlign("justify").run()*!/*/}
-        {/*  /!*  }*!/*/}
-        {/*  /!*  className={*!/*/}
-        {/*  /!*    editor.isActive({ textAlign: "justify" }) ? "is-active" : ""*!/*/}
-        {/*  /!*  }*!/*/}
-        {/*  /!*>*!/*/}
-        {/*  /!*  justify*!/*/}
-        {/*  /!*</button>*!/*/}
-        {/*  /!*<button*!/*/}
-        {/*  /!*  onClick={() => editor.chain().focus().unsetTextAlign().run()}*!/*/}
-        {/*  /!*>*!/*/}
-        {/*  /!*  unsetTextAlign*!/*/}
-        {/*  /!*</button>*!/*/}
-        {/*</div>*/}
-
-        <EditorContent
-          editor={editor}
+        <div
           style={{
-            // border: "1px solid red",
-            minHeight: "95vh",
-            cursor: "text",
+            textAlign: "initial",
           }}
-        />
-      </div>
+        >
+          <MyToolbar editor={editor} />
+
+          <EditorContent
+            editor={editor}
+            style={{
+              // border: "1px solid red",
+              minHeight: "95vh",
+              cursor: "text",
+            }}
+          />
+        </div>
+      </OutsideAlerter>
     );
   },
 );

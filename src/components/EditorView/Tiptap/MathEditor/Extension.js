@@ -75,8 +75,12 @@ export default Node.create({
                   // "hello wolrd",
                   {
                     type: "reactComponent",
+                    attrs: {
+                      first: true,
+                    },
                   },
                 );
+                // TODO somehow open the tooltip upon inserting the node
                 //
 
                 return true; // this is to prevent the default behavior of inserting the text: https://prosemirror.net/docs/ref/
@@ -110,6 +114,12 @@ export default Node.create({
       },
       value: {
         default: String.raw`\small{\textit{long press to edit:}} \; \hat{H} \ket{\psi} = E\ket{\psi} `,
+      },
+      open: {
+        default: false,
+      },
+      first: {
+        default: false,
       },
     };
   },

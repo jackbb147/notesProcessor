@@ -148,7 +148,13 @@ export function useActiveCollection() {
           activeNotes.push(note);
         }
       }
-      return activeNotes;
+      // TODO sort by date
+      return activeNotes.sort((note1, note2) => {
+        if (!note1.DateLastModified || !note2.DateLastModified) return 0;
+        const date1 = new Date(note1.DateLastModified);
+        const date2 = new Date(note2.DateLastModified);
+        return date2.getTime() - date1.getTime();
+      });
     }
   }
 }

@@ -124,8 +124,12 @@ export function InlineMathEditorComponent(props: NodeViewProps) {
   const [draggableKey, setDraggableKey] = useState(0); //changing this will achieve the effect of resetting the node position: https://github.com/react-grid-layout/react-draggable/issues/214#issuecomment-270021423
 
   const [nodeMoved, setNodeMoved] = useState(false);
-  const [showTooltip, setShowTooltip] = useState(false);
+  // console.warn(props.node.attrs);
+  // const [showTooltip, setShowTooltip] = useState(false);
 
+  // useEffect(() => {
+  //   setShowTooltip(true);
+  // }, []);
   function resetNodePosition() {
     setDraggableKey(draggableKey + 1);
     setNodeMoved(false);
@@ -133,16 +137,35 @@ export function InlineMathEditorComponent(props: NodeViewProps) {
 
   function handleNodeLongPress() {
     // alert("long press detected")
-    setShowTooltip(true);
+    // setShowTooltip(true);
+    props.updateAttributes({
+      open: true,
+    });
   }
 
   function handleRequestCloseTooltip() {
-    setShowTooltip(false); //TODO modify this somehow
+    // setShowTooltip(false); //TODO modify this somehow
+    props.updateAttributes({
+      open: false,
+    });
   }
 
   function handleNodeMove() {
     setNodeMoved(true);
   }
+  useEffect(() => {
+    if (props.node.attrs.first) {
+      // debugger;
+      setTimeout(() => {
+        props.updateAttributes({
+          open: true,
+        });
+        props.updateAttributes({
+          first: false,
+        });
+      }, 0); // this is a hack to get the tooltip to show up on the first render. Without the set timeout, mathjax crashes.
+    }
+  }, []);
   // @ts-ignore
   return (
     <Draggable key={draggableKey} onDrag={handleNodeMove}>
@@ -158,7 +181,7 @@ export function InlineMathEditorComponent(props: NodeViewProps) {
           >
             <TippedMath
               value={props.node.attrs.value}
-              showTooltip={showTooltip}
+              showTooltip={props.node.attrs.open}
               requestClose={handleRequestCloseTooltip}
               onChange={(newValue: string) => {
                 // setValue(newValue);
