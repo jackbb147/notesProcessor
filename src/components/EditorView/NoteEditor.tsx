@@ -21,7 +21,7 @@ import {
 import { NoteInfoSidePanel } from "./NoteInfoSidePanel/NoteInfoSidePanel";
 import { Button } from "../ui/Button";
 import { AppActionType, Collections } from "../../reducers/AppStateReducer";
-import { TiptapBoxComponent } from "./Tiptap/Tiptap";
+import { EditorBoxComponent } from "./Tiptap/Tiptap";
 import {
   useGetLabelsQuery,
   useGetNoteLabelsQuery,
@@ -240,7 +240,7 @@ export function NoteEditor({
         }}
       >
         <ReferenceMapProvider note={note}>
-          <TiptapBoxComponent
+          <EditorBoxComponent
             note={note}
             width={`calc(100% - ${infoPanelWidth})`}
             focusRequested={focusRequested}

@@ -15,6 +15,7 @@ import { AppActionType } from "../../../reducers/AppStateReducer";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { GraphActionType, GraphNode } from "../../../reducers/GraphReducer";
 import TiptapEditor from "./TiptapEditor";
+import { Editor } from "../Lexical/Editor";
 import { countReferences } from "./Reference/countReferences";
 import { generateJSON } from "@tiptap/core";
 import Document from "@tiptap/extension-document";
@@ -29,7 +30,7 @@ import {
   useDeleteNoteMutation,
 } from "../../../api/apiSlice";
 
-export function TiptapBoxComponent({
+export function EditorBoxComponent({
   note,
   width,
   focusRequested,
@@ -90,11 +91,16 @@ export function TiptapBoxComponent({
       }}
       autoHide
     >
-      <TiptapEditor
-        note={note}
-        handleBlur={handleUpdateNode}
-        focusRequested={focusRequested}
+      <Editor
+      // note={note}
+      // handleBlur={handleUpdateNode}
+      // focusRequested={focusRequested}
       />
+      {/*<TiptapEditor*/}
+      {/*  note={note}*/}
+      {/*  handleBlur={handleUpdateNode}*/}
+      {/*  focusRequested={focusRequested}*/}
+      {/*/>*/}
       {/*<Tiptap note={note} />*/}
     </Scrollbars>
     // <div
