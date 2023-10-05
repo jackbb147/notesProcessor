@@ -22,7 +22,7 @@ import Tippy from "@tippyjs/react";
 // import 'tippy.js/dist/tippy.css'; // optional
 import { useDisableErrorOverlay } from "../../../../hooks/useDisableErrorOverlay";
 import { MathJax, MathJaxContext } from "better-react-mathjax";
-import MathView from "./MathView";
+import MathView from "../../MathView";
 import { getCursorPos, setCursorPos } from "./TiptapCursorPos";
 
 import { NodeViewProps } from "@tiptap/react";

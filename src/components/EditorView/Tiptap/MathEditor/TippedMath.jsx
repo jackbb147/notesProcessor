@@ -1,6 +1,6 @@
 import { Tooltip } from "react-tippy";
 import AceEditor from "react-ace";
-import MathView from "./MathView";
+import MathView from "../../MathView";
 import { MyCustomACEEditor } from "./InlineMathEditorComponent";
 import {
   AppStateContext,

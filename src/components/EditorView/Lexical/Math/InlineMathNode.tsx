@@ -1,5 +1,6 @@
 import { DecoratorNode, LexicalNode, NodeKey } from "lexical";
 import React, { ReactNode } from "react";
+import MathView from "../../MathView";
 
 export class InlineMathNode extends DecoratorNode<ReactNode> {
   __id: string;
@@ -21,7 +22,8 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
   }
 
   decorate(): ReactNode {
-    return <div>Inline Math</div>;
+    return <MathView value={"F = ma"} />;
+    // return <div>Inline Math</div>;
     // return <VideoPlayer videoID={this.__id} />;
   }
 }
