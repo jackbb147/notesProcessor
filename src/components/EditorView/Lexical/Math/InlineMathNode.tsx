@@ -9,10 +9,12 @@ import React, { ReactNode } from "react";
 import MathView from "../../MathView";
 import { TippedMath } from "../../TippedMath";
 import { ContentContainer } from "../../ContentContainer";
+import { InlineMathNodeReactComponent } from "./InlineMathNodeReactComponent";
 
 export class InlineMathNode extends DecoratorNode<ReactNode> {
   __id: string;
-  __showToolTip: boolean = true;
+  __showToolTip: boolean = false;
+  __tex: string = "F = ma";
   static getType(): string {
     return "InlineMathNode";
   }
@@ -32,6 +34,17 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
 
   updateDOM(): false {
     return false;
+  }
+
+  setTex(tex: string) {
+    const self = this.getWritable();
+    self.__tex = tex;
+  }
+
+  getTex(): string {
+    const self = this.getLatest();
+    console.log("[getTex] fired. tex: " + self.__tex);
+    return self.__tex;
   }
 
   setShowToolTip(showToolTip: boolean) {
@@ -62,6 +75,20 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
     });
   }
 
+  hanleTexChange(_editor: LexicalEditor, tex: string) {
+    console.log("[hanleTexChange] fired. tex: " + tex);
+    // THIS IS PROBLEM ...
+    _editor.update(() => {
+      console.log("editor is updating!");
+      const node = $getNodeByKey(this.__key);
+      if (node !== null && $isInlineMathNode(node)) {
+        console.log("found the node!");
+        // node.__tex = tex;
+        node.setTex(tex);
+      }
+    });
+  }
+
   decorate(_editor: LexicalEditor): ReactNode {
     const showTooltip = this.__showToolTip;
     const setShowTooltip = this.setShowToolTip.bind(this);
@@ -72,14 +99,23 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
           this.openToolTip(_editor);
         }}
       >
-        <TippedMath
-          value={"F = ma"}
-          onChange={() => {}}
-          showTooltip={this.getShowToolTip()}
-          requestClose={() => {
+        <InlineMathNodeReactComponent
+          handleCloseToolTip={() => {
             this.closeToolTip(_editor);
           }}
         />
+        {/*<TippedMath*/}
+        {/*  value={this.getTex()}*/}
+        {/*  onChange={(tex: string) => {*/}
+        {/*    console.log("[onChange] fired in TippedMath. tex: " + tex);*/}
+        {/*    // alert("hey");*/}
+        {/*    this.hanleTexChange(_editor, tex);*/}
+        {/*  }}*/}
+        {/*  showTooltip={true}*/}
+        {/*  requestClose={() => {*/}
+        {/*    this.closeToolTip(_editor);*/}
+        {/*  }}*/}
+        {/*/>*/}
       </ContentContainer>
     );
     // return <MathView value={"F = ma"} />;

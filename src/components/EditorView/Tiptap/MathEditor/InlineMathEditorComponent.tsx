@@ -258,20 +258,27 @@ export function MyCustomACEEditor({
     //
     editor.completers.push(staticWordCompleter);
     // https://stackoverflow.com/a/38437098
-    editor.on("change", (obj: Delta) => {
-      //
-      switch (obj.action) {
-        case "insert":
-          let lines = obj.lines;
-          let char = lines[0];
-          if (lines.length === 1 && char.length === 1 && /\\/i.test(char)) {
-            setTimeout(() => {
-              editor.commands.byName.startAutocomplete.exec(editor);
-            }, 50);
-          }
-          break;
-      }
+    editor.on("changeSession", (e: any) => {
+      console.log("[changeSession] fired");
     });
+    // editor.on("change", (obj: Delta) => {
+    //   //
+    //
+    //   console.log("[onChange] fired in ACEEditor.");
+    //   const s = editor.getValue();
+    //   // switch (obj.action) {
+    //   //   case "insert":
+    //   //     let lines = obj.lines;
+    //   //     let char = lines[0];
+    //   //     if (lines.length === 1 && char.length === 1 && /\\/i.test(char)) {
+    //   //       setTimeout(() => {
+    //   //         editor.commands.byName.startAutocomplete.exec(editor);
+    //   //       }, 50);
+    //   //     }
+    //   //     break;
+    //   // }
+    //   onChange(s); // onChange(obj.);
+    // });
 
     // make sure the auto complete pop up boxes are on top, instead of bottom
     // const config = {
@@ -330,6 +337,9 @@ export function MyCustomACEEditor({
         mode="latex"
         value={value}
         // focus={true}
+        onFocus={() => {
+          console.log("focused");
+        }}
         theme={"monokai"}
         // theme={AppState.darkModeOn ? "monokai" : "github"}
         style={{
@@ -344,7 +354,11 @@ export function MyCustomACEEditor({
         // showPrintMargin={false}
         enableLiveAutocompletion={false}
         enableBasicAutocompletion={true}
-        onChange={onChange}
+        onChange={(s) => {
+          console.log("[onChange] fired in ACEEditor. s: " + s);
+          onChange(s);
+          // if (reactAceRef.current) reactAceRef.current.editor.focus();
+        }}
         // commands={[
         //   {
         //     name: "deleteMe",
