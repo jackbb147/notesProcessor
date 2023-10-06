@@ -261,24 +261,24 @@ export function MyCustomACEEditor({
     editor.on("changeSession", (e: any) => {
       console.log("[changeSession] fired");
     });
-    // editor.on("change", (obj: Delta) => {
-    //   //
-    //
-    //   console.log("[onChange] fired in ACEEditor.");
-    //   const s = editor.getValue();
-    //   // switch (obj.action) {
-    //   //   case "insert":
-    //   //     let lines = obj.lines;
-    //   //     let char = lines[0];
-    //   //     if (lines.length === 1 && char.length === 1 && /\\/i.test(char)) {
-    //   //       setTimeout(() => {
-    //   //         editor.commands.byName.startAutocomplete.exec(editor);
-    //   //       }, 50);
-    //   //     }
-    //   //     break;
-    //   // }
-    //   onChange(s); // onChange(obj.);
-    // });
+    editor.on("change", (obj: Delta) => {
+      //
+
+      console.log("[onChange] fired in ACEEditor.");
+      const s = editor.getValue();
+      switch (obj.action) {
+        case "insert":
+          let lines = obj.lines;
+          let char = lines[0];
+          if (lines.length === 1 && char.length === 1 && /\\/i.test(char)) {
+            setTimeout(() => {
+              editor.commands.byName.startAutocomplete.exec(editor);
+            }, 50);
+          }
+          break;
+      }
+      onChange(s); // onChange(obj.);
+    });
 
     // make sure the auto complete pop up boxes are on top, instead of bottom
     // const config = {
@@ -354,11 +354,11 @@ export function MyCustomACEEditor({
         // showPrintMargin={false}
         enableLiveAutocompletion={false}
         enableBasicAutocompletion={true}
-        onChange={(s) => {
-          console.log("[onChange] fired in ACEEditor. s: " + s);
-          onChange(s);
-          // if (reactAceRef.current) reactAceRef.current.editor.focus();
-        }}
+        // onChange={(s) => {
+        //   console.log("[onChange] fired in ACEEditor. s: " + s);
+        //   onChange(s);
+        //   // if (reactAceRef.current) reactAceRef.current.editor.focus();
+        // }}
         // commands={[
         //   {
         //     name: "deleteMe",
