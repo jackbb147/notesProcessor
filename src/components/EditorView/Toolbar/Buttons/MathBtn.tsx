@@ -49,6 +49,9 @@ export function MathBtn({ editor }: { editor: LexicalEditor | null }) {
     return editor.registerCommand<string>(
       INSERT_INLINE_MATH_COMMAND,
       (payload) => {
+        /**
+         * https://github.com/facebook/lexical/discussions/2047
+         */
         const selection = $getSelection();
         const node = selection?.getNodes()[0];
 
@@ -57,15 +60,6 @@ export function MathBtn({ editor }: { editor: LexicalEditor | null }) {
         if (node) {
           const parent = $getNearestBlockElementAncestorOrThrow(node);
           parent.append(inlineMathNode);
-          // $insertFirst(
-          //   parent,
-          //   inlineMathNode,
-          // );
-          // $insertNodeToNearestRoot(
-          //   $wrapNodeInElement(inlineMathNode, () =>
-          //
-          //   ),
-          // );
         }
 
         return true;
