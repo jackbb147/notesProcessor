@@ -14,7 +14,7 @@ import { InlineMathNodeReactComponent } from "./InlineMathNodeReactComponent";
 export class InlineMathNode extends DecoratorNode<ReactNode> {
   __id: string;
   __showToolTip: boolean = false;
-  __tex: string = "F = ma";
+
   static getType(): string {
     return "InlineMathNode";
   }
@@ -34,17 +34,6 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
 
   updateDOM(): false {
     return false;
-  }
-
-  setTex(tex: string) {
-    const self = this.getWritable();
-    self.__tex = tex;
-  }
-
-  getTex(): string {
-    const self = this.getLatest();
-    console.log("[getTex] fired. tex: " + self.__tex);
-    return self.__tex;
   }
 
   setShowToolTip(showToolTip: boolean) {
@@ -75,24 +64,8 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
     });
   }
 
-  hanleTexChange(_editor: LexicalEditor, tex: string) {
-    console.log("[hanleTexChange] fired. tex: " + tex);
-    // THIS IS PROBLEM ...
-    _editor.update(() => {
-      console.log("editor is updating!");
-      const node = $getNodeByKey(this.__key);
-      if (node !== null && $isInlineMathNode(node)) {
-        console.log("found the node!");
-        // node.__tex = tex;
-        node.setTex(tex);
-      }
-    });
-  }
-
   decorate(_editor: LexicalEditor): ReactNode {
     const showTooltip = this.__showToolTip;
-    const setShowTooltip = this.setShowToolTip.bind(this);
-    const _ = this;
     return (
       <ContentContainer
         onLongPress={() => {
@@ -100,6 +73,7 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
         }}
       >
         <InlineMathNodeReactComponent
+          showToolTip={showTooltip}
           handleCloseToolTip={() => {
             this.closeToolTip(_editor);
           }}
