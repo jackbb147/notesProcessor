@@ -49,7 +49,7 @@ export function ContentContainer({
   );
   return (
     <div
-      className={`content`}
+      className={`content inline-block`}
       {...bind()}
       ref={buttonRef}
       tabIndex={1}

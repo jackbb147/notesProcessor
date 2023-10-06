@@ -36,6 +36,10 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
     return false;
   }
 
+  isInline(): boolean {
+    return true;
+  }
+
   setShowToolTip(showToolTip: boolean) {
     const self = this.getWritable();
     self.__showToolTip = showToolTip;
