@@ -29,7 +29,7 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
   }
 
   createDOM(): HTMLElement {
-    return document.createElement("div");
+    return document.createElement("span");
   }
 
   updateDOM(): false {
@@ -71,30 +71,31 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
   decorate(_editor: LexicalEditor): ReactNode {
     const showTooltip = this.__showToolTip;
     return (
-      <ContentContainer
-        onLongPress={() => {
-          this.openToolTip(_editor);
-        }}
-      >
-        <InlineMathNodeReactComponent
-          showToolTip={showTooltip}
-          handleCloseToolTip={() => {
-            this.closeToolTip(_editor);
-          }}
-        />
-        {/*<TippedMath*/}
-        {/*  value={this.getTex()}*/}
-        {/*  onChange={(tex: string) => {*/}
-        {/*    console.log("[onChange] fired in TippedMath. tex: " + tex);*/}
-        {/*    // alert("hey");*/}
-        {/*    this.hanleTexChange(_editor, tex);*/}
-        {/*  }}*/}
-        {/*  showTooltip={true}*/}
-        {/*  requestClose={() => {*/}
-        {/*    this.closeToolTip(_editor);*/}
-        {/*  }}*/}
-        {/*/>*/}
-      </ContentContainer>
+      <span>hey am i inline</span>
+      // <ContentContainer
+      //   onLongPress={() => {
+      //     this.openToolTip(_editor);
+      //   }}
+      // >
+      //   <InlineMathNodeReactComponent
+      //     showToolTip={showTooltip}
+      //     handleCloseToolTip={() => {
+      //       this.closeToolTip(_editor);
+      //     }}
+      //   />
+      //   {/*<TippedMath*/}
+      //   {/*  value={this.getTex()}*/}
+      //   {/*  onChange={(tex: string) => {*/}
+      //   {/*    console.log("[onChange] fired in TippedMath. tex: " + tex);*/}
+      //   {/*    // alert("hey");*/}
+      //   {/*    this.hanleTexChange(_editor, tex);*/}
+      //   {/*  }}*/}
+      //   {/*  showTooltip={true}*/}
+      //   {/*  requestClose={() => {*/}
+      //   {/*    this.closeToolTip(_editor);*/}
+      //   {/*  }}*/}
+      //   {/*/>*/}
+      // </ContentContainer>
     );
     // return <MathView value={"F = ma"} />;
     // return <div>Inline Math</div>;

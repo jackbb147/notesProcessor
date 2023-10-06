@@ -3,10 +3,12 @@ import { Editor } from "@tiptap/core";
 import { MenuItem } from "./MenuItem";
 import { IconSize } from "./IconSize";
 import {
+  $createParagraphNode,
   COMMAND_PRIORITY_EDITOR,
   createCommand,
   LexicalCommand,
   LexicalEditor,
+  ParagraphNode,
 } from "lexical";
 
 import { useEffect } from "react";
@@ -14,7 +16,15 @@ import {
   $createInlineMathNode,
   InlineMathNode,
 } from "../../Lexical/Math/InlineMathNode";
-import { $insertNodeToNearestRoot } from "@lexical/utils";
+import {
+  $insertNodeToNearestRoot,
+  $wrapNodeInElement,
+  $getNearestNodeOfType,
+  $getNearestBlockElementAncestorOrThrow,
+  $insertFirst,
+} from "@lexical/utils";
+import { $getSelection } from "lexical";
+
 export const INSERT_INLINE_MATH_COMMAND: LexicalCommand<string> =
   createCommand();
 export function MathBtn({ editor }: { editor: LexicalEditor | null }) {
@@ -39,8 +49,22 @@ export function MathBtn({ editor }: { editor: LexicalEditor | null }) {
     return editor.registerCommand<string>(
       INSERT_INLINE_MATH_COMMAND,
       (payload) => {
+        const selection = $getSelection();
+        const node = selection?.getNodes()[0];
+
         const inlineMathNode = $createInlineMathNode(payload);
-        $insertNodeToNearestRoot(inlineMathNode);
+
+        if (node) {
+          $insertFirst(
+            $getNearestBlockElementAncestorOrThrow(node),
+            inlineMathNode,
+          );
+          // $insertNodeToNearestRoot(
+          //   $wrapNodeInElement(inlineMathNode, () =>
+          //
+          //   ),
+          // );
+        }
 
         return true;
       },
