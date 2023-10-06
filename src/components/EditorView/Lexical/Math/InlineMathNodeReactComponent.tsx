@@ -9,7 +9,9 @@ export function InlineMathNodeReactComponent({
   handleCloseToolTip: () => void;
   showToolTip: boolean;
 }) {
-  const [tex, setTex] = React.useState("F = ma");
+  const [tex, setTex] = React.useState(
+    String.raw`\small{\textit{long press to edit:}} \; \hat{H} \ket{\psi} = E\ket{\psi} `,
+  );
   return (
     <TippedMath
       value={tex}
