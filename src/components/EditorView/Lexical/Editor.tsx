@@ -22,6 +22,9 @@ import { GraphNode } from "../../../reducers/GraphReducer";
 import { $createInlineMathNode, InlineMathNode } from "./Math/InlineMathNode";
 import { HTMLToLexicalPlugin } from "./HTMLToLexicalPlugin";
 import { $insertNodeToNearestRoot } from "@lexical/utils";
+import { Theme } from "./Theme";
+import "./theme.css";
+
 export const INSERT_INLINE_MATH_COMMAND: LexicalCommand<string> =
   createCommand();
 
@@ -61,6 +64,7 @@ export function Editor({ note }: { note: GraphNode }) {
         onError: (error) => {
           console.log("error: ", error);
         },
+        theme: Theme,
       }}
     >
       <div className="editor-container">
@@ -80,5 +84,5 @@ export function Editor({ note }: { note: GraphNode }) {
 }
 
 function Placeholder() {
-  return <div className="editor-placeholder">Enter some plain text...</div>;
+  return <div className="editor-placeholder">Write something ...</div>;
 }
