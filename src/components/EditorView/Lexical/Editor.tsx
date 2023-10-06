@@ -67,7 +67,7 @@ export function Editor({ note }: { note: GraphNode }) {
         theme: Theme,
       }}
     >
-      <div className="editor-container">
+      <div className="editor-container text-left">
         <RichTextPlugin
           contentEditable={<ContentEditable className="editor-input" />}
           placeholder={<Placeholder />}
