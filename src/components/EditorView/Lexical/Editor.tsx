@@ -26,36 +26,6 @@ import { Theme } from "./Theme";
 import "./theme.css";
 import MyToolbar from "../Toolbar/Toolbar";
 
-export const INSERT_INLINE_MATH_COMMAND: LexicalCommand<string> =
-  createCommand();
-
-export function InlineMathPlugin() {
-  const [editor] = useLexicalComposerContext();
-  function handleButtonPress() {
-    // alert("Button Pressed!");
-    editor.dispatchCommand(INSERT_INLINE_MATH_COMMAND, "test");
-  }
-  useEffect(() => {
-    if (!editor.hasNodes([InlineMathNode])) {
-      throw new Error(
-        "[InlineMathPlugin]: InlineMathNode not registered on editor (initialConfig.nodes)",
-      );
-    }
-
-    return editor.registerCommand<string>(
-      INSERT_INLINE_MATH_COMMAND,
-      (payload) => {
-        const inlineMathNode = $createInlineMathNode(payload);
-        $insertNodeToNearestRoot(inlineMathNode);
-
-        return true;
-      },
-      COMMAND_PRIORITY_EDITOR,
-    );
-  }, [editor]);
-  return <button onClick={handleButtonPress}>Press Me</button>;
-}
-
 export function Editor({ note }: { note: GraphNode }) {
   return (
     <LexicalComposer

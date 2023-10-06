@@ -2,15 +2,21 @@ import { Pi } from "lucide-react";
 import { Editor } from "@tiptap/core";
 import { MenuItem } from "./MenuItem";
 import { IconSize } from "./IconSize";
-import { COMMAND_PRIORITY_EDITOR, LexicalEditor } from "lexical";
-import { INSERT_INLINE_MATH_COMMAND } from "../../Lexical/Editor";
+import {
+  COMMAND_PRIORITY_EDITOR,
+  createCommand,
+  LexicalCommand,
+  LexicalEditor,
+} from "lexical";
+
 import { useEffect } from "react";
 import {
   $createInlineMathNode,
   InlineMathNode,
 } from "../../Lexical/Math/InlineMathNode";
 import { $insertNodeToNearestRoot } from "@lexical/utils";
-
+export const INSERT_INLINE_MATH_COMMAND: LexicalCommand<string> =
+  createCommand();
 export function MathBtn({ editor }: { editor: LexicalEditor | null }) {
   function handleClick() {
     if (!editor) return;
