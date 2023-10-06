@@ -55,10 +55,12 @@ export function MathBtn({ editor }: { editor: LexicalEditor | null }) {
         const inlineMathNode = $createInlineMathNode(payload);
 
         if (node) {
-          $insertFirst(
-            $getNearestBlockElementAncestorOrThrow(node),
-            inlineMathNode,
-          );
+          const parent = $getNearestBlockElementAncestorOrThrow(node);
+          parent.append(inlineMathNode);
+          // $insertFirst(
+          //   parent,
+          //   inlineMathNode,
+          // );
           // $insertNodeToNearestRoot(
           //   $wrapNodeInElement(inlineMathNode, () =>
           //
