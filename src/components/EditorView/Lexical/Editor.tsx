@@ -24,6 +24,7 @@ import { HTMLToLexicalPlugin } from "./HTMLToLexicalPlugin";
 import { $insertNodeToNearestRoot } from "@lexical/utils";
 import { Theme } from "./Theme";
 import "./theme.css";
+import MyToolbar from "../Toolbar/Toolbar";
 
 export const INSERT_INLINE_MATH_COMMAND: LexicalCommand<string> =
   createCommand();
@@ -68,6 +69,7 @@ export function Editor({ note }: { note: GraphNode }) {
       }}
     >
       <div className="editor-container text-left">
+        <MyToolbar />
         <RichTextPlugin
           contentEditable={<ContentEditable className="editor-input" />}
           placeholder={<Placeholder />}

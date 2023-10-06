@@ -8,6 +8,7 @@ import {
 } from "@radix-ui/react-icons";
 import { Editor } from "@tiptap/core";
 import { Level } from "@tiptap/extension-heading";
+import { LexicalEditor } from "lexical";
 
 const SelectItem = React.forwardRef(
   (
@@ -51,60 +52,60 @@ const enum Formats {
   heading3 = "heading3",
 }
 
-const SelectDemo = ({ editor }: { editor: Editor | null }) => {
+const SelectDemo = ({ editor }: { editor: LexicalEditor | null }) => {
   const [value, setValue] = useState<string>(Formats.normal);
   function handleValueChange(newValue: string) {
     if (!editor) return;
-    switch (newValue) {
-      case Formats.heading1:
-        editor?.chain().focus().toggleHeading({ level: 1 }).run();
-
-        break;
-      case Formats.heading2:
-        editor?.chain().focus().toggleHeading({ level: 2 }).run();
-        break;
-      case Formats.normal:
-        for (var x in [1, 2, 3]) {
-          const lvl = Number(x) as Level;
-          if (editor.isActive("heading", { level: lvl })) {
-            editor.chain().focus().toggleHeading({ level: lvl }).run();
-            break;
-          }
-        }
-        break;
-    }
+    // switch (newValue) {
+    //   case Formats.heading1:
+    //     editor?.chain().focus().toggleHeading({ level: 1 }).run();
+    //
+    //     break;
+    //   case Formats.heading2:
+    //     editor?.chain().focus().toggleHeading({ level: 2 }).run();
+    //     break;
+    //   case Formats.normal:
+    //     for (var x in [1, 2, 3]) {
+    //       const lvl = Number(x) as Level;
+    //       if (editor.isActive("heading", { level: lvl })) {
+    //         // editor.chain().focus().toggleHeading({ level: lvl }).run();
+    //         break;
+    //       }
+    //     }
+    //     break;
+    // }
     setValue(newValue);
   }
 
-  useEffect(() => {
-    if (!editor) return;
-    editor.on("selectionUpdate", ({ editor }) => {
-      var level: Level | undefined = undefined;
-      for (var x in [1, 2, 3]) {
-        const lvl = Number(x) as Level;
-        if (editor.isActive("heading", { level: lvl })) {
-          level = lvl;
-          break;
-        }
-      }
-      if (level === undefined) {
-        setValue(Formats.normal);
-        return;
-      } else {
-        switch (level) {
-          case 1:
-            setValue(Formats.heading1);
-            break;
-          case 2:
-            setValue(Formats.heading2);
-            break;
-          case 3:
-            setValue(Formats.heading3);
-            break;
-        }
-      }
-    });
-  }, [editor]);
+  // useEffect(() => {
+  //   if (!editor) return;
+  //   editor.on("selectionUpdate", ({ editor }) => {
+  //     var level: Level | undefined = undefined;
+  //     for (var x in [1, 2, 3]) {
+  //       const lvl = Number(x) as Level;
+  //       if (editor.isActive("heading", { level: lvl })) {
+  //         level = lvl;
+  //         break;
+  //       }
+  //     }
+  //     if (level === undefined) {
+  //       setValue(Formats.normal);
+  //       return;
+  //     } else {
+  //       switch (level) {
+  //         case 1:
+  //           setValue(Formats.heading1);
+  //           break;
+  //         case 2:
+  //           setValue(Formats.heading2);
+  //           break;
+  //         case 3:
+  //           setValue(Formats.heading3);
+  //           break;
+  //       }
+  //     }
+  //   });
+  // }, [editor]);
   return (
     <Select.Root
       value={value}

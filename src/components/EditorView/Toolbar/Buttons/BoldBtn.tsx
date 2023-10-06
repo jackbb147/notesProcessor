@@ -5,24 +5,25 @@ import { Bold } from "lucide-react";
 import { Editor } from "@tiptap/core";
 import { useEffect, useState } from "react";
 import { IconSize } from "./IconSize";
+import { LexicalEditor } from "lexical";
 
-export function BoldBtn({ editor }: { editor: Editor | null }) {
+export function BoldBtn({ editor }: { editor: LexicalEditor | null }) {
   const [isActive, setIsActive] = useState(false);
   function handleClick() {
     if (!editor) return;
-    editor.chain().focus().toggleBold().run();
+    // editor.chain().focus().toggleBold().run();
   }
 
-  useEffect(() => {
-    editor?.on("selectionUpdate", ({ editor }) => {
-      if (editor.isActive("bold")) {
-        console.debug("[bold] is active");
-        setIsActive(true);
-      } else {
-        setIsActive(false);
-      }
-    });
-  }, [editor]);
+  // useEffect(() => {
+  //   editor?.on("selectionUpdate", ({ editor }) => {
+  //     if (editor.isActive("bold")) {
+  //       console.debug("[bold] is active");
+  //       setIsActive(true);
+  //     } else {
+  //       setIsActive(false);
+  //     }
+  //   });
+  // }, [editor]);
 
   return (
     <MenuItem

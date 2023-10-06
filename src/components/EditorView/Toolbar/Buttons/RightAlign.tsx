@@ -5,24 +5,25 @@ import { Editor } from "@tiptap/core";
 import { MenuItem } from "./MenuItem";
 import { AlignRight } from "lucide-react";
 import { IconSize } from "./IconSize";
+import { LexicalEditor } from "lexical";
 
-export function RightAlign({ editor }: { editor: Editor | null }) {
+export function RightAlign({ editor }: { editor: LexicalEditor | null }) {
   const [isActive, setIsActive] = useState(false);
   function handleClick() {
     if (!editor) return;
-    editor.chain().focus().setTextAlign("right").run();
+    // editor.chain().focus().setTextAlign("right").run();
   }
 
-  useEffect(() => {
-    editor?.on("transaction", ({ editor }) => {
-      if (editor.isActive({ textAlign: "right" })) {
-        console.debug("[right] is active");
-        setIsActive(true);
-      } else {
-        setIsActive(false);
-      }
-    });
-  }, [editor]);
+  // useEffect(() => {
+  //   editor?.on("transaction", ({ editor }) => {
+  //     if (editor.isActive({ textAlign: "right" })) {
+  //       console.debug("[right] is active");
+  //       setIsActive(true);
+  //     } else {
+  //       setIsActive(false);
+  //     }
+  //   });
+  // }, [editor]);
   return (
     <MenuItem
       value={"right"}
