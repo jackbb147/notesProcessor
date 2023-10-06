@@ -23,6 +23,7 @@ import {
   $getNearestBlockElementAncestorOrThrow,
   $insertFirst,
 } from "@lexical/utils";
+
 import { $getSelection } from "lexical";
 
 export const INSERT_INLINE_MATH_COMMAND: LexicalCommand<string> =

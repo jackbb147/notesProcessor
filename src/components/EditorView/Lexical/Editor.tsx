@@ -14,7 +14,7 @@ import {
   LexicalCommand,
 } from "lexical";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-
+import { TabIndentationPlugin } from "@lexical/react/LexicalTabIndentationPlugin";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import { UpdateHandlerPlugin } from "./UpdateHandlerPlugin";
 import { GraphNode } from "../../../reducers/GraphReducer";
@@ -45,6 +45,8 @@ export function Editor({ note }: { note: GraphNode }) {
           placeholder={<Placeholder />}
           ErrorBoundary={LexicalErrorBoundary}
         />
+        {/*  https://github.com/facebook/lexical/issues/2854#issuecomment-1422253235 */}
+        <TabIndentationPlugin />{" "}
         {/*<OnChangePlugin onChange={onChange} ignoreSelectionChange />*/}
         <UpdateHandlerPlugin />
         <HTMLToLexicalPlugin html={note.Content} />
