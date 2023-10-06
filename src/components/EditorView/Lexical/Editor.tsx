@@ -3,6 +3,7 @@ import { PlainTextPlugin } from "@lexical/react/LexicalPlainTextPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
+import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { useEffect } from "react";
 import {
   $getRoot,
@@ -63,7 +64,7 @@ export function Editor({ note }: { note: GraphNode }) {
       }}
     >
       <div className="editor-container">
-        <PlainTextPlugin
+        <RichTextPlugin
           contentEditable={<ContentEditable className="editor-input" />}
           placeholder={<Placeholder />}
           ErrorBoundary={LexicalErrorBoundary}

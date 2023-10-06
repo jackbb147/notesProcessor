@@ -1,5 +1,5 @@
-import "./tiptap.css";
-import "./Reference/styles.css";
+import "./Tiptap/tiptap.css";
+import "./Tiptap/Reference/styles.css";
 // import "./Reference/styles.css";
 import React, { useContext, useEffect, useRef } from "react";
 // import {
@@ -9,26 +9,26 @@ import React, { useContext, useEffect, useRef } from "react";
 import {
   useAppState,
   useGraphDispatch,
-} from "../../../hooks/AppStateAndGraphAndUserhooks";
-import { useAppDispatch } from "../../../hooks/AppStateAndGraphAndUserhooks";
-import { AppActionType } from "../../../reducers/AppStateReducer";
+} from "../../hooks/AppStateAndGraphAndUserhooks";
+import { useAppDispatch } from "../../hooks/AppStateAndGraphAndUserhooks";
+import { AppActionType } from "../../reducers/AppStateReducer";
 import { Scrollbars } from "react-custom-scrollbars-2";
-import { GraphActionType, GraphNode } from "../../../reducers/GraphReducer";
-import TiptapEditor from "./TiptapEditor";
-import { Editor } from "../Lexical/Editor";
-import { countReferences } from "./Reference/countReferences";
+import { GraphActionType, GraphNode } from "../../reducers/GraphReducer";
+import TiptapEditor from "./Tiptap/TiptapEditor";
+import { Editor } from "./Lexical/Editor";
+import { countReferences } from "./Tiptap/Reference/countReferences";
 import { generateJSON } from "@tiptap/core";
 import Document from "@tiptap/extension-document";
 import Paragraph from "@tiptap/extension-paragraph";
 import Text from "@tiptap/extension-text";
 import Bold from "@tiptap/extension-bold";
-import MathExtension from "./MathEditor/Extension";
+import MathExtension from "./Tiptap/MathEditor/Extension";
 import { Mention } from "@tiptap/extension-mention";
-import { ReferenceStateDispatchContext } from "./Reference/ReferenceStateContext";
+import { ReferenceStateDispatchContext } from "./Tiptap/Reference/ReferenceStateContext";
 import {
   useUpdateNoteMutation,
   useDeleteNoteMutation,
-} from "../../../api/apiSlice";
+} from "../../api/apiSlice";
 
 export function EditorBoxComponent({
   note,

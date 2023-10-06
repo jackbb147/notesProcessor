@@ -21,7 +21,7 @@ import {
 import { NoteInfoSidePanel } from "./NoteInfoSidePanel/NoteInfoSidePanel";
 import { Button } from "../ui/Button";
 import { AppActionType, Collections } from "../../reducers/AppStateReducer";
-import { EditorBoxComponent } from "./Tiptap/Tiptap";
+import { EditorBoxComponent } from "./EditorBoxComponent";
 import {
   useGetLabelsQuery,
   useGetNoteLabelsQuery,
