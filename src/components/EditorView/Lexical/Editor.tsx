@@ -79,7 +79,7 @@ export function Editor({ note }: { note: GraphNode }) {
         <UpdateHandlerPlugin />
         <HTMLToLexicalPlugin html={note.Content} />
         <HistoryPlugin />
-        <InlineMathPlugin />
+        {/*<InlineMathPlugin />*/}
       </div>
     </LexicalComposer>
   );
