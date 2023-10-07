@@ -41,6 +41,7 @@ function getFirstLine(
   var q: SerializedLexicalNode[] = [json.root];
 
   while (q.length > 0) {
+    // debugger;
     var node: SerializedLexicalNode | undefined = q.shift();
     if (!node) continue;
 
@@ -50,11 +51,17 @@ function getFirstLine(
       break;
     }
 
+    if ("children" in node) {
+      var children = node.children as SerializedLexicalNode[];
+      q.push(...children);
+    }
+
     // if (node.content) {
     //   q.push(...node.content);
     // }
   }
   if (res.length < 1) res = "New Note";
+
   return res;
 }
 
@@ -99,10 +106,13 @@ function HandleEditorBlurPlugin({
     const json = editorState.toJSON();
     debugger;
 
-    const content = $generateHtmlFromNodes(editor, null);
-    let firstLine: string = getFirstLine(json);
-    console.log("firstLine: " + firstLine);
-    console.log("content: " + content);
+    editorState.read(() => {
+      const content = $generateHtmlFromNodes(editor, null);
+      let firstLine: string = getFirstLine(json);
+      console.log("firstLine: " + firstLine);
+      console.log("content: " + content);
+    });
+
     // handleBlur(firstLine, content);
   }, [clickedOutside]);
   useEffect(() => {
