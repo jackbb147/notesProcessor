@@ -223,8 +223,11 @@ export const ToolbarPlugin = () => {
             editor={activeEditor}
             isActive={elementFormat === "left"}
           />
-          <Center editor={activeEditor} />
-          <RightAlign editor={activeEditor} />
+          <Center editor={activeEditor} isActive={elementFormat === "center"} />
+          <RightAlign
+            editor={activeEditor}
+            isActive={elementFormat === "right"}
+          />
         </ToggleGroup>
         <Separator className="w-[1px] bg-mauve6 mx-[10px]" />
         <ToggleGroup type="single" aria-label="Math">
