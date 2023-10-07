@@ -184,49 +184,49 @@ export function Editor({
         // debugger;
       }}
     >
-      <div
-        className={"LEXICAL_WRAPPER"}
-        style={{
-          display: "flex",
-          flexDirection: "column",
+      {/*<div*/}
+      {/*  className={"LEXICAL_WRAPPER"}*/}
+      {/*  style={{*/}
+      {/*    display: "flex",*/}
+      {/*    flexDirection: "column",*/}
+      {/*  }}*/}
+      {/*>*/}
+      <LexicalComposer
+        initialConfig={{
+          namespace: "editor",
+          nodes: [
+            InlineMathNode,
+            HeadingNode,
+            QuoteNode,
+            ListNode,
+            ListItemNode,
+          ],
+          onError: (error) => {
+            console.log("error: ", error);
+          },
+          theme: Theme,
         }}
       >
-        <LexicalComposer
-          initialConfig={{
-            namespace: "editor",
-            nodes: [
-              InlineMathNode,
-              HeadingNode,
-              QuoteNode,
-              ListNode,
-              ListItemNode,
-            ],
-            onError: (error) => {
-              console.log("error: ", error);
-            },
-            theme: Theme,
+        <div
+          className={"EDITOR_WRAPPER"}
+          style={{
+            border: "1px solid white",
+            height: "100%",
+            overflow: "hidden",
+            // display: "flex",
+            // flexDirection: "column",
           }}
         >
-          <div
-            className={"EDITOR_WRAPPER"}
-            style={
-              {
-                // display: "flex",
-                // flexDirection: "column",
-              }
-            }
-          >
+          <RadixScrollArea>
             <MyToolbar />
             <RichTextPlugin
               contentEditable={
-                <RadixScrollArea>
-                  <ContentEditable
-                    className="editor-input"
-                    style={{
-                      outline: "none",
-                    }}
-                  />
-                </RadixScrollArea>
+                <ContentEditable
+                  className="editor-input"
+                  style={{
+                    outline: "none",
+                  }}
+                />
               }
               placeholder={<Placeholder />}
               ErrorBoundary={LexicalErrorBoundary}
@@ -243,9 +243,10 @@ export function Editor({
               handleBlur={handleBlur}
               note={note}
             />
-          </div>
-        </LexicalComposer>
-      </div>
+          </RadixScrollArea>
+        </div>
+      </LexicalComposer>
+      {/*</div>*/}
     </OutsideAlerter>
   );
 }
