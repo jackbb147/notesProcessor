@@ -77,6 +77,7 @@ export function getSelectedNode(
 export const ToolbarPlugin = () => {
   const [activeEditor] = useLexicalComposerContext();
   const [isBold, setIsBold] = useState(false);
+  const [isUnderline, setIsUnderline] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
   const [elementFormat, setElementFormat] = useState("left");
 
@@ -104,7 +105,7 @@ export const ToolbarPlugin = () => {
       console.warn(selection.hasFormat("bold"));
       setIsBold(selection.hasFormat("bold"));
       setIsItalic(selection.hasFormat("italic"));
-      // setIsUnderline(selection.hasFormat("underline"));
+      setIsUnderline(selection.hasFormat("underline"));
       // setIsStrikethrough(selection.hasFormat("strikethrough"));
       // setIsSubscript(selection.hasFormat("subscript"));
       // setIsSuperscript(selection.hasFormat("superscript"));
@@ -213,7 +214,7 @@ export const ToolbarPlugin = () => {
         <ToggleGroup type="multiple" aria-label="Text formatting">
           <BoldBtn editor={activeEditor} isActive={isBold} />
           <ItalicBtn editor={activeEditor} isActive={isItalic} />
-          <UnderlineBtn editor={activeEditor} />
+          <UnderlineBtn editor={activeEditor} isActive={isUnderline} />
         </ToggleGroup>
         <Separator className="w-[1px] bg-mauve6 mx-[10px]" />
         <SelectDemo editor={activeEditor} />

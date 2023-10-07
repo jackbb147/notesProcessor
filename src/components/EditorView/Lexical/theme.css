@@ -25,3 +25,7 @@
     /*display: none;*/
     overflow-x: hidden !important;
 }
+
+.editor_textUnderline {
+    text-decoration: underline;
+}

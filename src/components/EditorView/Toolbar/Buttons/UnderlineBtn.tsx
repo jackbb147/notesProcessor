@@ -4,13 +4,18 @@ import { Editor } from "@tiptap/core";
 import { useEffect, useState } from "react";
 import { Underline } from "lucide-react";
 import { IconSize } from "./IconSize";
-import { LexicalEditor } from "lexical";
+import { FORMAT_TEXT_COMMAND, LexicalEditor } from "lexical";
 
-export function UnderlineBtn({ editor }: { editor: LexicalEditor | null }) {
-  const [isActive, setIsActive] = useState(false);
-
+export function UnderlineBtn({
+  editor,
+  isActive,
+}: {
+  editor: LexicalEditor | null;
+  isActive: boolean;
+}) {
   function handleClick() {
     if (!editor) return;
+    editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
     // editor.chain().focus().toggleUnderline().run();
   }
 
