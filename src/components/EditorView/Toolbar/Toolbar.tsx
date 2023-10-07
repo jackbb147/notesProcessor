@@ -188,7 +188,7 @@ export const ToolbarPlugin = () => {
 
         <ToggleGroup type="multiple" aria-label="Text formatting">
           <BoldBtn editor={activeEditor} isActive={isBold} />
-          <ItalicBtn editor={activeEditor} />
+          <ItalicBtn editor={activeEditor} isActive={isItalic} />
           <UnderlineBtn editor={activeEditor} />
         </ToggleGroup>
         <Separator className="w-[1px] bg-mauve6 mx-[10px]" />
