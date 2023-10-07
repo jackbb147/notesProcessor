@@ -184,13 +184,6 @@ export function Editor({
         // debugger;
       }}
     >
-      {/*<div*/}
-      {/*  className={"LEXICAL_WRAPPER"}*/}
-      {/*  style={{*/}
-      {/*    display: "flex",*/}
-      {/*    flexDirection: "column",*/}
-      {/*  }}*/}
-      {/*>*/}
       <LexicalComposer
         initialConfig={{
           namespace: "editor",
@@ -210,15 +203,15 @@ export function Editor({
         <div
           className={"EDITOR_WRAPPER"}
           style={{
-            border: "1px solid white",
+            // border: "1px solid white",
             height: "100%",
             overflow: "hidden",
-            // display: "flex",
-            // flexDirection: "column",
+            display: "flex",
+            flexDirection: "column",
           }}
         >
+          <MyToolbar />
           <RadixScrollArea>
-            <MyToolbar />
             <RichTextPlugin
               contentEditable={
                 <ContentEditable
@@ -246,7 +239,6 @@ export function Editor({
           </RadixScrollArea>
         </div>
       </LexicalComposer>
-      {/*</div>*/}
     </OutsideAlerter>
   );
 }
