@@ -204,7 +204,7 @@ export function Editor({
             style={{
               border: "1px solid red",
               height: "100%",
-              marginTop: "10px",
+              // marginTop: "10px",
             }}
           >
             {/*<Scrollbars*/}
@@ -226,7 +226,7 @@ export function Editor({
                     // maxHeight: "100%",
                     outline: "2px solid blue",
                     overflow: "hidden",
-                    overflowY: "scroll",
+                    // overflowY: "scroll",
                   }}
                 />
               }
