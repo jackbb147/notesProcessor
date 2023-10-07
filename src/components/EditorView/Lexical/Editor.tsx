@@ -8,7 +8,7 @@ import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 import { ListNode, ListItemNode } from "@lexical/list";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { $generateHtmlFromNodes } from "@lexical/html";
 import {
   $getRoot,
@@ -37,6 +37,28 @@ import MyToolbar from "../Toolbar/Toolbar";
 import { NodeEventPlugin } from "@lexical/react/LexicalNodeEventPlugin";
 import OutsideAlerter from "../../ui/OutsideAlerter";
 import { Scrollbars } from "react-custom-scrollbars-2";
+import * as ScrollArea from "@radix-ui/react-scroll-area";
+
+function RadixScrollArea({ children }: { children: React.ReactNode }) {
+  return (
+    <ScrollArea.Root
+      className={"RADIX_SCROLL_AREA w-full h-full overflow-hidden"}
+    >
+      <ScrollArea.Viewport className={"w-full h-full"}>
+        {children}
+      </ScrollArea.Viewport>
+
+      <ScrollArea.Scrollbar
+        className="flex select-none touch-none p-0.5 bg-blackA3 transition-colors duration-[160ms] ease-out hover:bg-blackA5 data-[orientation=vertical]:w-2.5 data-[orientation=horizontal]:flex-col data-[orientation=horizontal]:h-2.5"
+        orientation="vertical"
+      >
+        <ScrollArea.Thumb />
+      </ScrollArea.Scrollbar>
+      <ScrollArea.Corner />
+    </ScrollArea.Root>
+  );
+}
+
 function getFirstLine(
   json: SerializedEditorState<SerializedLexicalNode>,
 ): string {
@@ -166,9 +188,18 @@ export function Editor({
         className={"LEXICAL_WRAPPER"}
         style={{
           height: "100%",
-          overflowY: "scroll",
+          width: "100%",
+          overflow: "hidden",
+          // overflowY: "scroll",
         }}
       >
+        {/*<Scrollbars*/}
+        {/*  style={{*/}
+        {/*    width: "100%",*/}
+        {/*    height: "100%",*/}
+        {/*    overflowX: "hidden",*/}
+        {/*  }}*/}
+        {/*>*/}
         <LexicalComposer
           initialConfig={{
             namespace: "editor",
@@ -219,16 +250,20 @@ export function Editor({
             {/*>*/}
             <RichTextPlugin
               contentEditable={
-                <ContentEditable
-                  className="editor-input"
-                  style={{
-                    // border: "2px solid blue",
-                    // maxHeight: "100%",
-                    outline: "2px solid blue",
-                    overflow: "hidden",
-                    // overflowY: "scroll",
-                  }}
-                />
+                <RadixScrollArea>
+                  <ContentEditable
+                    className="editor-input"
+                    style={{
+                      // border: "2px solid blue",
+                      // maxHeight: "100%",
+                      width: "100%",
+                      outline: "2px solid blue",
+                      // overflow: "hidden",
+                      // position: "absolute",
+                      // overflowY: "scroll",
+                    }}
+                  />
+                </RadixScrollArea>
               }
               placeholder={<Placeholder />}
               ErrorBoundary={LexicalErrorBoundary}
@@ -249,6 +284,7 @@ export function Editor({
           </div>
           {/*</div>*/}
         </LexicalComposer>
+        {/*</Scrollbars>*/}
       </div>
     </OutsideAlerter>
   );

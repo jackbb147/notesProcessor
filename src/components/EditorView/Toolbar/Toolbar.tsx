@@ -47,7 +47,7 @@ export const MyToolbar = () => {
   const [editor] = useLexicalComposerContext();
   return (
     <Toolbar.Root
-      className="flex w-full   overflow-hidden  top-0 bg-white z-40 dark:bg-dark_primary"
+      className="flex w-full  sticky overflow-hidden  top-0 bg-white z-40 dark:bg-dark_primary"
       aria-label="Formatting options"
       style={{
         paddingBottom: "2px",
