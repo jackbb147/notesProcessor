@@ -184,50 +184,68 @@ export function Editor({
         // debugger;
       }}
     >
-      <LexicalComposer
-        initialConfig={{
-          namespace: "editor",
-          nodes: [
-            InlineMathNode,
-            HeadingNode,
-            QuoteNode,
-            ListNode,
-            ListItemNode,
-          ],
-          onError: (error) => {
-            console.log("error: ", error);
-          },
-          theme: Theme,
+      <div
+        className={"LEXICAL_WRAPPER"}
+        style={{
+          display: "flex",
+          flexDirection: "column",
         }}
       >
-        <MyToolbar />
-        <RichTextPlugin
-          contentEditable={
-            <RadixScrollArea>
-              <ContentEditable
-                className="editor-input"
-                style={{
-                  outline: "none",
-                }}
-              />
-            </RadixScrollArea>
-          }
-          placeholder={<Placeholder />}
-          ErrorBoundary={LexicalErrorBoundary}
-        />
-        {/*  https://github.com/facebook/lexical/issues/2854#issuecomment-1422253235 */}
-        <TabIndentationPlugin />{" "}
-        {/*<OnChangePlugin onChange={onChange} ignoreSelectionChange />*/}
-        <UpdateHandlerPlugin />
-        <HTMLToLexicalPlugin html={note.Content} />
-        <HistoryPlugin />
-        <ListPlugin />
-        <HandleEditorBlurPlugin
-          clickedOutside={clickedOutside}
-          handleBlur={handleBlur}
-          note={note}
-        />
-      </LexicalComposer>
+        <LexicalComposer
+          initialConfig={{
+            namespace: "editor",
+            nodes: [
+              InlineMathNode,
+              HeadingNode,
+              QuoteNode,
+              ListNode,
+              ListItemNode,
+            ],
+            onError: (error) => {
+              console.log("error: ", error);
+            },
+            theme: Theme,
+          }}
+        >
+          <div
+            className={"EDITOR_WRAPPER"}
+            style={
+              {
+                // display: "flex",
+                // flexDirection: "column",
+              }
+            }
+          >
+            <MyToolbar />
+            <RichTextPlugin
+              contentEditable={
+                <RadixScrollArea>
+                  <ContentEditable
+                    className="editor-input"
+                    style={{
+                      outline: "none",
+                    }}
+                  />
+                </RadixScrollArea>
+              }
+              placeholder={<Placeholder />}
+              ErrorBoundary={LexicalErrorBoundary}
+            />
+            {/*  https://github.com/facebook/lexical/issues/2854#issuecomment-1422253235 */}
+            <TabIndentationPlugin />{" "}
+            {/*<OnChangePlugin onChange={onChange} ignoreSelectionChange />*/}
+            <UpdateHandlerPlugin />
+            <HTMLToLexicalPlugin html={note.Content} />
+            <HistoryPlugin />
+            <ListPlugin />
+            <HandleEditorBlurPlugin
+              clickedOutside={clickedOutside}
+              handleBlur={handleBlur}
+              note={note}
+            />
+          </div>
+        </LexicalComposer>
+      </div>
     </OutsideAlerter>
   );
 }
