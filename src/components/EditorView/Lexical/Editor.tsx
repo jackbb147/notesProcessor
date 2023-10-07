@@ -36,6 +36,7 @@ import "./theme.css";
 import MyToolbar from "../Toolbar/Toolbar";
 import { NodeEventPlugin } from "@lexical/react/LexicalNodeEventPlugin";
 import OutsideAlerter from "../../ui/OutsideAlerter";
+import { Scrollbars } from "react-custom-scrollbars-2";
 function getFirstLine(
   json: SerializedEditorState<SerializedLexicalNode>,
 ): string {
@@ -177,25 +178,50 @@ export function Editor({
           theme: Theme,
         }}
       >
-        <div className="editor-container text-left">
+        <div
+          className={" absolute top-0 h-full w-full overflow-hidden"}
+          style={{
+            border: "1px solid white",
+          }}
+        >
           <MyToolbar />
-          <RichTextPlugin
-            contentEditable={<ContentEditable className="editor-input" />}
-            placeholder={<Placeholder />}
-            ErrorBoundary={LexicalErrorBoundary}
-          />
-          {/*  https://github.com/facebook/lexical/issues/2854#issuecomment-1422253235 */}
-          <TabIndentationPlugin />{" "}
-          {/*<OnChangePlugin onChange={onChange} ignoreSelectionChange />*/}
-          <UpdateHandlerPlugin />
-          <HTMLToLexicalPlugin html={note.Content} />
-          <HistoryPlugin />
-          <ListPlugin />
-          <HandleEditorBlurPlugin
-            clickedOutside={clickedOutside}
-            handleBlur={handleBlur}
-            note={note}
-          />
+
+          <div
+            className="editor-container text-left"
+            style={{
+              height: "100%",
+              border: "2px solid red",
+            }}
+          >
+            <RichTextPlugin
+              contentEditable={
+                <ContentEditable
+                  className="editor-input"
+                  style={{
+                    border: "2px solid blue",
+                    maxHeight: "100%",
+                    outline: "none",
+                    overflow: "hidden",
+                    overflowY: "scroll",
+                  }}
+                />
+              }
+              placeholder={<Placeholder />}
+              ErrorBoundary={LexicalErrorBoundary}
+            />
+            {/*  https://github.com/facebook/lexical/issues/2854#issuecomment-1422253235 */}
+            <TabIndentationPlugin />{" "}
+            {/*<OnChangePlugin onChange={onChange} ignoreSelectionChange />*/}
+            <UpdateHandlerPlugin />
+            <HTMLToLexicalPlugin html={note.Content} />
+            <HistoryPlugin />
+            <ListPlugin />
+            <HandleEditorBlurPlugin
+              clickedOutside={clickedOutside}
+              handleBlur={handleBlur}
+              note={note}
+            />
+          </div>
         </div>
       </LexicalComposer>
     </OutsideAlerter>
