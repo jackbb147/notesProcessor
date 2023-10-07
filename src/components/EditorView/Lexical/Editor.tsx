@@ -184,22 +184,6 @@ export function Editor({
         // debugger;
       }}
     >
-      {/*<div*/}
-      {/*  className={"LEXICAL_WRAPPER"}*/}
-      {/*  style={{*/}
-      {/*    height: "100%",*/}
-      {/*    width: "100%",*/}
-      {/*    overflow: "hidden",*/}
-      {/*    // overflowY: "scroll",*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*<Scrollbars*/}
-      {/*  style={{*/}
-      {/*    width: "100%",*/}
-      {/*    height: "100%",*/}
-      {/*    overflowX: "hidden",*/}
-      {/*  }}*/}
-      {/*>*/}
       <LexicalComposer
         initialConfig={{
           namespace: "editor",
@@ -216,76 +200,34 @@ export function Editor({
           theme: Theme,
         }}
       >
-        {/*<div*/}
-        {/*  className={"WRAPPER"}*/}
-        {/*  style={{*/}
-        {/*    height: "100%",*/}
-        {/*    width: "100%",*/}
-        {/*    border: "2px solid gold",*/}
-        {/*    overflow: "hidden",*/}
-        {/*    position: "absolute",*/}
-        {/*    top: "0",*/}
-        {/*    display: "flex",*/}
-        {/*    flexDirection: "column",*/}
-        {/*  }}*/}
-        {/*>*/}
         <MyToolbar />
-        <div
-          className={" w-full grow SCROLLBAR_WRAPPER "}
-          style={{
-            border: "1px solid red",
-            height: "100%",
-            // marginTop: "10px",
-          }}
-        >
-          {/*<Scrollbars*/}
-          {/*  style={{*/}
-          {/*    width: "100%",*/}
-          {/*    // flexGrow: "1",*/}
-          {/*    // height: "100%",*/}
-          {/*    // overflowX: "hidden",*/}
-          {/*    // overflowY: "scroll",*/}
-          {/*  }}*/}
-          {/*  autoHide*/}
-          {/*>*/}
-          <RichTextPlugin
-            contentEditable={
-              <RadixScrollArea>
-                <ContentEditable
-                  className="editor-input"
-                  style={{
-                    // border: "2px solid blue",
-                    // maxHeight: "100%",
-                    width: "100%",
-                    outline: "2px solid blue",
-                    // overflow: "hidden",
-                    // position: "absolute",
-                    // overflowY: "scroll",
-                  }}
-                />
-              </RadixScrollArea>
-            }
-            placeholder={<Placeholder />}
-            ErrorBoundary={LexicalErrorBoundary}
-          />
-          {/*  https://github.com/facebook/lexical/issues/2854#issuecomment-1422253235 */}
-          <TabIndentationPlugin />{" "}
-          {/*<OnChangePlugin onChange={onChange} ignoreSelectionChange />*/}
-          <UpdateHandlerPlugin />
-          <HTMLToLexicalPlugin html={note.Content} />
-          <HistoryPlugin />
-          <ListPlugin />
-          <HandleEditorBlurPlugin
-            clickedOutside={clickedOutside}
-            handleBlur={handleBlur}
-            note={note}
-          />
-          {/*</Scrollbars>*/}
-        </div>
-        {/*</div>*/}
+        <RichTextPlugin
+          contentEditable={
+            <RadixScrollArea>
+              <ContentEditable
+                className="editor-input"
+                style={{
+                  outline: "none",
+                }}
+              />
+            </RadixScrollArea>
+          }
+          placeholder={<Placeholder />}
+          ErrorBoundary={LexicalErrorBoundary}
+        />
+        {/*  https://github.com/facebook/lexical/issues/2854#issuecomment-1422253235 */}
+        <TabIndentationPlugin />{" "}
+        {/*<OnChangePlugin onChange={onChange} ignoreSelectionChange />*/}
+        <UpdateHandlerPlugin />
+        <HTMLToLexicalPlugin html={note.Content} />
+        <HistoryPlugin />
+        <ListPlugin />
+        <HandleEditorBlurPlugin
+          clickedOutside={clickedOutside}
+          handleBlur={handleBlur}
+          note={note}
+        />
       </LexicalComposer>
-      {/*</Scrollbars>*/}
-      {/*</div>*/}
     </OutsideAlerter>
   );
 }
