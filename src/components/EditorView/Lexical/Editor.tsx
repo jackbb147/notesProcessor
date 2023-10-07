@@ -218,6 +218,7 @@ export function Editor({
                   className="editor-input"
                   style={{
                     outline: "none",
+                    textAlign: "left",
                   }}
                 />
               }
@@ -225,7 +226,7 @@ export function Editor({
               ErrorBoundary={LexicalErrorBoundary}
             />
             {/*  https://github.com/facebook/lexical/issues/2854#issuecomment-1422253235 */}
-            <TabIndentationPlugin />{" "}
+            <TabIndentationPlugin />
             {/*<OnChangePlugin onChange={onChange} ignoreSelectionChange />*/}
             <UpdateHandlerPlugin />
             <HTMLToLexicalPlugin html={note.Content} />

@@ -6,11 +6,14 @@ import { Editor } from "@tiptap/core";
 import { useEffect, useState } from "react";
 import { IconSize } from "./IconSize";
 import { LexicalEditor } from "lexical";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { FORMAT_TEXT_COMMAND } from "lexical";
 
 export function BoldBtn({ editor }: { editor: LexicalEditor | null }) {
   const [isActive, setIsActive] = useState(false);
   function handleClick() {
     if (!editor) return;
+    editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
     // editor.chain().focus().toggleBold().run();
   }
 
