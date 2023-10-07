@@ -5,6 +5,8 @@ import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { HeadingNode, QuoteNode } from "@lexical/rich-text";
+import { ListNode, ListItemNode } from "@lexical/list";
+import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 
 import { useEffect, useState } from "react";
 import { $generateHtmlFromNodes } from "@lexical/html";
@@ -162,7 +164,13 @@ export function Editor({
       <LexicalComposer
         initialConfig={{
           namespace: "editor",
-          nodes: [InlineMathNode, HeadingNode, QuoteNode],
+          nodes: [
+            InlineMathNode,
+            HeadingNode,
+            QuoteNode,
+            ListNode,
+            ListItemNode,
+          ],
           onError: (error) => {
             console.log("error: ", error);
           },
@@ -182,6 +190,7 @@ export function Editor({
           <UpdateHandlerPlugin />
           <HTMLToLexicalPlugin html={note.Content} />
           <HistoryPlugin />
+          <ListPlugin />
           <HandleEditorBlurPlugin
             clickedOutside={clickedOutside}
             handleBlur={handleBlur}
