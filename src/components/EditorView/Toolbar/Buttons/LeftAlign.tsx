@@ -5,12 +5,13 @@ import { Editor } from "@tiptap/core";
 import { MenuItem } from "./MenuItem";
 import { AlignLeft } from "lucide-react";
 import { IconSize } from "./IconSize";
-import { LexicalEditor } from "lexical";
+import { FORMAT_ELEMENT_COMMAND, LexicalEditor } from "lexical";
 
 export function LeftAlign({ editor }: { editor: LexicalEditor | null }) {
   const [isActive, setIsActive] = useState(false);
   function handleClick() {
     if (!editor) return;
+    editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "right");
     // editor.chain().focus().setTextAlign("left").run();
   }
   // useEffect(() => {
