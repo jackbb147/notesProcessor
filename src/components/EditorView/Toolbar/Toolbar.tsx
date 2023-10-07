@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import * as Toolbar from "@radix-ui/react-toolbar";
 import {
   StrikethroughIcon,
@@ -10,7 +10,7 @@ import {
 } from "@radix-ui/react-icons";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import * as Select from "@radix-ui/react-select";
-
+import { $findMatchingParent } from "@lexical/utils";
 import { MenuItem } from "./Buttons/MenuItem";
 import { Editor } from "@tiptap/core";
 import { BoldBtn } from "./Buttons/BoldBtn";
@@ -27,6 +27,14 @@ import { styled } from "@stitches/react";
 import { MathBtn } from "./Buttons/MathBtn";
 import { AddReferenceBtn } from "./Buttons/AddReferenceBtn";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import {
+  $getSelection,
+  $isRangeSelection,
+  $isRootOrShadowRoot,
+  COMMAND_PRIORITY_CRITICAL,
+  SELECTION_CHANGE_COMMAND,
+} from "lexical";
+// import { $findMatchingParent } from "lexical/LexicalUtils";
 
 const ToggleGroup = styled(Toolbar.ToggleGroup, {
   display: "flex",
@@ -43,8 +51,123 @@ const Separator = styled(Toolbar.Separator, {
   marginBottom: "9px",
 });
 
-export const MyToolbar = () => {
-  const [editor] = useLexicalComposerContext();
+export const ToolbarPlugin = () => {
+  const [activeEditor] = useLexicalComposerContext();
+  const [isBold, setIsBold] = useState(false);
+  const [isItalic, setIsItalic] = useState(false);
+
+  const $updateToolbar = useCallback(() => {
+    console.warn("update toolbar");
+    const selection = $getSelection();
+    if ($isRangeSelection(selection)) {
+      const anchorNode = selection.anchor.getNode();
+      let element =
+        anchorNode.getKey() === "root"
+          ? anchorNode
+          : $findMatchingParent(anchorNode, (e) => {
+              const parent = e.getParent();
+              return parent !== null && $isRootOrShadowRoot(parent);
+            });
+
+      if (element === null) {
+        element = anchorNode.getTopLevelElementOrThrow();
+      }
+
+      const elementKey = element.getKey();
+      const elementDOM = activeEditor.getElementByKey(elementKey);
+
+      // Update text format
+      console.warn(selection.hasFormat("bold"));
+      setIsBold(selection.hasFormat("bold"));
+      setIsItalic(selection.hasFormat("italic"));
+      // setIsUnderline(selection.hasFormat("underline"));
+      // setIsStrikethrough(selection.hasFormat("strikethrough"));
+      // setIsSubscript(selection.hasFormat("subscript"));
+      // setIsSuperscript(selection.hasFormat("superscript"));
+      // setIsCode(selection.hasFormat("code"));
+      // setIsRTL($isParentElementRTL(selection));
+
+      // Update links
+      // const node = getSelectedNode(selection);
+      // const parent = node.getParent();
+      // if ($isLinkNode(parent) || $isLinkNode(node)) {
+      //   setIsLink(true);
+      // } else {
+      //   setIsLink(false);
+      // }
+
+      // const tableNode = $findMatchingParent(node, $isTableNode);
+      // if ($isTableNode(tableNode)) {
+      //   setRootType("table");
+      // } else {
+      //   setRootType("root");
+      // }
+
+      // if (elementDOM !== null) {
+      //   setSelectedElementKey(elementKey);
+      //   if ($isListNode(element)) {
+      //     const parentList = $getNearestNodeOfType<ListNode>(
+      //       anchorNode,
+      //       ListNode,
+      //     );
+      //     const type = parentList
+      //       ? parentList.getListType()
+      //       : element.getListType();
+      //     setBlockType(type);
+      //   } else {
+      //     const type = $isHeadingNode(element)
+      //       ? element.getTag()
+      //       : element.getType();
+      //     if (type in blockTypeToBlockName) {
+      //       setBlockType(type as keyof typeof blockTypeToBlockName);
+      //     }
+      //     if ($isCodeNode(element)) {
+      //       const language =
+      //         element.getLanguage() as keyof typeof CODE_LANGUAGE_MAP;
+      //       setCodeLanguage(
+      //         language ? CODE_LANGUAGE_MAP[language] || language : "",
+      //       );
+      //       return;
+      //     }
+      //   }
+      // }
+      // Handle buttons
+      // setFontSize(
+      //   $getSelectionStyleValueForProperty(selection, "font-size", "15px"),
+      // );
+      // setFontColor(
+      //   $getSelectionStyleValueForProperty(selection, "color", "#000"),
+      // );
+      // setBgColor(
+      //   $getSelectionStyleValueForProperty(
+      //     selection,
+      //     "background-color",
+      //     "#fff",
+      //   ),
+      // );
+      // setFontFamily(
+      //   $getSelectionStyleValueForProperty(selection, "font-family", "Arial"),
+      // );
+      // setElementFormat(
+      //   ($isElementNode(node)
+      //     ? node.getFormatType()
+      //     : parent?.getFormatType()) || "left",
+      // );
+    }
+  }, [activeEditor]);
+
+  useEffect(() => {
+    return activeEditor.registerCommand(
+      SELECTION_CHANGE_COMMAND,
+      (_payload, newEditor) => {
+        $updateToolbar();
+        // setActiveEditor(newEditor);
+        return false;
+      },
+      COMMAND_PRIORITY_CRITICAL,
+    );
+  }, [activeEditor, $updateToolbar]);
+
   return (
     <Toolbar.Root
       className="flex w-full  sticky overflow-hidden  top-0 bg-white z-40 dark:bg-dark_primary"
@@ -58,32 +181,32 @@ export const MyToolbar = () => {
     >
       <ScrollAreaDemo>
         <ToggleGroup type="multiple" aria-label="History">
-          <Undo editor={editor} />
-          <Redo editor={editor} />
+          <Undo editor={activeEditor} />
+          <Redo editor={activeEditor} />
         </ToggleGroup>
         <Separator className="w-[1px] bg-mauve6 mx-[10px]" />
 
         <ToggleGroup type="multiple" aria-label="Text formatting">
-          <BoldBtn editor={editor} />
-          <ItalicBtn editor={editor} />
-          <UnderlineBtn editor={editor} />
+          <BoldBtn editor={activeEditor} isActive={isBold} />
+          <ItalicBtn editor={activeEditor} />
+          <UnderlineBtn editor={activeEditor} />
         </ToggleGroup>
         <Separator className="w-[1px] bg-mauve6 mx-[10px]" />
-        <SelectDemo editor={editor} />
+        <SelectDemo editor={activeEditor} />
         <Separator className="w-[1px] bg-mauve6 mx-[10px]" />
         <ToggleGroup type="single" aria-label="Text alignment">
-          <LeftAlign editor={editor} />
-          <Center editor={editor} />
-          <RightAlign editor={editor} />
+          <LeftAlign editor={activeEditor} />
+          <Center editor={activeEditor} />
+          <RightAlign editor={activeEditor} />
         </ToggleGroup>
         <Separator className="w-[1px] bg-mauve6 mx-[10px]" />
         <ToggleGroup type="single" aria-label="Math">
-          <MathBtn editor={editor} />
-          <AddReferenceBtn editor={editor} />
+          <MathBtn editor={activeEditor} />
+          <AddReferenceBtn editor={activeEditor} />
         </ToggleGroup>
       </ScrollAreaDemo>
     </Toolbar.Root>
   );
 };
 
-export default MyToolbar;
+export default ToolbarPlugin;

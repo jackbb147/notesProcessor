@@ -33,7 +33,7 @@ import { HTMLToLexicalPlugin } from "./HTMLToLexicalPlugin";
 import { $insertNodeToNearestRoot } from "@lexical/utils";
 import { Theme } from "./Theme";
 import "./theme.css";
-import MyToolbar from "../Toolbar/Toolbar";
+import ToolbarPlugin from "../Toolbar/Toolbar";
 import { NodeEventPlugin } from "@lexical/react/LexicalNodeEventPlugin";
 import OutsideAlerter from "../../ui/OutsideAlerter";
 import { Scrollbars } from "react-custom-scrollbars-2";
@@ -210,7 +210,7 @@ export function Editor({
             flexDirection: "column",
           }}
         >
-          <MyToolbar />
+          <ToolbarPlugin />
           <RadixScrollArea>
             <RichTextPlugin
               contentEditable={
