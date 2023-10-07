@@ -162,45 +162,69 @@ export function Editor({
         // debugger;
       }}
     >
-      <LexicalComposer
-        initialConfig={{
-          namespace: "editor",
-          nodes: [
-            InlineMathNode,
-            HeadingNode,
-            QuoteNode,
-            ListNode,
-            ListItemNode,
-          ],
-          onError: (error) => {
-            console.log("error: ", error);
-          },
-          theme: Theme,
+      <div
+        className={"LEXICAL_WRAPPER"}
+        style={{
+          height: "100%",
+          overflowY: "scroll",
         }}
       >
-        <div
-          className={" absolute top-0 h-full w-full overflow-hidden"}
-          style={{
-            border: "1px solid white",
+        <LexicalComposer
+          initialConfig={{
+            namespace: "editor",
+            nodes: [
+              InlineMathNode,
+              HeadingNode,
+              QuoteNode,
+              ListNode,
+              ListItemNode,
+            ],
+            onError: (error) => {
+              console.log("error: ", error);
+            },
+            theme: Theme,
           }}
         >
+          {/*<div*/}
+          {/*  className={"WRAPPER"}*/}
+          {/*  style={{*/}
+          {/*    height: "100%",*/}
+          {/*    width: "100%",*/}
+          {/*    border: "2px solid gold",*/}
+          {/*    overflow: "hidden",*/}
+          {/*    position: "absolute",*/}
+          {/*    top: "0",*/}
+          {/*    display: "flex",*/}
+          {/*    flexDirection: "column",*/}
+          {/*  }}*/}
+          {/*>*/}
           <MyToolbar />
-
           <div
-            className="editor-container text-left"
+            className={" w-full grow SCROLLBAR_WRAPPER "}
             style={{
+              border: "1px solid red",
               height: "100%",
-              border: "2px solid red",
+              marginTop: "10px",
             }}
           >
+            {/*<Scrollbars*/}
+            {/*  style={{*/}
+            {/*    width: "100%",*/}
+            {/*    // flexGrow: "1",*/}
+            {/*    // height: "100%",*/}
+            {/*    // overflowX: "hidden",*/}
+            {/*    // overflowY: "scroll",*/}
+            {/*  }}*/}
+            {/*  autoHide*/}
+            {/*>*/}
             <RichTextPlugin
               contentEditable={
                 <ContentEditable
                   className="editor-input"
                   style={{
-                    border: "2px solid blue",
-                    maxHeight: "100%",
-                    outline: "none",
+                    // border: "2px solid blue",
+                    // maxHeight: "100%",
+                    outline: "2px solid blue",
                     overflow: "hidden",
                     overflowY: "scroll",
                   }}
@@ -221,9 +245,11 @@ export function Editor({
               handleBlur={handleBlur}
               note={note}
             />
+            {/*</Scrollbars>*/}
           </div>
-        </div>
-      </LexicalComposer>
+          {/*</div>*/}
+        </LexicalComposer>
+      </div>
     </OutsideAlerter>
   );
 }

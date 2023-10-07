@@ -80,44 +80,57 @@ export function EditorBoxComponent({
   //   });
   // }
   return (
-    <Scrollbars
-      style={{
-        width: width ?? "100%",
-
-        flexGrow: "1",
-        height: "100%",
-        // overflowX: "hidden",
-        // overflowY: "scroll",
-      }}
-      autoHide
-    >
-      <Editor
-        note={note}
-        handleBlur={handleUpdateNode}
-        // focusRequested={focusRequested}
-      />
-      {/*<TiptapEditor*/}
-      {/*  note={note}*/}
-      {/*  handleBlur={handleUpdateNode}*/}
-      {/*  focusRequested={focusRequested}*/}
-      {/*/>*/}
-      {/*<Tiptap note={note} />*/}
-    </Scrollbars>
-    // <div
-    //   tabIndex={0}
-    //   className={"scrollbar"}
-    //   id="style-1" //1 3
+    // <Scrollbars
     //   style={{
     //     width: width ?? "100%",
-    //     // border: "1px solid red",
+    //
     //     flexGrow: "1",
     //     height: "100%",
-    //     // overflow: "hidden",
+    //     // overflowX: "hidden",
     //     // overflowY: "scroll",
-    //     borderRight: AppState.darkModeOn ? "1px solid white" : "1px solid #ccc",
     //   }}
+    //   autoHide
     // >
-    //   <Tiptap />
-    // </div>
+    <Editor
+      note={note}
+      handleBlur={handleUpdateNode}
+      // focusRequested={focusRequested}
+    />
   );
+  {
+    /*<TiptapEditor*/
+  }
+  {
+    /*  note={note}*/
+  }
+  {
+    /*  handleBlur={handleUpdateNode}*/
+  }
+  {
+    /*  focusRequested={focusRequested}*/
+  }
+  {
+    /*/>*/
+  }
+  {
+    /*<Tiptap note={note} />*/
+  }
+  // </Scrollbars>
+  // <div
+  //   tabIndex={0}
+  //   className={"scrollbar"}
+  //   id="style-1" //1 3
+  //   style={{
+  //     width: width ?? "100%",
+  //     // border: "1px solid red",
+  //     flexGrow: "1",
+  //     height: "100%",
+  //     // overflow: "hidden",
+  //     // overflowY: "scroll",
+  //     borderRight: AppState.darkModeOn ? "1px solid white" : "1px solid #ccc",
+  //   }}
+  // >
+  //   <Tiptap />
+  // </div>
+  // );
 }

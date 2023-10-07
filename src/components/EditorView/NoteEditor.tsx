@@ -225,6 +225,7 @@ export function NoteEditor({
       }}
     >
       <div
+        className={"LOOKATME"}
         onClick={() => {
           // alert("hey");
           setFocusRequested(focusRequested + 1);
