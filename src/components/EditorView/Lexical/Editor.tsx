@@ -5,6 +5,7 @@ import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { useEffect, useState } from "react";
+import { $generateHtmlFromNodes } from "@lexical/html";
 import {
   $getRoot,
   $insertNodes,
@@ -13,6 +14,9 @@ import {
   EditorState,
   LexicalCommand,
   RootNode,
+  SerializedEditorState,
+  SerializedLexicalNode,
+  SerializedTextNode,
 } from "lexical";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { TabIndentationPlugin } from "@lexical/react/LexicalTabIndentationPlugin";
@@ -28,22 +32,87 @@ import "./theme.css";
 import MyToolbar from "../Toolbar/Toolbar";
 import { NodeEventPlugin } from "@lexical/react/LexicalNodeEventPlugin";
 import OutsideAlerter from "../../ui/OutsideAlerter";
+function getFirstLine(
+  json: SerializedEditorState<SerializedLexicalNode>,
+): string {
+  // debugger;
+  let res: string = "";
+  // TODO
+  var q: SerializedLexicalNode[] = [json.root];
 
-function MyPlugin() {
-  const [editor] = useLexicalComposerContext();
-  function myListener(event: Event) {
-    // You may want to filter on the event target here
-    // to only include clicks on certain types of DOM Nodes.
-    alert("blurred");
+  while (q.length > 0) {
+    var node: SerializedLexicalNode | undefined = q.shift();
+    if (!node) continue;
+
+    if (node.type === "text") {
+      const textNode: SerializedTextNode = node as SerializedTextNode;
+      res = textNode.text ?? "";
+      break;
+    }
+
+    // if (node.content) {
+    //   q.push(...node.content);
+    // }
   }
+  if (res.length < 1) res = "New Note";
+  return res;
+}
+
+/**
+ * When the editor loses focus, we want to update the note in the graph by calling the handleBlur function.
+ * @constructor
+ */
+function HandleEditorBlurPlugin({
+  clickedOutside,
+  handleBlur,
+  note,
+}: {
+  clickedOutside: number;
+  handleBlur: Function;
+  note: GraphNode;
+}) {
+  const [editor] = useLexicalComposerContext();
+  const [clickedInside, setClickedInside] = useState(0);
+
+  useEffect(() => {
+    setClickedInside(0);
+  }, [note.Id]);
+
+  function focusHandler(event: Event) {
+    console.warn("focused");
+    setClickedInside((prev) => prev + 1);
+  }
+
+  useEffect(() => {
+    return editor.registerRootListener((rootElement, prevRootElement) => {
+      //add listeners to the new root element
+      rootElement?.addEventListener("focus", focusHandler);
+      //remove listeners from the old root element
+    });
+  }, [editor]);
+
+  useEffect(() => {
+    if (!editor || !handleBlur || clickedInside === 0) return;
+    // debugger;
+    // TODO
+    const editorState = editor.getEditorState();
+    const json = editorState.toJSON();
+    debugger;
+
+    const content = $generateHtmlFromNodes(editor, null);
+    let firstLine: string = getFirstLine(json);
+    console.log("firstLine: " + firstLine);
+    console.log("content: " + content);
+    // handleBlur(firstLine, content);
+  }, [clickedOutside]);
   useEffect(() => {
     return editor.registerRootListener((rootElement, prevRootElement) => {
       // debugger;
       // add the listener to the current root element
-      rootElement?.addEventListener("blur", myListener);
+      rootElement?.addEventListener("blur", focusHandler);
       // remove the listener from the old root element - make sure the ref to myListener
       // is stable so the removal works and you avoid a memory leak.
-      prevRootElement?.removeEventListener("blur", myListener);
+      prevRootElement?.removeEventListener("blur", focusHandler);
     });
   }, [editor]);
   return null;
@@ -51,6 +120,7 @@ function MyPlugin() {
 
 export function Editor({ note }: { note: GraphNode }) {
   const [clickedOutside, setClickedOutside] = useState(0);
+
   return (
     <OutsideAlerter
       callback={() => {
@@ -95,15 +165,11 @@ export function Editor({ note }: { note: GraphNode }) {
           <UpdateHandlerPlugin />
           <HTMLToLexicalPlugin html={note.Content} />
           <HistoryPlugin />
-          {/*<MyPlugin />*/}
-          {/*<NodeEventPlugin*/}
-          {/*  nodeType={RootNode}*/}
-          {/*  eventType={"click"}*/}
-          {/*  eventListener={(e: Event) => {*/}
-          {/*    alert("blurred");*/}
-          {/*  }}*/}
-          {/*/>*/}
-          {/*<InlineMathPlugin />*/}
+          <HandleEditorBlurPlugin
+            clickedOutside={clickedOutside}
+            handleBlur={() => {}}
+            note={note}
+          />
         </div>
       </LexicalComposer>
     </OutsideAlerter>
