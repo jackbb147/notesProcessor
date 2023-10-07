@@ -7,11 +7,16 @@ import { AlignLeft } from "lucide-react";
 import { IconSize } from "./IconSize";
 import { FORMAT_ELEMENT_COMMAND, LexicalEditor } from "lexical";
 
-export function LeftAlign({ editor }: { editor: LexicalEditor | null }) {
-  const [isActive, setIsActive] = useState(false);
+export function LeftAlign({
+  editor,
+  isActive,
+}: {
+  editor: LexicalEditor | null;
+  isActive: boolean;
+}) {
   function handleClick() {
     if (!editor) return;
-    editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "right");
+    editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");
     // editor.chain().focus().setTextAlign("left").run();
   }
   // useEffect(() => {

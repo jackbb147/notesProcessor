@@ -25,14 +25,19 @@ import SelectDemo from "./Buttons/Select";
 import { ScrollAreaDemo } from "./ScrollArea";
 import { styled } from "@stitches/react";
 import { MathBtn } from "./Buttons/MathBtn";
+import { $isAtNodeEnd } from "@lexical/selection";
 import { AddReferenceBtn } from "./Buttons/AddReferenceBtn";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import {
   $getSelection,
+  $isElementNode,
   $isRangeSelection,
   $isRootOrShadowRoot,
   COMMAND_PRIORITY_CRITICAL,
+  ElementNode,
+  RangeSelection,
   SELECTION_CHANGE_COMMAND,
+  TextNode,
 } from "lexical";
 // import { $findMatchingParent } from "lexical/LexicalUtils";
 
@@ -51,10 +56,29 @@ const Separator = styled(Toolbar.Separator, {
   marginBottom: "9px",
 });
 
+export function getSelectedNode(
+  selection: RangeSelection,
+): TextNode | ElementNode {
+  const anchor = selection.anchor;
+  const focus = selection.focus;
+  const anchorNode = selection.anchor.getNode();
+  const focusNode = selection.focus.getNode();
+  if (anchorNode === focusNode) {
+    return anchorNode;
+  }
+  const isBackward = selection.isBackward();
+  if (isBackward) {
+    return $isAtNodeEnd(focus) ? anchorNode : focusNode;
+  } else {
+    return $isAtNodeEnd(anchor) ? anchorNode : focusNode;
+  }
+}
+
 export const ToolbarPlugin = () => {
   const [activeEditor] = useLexicalComposerContext();
   const [isBold, setIsBold] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
+  const [elementFormat, setElementFormat] = useState("left");
 
   const $updateToolbar = useCallback(() => {
     console.warn("update toolbar");
@@ -88,8 +112,8 @@ export const ToolbarPlugin = () => {
       // setIsRTL($isParentElementRTL(selection));
 
       // Update links
-      // const node = getSelectedNode(selection);
-      // const parent = node.getParent();
+      const node = getSelectedNode(selection);
+      const parent = node.getParent();
       // if ($isLinkNode(parent) || $isLinkNode(node)) {
       //   setIsLink(true);
       // } else {
@@ -148,11 +172,11 @@ export const ToolbarPlugin = () => {
       // setFontFamily(
       //   $getSelectionStyleValueForProperty(selection, "font-family", "Arial"),
       // );
-      // setElementFormat(
-      //   ($isElementNode(node)
-      //     ? node.getFormatType()
-      //     : parent?.getFormatType()) || "left",
-      // );
+      setElementFormat(
+        ($isElementNode(node)
+          ? node.getFormatType()
+          : parent?.getFormatType()) || "left",
+      );
     }
   }, [activeEditor]);
 
@@ -195,7 +219,10 @@ export const ToolbarPlugin = () => {
         <SelectDemo editor={activeEditor} />
         <Separator className="w-[1px] bg-mauve6 mx-[10px]" />
         <ToggleGroup type="single" aria-label="Text alignment">
-          <LeftAlign editor={activeEditor} />
+          <LeftAlign
+            editor={activeEditor}
+            isActive={elementFormat === "left"}
+          />
           <Center editor={activeEditor} />
           <RightAlign editor={activeEditor} />
         </ToggleGroup>
