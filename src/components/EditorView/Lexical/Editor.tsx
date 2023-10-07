@@ -4,6 +4,8 @@ import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
+import { HeadingNode, QuoteNode } from "@lexical/rich-text";
+
 import { useEffect, useState } from "react";
 import { $generateHtmlFromNodes } from "@lexical/html";
 import {
@@ -85,15 +87,15 @@ function HandleEditorBlurPlugin({
     setClickedInside(0);
   }, [note.Id]);
 
-  function focusHandler(event: Event) {
-    console.warn("focused");
+  function clickHandler(event: Event) {
+    console.warn("clicked");
     setClickedInside((prev) => prev + 1);
   }
 
   useEffect(() => {
     return editor.registerRootListener((rootElement, prevRootElement) => {
       //add listeners to the new root element
-      rootElement?.addEventListener("focus", focusHandler);
+      rootElement?.addEventListener("click", clickHandler);
       //remove listeners from the old root element
     });
   }, [editor]);
@@ -104,13 +106,12 @@ function HandleEditorBlurPlugin({
     // TODO
     const editorState = editor.getEditorState();
     const json = editorState.toJSON();
-    debugger;
-
     editorState.read(() => {
       const content = $generateHtmlFromNodes(editor, null);
       let firstLine: string = getFirstLine(json);
       console.log("firstLine: " + firstLine);
       console.log("content: " + content);
+      handleBlur(firstLine, content);
     });
 
     // handleBlur(firstLine, content);
@@ -119,16 +120,22 @@ function HandleEditorBlurPlugin({
     return editor.registerRootListener((rootElement, prevRootElement) => {
       // debugger;
       // add the listener to the current root element
-      rootElement?.addEventListener("blur", focusHandler);
+      rootElement?.addEventListener("blur", clickHandler);
       // remove the listener from the old root element - make sure the ref to myListener
       // is stable so the removal works and you avoid a memory leak.
-      prevRootElement?.removeEventListener("blur", focusHandler);
+      prevRootElement?.removeEventListener("blur", clickHandler);
     });
   }, [editor]);
   return null;
 }
 
-export function Editor({ note }: { note: GraphNode }) {
+export function Editor({
+  note,
+  handleBlur,
+}: {
+  note: GraphNode;
+  handleBlur: (title: string, content: string) => any;
+}) {
   const [clickedOutside, setClickedOutside] = useState(0);
 
   return (
@@ -155,7 +162,7 @@ export function Editor({ note }: { note: GraphNode }) {
       <LexicalComposer
         initialConfig={{
           namespace: "editor",
-          nodes: [InlineMathNode],
+          nodes: [InlineMathNode, HeadingNode, QuoteNode],
           onError: (error) => {
             console.log("error: ", error);
           },
@@ -177,7 +184,7 @@ export function Editor({ note }: { note: GraphNode }) {
           <HistoryPlugin />
           <HandleEditorBlurPlugin
             clickedOutside={clickedOutside}
-            handleBlur={() => {}}
+            handleBlur={handleBlur}
             note={note}
           />
         </div>

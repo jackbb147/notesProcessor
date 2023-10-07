@@ -93,7 +93,7 @@ export function EditorBoxComponent({
     >
       <Editor
         note={note}
-        // handleBlur={handleUpdateNode}
+        handleBlur={handleUpdateNode}
         // focusRequested={focusRequested}
       />
       {/*<TiptapEditor*/}

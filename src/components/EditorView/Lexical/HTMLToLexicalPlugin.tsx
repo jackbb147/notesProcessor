@@ -7,8 +7,12 @@ export function HTMLToLexicalPlugin({ html }: { html: string }) {
   useEffect(() => {
     editor.update(() => {
       const parser = new DOMParser();
+      // html = String.raw`<p>wendy</p>`;
+      // html = String.raw`<p><h1>wendy</h1></p>`; // error
+      html = String.raw`<h1>wendy</h1>`;
       const dom = parser.parseFromString(html, "text/html");
       const nodes = $generateNodesFromDOM(editor, dom);
+      console.log("nodes: ", nodes);
       // Select the root
       const root = $getRoot();
       root.clear();
