@@ -15,7 +15,6 @@ import { ContentContainer } from "../../ContentContainer";
 import { InlineMathNodeReactComponent } from "./InlineMathNodeReactComponent";
 
 export class InlineMathNode extends DecoratorNode<ReactNode> {
-  __id: string;
   __showToolTip: boolean = false;
   __tex: string = String.raw`F = m\vec{a}`;
 
@@ -24,12 +23,12 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
   }
 
   static clone(node: InlineMathNode): InlineMathNode {
-    return new InlineMathNode(node.__id, node.__key);
+    return new InlineMathNode(node.__tex, node.__key);
   }
 
-  constructor(id: string, key?: NodeKey) {
+  constructor(tex: string, key?: NodeKey) {
     super(key);
-    this.__id = id;
+    if (tex.length > 0) this.__tex = tex;
   }
 
   createDOM(): HTMLElement {
@@ -83,11 +82,11 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
         // debugger;
         var n = node as HTMLElement;
         if (n.classList.contains("InlineMathNode")) {
-          debugger;
+          // debugger;
           return {
             conversion: () => {
               return {
-                node: $createInlineMathNode(""),
+                node: $createInlineMathNode("666"),
               };
             },
             priority: 4,
@@ -176,12 +175,11 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
     );
     // return <MathView value={"F = ma"} />;
     // return <div>Inline Math</div>;
-    // return <VideoPlayer videoID={this.__id} />;
   }
 }
 
-export function $createInlineMathNode(id: string): InlineMathNode {
-  return new InlineMathNode(id);
+export function $createInlineMathNode(tex: string): InlineMathNode {
+  return new InlineMathNode(tex);
 }
 
 export function $isInlineMathNode(

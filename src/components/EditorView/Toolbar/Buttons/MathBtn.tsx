@@ -32,7 +32,7 @@ export function MathBtn({ editor }: { editor: LexicalEditor | null }) {
   function handleClick() {
     if (!editor) return;
     // TODO - insert math
-    editor.dispatchCommand(INSERT_INLINE_MATH_COMMAND, "test");
+    editor.dispatchCommand(INSERT_INLINE_MATH_COMMAND, "");
     // editor
     //   .chain()
     //   .focus()
