@@ -82,7 +82,7 @@ export function getSelectedNode(
   }
 }
 
-const blockTypeToBlockName = {
+export const blockTypeToBlockName = {
   bullet: "Bulleted List",
   h1: "Heading 1",
   h2: "Heading 2",

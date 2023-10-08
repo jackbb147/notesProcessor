@@ -28,6 +28,8 @@ import {
   $patchStyleText,
   $setBlocksType,
 } from "@lexical/selection";
+import { blockTypeToBlockName } from "../ToolbarPlugin";
+
 const SelectItem = React.forwardRef(
   (
     {
@@ -75,7 +77,7 @@ const HeadingSelector = ({
   defaultValue,
 }: {
   editor: LexicalEditor | null;
-  defaultValue: string;
+  defaultValue: keyof typeof blockTypeToBlockName;
 }) => {
   const [value, setValue] = useState<string>(defaultValue);
 
@@ -131,48 +133,11 @@ const HeadingSelector = ({
         break;
       case Formats.normal:
         formatParagraph();
-        // formatHeading("p");
-        // for (var x in [1, 2, 3]) {
-        //   const lvl = Number(x) as Level;
-        //   if (editor.isActive("heading", { level: lvl })) {
-        //     // editor.chain().focus().toggleHeading({ level: lvl }).run();
-        //     break;
-        //   }
-        // }
         break;
     }
     setValue(newValue);
   }
 
-  // useEffect(() => {
-  //   if (!editor) return;
-  //   editor.on("selectionUpdate", ({ editor }) => {
-  //     var level: Level | undefined = undefined;
-  //     for (var x in [1, 2, 3]) {
-  //       const lvl = Number(x) as Level;
-  //       if (editor.isActive("heading", { level: lvl })) {
-  //         level = lvl;
-  //         break;
-  //       }
-  //     }
-  //     if (level === undefined) {
-  //       setValue(Formats.normal);
-  //       return;
-  //     } else {
-  //       switch (level) {
-  //         case 1:
-  //           setValue(Formats.heading1);
-  //           break;
-  //         case 2:
-  //           setValue(Formats.heading2);
-  //           break;
-  //         case 3:
-  //           setValue(Formats.heading3);
-  //           break;
-  //       }
-  //     }
-  //   });
-  // }, [editor]);
   return (
     <Select.Root
       value={value}
