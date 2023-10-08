@@ -10,6 +10,13 @@ import {
 } from "@radix-ui/react-icons";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import * as Select from "@radix-ui/react-select";
+import {
+  $createHeadingNode,
+  $createQuoteNode,
+  $isHeadingNode,
+  $isQuoteNode,
+  HeadingTagType,
+} from "@lexical/rich-text";
 import { $findMatchingParent } from "@lexical/utils";
 import { MenuItem } from "./Buttons/MenuItem";
 import { Editor } from "@tiptap/core";
@@ -21,7 +28,7 @@ import { Redo } from "./Buttons/Redo";
 import { LeftAlign } from "./Buttons/LeftAlign";
 import { Center } from "./Buttons/Center";
 import { RightAlign } from "./Buttons/RightAlign";
-import SelectDemo from "./Buttons/HeadingSelector";
+import HeadingSelector from "./Buttons/HeadingSelector";
 import { ScrollAreaDemo } from "./ScrollArea";
 import { styled } from "@stitches/react";
 import { MathBtn } from "./Buttons/MathBtn";
@@ -35,6 +42,7 @@ import {
   $isRootOrShadowRoot,
   COMMAND_PRIORITY_CRITICAL,
   ElementNode,
+  NodeKey,
   RangeSelection,
   SELECTION_CHANGE_COMMAND,
   TextNode,
@@ -74,12 +82,31 @@ export function getSelectedNode(
   }
 }
 
+const blockTypeToBlockName = {
+  bullet: "Bulleted List",
+  h1: "Heading 1",
+  h2: "Heading 2",
+  h3: "Heading 3",
+  h4: "Heading 4",
+  h5: "Heading 5",
+  h6: "Heading 6",
+  number: "Numbered List",
+  paragraph: "Normal",
+  quote: "Quote",
+};
+
 export const ToolbarPlugin = () => {
   const [activeEditor] = useLexicalComposerContext();
   const [isBold, setIsBold] = useState(false);
   const [isUnderline, setIsUnderline] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
   const [elementFormat, setElementFormat] = useState("left");
+  const [blockType, setBlockType] =
+    useState<keyof typeof blockTypeToBlockName>("paragraph");
+
+  const [selectedElementKey, setSelectedElementKey] = useState<NodeKey | null>(
+    null,
+  );
 
   const $updateToolbar = useCallback(() => {
     console.warn("update toolbar");
@@ -128,34 +155,27 @@ export const ToolbarPlugin = () => {
       //   setRootType("root");
       // }
 
-      // if (elementDOM !== null) {
-      //   setSelectedElementKey(elementKey);
-      //   if ($isListNode(element)) {
-      //     const parentList = $getNearestNodeOfType<ListNode>(
-      //       anchorNode,
-      //       ListNode,
-      //     );
-      //     const type = parentList
-      //       ? parentList.getListType()
-      //       : element.getListType();
-      //     setBlockType(type);
-      //   } else {
-      //     const type = $isHeadingNode(element)
-      //       ? element.getTag()
-      //       : element.getType();
-      //     if (type in blockTypeToBlockName) {
-      //       setBlockType(type as keyof typeof blockTypeToBlockName);
-      //     }
-      //     if ($isCodeNode(element)) {
-      //       const language =
-      //         element.getLanguage() as keyof typeof CODE_LANGUAGE_MAP;
-      //       setCodeLanguage(
-      //         language ? CODE_LANGUAGE_MAP[language] || language : "",
-      //       );
-      //       return;
-      //     }
-      //   }
-      // }
+      if (elementDOM !== null) {
+        setSelectedElementKey(elementKey);
+        // if ($isListNode(element)) {
+        //   const parentList = $getNearestNodeOfType<ListNode>(
+        //     anchorNode,
+        //     ListNode,
+        //   );
+        //   const type = parentList
+        //     ? parentList.getListType()
+        //     : element.getListType();
+        //   setBlockType(type);
+        // } else
+        {
+          const type = $isHeadingNode(element)
+            ? element.getTag()
+            : element.getType();
+          if (type in blockTypeToBlockName) {
+            setBlockType(type as keyof typeof blockTypeToBlockName);
+          }
+        }
+      }
       // Handle buttons
       // setFontSize(
       //   $getSelectionStyleValueForProperty(selection, "font-size", "15px"),
@@ -217,7 +237,7 @@ export const ToolbarPlugin = () => {
           <UnderlineBtn editor={activeEditor} isActive={isUnderline} />
         </ToggleGroup>
         <Separator className="w-[1px] bg-mauve6 mx-[10px]" />
-        <SelectDemo editor={activeEditor} />
+        <HeadingSelector editor={activeEditor} defaultValue={blockType} />
         <Separator className="w-[1px] bg-mauve6 mx-[10px]" />
         <ToggleGroup type="single" aria-label="Text alignment">
           <LeftAlign

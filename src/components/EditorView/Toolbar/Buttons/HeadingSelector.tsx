@@ -70,9 +70,18 @@ const enum Formats {
   heading3 = "heading3",
 }
 
-const SelectDemo = ({ editor }: { editor: LexicalEditor | null }) => {
-  const [value, setValue] = useState<string>(Formats.normal);
+const HeadingSelector = ({
+  editor,
+  defaultValue,
+}: {
+  editor: LexicalEditor | null;
+  defaultValue: string;
+}) => {
+  const [value, setValue] = useState<string>(defaultValue);
 
+  useEffect(() => {
+    console.warn("defaultValue", defaultValue);
+  }, [defaultValue]);
   const formatHeading = (headingSize: HeadingTagType) => {
     // if (blockType !== headingSize) {
     editor?.update(() => {
@@ -203,4 +212,4 @@ const SelectDemo = ({ editor }: { editor: LexicalEditor | null }) => {
   );
 };
 
-export default SelectDemo;
+export default HeadingSelector;
