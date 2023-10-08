@@ -43,6 +43,7 @@ export function EditorSwitch() {
 
   return (
     <NoteEditor
+      key={note.Id}
       darkModeOn={state.darkModeOn}
       note={note} //https://stackoverflow.com/a/54738437/21646295
       onEditAttempt={

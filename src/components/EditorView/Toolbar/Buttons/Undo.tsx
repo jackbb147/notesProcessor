@@ -1,15 +1,19 @@
 import { Undo2 } from "lucide-react";
 import { FontBoldIcon } from "@radix-ui/react-icons";
 import { MenuItem } from "./MenuItem";
-import { Editor } from "@tiptap/core";
+// import { Editor } from "@tiptap/core";
+import { LexicalEditor } from "lexical";
 import { IconSize } from "./IconSize";
+import { UNDO_COMMAND } from "lexical";
 
-export function Undo({ editor }: { editor: Editor | null }) {
+export function Undo({ editor }: { editor: LexicalEditor | null }) {
   function handleClick() {
     if (!editor) {
       return;
     }
-    editor.chain().focus().undo().run();
+    // TODO
+    editor.dispatchCommand(UNDO_COMMAND, undefined);
+    // editor.chain().focus().undo().run();
   }
   return (
     <MenuItem

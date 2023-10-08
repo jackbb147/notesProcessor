@@ -48,5 +48,16 @@ export default function OutsideAlerter({
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, callback, condition);
 
-  return <div ref={wrapperRef}>{children}</div>;
+  return (
+    <div
+      ref={wrapperRef}
+      className={"outside-alerter"}
+      style={{
+        width: "100%",
+        overflow: "hidden",
+      }}
+    >
+      {children}
+    </div>
+  );
 }

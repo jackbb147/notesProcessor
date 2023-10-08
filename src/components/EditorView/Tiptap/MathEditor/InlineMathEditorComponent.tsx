@@ -13,7 +13,7 @@ import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/theme-xcode";
 import "ace-builds/src-noconflict/ext-language_tools";
-
+import { ContentContainer } from "../../ContentContainer";
 import { MATHJAXCOMMANDS } from "./mathjaxCommands";
 import { useAppState } from "../../../../hooks/AppStateAndGraphAndUserhooks";
 // import "react-tippy/dist/tippy.css";
@@ -22,7 +22,7 @@ import Tippy from "@tippyjs/react";
 // import 'tippy.js/dist/tippy.css'; // optional
 import { useDisableErrorOverlay } from "../../../../hooks/useDisableErrorOverlay";
 import { MathJax, MathJaxContext } from "better-react-mathjax";
-import MathView from "./MathView";
+import MathView from "../../MathView";
 import { getCursorPos, setCursorPos } from "./TiptapCursorPos";
 
 import { NodeViewProps } from "@tiptap/react";
@@ -31,7 +31,7 @@ import { IAceEditor } from "react-ace/lib/types";
 import { Ace } from "ace-builds";
 import { VirtualRenderer } from "ace-builds/ace";
 import ReactFocusLock from "react-focus-lock";
-import { TippedMath } from "./TippedMath";
+import { TippedMath } from "../../TippedMath";
 import Draggable from "react-draggable"; // The default
 import useDoubleClick from "use-double-click";
 import { useLongPress } from "use-long-press";
@@ -48,76 +48,6 @@ interface Delta {
   start: Point;
   end: Point;
   lines: string[];
-}
-
-function ContentContainer({
-  onSingleClick,
-  onDoubleClick,
-  onLongPress,
-  onFinishLongPress,
-  children,
-}: {
-  onSingleClick?: (e: React.MouseEvent<Element, MouseEvent>) => void;
-  onDoubleClick?: (e: React.MouseEvent<Element, MouseEvent>) => void;
-  onLongPress?: () => void;
-  onFinishLongPress?: () => void;
-  children: React.ReactNode;
-}) {
-  const buttonRef = useRef<HTMLDivElement>(null);
-  const [className, setClassName] = useState<"NoPointerEvents" | "">("");
-  // useDoubleClick(
-  //     {
-  //       ref: buttonRef,
-  //   onSingleClick: onSingleClick??(()=>{}),
-  //   onDoubleClick: onDoubleClick??(()=>{}),
-  // })
-  const bind = useLongPress(
-    () => {
-      // alert('Long pressed!');
-      onLongPress?.();
-    },
-    {
-      threshold: 200,
-      cancelOnMovement: true,
-      onStart: () => {
-        setClassName("NoPointerEvents");
-      },
-      onFinish: () => {
-        // https://stackoverflow.com/a/20290312/21646295
-        window.addEventListener(
-          "click",
-          function captureClick(e) {
-            e.stopPropagation(); // Stop the click from being propagated.
-            console.log("click captured");
-            window.removeEventListener("click", captureClick, true); // cleanup
-          },
-          true,
-        );
-      },
-    },
-  );
-  return (
-    <div
-      className={`content`}
-      {...bind()}
-      ref={buttonRef}
-      tabIndex={1}
-      // onFocus={()=>{
-      //   alert("FOCUSED")
-      // }}
-      // onTouchStart={()=>{alert("touched")}}
-
-      // onDoubleClick={()=>{
-      //   alert("HEY!")
-      //   setDisableDraggable(true);
-      // }}
-      // onClick={()=>{
-      //      onSingleClick?.(null as any)
-      // }}
-    >
-      {children}
-    </div>
-  );
 }
 
 export function InlineMathEditorComponent(props: NodeViewProps) {
@@ -328,8 +258,14 @@ export function MyCustomACEEditor({
     //
     editor.completers.push(staticWordCompleter);
     // https://stackoverflow.com/a/38437098
+    editor.on("changeSession", (e: any) => {
+      console.log("[changeSession] fired");
+    });
     editor.on("change", (obj: Delta) => {
       //
+
+      console.log("[onChange] fired in ACEEditor.");
+      const s = editor.getValue();
       switch (obj.action) {
         case "insert":
           let lines = obj.lines;
@@ -341,6 +277,7 @@ export function MyCustomACEEditor({
           }
           break;
       }
+      onChange(s); // onChange(obj.);
     });
 
     // make sure the auto complete pop up boxes are on top, instead of bottom
@@ -400,6 +337,9 @@ export function MyCustomACEEditor({
         mode="latex"
         value={value}
         // focus={true}
+        onFocus={() => {
+          console.log("focused");
+        }}
         theme={"monokai"}
         // theme={AppState.darkModeOn ? "monokai" : "github"}
         style={{
@@ -414,7 +354,11 @@ export function MyCustomACEEditor({
         // showPrintMargin={false}
         enableLiveAutocompletion={false}
         enableBasicAutocompletion={true}
-        onChange={onChange}
+        // onChange={(s) => {
+        //   console.log("[onChange] fired in ACEEditor. s: " + s);
+        //   onChange(s);
+        //   // if (reactAceRef.current) reactAceRef.current.editor.focus();
+        // }}
         // commands={[
         //   {
         //     name: "deleteMe",

@@ -21,7 +21,7 @@ import {
 import { NoteInfoSidePanel } from "./NoteInfoSidePanel/NoteInfoSidePanel";
 import { Button } from "../ui/Button";
 import { AppActionType, Collections } from "../../reducers/AppStateReducer";
-import { TiptapBoxComponent } from "./Tiptap/Tiptap";
+import { EditorBoxComponent } from "./EditorBoxComponent";
 import {
   useGetLabelsQuery,
   useGetNoteLabelsQuery,
@@ -134,9 +134,9 @@ export function NoteEditor({
   const noteRef = useRef<GraphNode>(note); //https://stackoverflow.com/questions/57847594/react-hooks-accessing-up-to-date-state-from-within-a-callback
   noteRef.current = note;
 
-  useEffect(() => {
-    console.log(`note changed: ${JSON.stringify(note)}`);
-  }, [note]);
+  // useEffect(() => {
+  //   console.log(`note changed: ${JSON.stringify(note)}`);
+  // }, [note]);
 
   function handleChange(value: Options<any>, action: ActionMeta<any>) {
     //
@@ -225,6 +225,7 @@ export function NoteEditor({
       }}
     >
       <div
+        className={"LOOKATME"}
         onClick={() => {
           // alert("hey");
           setFocusRequested(focusRequested + 1);
@@ -240,7 +241,7 @@ export function NoteEditor({
         }}
       >
         <ReferenceMapProvider note={note}>
-          <TiptapBoxComponent
+          <EditorBoxComponent
             note={note}
             width={`calc(100% - ${infoPanelWidth})`}
             focusRequested={focusRequested}

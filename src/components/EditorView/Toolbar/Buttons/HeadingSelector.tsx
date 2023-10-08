@@ -8,6 +8,27 @@ import {
 } from "@radix-ui/react-icons";
 import { Editor } from "@tiptap/core";
 import { Level } from "@tiptap/extension-heading";
+import {
+  $createParagraphNode,
+  $getSelection,
+  $isRangeSelection,
+  DEPRECATED_$isGridSelection,
+  LexicalEditor,
+} from "lexical";
+import {
+  $createHeadingNode,
+  $createQuoteNode,
+  $isHeadingNode,
+  $isQuoteNode,
+  HeadingTagType,
+} from "@lexical/rich-text";
+import {
+  $getSelectionStyleValueForProperty,
+  $isParentElementRTL,
+  $patchStyleText,
+  $setBlocksType,
+} from "@lexical/selection";
+import { blockTypeToBlockName } from "../ToolbarPlugin";
 
 const SelectItem = React.forwardRef(
   (
@@ -51,60 +72,73 @@ const enum Formats {
   heading3 = "heading3",
 }
 
-const SelectDemo = ({ editor }: { editor: Editor | null }) => {
-  const [value, setValue] = useState<string>(Formats.normal);
+// https://github.com/facebook/lexical/blob/9a679ecb2fa3ca999772e2a170f4ad15d19d4635/packages/lexical-playground/src/plugins/ToolbarPlugin/index.tsx#L101
+const HeadingSelector = ({
+  editor,
+  defaultValue,
+}: {
+  editor: LexicalEditor | null;
+  defaultValue: keyof typeof blockTypeToBlockName;
+}) => {
+  const [value, setValue] = useState<string>(defaultValue);
+
+  useEffect(() => {
+    // console.warn("defaultValue", defaultValue);
+    switch (defaultValue) {
+      case "paragraph":
+        setValue(Formats.normal);
+        break;
+      case "h1":
+        setValue(Formats.heading1);
+        break;
+      case "h2":
+        setValue(Formats.heading2);
+        break;
+    }
+  }, [defaultValue]);
+  const formatHeading = (headingSize: HeadingTagType) => {
+    // if (blockType !== headingSize) {
+    editor?.update(() => {
+      const selection = $getSelection();
+      if (
+        $isRangeSelection(selection) ||
+        DEPRECATED_$isGridSelection(selection)
+      ) {
+        $setBlocksType(selection, () => $createHeadingNode(headingSize));
+      }
+    });
+    // }
+  };
+
+  const formatParagraph = () => {
+    editor?.update(() => {
+      const selection = $getSelection();
+      if (
+        $isRangeSelection(selection) ||
+        DEPRECATED_$isGridSelection(selection)
+      ) {
+        $setBlocksType(selection, () => $createParagraphNode());
+      }
+    });
+  };
   function handleValueChange(newValue: string) {
     if (!editor) return;
     switch (newValue) {
       case Formats.heading1:
-        editor?.chain().focus().toggleHeading({ level: 1 }).run();
-
+        // editor?.chain().focus().toggleHeading({ level: 1 }).run();
+        formatHeading("h1");
         break;
       case Formats.heading2:
-        editor?.chain().focus().toggleHeading({ level: 2 }).run();
+        formatHeading("h2");
+        // editor?.chain().focus().toggleHeading({ level: 2 }).run();
         break;
       case Formats.normal:
-        for (var x in [1, 2, 3]) {
-          const lvl = Number(x) as Level;
-          if (editor.isActive("heading", { level: lvl })) {
-            editor.chain().focus().toggleHeading({ level: lvl }).run();
-            break;
-          }
-        }
+        formatParagraph();
         break;
     }
     setValue(newValue);
   }
 
-  useEffect(() => {
-    if (!editor) return;
-    editor.on("selectionUpdate", ({ editor }) => {
-      var level: Level | undefined = undefined;
-      for (var x in [1, 2, 3]) {
-        const lvl = Number(x) as Level;
-        if (editor.isActive("heading", { level: lvl })) {
-          level = lvl;
-          break;
-        }
-      }
-      if (level === undefined) {
-        setValue(Formats.normal);
-        return;
-      } else {
-        switch (level) {
-          case 1:
-            setValue(Formats.heading1);
-            break;
-          case 2:
-            setValue(Formats.heading2);
-            break;
-          case 3:
-            setValue(Formats.heading3);
-            break;
-        }
-      }
-    });
-  }, [editor]);
   return (
     <Select.Root
       value={value}
@@ -132,7 +166,7 @@ const SelectDemo = ({ editor }: { editor: Editor | null }) => {
             <ChevronUpIcon />
           </Select.ScrollUpButton>
           <Select.Viewport className="">
-            <Select.Group>
+            <Select.Group className={"heading-selector"}>
               <Select.Label className="px-[15px] text-xs leading-[25px] text-mauve11">
                 Fruits
               </Select.Label>
@@ -155,4 +189,4 @@ const SelectDemo = ({ editor }: { editor: Editor | null }) => {
   );
 };
 
-export default SelectDemo;
+export default HeadingSelector;

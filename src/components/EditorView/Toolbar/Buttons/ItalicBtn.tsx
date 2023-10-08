@@ -4,25 +4,20 @@ import { Editor } from "@tiptap/core";
 import { useEffect, useState } from "react";
 import { Italic } from "lucide-react";
 import { IconSize } from "./IconSize";
+import { FORMAT_TEXT_COMMAND, LexicalEditor } from "lexical";
 
-export function ItalicBtn({ editor }: { editor: Editor | null }) {
-  const [isActive, setIsActive] = useState(false);
-
+export function ItalicBtn({
+  editor,
+  isActive,
+}: {
+  editor: LexicalEditor | null;
+  isActive: boolean;
+}) {
   function handleClick() {
     if (!editor) return;
-    editor.chain().focus().toggleItalic().run();
+    editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
   }
 
-  useEffect(() => {
-    editor?.on("selectionUpdate", ({ editor }) => {
-      if (editor.isActive("italic")) {
-        console.debug("[italic] is active");
-        setIsActive(true);
-      } else {
-        setIsActive(false);
-      }
-    });
-  }, [editor]);
   return (
     <MenuItem
       value={"italic"}

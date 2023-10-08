@@ -30,7 +30,7 @@ import { ReferenceStateActionType } from "./Reference/ReferenceStateReducer";
 import { TextAlign } from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
 
-import MyToolbar from "./Toolbar/Toolbar";
+import ToolbarPlugin from "../Toolbar/ToolbarPlugin";
 import { AppActionType, Collections } from "../../../reducers/AppStateReducer";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
@@ -350,7 +350,7 @@ export default forwardRef(
             textAlign: "initial",
           }}
         >
-          <MyToolbar editor={editor} />
+          {/*<MyToolbar editor={editor} />*/}
 
           <EditorContent
             editor={editor}
