@@ -38,7 +38,7 @@ import { NodeEventPlugin } from "@lexical/react/LexicalNodeEventPlugin";
 import OutsideAlerter from "../../ui/OutsideAlerter";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import * as ScrollArea from "@radix-ui/react-scroll-area";
-import { HandleEditorBlurPlugin } from "./HandleEditorBlurPlugin";
+import { HandleSaveNotePlugin } from "./HandleSaveNotePlugin";
 
 function RadixScrollArea({ children }: { children: React.ReactNode }) {
   return (
@@ -141,9 +141,9 @@ export function Editor({
             <HistoryPlugin />
             <ListPlugin />
 
-            <HandleEditorBlurPlugin
+            <HandleSaveNotePlugin
               clickedOutside={clickedOutside}
-              handleBlur={handleBlur}
+              handleSaveNote={handleBlur}
               note={note}
             />
           </RadixScrollArea>

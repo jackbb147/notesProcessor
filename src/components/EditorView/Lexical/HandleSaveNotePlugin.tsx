@@ -3,13 +3,16 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 import React, { useEffect, useRef, useState } from "react";
 import { $generateHtmlFromNodes } from "@lexical/html";
 import {
+  COMMAND_PRIORITY_HIGH,
+  createCommand,
   EditorState,
+  LexicalCommand,
   SerializedEditorState,
   SerializedLexicalNode,
   SerializedTextNode,
 } from "lexical";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
-
+export const SAVE_COMMAND: LexicalCommand<string> = createCommand();
 function getFirstLine(
   json: SerializedEditorState<SerializedLexicalNode>,
 ): string {
@@ -47,13 +50,13 @@ function getFirstLine(
  * When the editor loses focus, we want to update the note in the graph by calling the handleBlur function.
  * @constructor
  */
-export function HandleEditorBlurPlugin({
+export function HandleSaveNotePlugin({
   clickedOutside,
-  handleBlur,
+  handleSaveNote,
   note,
 }: {
   clickedOutside: number;
-  handleBlur: Function;
+  handleSaveNote: Function;
   note: GraphNode;
 }) {
   const [editor] = useLexicalComposerContext();
@@ -83,6 +86,41 @@ export function HandleEditorBlurPlugin({
   // }
 
   useEffect(() => {
+    return editor.registerCommand(
+      SAVE_COMMAND,
+      (payload, editor): boolean => {
+        debugger;
+        // TODO save the note
+        return true;
+      },
+      COMMAND_PRIORITY_HIGH,
+    );
+  }, [editor]);
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      // "Ctrl" or "Cmd" + "s"
+      if ((event.ctrlKey || event.metaKey) && event.which === 83) {
+        editor.dispatchCommand(SAVE_COMMAND, "");
+      }
+    };
+
+    return editor.registerRootListener(
+      (
+        rootElement: HTMLElement | null,
+        prevRootElement: HTMLElement | null,
+      ) => {
+        if (prevRootElement !== null) {
+          prevRootElement.removeEventListener("keydown", onKeyDown);
+        }
+        if (rootElement !== null) {
+          rootElement.addEventListener("keydown", onKeyDown);
+        }
+      },
+    );
+  }, [editor]);
+
+  useEffect(() => {
     return () => {
       // debugger;
       // console.warn("editor updated: " + editorUpdated);
@@ -97,7 +135,7 @@ export function HandleEditorBlurPlugin({
         console.log("firstLine: " + firstLine);
         console.log("content: " + content);
         // TODO somehow await this
-        handleBlur(firstLine, content);
+        handleSaveNote(firstLine, content);
       });
     };
   }, []);
