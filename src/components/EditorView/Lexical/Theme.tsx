@@ -2,5 +2,8 @@ export const Theme = {
   ltr: "ltr",
   rtl: "rtl",
   paragraph: "editor-paragraph",
-  underline: "editor-textUnderline",
+
+  text: {
+    underline: "editor-textUnderline",
+  },
 };
