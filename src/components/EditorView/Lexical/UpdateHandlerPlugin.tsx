@@ -11,7 +11,7 @@ export function UpdateHandlerPlugin() {
     // const raw = $generateHtmlFromNodes(editor, null);
     editorState.read(() => {
       const rawHTML = $generateHtmlFromNodes(editor, null);
-      console.log("[onChange] fired. rawHTML: " + rawHTML);
+      // console.log("[onChange] fired. rawHTML: " + rawHTML);
     });
   }
 

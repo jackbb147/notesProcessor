@@ -6,13 +6,23 @@ import {
   LexicalEditor,
   LexicalNode,
   NodeKey,
+  SerializedElementNode,
   SerializedLexicalNode,
+  Spread,
 } from "lexical";
 import React, { ReactNode } from "react";
 import MathView from "../../MathView";
 import { TippedMath } from "../../TippedMath";
 import { ContentContainer } from "../../ContentContainer";
 import { InlineMathNodeReactComponent } from "./InlineMathNodeReactComponent";
+import { SerializedDecoratorBlockNode } from "@lexical/react/LexicalDecoratorBlockNode";
+
+export type SerializedInlineMathNode = Spread<
+  {
+    __tex: string;
+  },
+  SerializedLexicalNode
+>;
 
 export class InlineMathNode extends DecoratorNode<ReactNode> {
   __showToolTip: boolean = false;
@@ -98,15 +108,16 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
     };
   }
 
-  exportJSON(): SerializedLexicalNode {
+  exportJSON(): SerializedInlineMathNode {
     return {
       type: "InlineMathNode",
       version: 1,
+      __tex: this.getTex(),
     };
   }
 
-  importJSON(jsonNode: SerializedLexicalNode): InlineMathNode {
-    const node = $createInlineMathNode(this.__id);
+  static importJSON(jsonNode: SerializedInlineMathNode): InlineMathNode {
+    const node = $createInlineMathNode(jsonNode.__tex);
     // node.setFormat(serializedNode.format);
     // node.setIndent(serializedNode.indent);
     // node.setDirection(serializedNode.direction);
