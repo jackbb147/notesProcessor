@@ -86,7 +86,7 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
           return {
             conversion: () => {
               return {
-                node: $createInlineMathNode("666"),
+                node: $createInlineMathNode(n.innerText),
               };
             },
             priority: 4,
