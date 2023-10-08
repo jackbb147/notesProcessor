@@ -45,7 +45,7 @@ function RadixScrollArea({ children }: { children: React.ReactNode }) {
     <ScrollArea.Root
       className={"RADIX_SCROLL_AREA w-full h-full overflow-hidden"}
     >
-      <ScrollArea.Viewport className={"w-full h-full"}>
+      <ScrollArea.Viewport className={"w-full h-full pr-2.5"}>
         {children}
       </ScrollArea.Viewport>
 
