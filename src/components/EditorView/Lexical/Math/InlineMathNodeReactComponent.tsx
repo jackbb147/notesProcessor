@@ -1,17 +1,21 @@
 import { ContentContainer } from "../../ContentContainer";
 import { TippedMath } from "../../TippedMath";
-import React from "react";
+import React, { useEffect } from "react";
 
 export function InlineMathNodeReactComponent({
   handleCloseToolTip,
-  showToolTip,
+  showToolTip, // ref,
+  defaultTex,
+  updateTex,
 }: {
   handleCloseToolTip: () => void;
   showToolTip: boolean;
+  defaultTex: string;
+  updateTex: (tex: string) => void;
+  // ref: Function;
 }) {
-  const [tex, setTex] = React.useState(
-    String.raw`\small{\textit{long press to edit:}} \; \hat{H} \ket{\psi} = E\ket{\psi} `,
-  );
+  const [tex, setTex] = React.useState(defaultTex);
+
   return (
     <TippedMath
       value={tex}
@@ -19,11 +23,16 @@ export function InlineMathNodeReactComponent({
         console.log("[onChange] fired in TippedMath. tex: " + tex);
         // alert("hey");
         // this.hanleTexChange(_editor, tex);
+        // debugger;
+        // const _ = ref();
+
+        // ref.current = tex;
         setTex(tex);
       }}
       showTooltip={showToolTip}
       requestClose={() => {
         // this.closeToolTip(_editor);
+        updateTex(tex);
         handleCloseToolTip();
       }}
     />

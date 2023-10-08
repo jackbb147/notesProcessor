@@ -109,7 +109,7 @@ export const ToolbarPlugin = () => {
   );
 
   const $updateToolbar = useCallback(() => {
-    console.warn("update toolbar");
+    console.info("update toolbar");
     const selection = $getSelection();
     if ($isRangeSelection(selection)) {
       const anchorNode = selection.anchor.getNode();
