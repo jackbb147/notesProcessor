@@ -21,7 +21,7 @@ import { Redo } from "./Buttons/Redo";
 import { LeftAlign } from "./Buttons/LeftAlign";
 import { Center } from "./Buttons/Center";
 import { RightAlign } from "./Buttons/RightAlign";
-import SelectDemo from "./Buttons/Select";
+import SelectDemo from "./Buttons/HeadingSelector";
 import { ScrollAreaDemo } from "./ScrollArea";
 import { styled } from "@stitches/react";
 import { MathBtn } from "./Buttons/MathBtn";

@@ -9,6 +9,7 @@ import {
 import { Editor } from "@tiptap/core";
 import { Level } from "@tiptap/extension-heading";
 import {
+  $createParagraphNode,
   $getSelection,
   $isRangeSelection,
   DEPRECATED_$isGridSelection,
@@ -85,6 +86,18 @@ const SelectDemo = ({ editor }: { editor: LexicalEditor | null }) => {
     });
     // }
   };
+
+  const formatParagraph = () => {
+    editor?.update(() => {
+      const selection = $getSelection();
+      if (
+        $isRangeSelection(selection) ||
+        DEPRECATED_$isGridSelection(selection)
+      ) {
+        $setBlocksType(selection, () => $createParagraphNode());
+      }
+    });
+  };
   function handleValueChange(newValue: string) {
     if (!editor) return;
     switch (newValue) {
@@ -97,6 +110,7 @@ const SelectDemo = ({ editor }: { editor: LexicalEditor | null }) => {
         // editor?.chain().focus().toggleHeading({ level: 2 }).run();
         break;
       case Formats.normal:
+        formatParagraph();
         // formatHeading("p");
         // for (var x in [1, 2, 3]) {
         //   const lvl = Number(x) as Level;
