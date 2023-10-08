@@ -8,8 +8,25 @@ import {
 } from "@radix-ui/react-icons";
 import { Editor } from "@tiptap/core";
 import { Level } from "@tiptap/extension-heading";
-import { LexicalEditor } from "lexical";
-
+import {
+  $getSelection,
+  $isRangeSelection,
+  DEPRECATED_$isGridSelection,
+  LexicalEditor,
+} from "lexical";
+import {
+  $createHeadingNode,
+  $createQuoteNode,
+  $isHeadingNode,
+  $isQuoteNode,
+  HeadingTagType,
+} from "@lexical/rich-text";
+import {
+  $getSelectionStyleValueForProperty,
+  $isParentElementRTL,
+  $patchStyleText,
+  $setBlocksType,
+} from "@lexical/selection";
 const SelectItem = React.forwardRef(
   (
     {
@@ -54,26 +71,42 @@ const enum Formats {
 
 const SelectDemo = ({ editor }: { editor: LexicalEditor | null }) => {
   const [value, setValue] = useState<string>(Formats.normal);
+
+  const formatHeading = (headingSize: HeadingTagType) => {
+    // if (blockType !== headingSize) {
+    editor?.update(() => {
+      const selection = $getSelection();
+      if (
+        $isRangeSelection(selection) ||
+        DEPRECATED_$isGridSelection(selection)
+      ) {
+        $setBlocksType(selection, () => $createHeadingNode(headingSize));
+      }
+    });
+    // }
+  };
   function handleValueChange(newValue: string) {
     if (!editor) return;
-    // switch (newValue) {
-    //   case Formats.heading1:
-    //     editor?.chain().focus().toggleHeading({ level: 1 }).run();
-    //
-    //     break;
-    //   case Formats.heading2:
-    //     editor?.chain().focus().toggleHeading({ level: 2 }).run();
-    //     break;
-    //   case Formats.normal:
-    //     for (var x in [1, 2, 3]) {
-    //       const lvl = Number(x) as Level;
-    //       if (editor.isActive("heading", { level: lvl })) {
-    //         // editor.chain().focus().toggleHeading({ level: lvl }).run();
-    //         break;
-    //       }
-    //     }
-    //     break;
-    // }
+    switch (newValue) {
+      case Formats.heading1:
+        // editor?.chain().focus().toggleHeading({ level: 1 }).run();
+        formatHeading("h1");
+        break;
+      case Formats.heading2:
+        formatHeading("h2");
+        // editor?.chain().focus().toggleHeading({ level: 2 }).run();
+        break;
+      case Formats.normal:
+        // formatHeading("p");
+        // for (var x in [1, 2, 3]) {
+        //   const lvl = Number(x) as Level;
+        //   if (editor.isActive("heading", { level: lvl })) {
+        //     // editor.chain().focus().toggleHeading({ level: lvl }).run();
+        //     break;
+        //   }
+        // }
+        break;
+    }
     setValue(newValue);
   }
 
