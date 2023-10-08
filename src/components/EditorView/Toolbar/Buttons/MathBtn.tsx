@@ -56,7 +56,7 @@ export function MathBtn({ editor }: { editor: LexicalEditor | null }) {
         const selection = $getSelection();
         const node = selection?.getNodes()[0];
 
-        const inlineMathNode = $createInlineMathNode(payload);
+        const inlineMathNode = $createInlineMathNode(payload, true);
 
         if (node) {
           const parent = $getNearestBlockElementAncestorOrThrow(node);
