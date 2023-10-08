@@ -1,9 +1,12 @@
 import {
   $getNodeByKey,
   DecoratorNode,
+  DOMConversionMap,
+  DOMExportOutput,
   LexicalEditor,
   LexicalNode,
   NodeKey,
+  SerializedLexicalNode,
 } from "lexical";
 import React, { ReactNode } from "react";
 import MathView from "../../MathView";
@@ -14,6 +17,7 @@ import { InlineMathNodeReactComponent } from "./InlineMathNodeReactComponent";
 export class InlineMathNode extends DecoratorNode<ReactNode> {
   __id: string;
   __showToolTip: boolean = false;
+  __tex: string = String.raw`F = m\vec{a}`;
 
   static getType(): string {
     return "InlineMathNode";
@@ -50,6 +54,66 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
     return self.__showToolTip;
   }
 
+  getTex() {
+    const self = this.getLatest();
+    return self.__tex;
+  }
+
+  setTex(tex: string) {
+    const self = this.getWritable();
+    self.__tex = tex;
+  }
+
+  exportDOM(editor: LexicalEditor): DOMExportOutput {
+    const element = this.createDOM();
+    element.innerText = this.getTex();
+    element.classList.add("InlineMathNode");
+    return {
+      element: element,
+    };
+    // return {
+    //   element: element,
+    // };
+  }
+
+  static importDOM(): DOMConversionMap | null {
+    // debugger;
+    return {
+      span: (node: Node) => {
+        // debugger;
+        var n = node as HTMLElement;
+        if (n.classList.contains("InlineMathNode")) {
+          debugger;
+          return {
+            conversion: () => {
+              return {
+                node: $createInlineMathNode(""),
+              };
+            },
+            priority: 4,
+          };
+        } else {
+          return null;
+        }
+      },
+    };
+  }
+
+  exportJSON(): SerializedLexicalNode {
+    return {
+      type: "InlineMathNode",
+      version: 1,
+    };
+  }
+
+  importJSON(jsonNode: SerializedLexicalNode): InlineMathNode {
+    const node = $createInlineMathNode(this.__id);
+    // node.setFormat(serializedNode.format);
+    // node.setIndent(serializedNode.indent);
+    // node.setDirection(serializedNode.direction);
+    return node;
+  }
+
   closeToolTip(_editor: LexicalEditor) {
     _editor.update(() => {
       const node = $getNodeByKey(this.__key);
@@ -70,6 +134,8 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
 
   decorate(_editor: LexicalEditor): ReactNode {
     const showTooltip = this.__showToolTip;
+
+    // debugger;
     return (
       // <span>hey am i inline</span>
       <ContentContainer
@@ -81,6 +147,17 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
           showToolTip={showTooltip}
           handleCloseToolTip={() => {
             this.closeToolTip(_editor);
+          }}
+          defaultTex={this.getTex()}
+          updateTex={(tex: string) => {
+            // debugger;
+            _editor.update(() => {
+              const node = $getNodeByKey(this.__key);
+              if (node !== null && $isInlineMathNode(node)) {
+                node.setTex(tex);
+              }
+            });
+            // this.setTex(tex);
           }}
         />
         {/*<TippedMath*/}

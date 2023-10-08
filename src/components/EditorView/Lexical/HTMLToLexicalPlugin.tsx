@@ -8,7 +8,7 @@ export function HTMLToLexicalPlugin({ html }: { html: string }) {
     editor.update(() => {
       const parser = new DOMParser();
       // html = String.raw`<p>wendy</p>`;
-      // html = String.raw`<p><h1>wendy</h1></p>`; // error
+      // html = String.raw`<p><span>Wendy</span> <span class="InlineMathNode">F = m\vec{a}</span></p>`; // error
       // html = String.raw`<!--<ol><li>number 1</li></ol>-->`;
       const dom = parser.parseFromString(html, "text/html");
       const nodes = $generateNodesFromDOM(editor, dom);
