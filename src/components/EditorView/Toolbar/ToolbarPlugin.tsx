@@ -253,7 +253,7 @@ export const ToolbarPlugin = () => {
         <Separator className="w-[1px] bg-mauve6 mx-[10px]" />
         <ToggleGroup type="single" aria-label="Math">
           <MathBtn editor={activeEditor} />
-          <AddReferenceBtn editor={activeEditor} />
+          {/*<AddReferenceBtn editor={activeEditor} />*/}
         </ToggleGroup>
       </ScrollAreaDemo>
     </Toolbar.Root>

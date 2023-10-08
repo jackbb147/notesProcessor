@@ -9,7 +9,7 @@ import { ListNode, ListItemNode } from "@lexical/list";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 
 import React, { useEffect, useState } from "react";
-import { $generateHtmlFromNodes } from "@lexical/html";
+
 import {
   $getRoot,
   $insertNodes,
@@ -38,6 +38,7 @@ import { NodeEventPlugin } from "@lexical/react/LexicalNodeEventPlugin";
 import OutsideAlerter from "../../ui/OutsideAlerter";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import * as ScrollArea from "@radix-ui/react-scroll-area";
+import { HandleEditorBlurPlugin } from "./HandleEditorBlurPlugin";
 
 function RadixScrollArea({ children }: { children: React.ReactNode }) {
   return (
@@ -57,101 +58,6 @@ function RadixScrollArea({ children }: { children: React.ReactNode }) {
       <ScrollArea.Corner />
     </ScrollArea.Root>
   );
-}
-
-function getFirstLine(
-  json: SerializedEditorState<SerializedLexicalNode>,
-): string {
-  // debugger;
-  let res: string = "";
-  // TODO
-  var q: SerializedLexicalNode[] = [json.root];
-
-  while (q.length > 0) {
-    // debugger;
-    var node: SerializedLexicalNode | undefined = q.shift();
-    if (!node) continue;
-
-    if (node.type === "text") {
-      const textNode: SerializedTextNode = node as SerializedTextNode;
-      res = textNode.text ?? "";
-      break;
-    }
-
-    if ("children" in node) {
-      var children = node.children as SerializedLexicalNode[];
-      q.push(...children);
-    }
-
-    // if (node.content) {
-    //   q.push(...node.content);
-    // }
-  }
-  if (res.length < 1) res = "New Note";
-
-  return res;
-}
-
-/**
- * When the editor loses focus, we want to update the note in the graph by calling the handleBlur function.
- * @constructor
- */
-function HandleEditorBlurPlugin({
-  clickedOutside,
-  handleBlur,
-  note,
-}: {
-  clickedOutside: number;
-  handleBlur: Function;
-  note: GraphNode;
-}) {
-  const [editor] = useLexicalComposerContext();
-  const [clickedInside, setClickedInside] = useState(0);
-
-  useEffect(() => {
-    setClickedInside(0);
-  }, [note.Id]);
-
-  function clickHandler(event: Event) {
-    console.warn("clicked");
-    setClickedInside((prev) => prev + 1);
-  }
-
-  useEffect(() => {
-    return editor.registerRootListener((rootElement, prevRootElement) => {
-      //add listeners to the new root element
-      rootElement?.addEventListener("click", clickHandler);
-      //remove listeners from the old root element
-    });
-  }, [editor]);
-
-  useEffect(() => {
-    if (!editor || !handleBlur || clickedInside === 0) return;
-    // debugger;
-    // TODO
-    const editorState = editor.getEditorState();
-    const json = editorState.toJSON();
-    editorState.read(() => {
-      const content = $generateHtmlFromNodes(editor, null);
-      let firstLine: string = getFirstLine(json);
-      console.log("firstLine: " + firstLine);
-      console.log("content: " + content);
-      handleBlur(firstLine, content);
-    });
-
-    // handleBlur(firstLine, content);
-  }, [clickedOutside]);
-  useEffect(() => {
-    return editor.registerRootListener((rootElement, prevRootElement) => {
-      // debugger;
-      // add the listener to the current root element
-      rootElement?.addEventListener("blur", clickHandler);
-      // remove the listener from the old root element - make sure the ref to myListener
-      // is stable so the removal works and you avoid a memory leak.
-      prevRootElement?.removeEventListener("blur", clickHandler);
-    });
-  }, [editor]);
-  return null;
 }
 
 export function Editor({

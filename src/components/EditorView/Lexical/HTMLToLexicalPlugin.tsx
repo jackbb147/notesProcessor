@@ -9,7 +9,7 @@ export function HTMLToLexicalPlugin({ html }: { html: string }) {
       const parser = new DOMParser();
       // html = String.raw`<p>wendy</p>`;
       // html = String.raw`<p><h1>wendy</h1></p>`; // error
-      // html = String.raw`<ol><li>number 1</li></ol>`;
+      // html = String.raw`<!--<ol><li>number 1</li></ol>-->`;
       const dom = parser.parseFromString(html, "text/html");
       const nodes = $generateNodesFromDOM(editor, dom);
       console.log("nodes: ", nodes);
