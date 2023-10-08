@@ -72,6 +72,7 @@ const enum Formats {
   heading3 = "heading3",
 }
 
+// https://github.com/facebook/lexical/blob/9a679ecb2fa3ca999772e2a170f4ad15d19d4635/packages/lexical-playground/src/plugins/ToolbarPlugin/index.tsx#L101
 const HeadingSelector = ({
   editor,
   defaultValue,

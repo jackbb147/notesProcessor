@@ -4,6 +4,7 @@ import { MenuItem } from "./MenuItem";
 // import { Editor } from "@tiptap/core";
 import { LexicalEditor } from "lexical";
 import { IconSize } from "./IconSize";
+import { UNDO_COMMAND } from "lexical";
 
 export function Undo({ editor }: { editor: LexicalEditor | null }) {
   function handleClick() {
@@ -11,6 +12,7 @@ export function Undo({ editor }: { editor: LexicalEditor | null }) {
       return;
     }
     // TODO
+    editor.dispatchCommand(UNDO_COMMAND, undefined);
     // editor.chain().focus().undo().run();
   }
   return (
