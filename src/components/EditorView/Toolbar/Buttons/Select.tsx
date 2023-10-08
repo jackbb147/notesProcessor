@@ -166,7 +166,7 @@ const SelectDemo = ({ editor }: { editor: LexicalEditor | null }) => {
             <ChevronUpIcon />
           </Select.ScrollUpButton>
           <Select.Viewport className="">
-            <Select.Group>
+            <Select.Group className={"heading-selector"}>
               <Select.Label className="px-[15px] text-xs leading-[25px] text-mauve11">
                 Fruits
               </Select.Label>
