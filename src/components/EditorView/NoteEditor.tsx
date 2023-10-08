@@ -134,9 +134,9 @@ export function NoteEditor({
   const noteRef = useRef<GraphNode>(note); //https://stackoverflow.com/questions/57847594/react-hooks-accessing-up-to-date-state-from-within-a-callback
   noteRef.current = note;
 
-  useEffect(() => {
-    console.log(`note changed: ${JSON.stringify(note)}`);
-  }, [note]);
+  // useEffect(() => {
+  //   console.log(`note changed: ${JSON.stringify(note)}`);
+  // }, [note]);
 
   function handleChange(value: Options<any>, action: ActionMeta<any>) {
     //

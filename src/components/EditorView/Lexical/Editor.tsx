@@ -8,7 +8,7 @@ import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 import { ListNode, ListItemNode } from "@lexical/list";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import {
   $getRoot,
@@ -118,6 +118,7 @@ export function Editor({
           }}
         >
           <ToolbarPlugin />
+
           <RadixScrollArea>
             <RichTextPlugin
               contentEditable={
@@ -139,6 +140,7 @@ export function Editor({
             <HTMLToLexicalPlugin html={note.Content} />
             <HistoryPlugin />
             <ListPlugin />
+
             <HandleEditorBlurPlugin
               clickedOutside={clickedOutside}
               handleBlur={handleBlur}

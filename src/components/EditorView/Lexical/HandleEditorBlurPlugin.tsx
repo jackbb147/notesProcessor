@@ -1,12 +1,14 @@
 import { GraphNode } from "../../../reducers/GraphReducer";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { $generateHtmlFromNodes } from "@lexical/html";
 import {
+  EditorState,
   SerializedEditorState,
   SerializedLexicalNode,
   SerializedTextNode,
 } from "lexical";
+import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 
 function getFirstLine(
   json: SerializedEditorState<SerializedLexicalNode>,
@@ -56,37 +58,35 @@ export function HandleEditorBlurPlugin({
 }) {
   const [editor] = useLexicalComposerContext();
   const [clickedInside, setClickedInside] = useState(0);
+  const editorUpdated = useRef(0);
+  const editorStateRef = useRef<EditorState>();
+  // useEffect(() => {
+  //   return editor.registerTextContentListener((editorState) => {
+  //     debugger;
+  //     console.warn("editor updated");
+  //     setEditorUpdated((prev) => prev + 1);
+  //     // setCanUndo(editorState.canUndo());
+  //   });
+  // }, [editor]);
+  // useEffect(() => {
+  //   setClickedInside(0);
+  //   editor.getEditorState().read(() => {
+  //     // TODO get the content of the editor and update the note
+  //     // debugger;
+  //   });
+  //   // debugger;
+  // }, [note.Id]);
 
-  useEffect(() => {
-    setClickedInside(0);
-    editor.getEditorState().read(() => {
-      // TODO get the content of the editor and update the note
-      // debugger;
-    });
-    // debugger;
-  }, [note.Id]);
-
-  function clickHandler(event: Event) {
-    console.warn("clicked");
-    setClickedInside((prev) => prev + 1);
-  }
-
-  useEffect(() => {
-    return editor.registerRootListener((rootElement, prevRootElement) => {
-      //add listeners to the new root element
-      debugger;
-      rootElement?.addEventListener("click", clickHandler);
-      //remove listeners from the old root element
-    });
-  }, [editor]);
+  // function clickHandler(event: Event) {
+  //   console.warn("clicked");
+  //   setClickedInside((prev) => prev + 1);
+  // }
 
   useEffect(() => {
     return () => {
       // debugger;
-      // TODO The editor is unmounting. Save the note.
-      // debugger;
-      console.warn("unmounting, clickedInside: " + clickedInside);
-      if (clickedInside === 0) return;
+      // console.warn("editor updated: " + editorUpdated);
+      if (editorUpdated.current < 2) return;
       // debugger;
       const editorState = editor.getEditorState();
       const json = editorState.toJSON();
@@ -96,11 +96,41 @@ export function HandleEditorBlurPlugin({
         let firstLine: string = getFirstLine(json);
         console.log("firstLine: " + firstLine);
         console.log("content: " + content);
+        // TODO somehow await this
         handleBlur(firstLine, content);
       });
-      // debugger;
     };
-  }, [clickedInside]);
+  }, []);
+
+  // return editor.registerRootListener((rootElement, prevRootElement) => {
+  //   //add listeners to the new root element
+  //   // debugger;
+  //   rootElement?.addEventListener("click", clickHandler);
+  //   //remove listeners from the old root element
+  // });
+  // }, [editorUpdated]);
+
+  // useEffect(() => {
+  //   return () => {
+  //     // debugger;
+  //     // TODO The editor is unmounting. Save the note.
+  //     // debugger;
+  //     console.warn("unmounting, clickedInside: " + clickedInside);
+  //     if (clickedInside === 0) return;
+  //     // debugger;
+  //     const editorState = editor.getEditorState();
+  //     const json = editorState.toJSON();
+  //     editorState.read(() => {
+  //       // debugger;
+  //       const content = $generateHtmlFromNodes(editor, null);
+  //       let firstLine: string = getFirstLine(json);
+  //       console.log("firstLine: " + firstLine);
+  //       console.log("content: " + content);
+  //       handleBlur(firstLine, content);
+  //     });
+  //     // debugger;
+  //   };
+  // }, [clickedInside]);
 
   // useEffect(() => {
   //   // alert("hey");
@@ -121,15 +151,24 @@ export function HandleEditorBlurPlugin({
   //
   //   // handleBlur(firstLine, content);
   // }, [clickedOutside]);
-  useEffect(() => {
-    return editor.registerRootListener((rootElement, prevRootElement) => {
-      // debugger;
-      // add the listener to the current root element
-      rootElement?.addEventListener("blur", clickHandler);
-      // remove the listener from the old root element - make sure the ref to myListener
-      // is stable so the removal works and you avoid a memory leak.
-      prevRootElement?.removeEventListener("blur", clickHandler);
-    });
-  }, [editor]);
-  return null;
+  // useEffect(() => {
+  //   return editor.registerRootListener((rootElement, prevRootElement) => {
+  //     // debugger;
+  //     // add the listener to the current root element
+  //     rootElement?.addEventListener("blur", clickHandler);
+  //     // remove the listener from the old root element - make sure the ref to myListener
+  //     // is stable so the removal works and you avoid a memory leak.
+  //     prevRootElement?.removeEventListener("blur", clickHandler);
+  //   });
+  // }, [editor]);
+  return (
+    <OnChangePlugin
+      ignoreSelectionChange={true}
+      onChange={(editorState) => {
+        // setEditorUpdated((prev) => prev + 1);
+        editorUpdated.current += 1;
+        editorStateRef.current = editorState;
+      }}
+    />
+  );
 }

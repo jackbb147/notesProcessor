@@ -83,7 +83,7 @@ const HeadingSelector = ({
   const [value, setValue] = useState<string>(defaultValue);
 
   useEffect(() => {
-    console.warn("defaultValue", defaultValue);
+    // console.warn("defaultValue", defaultValue);
     switch (defaultValue) {
       case "paragraph":
         setValue(Formats.normal);
