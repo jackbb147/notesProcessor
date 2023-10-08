@@ -85,12 +85,32 @@ export function HandleSaveNotePlugin({
   //   setClickedInside((prev) => prev + 1);
   // }
 
+  function save() {
+    // debugger;
+    console.info("save command fired");
+    // TODO save the note
+    // debugger;
+    // console.warn("editor updated: " + editorUpdated);
+    if (editorUpdated.current < 2) return;
+    // debugger;
+    const editorState = editor.getEditorState();
+    const json = editorState.toJSON();
+    editorState.read(() => {
+      // debugger;
+      const content = $generateHtmlFromNodes(editor, null);
+      let firstLine: string = getFirstLine(json);
+      console.log("firstLine: " + firstLine);
+      console.log("content: " + content);
+      // TODO somehow await this
+      handleSaveNote(firstLine, content);
+    });
+  }
+
   useEffect(() => {
     return editor.registerCommand(
       SAVE_COMMAND,
       (payload, editor): boolean => {
-        debugger;
-        // TODO save the note
+        save();
         return true;
       },
       COMMAND_PRIORITY_HIGH,
@@ -102,6 +122,7 @@ export function HandleSaveNotePlugin({
       // "Ctrl" or "Cmd" + "s"
       if ((event.ctrlKey || event.metaKey) && event.which === 83) {
         editor.dispatchCommand(SAVE_COMMAND, "");
+        event.preventDefault();
       }
     };
 
@@ -123,20 +144,8 @@ export function HandleSaveNotePlugin({
   useEffect(() => {
     return () => {
       // debugger;
-      // console.warn("editor updated: " + editorUpdated);
-      if (editorUpdated.current < 2) return;
-      // debugger;
-      const editorState = editor.getEditorState();
-      const json = editorState.toJSON();
-      editorState.read(() => {
-        // debugger;
-        const content = $generateHtmlFromNodes(editor, null);
-        let firstLine: string = getFirstLine(json);
-        console.log("firstLine: " + firstLine);
-        console.log("content: " + content);
-        // TODO somehow await this
-        handleSaveNote(firstLine, content);
-      });
+      save();
+      // editor.dispatchCommand(SAVE_COMMAND, "");
     };
   }, []);
 
