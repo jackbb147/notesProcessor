@@ -81,6 +81,17 @@ const HeadingSelector = ({
 
   useEffect(() => {
     console.warn("defaultValue", defaultValue);
+    switch (defaultValue) {
+      case "paragraph":
+        setValue(Formats.normal);
+        break;
+      case "h1":
+        setValue(Formats.heading1);
+        break;
+      case "h2":
+        setValue(Formats.heading2);
+        break;
+    }
   }, [defaultValue]);
   const formatHeading = (headingSize: HeadingTagType) => {
     // if (blockType !== headingSize) {
