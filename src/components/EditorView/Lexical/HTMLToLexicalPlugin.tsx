@@ -1,7 +1,9 @@
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { useEffect } from "react";
-import { $getRoot, $insertNodes } from "lexical";
+import { $getRoot, $insertNodes, $setSelection } from "lexical";
 import { $generateNodesFromDOM } from "@lexical/html";
+import { $createRangeSelection } from "lexical";
+
 export function HTMLToLexicalPlugin({ html }: { html: string }) {
   const [editor] = useLexicalComposerContext();
   useEffect(() => {
@@ -20,6 +22,9 @@ export function HTMLToLexicalPlugin({ html }: { html: string }) {
 
       // Insert them at a selection.
       $insertNodes(nodes);
+      const rangeSelection = $createRangeSelection();
+      // $setSelection(rangeSelection);
+      $setSelection(null);
     });
   }, [html]);
   return null;
