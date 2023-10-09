@@ -26,6 +26,7 @@ export function Tablet_NotesPanel({ children }: { children: React.ReactNode }) {
         }
       >
         <Desktop_SidePanel
+          sideBarMinimized={!state.showNotesPanel}
           panelChildren={<NotesPanelContent collection={activeCollection} />}
         >
           {children}

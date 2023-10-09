@@ -177,6 +177,7 @@ export function NotesPanelContent({
                               article
                             </span>
                           }
+                          iconOnly={!state.showNotesPanel}
                           onClick={() =>
                             dispatch({
                               type: AppActionType.setActiveNodeID,

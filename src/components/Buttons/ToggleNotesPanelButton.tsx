@@ -10,6 +10,10 @@ export function ToggleNotesPanelButton() {
   const appDispatch = useAppDispatch();
   const appState = useAppState();
   function handleClick() {
+    console.info(
+      `[ToggleNotesPanelButton] handleClick, ` + appState.showNotesPanel,
+    );
+
     appDispatch({
       type: AppActionType.setShowNotesPanel,
       show: !appState.showNotesPanel,
