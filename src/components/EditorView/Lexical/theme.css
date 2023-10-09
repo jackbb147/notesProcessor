@@ -10,8 +10,10 @@
     color: #999;
     overflow: hidden;
     position: absolute;
-    top: 15px;
-    left: 15px;
+    /*border: 1px solid white;*/
+    /*top: 15px;*/
+    /*left: 15px;*/
+    top: 0;
     user-select: none;
     pointer-events: none;
 }

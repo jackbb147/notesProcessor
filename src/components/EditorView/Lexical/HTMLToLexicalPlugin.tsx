@@ -22,9 +22,8 @@ export function HTMLToLexicalPlugin({ html }: { html: string }) {
 
       // Insert them at a selection.
       $insertNodes(nodes);
-      const rangeSelection = $createRangeSelection();
-      // $setSelection(rangeSelection);
-      $setSelection(null);
+
+      $setSelection(null); // this is to prevent the selection from being at the end of the document after inserting the nodes
     });
   }, [html]);
   return null;

@@ -194,6 +194,7 @@ export default forwardRef(
           }),
           Placeholder.configure({
             // Use a placeholder:
+
             placeholder: "Write something …",
             // Use different placeholders depending on the node type:
             // placeholder: ({ node }) => {
