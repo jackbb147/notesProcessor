@@ -1,5 +1,5 @@
 import { ContentContainer } from "../../ContentContainer";
-import { TippedMath } from "../../TippedMath";
+import { Popover, TippedMath } from "../../TippedMath";
 import React, { useEffect } from "react";
 
 export function InlineMathNodeReactComponent({
@@ -17,6 +17,7 @@ export function InlineMathNodeReactComponent({
   const [tex, setTex] = React.useState(defaultTex);
 
   return (
+    // <Popover />
     <TippedMath
       value={tex}
       onChange={(tex: string) => {

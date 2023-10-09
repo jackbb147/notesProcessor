@@ -16,6 +16,7 @@ import { TippedMath } from "../../TippedMath";
 import { ContentContainer } from "../../ContentContainer";
 import { InlineMathNodeReactComponent } from "./InlineMathNodeReactComponent";
 import { SerializedDecoratorBlockNode } from "@lexical/react/LexicalDecoratorBlockNode";
+import { boolean } from "zod";
 
 export type SerializedInlineMathNode = Spread<
   {
@@ -189,8 +190,14 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
   }
 }
 
-export function $createInlineMathNode(tex: string): InlineMathNode {
-  return new InlineMathNode(tex);
+export function $createInlineMathNode(
+  tex: string,
+  showTooltip?: boolean,
+): InlineMathNode {
+  const res = new InlineMathNode(tex);
+
+  if (showTooltip !== undefined) res.setShowToolTip(showTooltip);
+  return res;
 }
 
 export function $isInlineMathNode(
