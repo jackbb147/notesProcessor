@@ -15,6 +15,7 @@ export enum AppActionType {
   setShowLoginPage,
   setIsLoggedIn,
   setShowNoteInfoPanel,
+  setShowNotesPanel,
 }
 
 export type AppAction =
@@ -33,7 +34,8 @@ export type AppAction =
   | { type: AppActionType.setShowRegisterPage; show: boolean }
   | { type: AppActionType.setShowLoginPage; show: boolean }
   | { type: AppActionType.setIsLoggedIn; isLoggedIn: boolean }
-  | { type: AppActionType.setShowNoteInfoPanel; show: boolean };
+  | { type: AppActionType.setShowNoteInfoPanel; show: boolean }
+  | { type: AppActionType.setShowNotesPanel; show: boolean };
 
 export enum Collections {
   All,
@@ -47,6 +49,7 @@ export interface AppState {
   activeCollection: Collections;
   activeLabel: string | undefined;
   LabelPanelClosed: boolean;
+  showNotesPanel: boolean;
   showRecoverNodePopup: boolean;
   showClearDataPopup: boolean;
   darkModeOn: boolean;
@@ -137,6 +140,11 @@ export function AppStateReducer(draft: AppState, action: AppAction) {
 
     case AppActionType.setShowClearDataPopup: {
       draft.showClearDataPopup = action.show;
+      break;
+    }
+
+    case AppActionType.setShowNotesPanel: {
+      draft.showNotesPanel = action.show;
       break;
     }
   }

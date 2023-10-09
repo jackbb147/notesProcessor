@@ -7,7 +7,9 @@ import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 import { ListNode, ListItemNode } from "@lexical/list";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
-
+import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
+import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
+import { CodeHighlightNode, CodeNode } from "@lexical/code";
 import React, { useEffect, useRef, useState } from "react";
 
 import {
@@ -39,6 +41,9 @@ import OutsideAlerter from "../../ui/OutsideAlerter";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import * as ScrollArea from "@radix-ui/react-scroll-area";
 import { HandleSaveNotePlugin } from "./HandleSaveNotePlugin";
+import { TRANSFORMERS } from "@lexical/markdown";
+import { AutoLinkNode, LinkNode } from "@lexical/link";
+import AutoLinkPlugin from "./AutoLinkPlugin";
 
 function RadixScrollArea({ children }: { children: React.ReactNode }) {
   return (
@@ -97,9 +102,12 @@ export function Editor({
           nodes: [
             InlineMathNode,
             HeadingNode,
+            CodeNode,
             QuoteNode,
             ListNode,
             ListItemNode,
+            LinkNode,
+            AutoLinkNode,
           ],
           onError: (error) => {
             console.log("error: ", error);
@@ -140,6 +148,9 @@ export function Editor({
             <HTMLToLexicalPlugin html={note.Content} />
             <HistoryPlugin />
             <ListPlugin />
+            <AutoLinkPlugin />
+            <LinkPlugin />
+            <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
 
             <HandleSaveNotePlugin
               clickedOutside={clickedOutside}

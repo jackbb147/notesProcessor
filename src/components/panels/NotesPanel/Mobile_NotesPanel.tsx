@@ -1,20 +1,17 @@
 import { NotesPanelContent } from "./NotesPanelContent";
 import { AddNodeButton } from "../../Buttons/AddNodeButton";
-import { EditorSwitch } from "../../EditorView/EditorSwitch";
-import { Desktop_SidePanel } from "../../ui/SidePanel/Desktop/Desktop_SidePanel";
 import React from "react";
-import { GraphNode } from "../../../reducers/GraphReducer";
-import { Collections } from "../../../reducers/AppStateReducer";
+import { AppActionType } from "../../../reducers/AppStateReducer";
 import {
   useAppDispatch,
+  useAppState,
   useGraph,
   useGraphDispatch,
-  useAppState,
 } from "../../../hooks/AppStateAndGraphAndUserhooks";
 import { Mobile_SidePanel } from "../../ui/SidePanel/Mobile/Mobile_SidePanel";
-import { Mobile } from "../../../hooks/useMediaQuery";
 import { useActiveCollection } from "../../../hooks/useActiveCollection";
 import { ToggleLabelPanelButton } from "../../Buttons/ToggleLabelPanelButton";
+import { useSwipeable } from "react-swipeable";
 
 function PanelContent() {
   const activeCollection = useActiveCollection();
@@ -34,13 +31,20 @@ export function Mobile_NotesPanel({ children }: { children: React.ReactNode }) {
   const graphDispatch = useGraphDispatch();
   const state = useAppState();
   const dispatch = useAppDispatch();
-
+  const handlers = useSwipeable({
+    onSwipedRight: (eventData) => {
+      console.log("User Swiped!", eventData);
+      dispatch({ type: AppActionType.openLabelPanel });
+    },
+    // ...config,
+  });
   return (
     <>
       <div
         className={
           "dark:bg-dark_primary  dark:border-dark_primary w-full h-full "
         }
+        {...handlers}
       >
         <Mobile_SidePanel
           panelChildren={<PanelContent />}

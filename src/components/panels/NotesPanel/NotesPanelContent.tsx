@@ -21,6 +21,7 @@ import {
   useAppState,
 } from "../../../hooks/AppStateAndGraphAndUserhooks";
 import { DeleteButton } from "../../Buttons/DeleteButton";
+import { ToggleNotesPanelButton } from "../../Buttons/ToggleNotesPanelButton";
 
 const NoNotesDisplayID = "none";
 const MyComponent = (styles: any) => <div style={styles}>hello</div>;
@@ -131,15 +132,19 @@ export function NotesPanelContent({
         <div className={"top-bar h-12 flex items-center"}>
           {topBarButtons || (
             <>
-              <Button
-                icon={<span className="material-symbols-outlined">list</span>}
-              ></Button>
-              <Button
-                icon={
-                  <span className="material-symbols-outlined">grid_view</span>
-                }
-              ></Button>
-              <DeleteButton />
+              <ToggleNotesPanelButton />
+              {state.showNotesPanel && (
+                <>
+                  <Button
+                    icon={
+                      <span className="material-symbols-outlined">
+                        grid_view
+                      </span>
+                    }
+                  ></Button>
+                  <DeleteButton />
+                </>
+              )}
             </>
           )}
         </div>
@@ -178,6 +183,7 @@ export function NotesPanelContent({
                               article
                             </span>
                           }
+                          iconOnly={!state.showNotesPanel}
                           onClick={() =>
                             dispatch({
                               type: AppActionType.setActiveNodeID,
