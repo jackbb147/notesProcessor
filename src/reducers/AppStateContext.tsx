@@ -21,6 +21,7 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
       activeNodeID: undefined,
       activeCollection: Collections.All,
       LabelPanelClosed: true,
+      NotesPanelClosed: false,
       showRecoverNodePopup: false,
       darkModeOn: true,
       activeLabel: undefined,
