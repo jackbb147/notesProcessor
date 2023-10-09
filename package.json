@@ -6,6 +6,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@floating-ui/react": "^0.26.0",
     "@hookform/resolvers": "^3.2.0",
     "@jackhou147/tiptap": "^1.0.1",
     "@lexical/react": "^0.12.2",

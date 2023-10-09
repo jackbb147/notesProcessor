@@ -187,6 +187,7 @@ export function MyCustomACEEditor({
   value: string;
   onChange: (newValue: string) => void;
 }) {
+  const [focused, setFocused] = useState(false);
   const reactAceRef = useRef<ReactAce>(null);
   const [completerConfigured, setCompleterConfigured] = React.useState(false);
   function updateSize(
@@ -329,6 +330,31 @@ export function MyCustomACEEditor({
 
     setCompleterConfigured(true);
   }, [completerConfigured]);
+
+  useEffect(() => {
+    // debugger;
+    setTimeout(() => {
+      console.warn("focusing on ace editor, focused: " + focused);
+      if (focused) return;
+
+      console.warn("focusing on ace editor");
+      const editor = reactAceRef.current?.editor;
+      if (!editor) return;
+      editor.focus();
+      setFocused(true);
+    }, 10);
+
+    // return () => {
+    //   // unmounting...
+    //   // debugger;
+    // };
+  }, [reactAceRef.current]);
+
+  useEffect(() => {
+    return () => {
+      console.info("unmounting ace editor");
+    };
+  }, []);
   return (
     <>
       {/*<input ref={inputRef} />*/}
@@ -429,12 +455,7 @@ export function MyCustomACEEditor({
           setCompleterConfigured(false);
         }}
         onLoad={(editor) => {
-          setTimeout(() => {
-            // focusAndOpenKeyboard(editor);
-            // let d = document;
-            //
-            // editor.focus();
-          }, 0);
+          // debugger;
         }}
         name="UNIQUE_ID_OF_DIV"
         editorProps={{ $blockScrolling: true }}
