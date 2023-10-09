@@ -49,7 +49,7 @@ export interface AppState {
   activeCollection: Collections;
   activeLabel: string | undefined;
   LabelPanelClosed: boolean;
-  NotesPanelClosed: boolean;
+  showNotesPanel: boolean;
   showRecoverNodePopup: boolean;
   showClearDataPopup: boolean;
   darkModeOn: boolean;
@@ -144,7 +144,7 @@ export function AppStateReducer(draft: AppState, action: AppAction) {
     }
 
     case AppActionType.setShowNotesPanel: {
-      draft.NotesPanelClosed = !action.show;
+      draft.showNotesPanel = action.show;
       break;
     }
   }
