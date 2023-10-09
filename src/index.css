@@ -38,6 +38,14 @@ code {
     @apply text-xl;
     @apply font-bold;
   }
+
+  /* https://stackoverflow.com/a/69519605 */
+  ul, ol {
+    list-style: revert;
+    margin: revert;
+    padding: revert;
+  }
+
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 47.4% 11.2%;
