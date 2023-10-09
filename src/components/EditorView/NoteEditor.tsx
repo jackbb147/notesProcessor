@@ -217,7 +217,7 @@ export function NoteEditor({
       className={`${styles.noteEditorContainer}`}
       style={{
         // width: "100%",
-        overflowX: "hidden",
+        overflow: "hidden",
         // ensures no selection
         userSelect: "none",
         // disable browser handling of all panning and zooming gestures on touch devices

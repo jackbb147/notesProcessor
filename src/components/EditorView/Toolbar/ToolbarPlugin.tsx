@@ -205,10 +205,10 @@ export const ToolbarPlugin = () => {
     return activeEditor.registerCommand(
       SELECTION_CHANGE_COMMAND,
       (_payload, newEditor) => {
-        // $updateToolbar();
+        $updateToolbar();
         // setActiveEditor(newEditor);
-        // return false;
-        return true;
+        return false;
+        // return true;
       },
       COMMAND_PRIORITY_CRITICAL,
     );
