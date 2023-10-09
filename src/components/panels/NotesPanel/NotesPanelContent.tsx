@@ -133,12 +133,18 @@ export function NotesPanelContent({
           {topBarButtons || (
             <>
               <ToggleNotesPanelButton />
-              <Button
-                icon={
-                  <span className="material-symbols-outlined">grid_view</span>
-                }
-              ></Button>
-              <DeleteButton />
+              {state.showNotesPanel && (
+                <>
+                  <Button
+                    icon={
+                      <span className="material-symbols-outlined">
+                        grid_view
+                      </span>
+                    }
+                  ></Button>
+                  <DeleteButton />
+                </>
+              )}
             </>
           )}
         </div>

@@ -54,6 +54,7 @@ export function Desktop_NotesPanel({
         }
       >
         <Desktop_SidePanel
+          sideBarMinimized={!state.showNotesPanel}
           panelChildren={<NotesPanelContent collection={activeCollection} />}
         >
           {children}
