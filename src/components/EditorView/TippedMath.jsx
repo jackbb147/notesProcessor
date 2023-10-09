@@ -19,11 +19,72 @@ import {
   useInteractions,
   FloatingFocusManager,
 } from "@floating-ui/react";
-export function TippedMath({ value, onChange, showTooltip, requestClose }) {
+
+export function Popover() {
   const [isOpen, setIsOpen] = useState(false);
+
   const { refs, floatingStyles, context } = useFloating({
     open: isOpen,
     onOpenChange: setIsOpen,
+    middleware: [
+      offset(10),
+      flip({ fallbackAxisSideDirection: "end" }),
+      shift(),
+    ],
+    whileElementsMounted: autoUpdate,
+  });
+
+  const click = useClick(context);
+  const dismiss = useDismiss(context);
+  const role = useRole(context);
+
+  const { getReferenceProps, getFloatingProps } = useInteractions([
+    click,
+    dismiss,
+    role,
+  ]);
+
+  const headingId = "123";
+
+  return (
+    <>
+      <button ref={refs.setReference} {...getReferenceProps()}>
+        Add review
+      </button>
+      {isOpen && (
+        <FloatingFocusManager context={context} modal={false}>
+          <div
+            className="Popover"
+            ref={refs.setFloating}
+            style={{
+              ...floatingStyles,
+              border: "1px solid white",
+              padding: "10px",
+              cursor: "pointer",
+              color: "black",
+            }}
+            aria-labelledby={headingId}
+            {...getFloatingProps()}
+          >
+            <textarea placeholder="Write your review..." />
+          </div>
+        </FloatingFocusManager>
+      )}
+    </>
+  );
+}
+export function TippedMath({ value, onChange, showTooltip, requestClose }) {
+  const [isOpen, setIsOpen] = useState(showTooltip);
+
+  const { refs, floatingStyles, context } = useFloating({
+    open: isOpen,
+    onOpenChange(open) {
+      setIsOpen(open);
+      if (!open) {
+        // debugger;
+        requestClose();
+      }
+    },
     middleware: [offset(10), flip(), shift()],
     whileElementsMounted: autoUpdate,
   });
@@ -32,12 +93,12 @@ export function TippedMath({ value, onChange, showTooltip, requestClose }) {
   const dismiss = useDismiss(context);
   const role = useRole(context);
 
-  // Merge all the interactions into prop getters
   const { getReferenceProps, getFloatingProps } = useInteractions([
     click,
     dismiss,
     role,
   ]);
+
   return (
     <>
       <div ref={refs.setReference} {...getReferenceProps()}>
@@ -46,16 +107,37 @@ export function TippedMath({ value, onChange, showTooltip, requestClose }) {
       {isOpen && (
         <FloatingFocusManager context={context} modal={false}>
           <div
+            className="Popover"
             ref={refs.setFloating}
-            style={floatingStyles}
+            style={{
+              ...floatingStyles,
+              // border: "1px solid white",
+              // padding: "10px",
+              cursor: "pointer",
+              color: "black",
+              zIndex: 1000,
+            }}
             {...getFloatingProps()}
           >
+            {/*<textarea placeholder="Write your review..." />*/}
             <MyCustomACEEditor
               // width={"350px"}
               value={value}
               onChange={onChange}
             />
           </div>
+          {/*<div*/}
+          {/*  ref={refs.setFloating}*/}
+          {/*  style={floatingStyles}*/}
+          {/*  {...getFloatingProps()}*/}
+          {/*>*/}
+          {/*<div className={"border p-2"}>HELLO</div>*/}
+          {/*<MyCustomACEEditor*/}
+          {/*  // width={"350px"}*/}
+          {/*  value={value}*/}
+          {/*  onChange={onChange}*/}
+          {/*/>*/}
+          {/*</div>*/}
         </FloatingFocusManager>
       )}
       {/*<Tooltip*/}
