@@ -27,11 +27,13 @@ export function Mobile_SidePanel({
 
   sideBarClosed = false,
   defaultSideBarWidth = `100%`,
+  maxWidth = "100%",
 }: {
   panelChildren?: React.ReactNode;
   children?: React.ReactNode;
   sideBarClosed?: boolean;
   defaultSideBarWidth?: string;
+  maxWidth?: string;
 }) {
   const containerRef = useRef<any>(null);
   const [sideBarWidth, setSideBarWidth] = useState(defaultSideBarWidth);
@@ -44,7 +46,7 @@ export function Mobile_SidePanel({
       }
     >
       <SideBar
-        width={sideBarClosed ? "0px" : "100%"}
+        width={sideBarClosed ? "0px" : maxWidth}
         minWidth={"0px"}
         rootClassNames={`overflow-hidden`}
       >

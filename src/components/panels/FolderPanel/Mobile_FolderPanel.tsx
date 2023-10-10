@@ -37,6 +37,7 @@ export function Mobile_FolderPanel({
       <Mobile_SidePanel
         panelChildren={<FolderPanelContent />}
         sideBarClosed={state.LabelPanelClosed}
+        maxWidth={"70%"}
       >
         {children}
       </Mobile_SidePanel>
