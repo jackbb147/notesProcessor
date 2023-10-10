@@ -10,6 +10,7 @@ import {
   AppStateDispatchContext,
 } from "../../../reducers/AppStateContext";
 import { AppActionType } from "../../../reducers/AppStateReducer";
+import { useSwipeable } from "react-swipeable";
 
 export function Mobile_FolderPanel({
   children,
@@ -24,12 +25,19 @@ export function Mobile_FolderPanel({
     throw Error("state or dispatch is null. ");
   if (graph === null || graphDispatch === null)
     throw Error("graph or graphDispatch is null. ");
-
+  const handlers = useSwipeable({
+    onSwipedLeft: (eventData) => {
+      console.log("User Swiped!", eventData);
+      dispatch({ type: AppActionType.closeLabelPanel });
+    },
+    // ...config,
+  });
   return (
     <div
       className={
         "dark:bg-dark_secondary  dark:border-dark_secondary w-full h-full "
       }
+      {...handlers}
     >
       <Mobile_SidePanel
         panelChildren={<FolderPanelContent />}
