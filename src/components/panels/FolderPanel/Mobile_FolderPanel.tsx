@@ -1,9 +1,6 @@
 import React, { useContext } from "react";
 import { FolderPanelContent } from "./FolderPanelContent";
 import { Mobile_SidePanel } from "../../ui/SidePanel/Mobile/Mobile_SidePanel";
-import { NotesPanelContent } from "../NotesPanel/NotesPanelContent";
-import { AddNodeButton } from "../../Buttons/AddNodeButton";
-import { EditorSwitch } from "../../EditorView/EditorSwitch";
 import {
   GraphContext,
   GraphDispatchContext,
@@ -12,7 +9,8 @@ import {
   AppStateContext,
   AppStateDispatchContext,
 } from "../../../reducers/AppStateContext";
-import { Mobile } from "../../../hooks/useMediaQuery";
+import { AppActionType } from "../../../reducers/AppStateReducer";
+import { useSwipeable } from "react-swipeable";
 
 export function Mobile_FolderPanel({
   children,
@@ -27,16 +25,29 @@ export function Mobile_FolderPanel({
     throw Error("state or dispatch is null. ");
   if (graph === null || graphDispatch === null)
     throw Error("graph or graphDispatch is null. ");
-
+  const handlers = useSwipeable({
+    onSwipedLeft: (eventData) => {
+      console.log("User Swiped!", eventData);
+      dispatch({ type: AppActionType.closeLabelPanel });
+    },
+    // ...config,
+  });
   return (
     <div
       className={
         "dark:bg-dark_secondary  dark:border-dark_secondary w-full h-full "
       }
+      {...handlers}
     >
       <Mobile_SidePanel
         panelChildren={<FolderPanelContent />}
         sideBarClosed={state.LabelPanelClosed}
+        maxWidth={"70%"}
+        requestSideBarClose={() => {
+          dispatch({
+            type: AppActionType.closeLabelPanel,
+          });
+        }}
       >
         {children}
       </Mobile_SidePanel>

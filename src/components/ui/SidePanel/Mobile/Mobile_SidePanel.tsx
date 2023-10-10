@@ -14,6 +14,7 @@ function Main({
       className={"  h-full grow"}
       style={{
         width,
+        position: "relative",
       }}
     >
       {children}
@@ -27,11 +28,15 @@ export function Mobile_SidePanel({
 
   sideBarClosed = false,
   defaultSideBarWidth = `100%`,
+  maxWidth = "100%",
+  requestSideBarClose = () => {},
 }: {
   panelChildren?: React.ReactNode;
   children?: React.ReactNode;
   sideBarClosed?: boolean;
   defaultSideBarWidth?: string;
+  maxWidth?: string;
+  requestSideBarClose?: (e: any) => any;
 }) {
   const containerRef = useRef<any>(null);
   const [sideBarWidth, setSideBarWidth] = useState(defaultSideBarWidth);
@@ -44,14 +49,34 @@ export function Mobile_SidePanel({
       }
     >
       <SideBar
-        width={sideBarClosed ? "0px" : "100%"}
+        width={sideBarClosed ? "0px" : maxWidth}
         minWidth={"0px"}
         rootClassNames={`overflow-hidden`}
       >
         {panelChildren}
       </SideBar>
 
-      <Main width={`calc(100% - ${sideBarWidth})`}>{children}</Main>
+      <Main width={`calc(100% - ${sideBarWidth})`}>
+        <>
+          {!sideBarClosed && (
+            <div
+              onClick={requestSideBarClose}
+              style={{
+                position: "absolute",
+                width: "100%",
+                height: "100%",
+                left: "0px",
+                top: "0px",
+                backgroundColor: "rgba(0,0,0,0.5)",
+                zIndex: 100,
+              }}
+            >
+              {/*{!sideBarClosed ? " YOU SHOULD SEE ME" : "YOU SHOULD NOT SEE ME"}*/}
+            </div>
+          )}
+          {children}
+        </>
+      </Main>
     </div>
   );
 }
