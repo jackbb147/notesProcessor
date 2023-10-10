@@ -1,9 +1,6 @@
 import React, { useContext } from "react";
 import { FolderPanelContent } from "./FolderPanelContent";
 import { Mobile_SidePanel } from "../../ui/SidePanel/Mobile/Mobile_SidePanel";
-import { NotesPanelContent } from "../NotesPanel/NotesPanelContent";
-import { AddNodeButton } from "../../Buttons/AddNodeButton";
-import { EditorSwitch } from "../../EditorView/EditorSwitch";
 import {
   GraphContext,
   GraphDispatchContext,
@@ -12,7 +9,7 @@ import {
   AppStateContext,
   AppStateDispatchContext,
 } from "../../../reducers/AppStateContext";
-import { Mobile } from "../../../hooks/useMediaQuery";
+import { AppActionType } from "../../../reducers/AppStateReducer";
 
 export function Mobile_FolderPanel({
   children,
@@ -38,6 +35,11 @@ export function Mobile_FolderPanel({
         panelChildren={<FolderPanelContent />}
         sideBarClosed={state.LabelPanelClosed}
         maxWidth={"70%"}
+        requestSideBarClose={() => {
+          dispatch({
+            type: AppActionType.closeLabelPanel,
+          });
+        }}
       >
         {children}
       </Mobile_SidePanel>
