@@ -22,6 +22,7 @@ import {
 } from "../../../hooks/AppStateAndGraphAndUserhooks";
 import { DeleteButton } from "../../Buttons/DeleteButton";
 import { ToggleNotesPanelButton } from "../../Buttons/ToggleNotesPanelButton";
+import { useSwipeable } from "react-swipeable";
 
 const NoNotesDisplayID = "none";
 const MyComponent = (styles: any) => <div style={styles}>hello</div>;
@@ -73,6 +74,14 @@ export function NotesPanelContent({
     throw Error("state or dispatch is null. ");
   if (graph === null || graphDispatch === null)
     throw Error("graph or graphDispatch is null. ");
+
+  const handlers = useSwipeable({
+    onSwipedRight: (eventData) => {
+      console.log("User Swiped!", eventData);
+      dispatch({ type: AppActionType.openLabelPanel });
+    },
+    // ...config,
+  });
 
   function handleKeyDown(e: React.KeyboardEvent) {
     if (graph === null) return;
@@ -128,7 +137,7 @@ export function NotesPanelContent({
 
   return (
     <>
-      <div className={"w-full h-full flex flex-col "}>
+      <div className={"w-full h-full flex flex-col "} {...handlers}>
         <div className={"top-bar h-12 flex items-center"}>
           {topBarButtons || (
             <>

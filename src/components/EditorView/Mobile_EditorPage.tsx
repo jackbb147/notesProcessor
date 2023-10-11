@@ -6,6 +6,9 @@ import { Desktop } from "../../hooks/useMediaQuery";
 import { DesktopEditorPage } from "./DesktopEditorPage";
 import { BackButton } from "../Buttons/BackButton";
 import style from "../ScrollableButHiddenScrollBar.module.css";
+import { useSwipeable } from "react-swipeable";
+import { AppActionType } from "../../reducers/AppStateReducer";
+import { useAppDispatch } from "../../hooks/AppStateAndGraphAndUserhooks";
 
 export function Mobile_EditorPage() {
   return (
