@@ -51,7 +51,7 @@ export function Mobile_FolderPanel({
         }}
         sideBarRootClassNames={" bg-grey dark:bg-dark_secondary"}
         sideBarStyle={{
-          border: "1px solid white",
+          // border: "1px solid white",
           position: "absolute",
           width: "70%",
           height: "100%",
