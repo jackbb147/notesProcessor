@@ -49,6 +49,7 @@ export function Mobile_FolderPanel({
             type: AppActionType.closeLabelPanel,
           });
         }}
+        sideBarRootClassNames={" bg-grey dark:bg-dark_secondary"}
         sideBarStyle={{
           border: "1px solid white",
           position: "absolute",
@@ -57,7 +58,7 @@ export function Mobile_FolderPanel({
           right: state.LabelPanelClosed ? "100%" : "30%",
           top: "0px",
           zIndex: 100,
-          backgroundColor: "black",
+          // backgroundColor: "black",
         }}
       >
         {children}
