@@ -20,6 +20,7 @@ export function Mobile_FolderPanel({
   const graph = useContext(GraphContext);
   const graphDispatch = useContext(GraphDispatchContext);
   const state = useContext(AppStateContext);
+
   const dispatch = useContext(AppStateDispatchContext);
   if (state === null || dispatch === null)
     throw Error("state or dispatch is null. ");
@@ -47,6 +48,16 @@ export function Mobile_FolderPanel({
           dispatch({
             type: AppActionType.closeLabelPanel,
           });
+        }}
+        sideBarStyle={{
+          border: "1px solid white",
+          position: "absolute",
+          width: "70%",
+          height: "100%",
+          right: state.LabelPanelClosed ? "100%" : "30%",
+          top: "0px",
+          zIndex: 100,
+          backgroundColor: "black",
         }}
       >
         {children}

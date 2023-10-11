@@ -30,6 +30,7 @@ export function Mobile_SidePanel({
   defaultSideBarWidth = `100%`,
   maxWidth = "100%",
   requestSideBarClose = () => {},
+  sideBarStyle,
 }: {
   panelChildren?: React.ReactNode;
   children?: React.ReactNode;
@@ -37,6 +38,7 @@ export function Mobile_SidePanel({
   defaultSideBarWidth?: string;
   maxWidth?: string;
   requestSideBarClose?: (e: any) => any;
+  sideBarStyle?: React.CSSProperties;
 }) {
   const containerRef = useRef<any>(null);
   const [sideBarWidth, setSideBarWidth] = useState(defaultSideBarWidth);
@@ -52,28 +54,29 @@ export function Mobile_SidePanel({
         width={sideBarClosed ? "0px" : maxWidth}
         minWidth={"0px"}
         rootClassNames={`overflow-hidden`}
+        style={sideBarStyle}
       >
         {panelChildren}
       </SideBar>
 
       <Main width={`calc(100% - ${sideBarWidth})`}>
         <>
-          {!sideBarClosed && (
-            <div
-              onClick={requestSideBarClose}
-              style={{
-                position: "absolute",
-                width: "100%",
-                height: "100%",
-                left: "0px",
-                top: "0px",
-                backgroundColor: "rgba(0,0,0,0.5)",
-                zIndex: 100,
-              }}
-            >
-              {/*{!sideBarClosed ? " YOU SHOULD SEE ME" : "YOU SHOULD NOT SEE ME"}*/}
-            </div>
-          )}
+          {/*{!sideBarClosed && (*/}
+          {/*  <div*/}
+          {/*    onClick={requestSideBarClose}*/}
+          {/*    style={{*/}
+          {/*      position: "absolute",*/}
+          {/*      width: "100%",*/}
+          {/*      height: "100%",*/}
+          {/*      left: "0px",*/}
+          {/*      top: "0px",*/}
+          {/*      backgroundColor: "rgba(0,0,0,0.5)",*/}
+          {/*      zIndex: 100,*/}
+          {/*    }}*/}
+          {/*  >*/}
+          {/*    /!*{!sideBarClosed ? " YOU SHOULD SEE ME" : "YOU SHOULD NOT SEE ME"}*!/*/}
+          {/*  </div>*/}
+          {/*)}*/}
           {children}
         </>
       </Main>

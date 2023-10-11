@@ -7,6 +7,7 @@ export function SideBar({
   children,
   handleResize,
   rootClassNames,
+  style,
 }: {
   width: string;
   widthTransition?: boolean;
@@ -14,6 +15,7 @@ export function SideBar({
   children: React.ReactNode;
   handleResize?: (e: React.MouseEvent) => any;
   rootClassNames?: string;
+  style?: React.CSSProperties;
 }) {
   return (
     <div
@@ -29,6 +31,7 @@ export function SideBar({
         transition: widthTransition ? `all 200ms` : "none",
         transitionTimingFunction: "ease-out",
         minWidth: minWidth,
+        ...style,
         // maxWidth: "50%",
       }}
     >
