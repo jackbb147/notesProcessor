@@ -69,8 +69,14 @@ function Container({ children }: { children: React.ReactNode }) {
     if (html == null) return;
     if (AppState.darkModeOn) {
       if (!html.classList.contains("dark")) html.classList.add("dark");
+      document
+        .querySelector('meta[name="theme-color"]')
+        ?.setAttribute("content", "#222831");
     } else {
       html.classList.remove("dark");
+      document
+        .querySelector('meta[name="theme-color"]')
+        ?.setAttribute("content", "white");
     }
   }, [AppState.darkModeOn]);
 
