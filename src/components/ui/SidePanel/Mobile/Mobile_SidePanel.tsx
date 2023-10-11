@@ -30,6 +30,8 @@ export function Mobile_SidePanel({
   defaultSideBarWidth = `100%`,
   maxWidth = "100%",
   requestSideBarClose = () => {},
+  sideBarStyle,
+  sideBarRootClassNames,
 }: {
   panelChildren?: React.ReactNode;
   children?: React.ReactNode;
@@ -37,6 +39,8 @@ export function Mobile_SidePanel({
   defaultSideBarWidth?: string;
   maxWidth?: string;
   requestSideBarClose?: (e: any) => any;
+  sideBarStyle?: React.CSSProperties;
+  sideBarRootClassNames?: string;
 }) {
   const containerRef = useRef<any>(null);
   const [sideBarWidth, setSideBarWidth] = useState(defaultSideBarWidth);
@@ -51,7 +55,8 @@ export function Mobile_SidePanel({
       <SideBar
         width={sideBarClosed ? "0px" : maxWidth}
         minWidth={"0px"}
-        rootClassNames={`overflow-hidden`}
+        rootClassNames={`overflow-hidden ${sideBarRootClassNames ?? ""}`}
+        style={sideBarStyle}
       >
         {panelChildren}
       </SideBar>
@@ -68,7 +73,7 @@ export function Mobile_SidePanel({
                 left: "0px",
                 top: "0px",
                 backgroundColor: "rgba(0,0,0,0.5)",
-                zIndex: 100,
+                zIndex: 10,
               }}
             >
               {/*{!sideBarClosed ? " YOU SHOULD SEE ME" : "YOU SHOULD NOT SEE ME"}*/}
