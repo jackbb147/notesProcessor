@@ -44,11 +44,26 @@ import { HandleSaveNotePlugin } from "./HandleSaveNotePlugin";
 import { TRANSFORMERS } from "@lexical/markdown";
 import { AutoLinkNode, LinkNode } from "@lexical/link";
 import AutoLinkPlugin from "./AutoLinkPlugin";
+import { useSwipeable } from "react-swipeable";
+import { AppActionType } from "../../../reducers/AppStateReducer";
+import { useAppDispatch } from "../../../hooks/AppStateAndGraphAndUserhooks";
 
 function RadixScrollArea({ children }: { children: React.ReactNode }) {
+  const dispatch = useAppDispatch();
+  const handlers = useSwipeable({
+    onSwipedRight: (eventData) => {
+      console.log("User Swiped!", eventData);
+      dispatch({
+        type: AppActionType.setActiveNodeID,
+        id: undefined,
+      });
+    },
+    // ...config,
+  });
   return (
     <ScrollArea.Root
       className={"RADIX_SCROLL_AREA w-full h-full overflow-hidden"}
+      {...handlers}
     >
       <ScrollArea.Viewport className={"w-full h-full pr-2.5"}>
         {children}

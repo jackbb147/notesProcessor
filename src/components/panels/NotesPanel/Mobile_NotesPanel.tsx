@@ -31,20 +31,13 @@ export function Mobile_NotesPanel({ children }: { children: React.ReactNode }) {
   const graphDispatch = useGraphDispatch();
   const state = useAppState();
   const dispatch = useAppDispatch();
-  const handlers = useSwipeable({
-    onSwipedRight: (eventData) => {
-      console.log("User Swiped!", eventData);
-      dispatch({ type: AppActionType.openLabelPanel });
-    },
-    // ...config,
-  });
+
   return (
     <>
       <div
         className={
           "dark:bg-dark_primary  dark:border-dark_primary w-full h-full "
         }
-        {...handlers}
       >
         <Mobile_SidePanel
           panelChildren={<PanelContent />}
