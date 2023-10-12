@@ -12,9 +12,16 @@ export function useKeystrokeShortcutPlugin({
     const onKeyDown = (event: KeyboardEvent) => {
       // "Ctrl" or "Cmd" + "s"
 
+      // "Ctrl" or "Cmd" + "s"
+      if ((event.ctrlKey || event.metaKey) && event.which === 83) {
+        editor.dispatchCommand(SAVE_COMMAND, "");
+        event.preventDefault();
+      }
+
       if (event.shiftKey && event.code === "Digit4") {
         // alert("Shift + 4 pressed!");
         editor.dispatchCommand(INSERT_DOUBLE_DOLLAR_COMMAND, "");
+        // event.preventDefault();
       }
     };
 
