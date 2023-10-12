@@ -23,7 +23,7 @@ function findAndTransformInlineMath(node: TextNode): InlineMathNode | null {
       }
       // debugger;
       console.log("targetNode: " + targetNode.getTextContent());
-      const inlineMathNode = $createInlineMathNode("hello world");
+      const inlineMathNode = $createInlineMathNode("hello world", true);
       targetNode.replace(inlineMathNode);
       return inlineMathNode;
     }
