@@ -20,10 +20,12 @@ export function MyCustomACEEditor({
   width = "350px",
   value,
   onChange,
+  showAutoComplete,
 }: {
   width?: string;
   value: string;
   onChange: (newValue: string) => void;
+  showAutoComplete?: boolean;
 }) {
   const [focused, setFocused] = useState(false);
   const reactAceRef = useRef<ReactAce>(null);
@@ -294,6 +296,11 @@ export function MyCustomACEEditor({
         }}
         onLoad={(editor) => {
           // debugger;
+          if (showAutoComplete) {
+            setTimeout(() => {
+              editor.commands.byName.startAutocomplete.exec(editor);
+            }, 50);
+          }
         }}
         name="UNIQUE_ID_OF_DIV"
         editorProps={{ $blockScrolling: true }}

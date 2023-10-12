@@ -123,6 +123,7 @@ export function TippedMath({ value, onChange, showTooltip, requestClose }) {
             <MyCustomACEEditor
               // width={"350px"}
               value={value}
+              showAutoComplete={value === "\\"}
               onChange={onChange}
             />
           </div>
