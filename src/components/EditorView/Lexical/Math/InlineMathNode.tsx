@@ -12,7 +12,7 @@ import {
 } from "lexical";
 import React, { ReactNode } from "react";
 import MathView from "../../MathView";
-import { TippedMath } from "../../TippedMath";
+import { TippedMath } from "./TippedMath";
 import { ContentContainer } from "../../ContentContainer";
 import { InlineMathNodeReactComponent } from "./InlineMathNodeReactComponent";
 import { SerializedDecoratorBlockNode } from "@lexical/react/LexicalDecoratorBlockNode";

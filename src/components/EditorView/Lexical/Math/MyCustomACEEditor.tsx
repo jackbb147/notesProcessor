@@ -1,181 +1,19 @@
-import { NodeViewWrapper } from "@tiptap/react";
-import React, {
-  LegacyRef,
-  MutableRefObject,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import AceEditor from "react-ace";
-import "ace-builds/src-noconflict/mode-javascript";
-import "ace-builds/src-noconflict/mode-latex";
-import "ace-builds/src-noconflict/theme-monokai";
-import "ace-builds/src-noconflict/theme-github";
-import "ace-builds/src-noconflict/theme-xcode";
-import "ace-builds/src-noconflict/ext-language_tools";
-import { ContentContainer } from "../../ContentContainer";
-import { MATHJAXCOMMANDS } from "./mathjaxCommands";
-import { useAppState } from "../../../../hooks/AppStateAndGraphAndUserhooks";
-// import "react-tippy/dist/tippy.css";
-import { Tooltip, withTooltip } from "react-tippy";
-import Tippy from "@tippyjs/react";
-// import 'tippy.js/dist/tippy.css'; // optional
-import { useDisableErrorOverlay } from "../../../../hooks/useDisableErrorOverlay";
-import { MathJax, MathJaxContext } from "better-react-mathjax";
-import MathView from "../../MathView";
-import { getCursorPos, setCursorPos } from "./TiptapCursorPos";
-
-import { NodeViewProps } from "@tiptap/react";
+import React, { useEffect, useRef, useState } from "react";
 import ReactAce from "react-ace";
 import { IAceEditor } from "react-ace/lib/types";
 import { Ace } from "ace-builds";
-import { VirtualRenderer } from "ace-builds/ace";
-import ReactFocusLock from "react-focus-lock";
-import { TippedMath } from "../../Lexical/Math/TippedMath";
-import Draggable from "react-draggable"; // The default
-import useDoubleClick from "use-double-click";
-import { useLongPress } from "use-long-press";
-import NearMeIcon from "@mui/icons-material/NearMe";
-import { NearMeOutlined } from "@mui/icons-material";
+import { MATHJAXCOMMANDS } from "../../Tiptap/MathEditor/mathjaxCommands";
+import AceEditor from "react-ace";
 
 interface Point {
   row: number;
   column: number;
 }
-
 interface Delta {
   action: "insert" | "remove";
   start: Point;
   end: Point;
   lines: string[];
-}
-
-export function InlineMathEditorComponent(props: NodeViewProps) {
-  const [draggableKey, setDraggableKey] = useState(0); //changing this will achieve the effect of resetting the node position: https://github.com/react-grid-layout/react-draggable/issues/214#issuecomment-270021423
-
-  const [nodeMoved, setNodeMoved] = useState(false);
-  // console.warn(props.node.attrs);
-  // const [showTooltip, setShowTooltip] = useState(false);
-
-  // useEffect(() => {
-  //   setShowTooltip(true);
-  // }, []);
-  function resetNodePosition() {
-    setDraggableKey(draggableKey + 1);
-    setNodeMoved(false);
-  }
-
-  function handleNodeLongPress() {
-    // alert("long press detected")
-    // setShowTooltip(true);
-    props.updateAttributes({
-      open: true,
-    });
-  }
-
-  function handleRequestCloseTooltip() {
-    // setShowTooltip(false); //TODO modify this somehow
-    props.updateAttributes({
-      open: false,
-    });
-  }
-
-  function handleNodeMove() {
-    setNodeMoved(true);
-  }
-  useEffect(() => {
-    if (props.node.attrs.first) {
-      // debugger;
-      setTimeout(() => {
-        props.updateAttributes({
-          open: true,
-        });
-        props.updateAttributes({
-          first: false,
-        });
-      }, 0); // this is a hack to get the tooltip to show up on the first render. Without the set timeout, mathjax crashes.
-    }
-  }, []);
-  // @ts-ignore
-  return (
-    <Draggable key={draggableKey} onDrag={handleNodeMove}>
-      <NodeViewWrapper className="react-component">
-        {/*<span className="label">React Component</span>*/}
-        <ContentContainer onLongPress={handleNodeLongPress}>
-          <div
-            style={{
-              // border: "1px solid yellow",
-              position: "relative",
-              marginRight: "1.15rem",
-            }}
-          >
-            <TippedMath
-              value={props.node.attrs.value}
-              showTooltip={props.node.attrs.open}
-              requestClose={handleRequestCloseTooltip}
-              onChange={(newValue: string) => {
-                // setValue(newValue);
-                props.updateAttributes({
-                  value: newValue,
-                });
-              }}
-            />
-            <div
-              onClick={resetNodePosition}
-              onTouchStart={resetNodePosition}
-              style={{
-                display: "inline",
-                // width: "1rem",
-                // border: "1px solid blue",
-                position: "absolute",
-                left: "100%",
-                top: "0",
-                cursor: "pointer",
-                fontSize: "1rem",
-                opacity: ".4",
-                // color: "red"
-              }}
-            >
-              {nodeMoved ? (
-                <NearMeOutlined fontSize={"inherit"}></NearMeOutlined>
-              ) : (
-                <NearMeIcon fontSize={"inherit"}></NearMeIcon>
-              )}
-            </div>
-          </div>
-          {/*// <Tippy*/}
-          {/*// allowHTML={true}*/}
-          {/*// interactive={true}*/}
-          {/*// content={*/}
-          {/*//   <div>asklflk</div>*/}
-          {/*//   // <AceEditor></AceEditor>*/}
-          {/*// }>*/}
-          {/*//   <div>{value}</div>*/}
-          {/*// </Tippy>*/}
-
-          {/*// withTooltip(MyCustomACEEditor, {*/}
-          {/*//   html:*/}
-          {/*//   <MyCustomACEEditor*/}
-          {/*//     props={props}*/}
-          {/*//     value={value}*/}
-          {/*//     setValue={setValue}*/}
-          {/*//   />,*/}
-          {/*//*/}
-          {/*//   // position: "top",*/}
-          {/*//   // trigger="click"*/}
-          {/*//   open: showTooltip,*/}
-          {/*//   arrow: true,*/}
-          {/*// })*/}
-          {/*// <MathView value={value} />*/}
-          {/*// <MyCustomACEEditor*/}
-          {/*//   props={props}*/}
-          {/*//   value={value}*/}
-          {/*//   setValue={setValue}*/}
-          {/*// />*/}
-        </ContentContainer>
-      </NodeViewWrapper>
-    </Draggable>
-  );
 }
 
 export function MyCustomACEEditor({
@@ -463,12 +301,3 @@ export function MyCustomACEEditor({
     </>
   );
 }
-const Header = () => <h2>Header here</h2>;
-
-const HeaderWithTooltip = withTooltip(Header, {
-  title: "Welcome to React with tooltip",
-});
-
-// export const TooltippedAceEditor = withTooltip(MyCustomACEEditor, {
-//   // options
-// });

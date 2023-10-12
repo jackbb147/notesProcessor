@@ -1,11 +1,11 @@
 import { Tooltip } from "react-tippy";
 import AceEditor from "react-ace";
-import MathView from "./MathView";
-import { MyCustomACEEditor } from "./Tiptap/MathEditor/InlineMathEditorComponent";
+import MathView from "../../MathView";
+import { MyCustomACEEditor } from "./MyCustomACEEditor";
 import {
   AppStateContext,
   AppStateProvider,
-} from "../../reducers/AppStateContext";
+} from "../../../../reducers/AppStateContext";
 import { useRef, useState } from "react";
 import {
   useFloating,

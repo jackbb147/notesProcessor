@@ -1,5 +1,5 @@
 import { ContentContainer } from "../../ContentContainer";
-import { Popover, TippedMath } from "../../TippedMath";
+import { Popover, TippedMath } from "./TippedMath";
 import React, { useEffect } from "react";
 
 export function InlineMathNodeReactComponent({
