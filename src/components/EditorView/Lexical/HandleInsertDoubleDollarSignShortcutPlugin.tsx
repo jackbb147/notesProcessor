@@ -46,7 +46,7 @@ export function HandleInsertDoubleDollarSignShortcutPlugin() {
       (payload, editor): boolean => {
         // TODO
         // debugger;
-        alert("remove double dollar sign");
+        console.log("remove double dollar sign");
         editor.update(() => {
           //   TODO delete double dollar sign
           // const selection = $getSelection();

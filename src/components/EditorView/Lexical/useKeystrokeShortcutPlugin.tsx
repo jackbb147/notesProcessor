@@ -29,7 +29,7 @@ export function useKeystrokeShortcutPlugin({
 
       if (event.key === "Backspace") {
         // alert("backspace pressed!");
-        editor.dispatchCommand(REMOVE_DOUBLE_DOLLAR_COMMAND, "");
+        // editor.dispatchCommand(REMOVE_DOUBLE_DOLLAR_COMMAND, "");
         event.preventDefault();
       }
     };
