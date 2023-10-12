@@ -12,6 +12,7 @@ import {
   SerializedTextNode,
 } from "lexical";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
+import { useKeystrokeShortcutPlugin } from "./useKeystrokeShortcutPlugin";
 export const SAVE_COMMAND: LexicalCommand<string> = createCommand();
 function getFirstLine(
   json: SerializedEditorState<SerializedLexicalNode>,
@@ -63,6 +64,10 @@ export function HandleSaveNotePlugin({
   const [clickedInside, setClickedInside] = useState(0);
   const editorUpdated = useRef(0);
   const editorStateRef = useRef<EditorState>();
+
+  useKeystrokeShortcutPlugin({
+    editor,
+  });
   // useEffect(() => {
   //   return editor.registerTextContentListener((editorState) => {
   //     debugger;
@@ -114,30 +119,6 @@ export function HandleSaveNotePlugin({
         return true;
       },
       COMMAND_PRIORITY_HIGH,
-    );
-  }, [editor]);
-
-  useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => {
-      // "Ctrl" or "Cmd" + "s"
-      if ((event.ctrlKey || event.metaKey) && event.which === 83) {
-        editor.dispatchCommand(SAVE_COMMAND, "");
-        event.preventDefault();
-      }
-    };
-
-    return editor.registerRootListener(
-      (
-        rootElement: HTMLElement | null,
-        prevRootElement: HTMLElement | null,
-      ) => {
-        if (prevRootElement !== null) {
-          prevRootElement.removeEventListener("keydown", onKeyDown);
-        }
-        if (rootElement !== null) {
-          rootElement.addEventListener("keydown", onKeyDown);
-        }
-      },
     );
   }, [editor]);
 
