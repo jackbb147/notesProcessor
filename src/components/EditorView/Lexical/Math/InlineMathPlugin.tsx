@@ -4,8 +4,8 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 
 function useInlineMath(editor: LexicalEditor) {
   useEffect(() => {
-    const removeTransform = editor.registerNodeTransform(TextNode, () => {
-      console.log("hello");
+    const removeTransform = editor.registerNodeTransform(TextNode, (node) => {
+      console.log("hello: " + node.getTextContent());
     });
     return () => {
       removeTransform();
