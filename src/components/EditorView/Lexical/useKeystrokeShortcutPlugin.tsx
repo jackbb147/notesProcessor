@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 import { SAVE_COMMAND } from "./HandleSaveNotePlugin";
 import { LexicalEditor } from "lexical";
-import { INSERT_DOUBLE_DOLLAR_COMMAND } from "./HandleInsertDoubleDollarSignShortcutPlugin";
+import {
+  INSERT_DOUBLE_DOLLAR_COMMAND,
+  REMOVE_DOUBLE_DOLLAR_COMMAND,
+} from "./HandleInsertDoubleDollarSignShortcutPlugin";
 
 export function useKeystrokeShortcutPlugin({
   editor,
@@ -22,6 +25,12 @@ export function useKeystrokeShortcutPlugin({
         // alert("Shift + 4 pressed!");
         editor.dispatchCommand(INSERT_DOUBLE_DOLLAR_COMMAND, "");
         // event.preventDefault();
+      }
+
+      if (event.key === "Backspace") {
+        // alert("backspace pressed!");
+        editor.dispatchCommand(REMOVE_DOUBLE_DOLLAR_COMMAND, "");
+        event.preventDefault();
       }
     };
 

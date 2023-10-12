@@ -48,6 +48,7 @@ import { useSwipeable } from "react-swipeable";
 import { AppActionType } from "../../../reducers/AppStateReducer";
 import { useAppDispatch } from "../../../hooks/AppStateAndGraphAndUserhooks";
 import { HandleInsertDoubleDollarSignShortcutPlugin } from "./HandleInsertDoubleDollarSignShortcutPlugin";
+import { InlineMathPlugin } from "./Math/InlineMathPlugin";
 
 function RadixScrollArea({ children }: { children: React.ReactNode }) {
   const dispatch = useAppDispatch();
@@ -144,6 +145,7 @@ export function Editor({
           <ToolbarPlugin />
 
           <RadixScrollArea>
+            <InlineMathPlugin />
             <RichTextPlugin
               contentEditable={
                 <ContentEditable

@@ -12,6 +12,9 @@ import { $getNearestBlockElementAncestorOrThrow } from "@lexical/utils";
 export const INSERT_DOUBLE_DOLLAR_COMMAND: LexicalCommand<string> =
   createCommand();
 
+export const REMOVE_DOUBLE_DOLLAR_COMMAND: LexicalCommand<string> =
+  createCommand();
+
 export function HandleInsertDoubleDollarSignShortcutPlugin() {
   const [editor] = useLexicalComposerContext();
   useEffect(() => {
@@ -30,6 +33,24 @@ export function HandleInsertDoubleDollarSignShortcutPlugin() {
           const doubleDollarSign = $createTextNode("$");
           const parent = $getNearestBlockElementAncestorOrThrow(node);
           parent.append(doubleDollarSign);
+        });
+        return true;
+      },
+      COMMAND_PRIORITY_HIGH,
+    );
+  }, [editor]);
+
+  useEffect(() => {
+    return editor.registerCommand(
+      REMOVE_DOUBLE_DOLLAR_COMMAND,
+      (payload, editor): boolean => {
+        // TODO
+        // debugger;
+        alert("remove double dollar sign");
+        editor.update(() => {
+          //   TODO delete double dollar sign
+          // const selection = $getSelection();
+          // const node = selection?.getNodes()[0];
         });
         return true;
       },
