@@ -47,6 +47,7 @@ import AutoLinkPlugin from "./AutoLinkPlugin";
 import { useSwipeable } from "react-swipeable";
 import { AppActionType } from "../../../reducers/AppStateReducer";
 import { useAppDispatch } from "../../../hooks/AppStateAndGraphAndUserhooks";
+import { HandleInsertDoubleDollarSignShortcutPlugin } from "./HandleInsertDoubleDollarSignShortcutPlugin";
 
 function RadixScrollArea({ children }: { children: React.ReactNode }) {
   const dispatch = useAppDispatch();
@@ -172,6 +173,7 @@ export function Editor({
               handleSaveNote={handleBlur}
               note={note}
             />
+            <HandleInsertDoubleDollarSignShortcutPlugin />
           </RadixScrollArea>
         </div>
       </LexicalComposer>
