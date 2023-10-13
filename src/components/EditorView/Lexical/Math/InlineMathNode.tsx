@@ -1,11 +1,15 @@
 import {
   $getNodeByKey,
+  $getPreviousSelection,
+  $getSelection,
+  $isRangeSelection,
   DecoratorNode,
   DOMConversionMap,
   DOMExportOutput,
   LexicalEditor,
   LexicalNode,
   NodeKey,
+  RangeSelection,
   SerializedElementNode,
   SerializedLexicalNode,
   Spread,
@@ -28,16 +32,17 @@ export type SerializedInlineMathNode = Spread<
 export class InlineMathNode extends DecoratorNode<ReactNode> {
   __showToolTip: boolean = false;
   __tex: string = String.raw`F = m\vec{a}`;
+  __selection: RangeSelection | null = null;
 
   static getType(): string {
     return "InlineMathNode";
   }
 
   static clone(node: InlineMathNode): InlineMathNode {
-    return new InlineMathNode(node.__tex, node.__key);
+    return new InlineMathNode(node.__tex, node.__key, null);
   }
 
-  constructor(tex: string, key?: NodeKey) {
+  constructor(tex: string, key: NodeKey, selection: RangeSelection | null) {
     super(key);
     if (tex.length > 0) this.__tex = tex;
   }
@@ -62,6 +67,24 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
   getShowToolTip(): boolean {
     const self = this.getLatest();
     return self.__showToolTip;
+  }
+
+  getSelection() {
+    const self = this.getLatest();
+    return self.__selection;
+  }
+
+  setSelection(editor: LexicalEditor) {
+    const self = this.getWritable();
+    editor.update(() => {
+      const selection = $getSelection();
+      debugger;
+      if (!$isRangeSelection(selection)) {
+        self.__selection = null;
+        return;
+      }
+      self.__selection = selection;
+    });
   }
 
   getTex() {
@@ -126,7 +149,13 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
   }
 
   closeToolTip(_editor: LexicalEditor) {
+    // const selection = this.getSelection();
+
     _editor.update(() => {
+      // const s = selection;
+      const selection = this.getSelection();
+      debugger;
+
       const node = $getNodeByKey(this.__key);
       if (node !== null && $isInlineMathNode(node)) {
         node.setShowToolTip(false);
@@ -136,6 +165,8 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
 
   openToolTip(_editor: LexicalEditor) {
     _editor.update(() => {
+      debugger;
+
       const node = $getNodeByKey(this.__key);
       if (node !== null && $isInlineMathNode(node)) {
         node.setShowToolTip(true);
@@ -151,7 +182,7 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
       // <span>hey am i inline</span>
       <ContentContainer
         onLongPress={() => {
-          this.openToolTip(_editor);
+          // this.openToolTip(_editor);
         }}
       >
         <InlineMathNodeReactComponent
@@ -171,18 +202,6 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
             // this.setTex(tex);
           }}
         />
-        {/*<TippedMath*/}
-        {/*  value={this.getTex()}*/}
-        {/*  onChange={(tex: string) => {*/}
-        {/*    console.log("[onChange] fired in TippedMath. tex: " + tex);*/}
-        {/*    // alert("hey");*/}
-        {/*    this.hanleTexChange(_editor, tex);*/}
-        {/*  }}*/}
-        {/*  showTooltip={true}*/}
-        {/*  requestClose={() => {*/}
-        {/*    this.closeToolTip(_editor);*/}
-        {/*  }}*/}
-        {/*/>*/}
       </ContentContainer>
     );
     // return <MathView value={"F = ma"} />;
@@ -192,9 +211,10 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
 
 export function $createInlineMathNode(
   tex: string,
-  showTooltip?: boolean,
+  showTooltip: boolean,
+  selection: RangeSelection | null,
 ): InlineMathNode {
-  const res = new InlineMathNode(tex);
+  const res = new InlineMathNode(tex, selection);
 
   if (showTooltip !== undefined) res.setShowToolTip(showTooltip);
   return res;

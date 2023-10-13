@@ -128,6 +128,8 @@ export function TippedMath({ value, onChange, showTooltip, requestClose }) {
               requestUnmount={() => {
                 // debugger;
                 setIsOpen(false);
+                //   TODO make sure the lexical cursor is restored
+                requestClose();
               }}
             />
           </div>
