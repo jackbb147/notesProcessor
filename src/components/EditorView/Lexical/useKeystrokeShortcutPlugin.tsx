@@ -2,10 +2,11 @@ import { useEffect } from "react";
 import { SAVE_COMMAND } from "./HandleSaveNotePlugin";
 import {
   $getSelection,
+  $isTextNode,
   EditorState,
   LexicalEditor,
-  NodeSelection,
   RangeSelection,
+  TextNode,
 } from "lexical";
 import {
   INSERT_DOUBLE_DOLLAR_COMMAND,
@@ -57,8 +58,24 @@ export function useKeystrokeShortcutPlugin({
 
     const removeUpdateListener = editor.registerUpdateListener(
       ({ editorState, prevEditorState }) => {
-        function getChar(state: EditorState): string {
-          return "";
+        function getChar(state: EditorState): string | undefined {
+          const selection = state._selection;
+          debugger;
+          if (selection && "anchor" in selection) {
+            var s = selection as RangeSelection;
+            var offset = s.anchor.offset;
+            let key = s.anchor.key;
+            let node = state._nodeMap.get(key);
+            if ($isTextNode(node)) {
+              let textNode = node as TextNode;
+              let textContent = textNode.__text;
+              let res = textContent[offset];
+              return res;
+            } else {
+              return undefined;
+            }
+          }
+          return undefined;
         }
 
         /**
@@ -71,15 +88,10 @@ export function useKeystrokeShortcutPlugin({
           prevState: EditorState,
         ): boolean {
           const prevChar = getChar(prevEditorState);
-          const char = getChar(editorState);
+          var char = getChar(state);
           const selection = state._selection;
           const prevSelection = prevState._selection;
 
-          if (selection && "anchor" in selection) {
-            var s = selection as RangeSelection;
-            let key = s.anchor.key;
-            let node = state._nodeMap.get(key);
-          }
           if (char === "$" && prevChar === "$") {
             //   TODO
             debugger;
