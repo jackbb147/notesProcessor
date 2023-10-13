@@ -102,6 +102,7 @@ export function MyCustomACEEditor({
     editor.on("changeSession", (e: any) => {
       console.log("[changeSession] fired");
     });
+
     editor.on("change", (obj: Delta) => {
       //
 
@@ -220,6 +221,19 @@ export function MyCustomACEEditor({
         // showPrintMargin={false}
         enableLiveAutocompletion={false}
         enableBasicAutocompletion={true}
+        commands={[
+          {
+            name: "backspace",
+            bindKey: { win: "backspace", mac: "backspace" },
+            exec: function (editor) {
+              let value = editor.getValue();
+              let selection = editor.getSelection();
+
+              debugger;
+              return false;
+            },
+          },
+        ]}
         // onChange={(s) => {
         //   console.log("[onChange] fired in ACEEditor. s: " + s);
         //   onChange(s);

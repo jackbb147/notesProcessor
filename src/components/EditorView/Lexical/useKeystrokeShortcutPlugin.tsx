@@ -38,7 +38,7 @@ export function useKeystrokeShortcutPlugin({
       if (event.key === "Backspace") {
         // alert("backspace pressed!");
         // debugger;
-        event.preventDefault();
+        // event.preventDefault();
         editor.dispatchCommand(REMOVE_DOUBLE_DOLLAR_COMMAND, "");
       }
     };
