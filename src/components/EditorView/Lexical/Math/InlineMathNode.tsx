@@ -39,10 +39,10 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
   }
 
   static clone(node: InlineMathNode): InlineMathNode {
-    return new InlineMathNode(node.__tex, node.__key, null);
+    return new InlineMathNode(node.__tex, node.__key);
   }
 
-  constructor(tex: string, key: NodeKey, selection: RangeSelection | null) {
+  constructor(tex: string, key?: NodeKey) {
     super(key);
     if (tex.length > 0) this.__tex = tex;
   }
@@ -211,10 +211,9 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
 
 export function $createInlineMathNode(
   tex: string,
-  showTooltip: boolean,
-  selection: RangeSelection | null,
+  showTooltip?: boolean,
 ): InlineMathNode {
-  const res = new InlineMathNode(tex, selection);
+  const res = new InlineMathNode(tex);
 
   if (showTooltip !== undefined) res.setShowToolTip(showTooltip);
   return res;
