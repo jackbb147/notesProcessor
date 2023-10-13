@@ -32,9 +32,16 @@ export function InlineMathNodeReactComponent({
         setTex(tex);
       }}
       showTooltip={showToolTip}
-      requestClose={() => {
+      requestClose={(val?: string) => {
         // this.closeToolTip(_editor);
-        updateTex(tex);
+        // debugger;
+
+        if (val) {
+          setTex(val);
+          updateTex(val);
+        } else {
+          updateTex(tex);
+        }
         handleCloseToolTip();
       }}
     />

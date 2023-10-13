@@ -241,6 +241,15 @@ export function MyCustomACEEditor({
               return false;
             },
           },
+          {
+            name: "save",
+            bindKey: { win: "Ctrl-Enter", mac: "Command-Enter" },
+            exec: function (editor) {
+              // debugger;
+              requestUnmount?.(editor.getValue());
+              return true;
+            },
+          },
         ]}
         // onChange={(s) => {
         //   console.log("[onChange] fired in ACEEditor. s: " + s);
