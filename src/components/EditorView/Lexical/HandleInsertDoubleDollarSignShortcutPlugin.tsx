@@ -41,24 +41,5 @@ export function HandleInsertDoubleDollarSignShortcutPlugin() {
     );
   }, [editor]);
 
-  useEffect(() => {
-    return editor.registerCommand(
-      REMOVE_DOUBLE_DOLLAR_COMMAND,
-      (payload, editor): boolean => {
-        // TODO
-        // debugger;
-        console.log("remove double dollar sign");
-        editor.update(() => {
-          //   TODO delete double dollar sign
-          const selection = $getSelection();
-          const node = selection?.getNodes()[0];
-          console.log("node: " + JSON.stringify(node));
-        });
-        return true;
-      },
-      COMMAND_PRIORITY_CRITICAL,
-    );
-  }, [editor]);
-
   return null;
 }

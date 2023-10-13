@@ -49,6 +49,7 @@ function useInlineMath(editor: LexicalEditor) {
         editor.update(() => {
           const selection = $getSelection();
           if (!$isRangeSelection(selection)) return;
+          debugger;
           node.setSelection(selection);
           // debugger;
         });

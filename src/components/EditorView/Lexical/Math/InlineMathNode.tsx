@@ -1,8 +1,10 @@
 import {
+  $createRangeSelection,
   $getNodeByKey,
   $getPreviousSelection,
   $getSelection,
   $isRangeSelection,
+  $setSelection,
   DecoratorNode,
   DOMConversionMap,
   DOMExportOutput,
@@ -77,6 +79,7 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
   setSelection(selection: RangeSelection) {
     const self = this.getWritable();
     self.__selection = selection;
+    debugger;
   }
 
   getTex() {
@@ -143,16 +146,34 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
   closeToolTip(_editor: LexicalEditor) {
     // const selection = this.getSelection();
 
-    _editor.update(() => {
-      // const s = selection;
-      const selection = this.getSelection();
-      debugger;
+    _editor.update(
+      (() => {
+        // const s = selection;
+        const self = this.getLatest();
+        debugger;
 
-      const node = $getNodeByKey(this.__key);
-      if (node !== null && $isInlineMathNode(node)) {
-        node.setShowToolTip(false);
-      }
-    });
+        const selection = self.__selection;
+        if (!selection) debugger;
+        // debugger;
+        setTimeout(() => {
+          _editor.update(() => {
+            $setSelection(selection);
+            console.log("set selection to : " + JSON.stringify(selection));
+            setTimeout(() => {
+              _editor.update(() => {
+                const selection = $getSelection();
+                debugger;
+              });
+            }, 500);
+          });
+        }, 500);
+
+        const node = $getNodeByKey(this.__key);
+        if (node !== null && $isInlineMathNode(node)) {
+          // node.setShowToolTip(false);
+        }
+      }).bind(this),
+    );
   }
 
   openToolTip(_editor: LexicalEditor) {
@@ -180,16 +201,30 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
         <InlineMathNodeReactComponent
           showToolTip={showTooltip}
           handleCloseToolTip={() => {
-            this.closeToolTip(_editor);
+            // this.closeToolTip(_editor);
+            // _editor.update(() => {
+            //   const self = this.getLatest();
+            //   debugger;
+            // });
           }}
           defaultTex={this.getTex()}
           updateTex={(tex: string) => {
             // debugger;
             _editor.update(() => {
               const node = $getNodeByKey(this.__key);
+              const self = this.getLatest();
+              // debugger;
               if (node !== null && $isInlineMathNode(node)) {
                 node.setTex(tex);
               }
+              setTimeout(() => {
+                _editor.update(() => {
+                  console.log("set selection to : " + self.__selection);
+                  let selection = self.__selection?.clone();
+                  if (!selection) return;
+                  $setSelection(selection);
+                });
+              }, 500);
             });
             // this.setTex(tex);
           }}
