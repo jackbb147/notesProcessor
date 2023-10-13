@@ -1,6 +1,7 @@
 import {
   $createTextNode,
   $getSelection,
+  COMMAND_PRIORITY_CRITICAL,
   COMMAND_PRIORITY_HIGH,
   createCommand,
   EditorState,
@@ -49,12 +50,13 @@ export function HandleInsertDoubleDollarSignShortcutPlugin() {
         console.log("remove double dollar sign");
         editor.update(() => {
           //   TODO delete double dollar sign
-          // const selection = $getSelection();
-          // const node = selection?.getNodes()[0];
+          const selection = $getSelection();
+          const node = selection?.getNodes()[0];
+          console.log("node: " + JSON.stringify(node));
         });
         return true;
       },
-      COMMAND_PRIORITY_HIGH,
+      COMMAND_PRIORITY_CRITICAL,
     );
   }, [editor]);
 
