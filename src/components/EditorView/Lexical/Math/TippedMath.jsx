@@ -133,6 +133,7 @@ export function TippedMath({ value, onChange, showTooltip, requestClose }) {
                 setIsOpen(false);
                 //   TODO make sure the lexical cursor is restored
 
+                // debugger;
                 requestClose(val);
               }}
             />
