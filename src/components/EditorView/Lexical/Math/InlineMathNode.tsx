@@ -74,17 +74,9 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
     return self.__selection;
   }
 
-  setSelection(editor: LexicalEditor) {
+  setSelection(selection: RangeSelection) {
     const self = this.getWritable();
-    editor.update(() => {
-      const selection = $getSelection();
-      debugger;
-      if (!$isRangeSelection(selection)) {
-        self.__selection = null;
-        return;
-      }
-      self.__selection = selection;
-    });
+    self.__selection = selection;
   }
 
   getTex() {

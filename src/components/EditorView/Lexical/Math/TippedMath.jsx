@@ -19,6 +19,8 @@ import {
   useInteractions,
   FloatingFocusManager,
 } from "@floating-ui/react";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { $getPreviousSelection, $getSelection } from "lexical";
 
 export function Popover() {
   const [isOpen, setIsOpen] = useState(false);
@@ -75,6 +77,7 @@ export function Popover() {
 }
 export function TippedMath({ value, onChange, showTooltip, requestClose }) {
   const [isOpen, setIsOpen] = useState(showTooltip);
+  const [editor] = useLexicalComposerContext();
 
   const { refs, floatingStyles, context } = useFloating({
     open: isOpen,

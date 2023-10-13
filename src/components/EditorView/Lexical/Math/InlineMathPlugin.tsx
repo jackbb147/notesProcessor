@@ -1,5 +1,10 @@
 import { useEffect } from "react";
-import { LexicalEditor, TextNode } from "lexical";
+import {
+  $getSelection,
+  $isRangeSelection,
+  LexicalEditor,
+  TextNode,
+} from "lexical";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $createInlineMathNode, InlineMathNode } from "./InlineMathNode";
 
@@ -34,11 +39,24 @@ function findAndTransformInlineMath(node: TextNode): InlineMathNode | null {
 
 function useInlineMath(editor: LexicalEditor) {
   useEffect(() => {
-    const removeTransform = editor.registerNodeTransform(TextNode, (node) => {
+    const removeTransform1 = editor.registerNodeTransform(TextNode, (node) => {
       textNodeTransform(node);
     });
+
+    const removeTransform2 = editor.registerNodeTransform(
+      InlineMathNode,
+      (node) => {
+        editor.update(() => {
+          const selection = $getSelection();
+          if (!$isRangeSelection(selection)) return;
+          node.setSelection(selection);
+          // debugger;
+        });
+      },
+    );
     return () => {
-      removeTransform();
+      removeTransform1();
+      removeTransform2();
     };
   }, [editor]);
 }

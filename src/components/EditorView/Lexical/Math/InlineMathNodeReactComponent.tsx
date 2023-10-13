@@ -1,6 +1,7 @@
 import { ContentContainer } from "../../ContentContainer";
 import { Popover, TippedMath } from "./TippedMath";
 import React, { useEffect } from "react";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 
 export function InlineMathNodeReactComponent({
   handleCloseToolTip,
