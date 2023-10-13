@@ -21,11 +21,13 @@ export function MyCustomACEEditor({
   value,
   onChange,
   showAutoComplete,
+  requestUnmount,
 }: {
   width?: string;
   value: string;
   onChange: (newValue: string) => void;
   showAutoComplete?: boolean;
+  requestUnmount?: Function;
 }) {
   const [focused, setFocused] = useState(false);
   const reactAceRef = useRef<ReactAce>(null);
@@ -228,8 +230,14 @@ export function MyCustomACEEditor({
             exec: function (editor) {
               let value = editor.getValue();
               let selection = editor.getSelection();
+              if (value.length === 0) {
+                // debugger;
+                //   TODO delete the node
 
-              debugger;
+                requestUnmount?.();
+                return true;
+              }
+
               return false;
             },
           },

@@ -125,6 +125,10 @@ export function TippedMath({ value, onChange, showTooltip, requestClose }) {
               value={value}
               showAutoComplete={value === "\\"}
               onChange={onChange}
+              requestUnmount={() => {
+                // debugger;
+                setIsOpen(false);
+              }}
             />
           </div>
           {/*<div*/}
