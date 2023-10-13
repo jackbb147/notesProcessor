@@ -12,6 +12,7 @@ import {
   INSERT_DOUBLE_DOLLAR_COMMAND,
   REMOVE_DOUBLE_DOLLAR_COMMAND,
 } from "./HandleInsertDoubleDollarSignShortcutPlugin";
+import { $isRangeSelection } from "lexical";
 
 export function useKeystrokeShortcutPlugin({
   editor,
@@ -58,9 +59,9 @@ export function useKeystrokeShortcutPlugin({
 
     const removeUpdateListener = editor.registerUpdateListener(
       ({ editorState, prevEditorState }) => {
-        function getChar(state: EditorState): string | undefined {
+        function getChar(state: EditorState): string[] | undefined {
           const selection = state._selection;
-          debugger;
+
           if (selection && "anchor" in selection) {
             var s = selection as RangeSelection;
             var offset = s.anchor.offset;
@@ -69,7 +70,8 @@ export function useKeystrokeShortcutPlugin({
             if ($isTextNode(node)) {
               let textNode = node as TextNode;
               let textContent = textNode.__text;
-              let res = textContent[offset];
+              let res = [textContent[offset]];
+              if (offset > 0) res.push(textContent[offset - 1]);
               return res;
             } else {
               return undefined;
@@ -89,23 +91,45 @@ export function useKeystrokeShortcutPlugin({
         ): boolean {
           const prevChar = getChar(prevEditorState);
           var char = getChar(state);
-          const selection = state._selection;
-          const prevSelection = prevState._selection;
+          const isRangeSelection = (
+            selection: any,
+          ): RangeSelection | undefined => {
+            return $isRangeSelection(selection)
+              ? (selection as RangeSelection)
+              : undefined;
+          };
+          const selection = isRangeSelection(state._selection);
+          const prevSelection = isRangeSelection(prevState._selection);
 
-          if (char === "$" && prevChar === "$") {
+          // debugger;
+          if (
+            char &&
+            char[0] === "$" &&
+            char[1] !== "$" &&
+            prevChar &&
+            prevChar[0] === "$" &&
+            selection &&
+            prevSelection
+          ) {
             //   TODO
-            debugger;
+            return true;
           }
 
           return false;
         }
 
         editor.update(() => {
-          const s = $getSelection();
+          let s = $getSelection();
 
+          if (!$isRangeSelection(s)) return;
+          s = s as RangeSelection;
           if (isDeletingDoubleDollarSign(editorState, prevEditorState)) {
             //   TODO
-            debugger;
+            // debugger;
+            let node = editorState._nodeMap.get(s.anchor.key);
+            if (!$isTextNode(node)) return;
+            // debugger;
+            node.spliceText(s.anchor.offset, 1, "");
           }
         });
         // debugger;
