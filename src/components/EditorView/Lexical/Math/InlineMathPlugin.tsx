@@ -158,8 +158,10 @@ export function InlineMathPlugin() {
             //   debugger;
             const lastS = lastSelection.current;
             console.assert($isRangeSelection(lastS));
+            console.log("[NodeTransform] about to set selection to: ");
             console.dir(lastS);
-            $setSelection(lastS?.clone() ?? null);
+            console.dir(node);
+            if (!node.__selected) $setSelection(lastS?.clone() ?? null);
             // $setSelection($createRangeSelection());
             // $setSelection(lastSelection.current?.clone() ?? null);
           }
