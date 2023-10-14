@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import {
+  $createNodeSelection,
   $createRangeSelection,
   $getNodeByKey,
   $getSelection,
@@ -171,9 +172,16 @@ export function InlineMathPlugin() {
             if (!node.__selected) {
               const existDirection = node.getExitDirection();
               if (!existDirection) $setSelection(lastS?.clone() ?? null);
-              else {
+              else if (existDirection === "left") {
                 //   TODO
-                debugger;
+                //   set selection to be the left of the inline math node
+                const prevNode = node.getPreviousSibling();
+                // debugger;
+                node.selectPrevious();
+              } else if (existDirection === "right") {
+                //   TODO
+                node.selectNext();
+                //   set selection to be the right of the inline math node
               }
             }
             // $setSelection($createRangeSelection());
