@@ -160,8 +160,22 @@ export function InlineMathPlugin() {
             console.assert($isRangeSelection(lastS));
             console.log("[NodeTransform] about to set selection to: ");
             console.dir(lastS);
+
+            console.log(
+              "[NodeTransform] inline math node exit direction:  " +
+                node.getExitDirection(),
+            );
+
             console.dir(node);
-            if (!node.__selected) $setSelection(lastS?.clone() ?? null);
+            // debugger;
+            if (!node.__selected) {
+              const existDirection = node.getExitDirection();
+              if (!existDirection) $setSelection(lastS?.clone() ?? null);
+              else {
+                //   TODO
+                debugger;
+              }
+            }
             // $setSelection($createRangeSelection());
             // $setSelection(lastSelection.current?.clone() ?? null);
           }

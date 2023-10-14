@@ -36,6 +36,7 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
   __tex: string = String.raw`F = m\vec{a}`;
   __selection: RangeSelection | null = null;
   __selected: boolean = false;
+  __exitDirection: "left" | "right" | undefined = undefined;
 
   static getType(): string {
     return "InlineMathNode";
@@ -60,6 +61,17 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
 
   isInline(): boolean {
     return true;
+  }
+
+  getExitDirection(): "left" | "right" | undefined {
+    const self = this.getLatest();
+    return self.__exitDirection;
+  }
+
+  setExitDirection(exitDirection: "left" | "right" | undefined) {
+    // debugger;
+    const self = this.getWritable();
+    self.__exitDirection = exitDirection;
   }
 
   getSelected() {
@@ -220,6 +232,16 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
               "[InlineMathNode] handleCloseToolTip. Exit direction: " +
                 exitDirection,
             );
+            _editor.update(() => {
+              this.setExitDirection(exitDirection);
+              const self = this.getLatest();
+              // debugger;
+            });
+
+            // const self = this.getWritable();
+            //
+            // self.__exitDirection = exitDirection;
+
             // this.closeToolTip(_editor);
             // _editor.update(() => {
             //   const self = this.getLatest();
