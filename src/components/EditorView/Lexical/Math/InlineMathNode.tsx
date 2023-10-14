@@ -76,7 +76,7 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
     return self.__selection;
   }
 
-  setSelection(selection: RangeSelection) {
+  setSelection(selection: any) {
     const self = this.getWritable();
     self.__selection = selection;
     // debugger;
@@ -89,6 +89,7 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
 
   setTex(tex: string) {
     const self = this.getWritable();
+    // debugger;
     self.__tex = tex;
   }
 
@@ -215,15 +216,22 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
               // debugger;
               const node = $getNodeByKey(this.__key);
               const self = this.getLatest();
-              // debugger;
+
               if (node !== null && $isInlineMathNode(node)) {
                 node.setTex(tex);
+                // debugger;
+                const tex1 = node.__selection;
+                console.assert(tex1);
+                node.setSelection(tex1);
               }
-              let selection = self.__selection?.clone();
-              if (!selection) return;
-              debugger;
-              selection.anchor.offset -= 2;
-              $setSelection(selection);
+              // let selection = self.__selection?.clone();
+              // if (!selection) debugger;
+              // console.assert(selection !== undefined);
+              // console.log("set selection to : " + selection);
+              // if (!selection) return;
+              // debugger;
+              // selection.anchor.offset -= 2;
+              // $setSelection(selection);
               // setTimeout(() => {
               //   _editor.update(() => {
               //     console.log("set selection to : " + self.__selection);
