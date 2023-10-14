@@ -84,7 +84,7 @@ export function InlineMathPlugin() {
         editor.update(() => {
           const selection = $getSelection();
           // if (!selection) debugger;
-          console.log("SETTING SELECTION");
+
           if ($isNodeSelection(selection)) {
             const nodes = selection.getNodes();
             if (nodes.length > 1 && !$isInlineMathNode(nodes[0])) return;
@@ -94,6 +94,7 @@ export function InlineMathPlugin() {
               return;
             }
             node.setSelected(true);
+            return;
           } else {
             const prevSelection = prevEditorState._selection;
             if ($isNodeSelection(prevSelection)) {
@@ -125,6 +126,7 @@ export function InlineMathPlugin() {
           if (DEPRECATED_$isGridSelection(selection) || !selection) {
             return;
           }
+          console.log("SETTING LAST SELECTION");
           console.dir(selection);
           lastSelection.current = selection;
         });
@@ -135,39 +137,37 @@ export function InlineMathPlugin() {
       textNodeTransform(node);
     });
 
-    // const removeTransform2 = editor.registerNodeTransform(
-    //   InlineMathNode,
-    //   (node) => {
-    //     editor.update(() => {
-    //       if (node.getShowToolTip()) {
-    //         const selection = $getSelection();
-    //         if (!$isRangeSelection(selection)) return;
-    //         // debugger;
-    //         console.assert(selection);
-    //         if (!selection) debugger;
-    //         node.setSelection(selection);
-    //       } else {
-    //         //   TODO set selection
-    //         console.assert(lastSelection.current);
-    //         // if (
-    //         //   !lastSelection.current &&
-    //         //   !$isRangeSelection(lastSelection.current)
-    //         // )
-    //         //   debugger;
-    //         const lastS = lastSelection.current;
-    //         if ($isNodeSelection(lastS)) {
-    //           debugger;
-    //         }
-    //         console.dir(lastS);
-    //         $setSelection(lastS?.clone() ?? null);
-    //         // $setSelection($createRangeSelection());
-    //         // $setSelection(lastSelection.current?.clone() ?? null);
-    //       }
-    //
-    //       // debugger;
-    //     });
-    //   },
-    // );
+    const removeTransform2 = editor.registerNodeTransform(
+      InlineMathNode,
+      (node) => {
+        editor.update(() => {
+          if (node.getShowToolTip()) {
+            const selection = $getSelection();
+            if (!$isRangeSelection(selection)) return;
+            // debugger;
+            console.assert(selection);
+            if (!selection) debugger;
+            node.setSelection(selection);
+          } else {
+            //   TODO set selection
+            console.assert(lastSelection.current);
+            // if (
+            //   !lastSelection.current &&
+            //   !$isRangeSelection(lastSelection.current)
+            // )
+            //   debugger;
+            const lastS = lastSelection.current;
+            console.assert($isRangeSelection(lastS));
+            console.dir(lastS);
+            $setSelection(lastS?.clone() ?? null);
+            // $setSelection($createRangeSelection());
+            // $setSelection(lastSelection.current?.clone() ?? null);
+          }
+
+          // debugger;
+        });
+      },
+    );
 
     // editor.registerNodeTransform(InlineMathNode, (node) => {
     //   editor.update(() => {
@@ -214,7 +214,7 @@ export function InlineMathPlugin() {
       removeCommand();
       removeUpdateListender();
       removeTransform1();
-      // removeTransform2();
+      removeTransform2();
       // removeMutationListener();
     };
   }, [editor]);
