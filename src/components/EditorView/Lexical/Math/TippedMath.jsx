@@ -91,7 +91,7 @@ export function TippedMath({ value, onChange, showTooltip, requestClose }) {
       setIsOpen(open);
       if (!open) {
         // debugger;
-        requestClose();
+        requestClose({});
       }
     },
     middleware: [offset(10), flip(), shift()],
@@ -140,6 +140,7 @@ export function TippedMath({ value, onChange, showTooltip, requestClose }) {
                 //   TODO make sure the lexical cursor is restored
 
                 // debugger;
+                debugger;
                 requestClose({
                   val: val,
                   exitDirection: exitDirection,
