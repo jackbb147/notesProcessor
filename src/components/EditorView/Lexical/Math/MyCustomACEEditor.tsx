@@ -250,6 +250,49 @@ export function MyCustomACEEditor({
               return true;
             },
           },
+          {
+            name: "exit me, left",
+            bindKey: { win: "Left", mac: "Left" },
+            exec: function (editor) {
+              let cursorPosition = editor.selection.getCursor();
+
+              if (cursorPosition.column === 0 && cursorPosition.row === 0) {
+                // debugger;
+                // TODO exit
+                requestUnmount?.(editor.getValue());
+                return true;
+                //
+                //
+                // let p = props;
+                // setCursorPos(p.editor, getCursorPos(p.editor) - 1);
+                //TODO convertEditorToMath(editor);
+                // setIsEditing(false);
+              }
+              return false;
+            },
+          },
+          {
+            name: "exit me, right",
+            bindKey: { win: "Right", mac: "Right" },
+            exec: function (editor) {
+              let cursorPosition = editor.selection.getCursor();
+
+              const rowCount = editor.getSession().getLength();
+              const lastLine = editor.getSession().getLine(rowCount - 1);
+
+              // debugger;
+              //
+              if (
+                cursorPosition.column === lastLine.length &&
+                cursorPosition.row === rowCount - 1
+              ) {
+                // debugger;
+                requestUnmount?.(editor.getValue());
+                return true;
+              }
+              return false;
+            },
+          },
         ]}
         // onChange={(s) => {
         //   console.log("[onChange] fired in ACEEditor. s: " + s);
@@ -285,24 +328,7 @@ export function MyCustomACEEditor({
         //       return false; // must return false in order to fire the default event:https://stackoverflow.com/a/42020190/21646295
         //     },
         //   },
-        //   {
-        //     name: "exit me, left",
-        //     bindKey: { win: "Left", mac: "Left" },
-        //     exec: function (editor) {
-        //       let cursorPosition = editor.selection.getCursor();
-        //
-        //       if (cursorPosition.column === 0) {
-        //         //
-        //         //
-        //         let p = props;
-        //         setCursorPos(p.editor, getCursorPos(p.editor) - 1);
-        //
-        //         //TODO convertEditorToMath(editor);
-        //         // setIsEditing(false);
-        //       }
-        //       return false;
-        //     },
-        //   },
+
         //   {
         //     name: "exit me, right",
         //     bindKey: { win: "Right", mac: "Right" },
