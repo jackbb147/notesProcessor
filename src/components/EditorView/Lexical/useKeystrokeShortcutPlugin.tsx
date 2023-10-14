@@ -13,6 +13,7 @@ import {
   REMOVE_DOUBLE_DOLLAR_COMMAND,
 } from "./HandleInsertDoubleDollarSignShortcutPlugin";
 import { $isRangeSelection } from "lexical";
+import { ENTER_COMMAND } from "./Math/InlineMathPlugin";
 
 export function useKeystrokeShortcutPlugin({
   editor,
@@ -27,6 +28,10 @@ export function useKeystrokeShortcutPlugin({
       if ((event.ctrlKey || event.metaKey) && event.which === 83) {
         editor.dispatchCommand(SAVE_COMMAND, "");
         event.preventDefault();
+      }
+
+      if (event.code === "Enter") {
+        editor.dispatchCommand(ENTER_COMMAND, "");
       }
 
       if (event.shiftKey && event.code === "Digit4") {

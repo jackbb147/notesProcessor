@@ -81,6 +81,7 @@ export function TippedMath({ value, onChange, showTooltip, requestClose }) {
 
   useEffect(() => {
     console.log("showTooltip TippedMath", showTooltip);
+    if (!showTooltip) return;
     setIsOpen(showTooltip);
   }, [showTooltip]);
 

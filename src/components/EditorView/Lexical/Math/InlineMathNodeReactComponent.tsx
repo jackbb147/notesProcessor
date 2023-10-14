@@ -20,6 +20,7 @@ export function InlineMathNodeReactComponent({
   const [tex, setTex] = React.useState(defaultTex);
 
   useEffect(() => {
+    // if (!showToolTip) debugger;
     console.log("showToolTip: " + showToolTip);
   }, [showToolTip]);
   useEffect(() => {

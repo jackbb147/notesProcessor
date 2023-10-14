@@ -6,8 +6,11 @@ import {
   $isNodeSelection,
   $isRangeSelection,
   $setSelection,
+  COMMAND_PRIORITY_HIGH,
+  createCommand,
   DEPRECATED_$isGridSelection,
   GridSelection,
+  LexicalCommand,
   LexicalEditor,
   NodeSelection,
   RangeSelection,
@@ -19,6 +22,7 @@ import {
   $isInlineMathNode,
   InlineMathNode,
 } from "./InlineMathNode";
+import { SAVE_COMMAND } from "../HandleSaveNotePlugin";
 
 function textNodeTransform(node: TextNode): void {
   let targetNode: InlineMathNode | null = findAndTransformInlineMath(node);
@@ -49,6 +53,7 @@ function findAndTransformInlineMath(node: TextNode): InlineMathNode | null {
   return null;
 }
 
+export const ENTER_COMMAND: LexicalCommand<string> = createCommand();
 export function InlineMathPlugin() {
   const [editor] = useLexicalComposerContext();
   // const [lastSelection, setLastSelection] = useState<any>(null);
@@ -56,7 +61,25 @@ export function InlineMathPlugin() {
     RangeSelection | NodeSelection | GridSelection | null
   >(null);
   useEffect(() => {
-    editor.registerUpdateListener(
+    const removeCommand = editor.registerCommand(
+      ENTER_COMMAND,
+      (payload, editor): boolean => {
+        editor.update(() => {
+          const selection = $getSelection();
+          const nodes = selection?.getNodes();
+          if (!nodes || nodes.length !== 1 || !$isInlineMathNode(nodes[0]))
+            return false;
+          // debugger;
+          const node = nodes[0] as InlineMathNode;
+          // debugger;
+          node.setShowToolTip(true);
+        });
+        return true;
+      },
+      COMMAND_PRIORITY_HIGH,
+    );
+
+    const removeUpdateListender = editor.registerUpdateListener(
       ({ editorState, dirtyElements, prevEditorState }) => {
         editor.update(() => {
           const selection = $getSelection();
@@ -188,6 +211,8 @@ export function InlineMathPlugin() {
     //   },
     // );
     return () => {
+      removeCommand();
+      removeUpdateListender();
       removeTransform1();
       // removeTransform2();
       // removeMutationListener();
