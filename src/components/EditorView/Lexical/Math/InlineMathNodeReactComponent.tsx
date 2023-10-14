@@ -28,31 +28,37 @@ export function InlineMathNodeReactComponent({
 
   return (
     // <Popover />
-    <TippedMath
-      value={tex}
-      onChange={(tex: string) => {
-        console.log("[onChange] fired in TippedMath. tex: " + tex);
-        // alert("hey");
-        // this.hanleTexChange(_editor, tex);
-        // debugger;
-        // const _ = ref();
-
-        // ref.current = tex;
-        setTex(tex);
+    <div
+      style={{
+        opacity: selected ? 0.6 : 1,
       }}
-      showTooltip={showToolTip}
-      requestClose={(val?: string) => {
-        // this.closeToolTip(_editor);
-        // debugger;
+    >
+      <TippedMath
+        value={tex}
+        onChange={(tex: string) => {
+          console.log("[onChange] fired in TippedMath. tex: " + tex);
+          // alert("hey");
+          // this.hanleTexChange(_editor, tex);
+          // debugger;
+          // const _ = ref();
 
-        if (val) {
-          setTex(val);
-          updateTex(val);
-        } else {
-          updateTex(tex);
-        }
-        handleCloseToolTip();
-      }}
-    />
+          // ref.current = tex;
+          setTex(tex);
+        }}
+        showTooltip={showToolTip}
+        requestClose={(val?: string) => {
+          // this.closeToolTip(_editor);
+          // debugger;
+
+          if (val) {
+            setTex(val);
+            updateTex(val);
+          } else {
+            updateTex(tex);
+          }
+          handleCloseToolTip();
+        }}
+      />
+    </div>
   );
 }
