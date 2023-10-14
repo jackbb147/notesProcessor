@@ -1,10 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
+  $createRangeSelection,
   $getSelection,
   $isNodeSelection,
   $isRangeSelection,
   $setSelection,
+  DEPRECATED_$isGridSelection,
+  GridSelection,
   LexicalEditor,
+  NodeSelection,
+  RangeSelection,
   TextNode,
 } from "lexical";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
@@ -45,7 +50,27 @@ function findAndTransformInlineMath(node: TextNode): InlineMathNode | null {
 
 export function InlineMathPlugin() {
   const [editor] = useLexicalComposerContext();
+  // const [lastSelection, setLastSelection] = useState<any>(null);
+  const lastSelection = useRef<
+    RangeSelection | NodeSelection | GridSelection | null
+  >(null);
   useEffect(() => {
+    editor.registerUpdateListener(() => {
+      editor.getEditorState().read(() => {
+        const selection = $getSelection();
+        if (!selection) debugger;
+        console.log("SETTING SELECTION");
+        if (
+          $isNodeSelection(selection) ||
+          DEPRECATED_$isGridSelection(selection)
+        ) {
+          return;
+        }
+        console.dir(selection);
+        lastSelection.current = selection;
+      });
+    });
+
     const removeTransform1 = editor.registerNodeTransform(TextNode, (node) => {
       textNodeTransform(node);
     });
@@ -62,10 +87,21 @@ export function InlineMathPlugin() {
             if (!selection) debugger;
             node.setSelection(selection);
           } else {
-            const selection = node.getSelection();
-            console.assert(selection);
             //   TODO set selection
-            $setSelection(selection?.clone() ?? null);
+            console.assert(lastSelection.current);
+            if (
+              !lastSelection.current &&
+              !$isRangeSelection(lastSelection.current)
+            )
+              debugger;
+            const lastS = lastSelection.current;
+            if ($isNodeSelection(lastS)) {
+              debugger;
+            }
+            console.dir(lastS);
+            $setSelection(lastS?.clone() ?? null);
+            // $setSelection($createRangeSelection());
+            // $setSelection(lastSelection.current?.clone() ?? null);
           }
 
           // debugger;

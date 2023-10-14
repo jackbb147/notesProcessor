@@ -76,8 +76,9 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
     return self.__selection;
   }
 
-  setSelection(selection: any) {
+  setSelection(selection: RangeSelection | null) {
     const self = this.getWritable();
+    // console.assert(selection);
     self.__selection = selection;
     // debugger;
   }
@@ -221,7 +222,7 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
                 node.setTex(tex);
                 // debugger;
                 const tex1 = node.__selection;
-                console.assert(tex1);
+                // console.assert(tex1);
                 node.setSelection(tex1);
               }
               // let selection = self.__selection?.clone();
