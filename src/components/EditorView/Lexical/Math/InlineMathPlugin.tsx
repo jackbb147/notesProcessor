@@ -1,12 +1,17 @@
 import { useEffect } from "react";
 import {
   $getSelection,
+  $isNodeSelection,
   $isRangeSelection,
   LexicalEditor,
   TextNode,
 } from "lexical";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { $createInlineMathNode, InlineMathNode } from "./InlineMathNode";
+import {
+  $createInlineMathNode,
+  $isInlineMathNode,
+  InlineMathNode,
+} from "./InlineMathNode";
 
 function textNodeTransform(node: TextNode): void {
   let targetNode: InlineMathNode | null = findAndTransformInlineMath(node);
@@ -55,9 +60,27 @@ function useInlineMath(editor: LexicalEditor) {
         });
       },
     );
+
+    const removeMutationListener = editor.registerUpdateListener(
+      ({ editorState }) => {
+        editor.update(() => {
+          // ...
+          const selection = $getSelection();
+          if ($isNodeSelection(selection)) {
+            const nodes = selection.getNodes();
+            if (nodes.length > 1 && !$isInlineMathNode(nodes[0])) return;
+            let node: InlineMathNode = nodes[0] as InlineMathNode;
+            if (node.getShowToolTip()) return;
+            console.warn("showing tooltip");
+            node.setShowToolTip(true);
+          }
+        });
+      },
+    );
     return () => {
       removeTransform1();
       removeTransform2();
+      removeMutationListener();
     };
   }, [editor]);
 }

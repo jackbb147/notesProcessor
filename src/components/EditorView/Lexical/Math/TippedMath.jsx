@@ -6,7 +6,7 @@ import {
   AppStateContext,
   AppStateProvider,
 } from "../../../../reducers/AppStateContext";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   useFloating,
   autoUpdate,
@@ -78,6 +78,11 @@ export function Popover() {
 export function TippedMath({ value, onChange, showTooltip, requestClose }) {
   const [isOpen, setIsOpen] = useState(showTooltip);
   const [editor] = useLexicalComposerContext();
+
+  useEffect(() => {
+    console.log("showTooltip TippedMath", showTooltip);
+    setIsOpen(showTooltip);
+  }, [showTooltip]);
 
   const { refs, floatingStyles, context } = useFloating({
     open: isOpen,

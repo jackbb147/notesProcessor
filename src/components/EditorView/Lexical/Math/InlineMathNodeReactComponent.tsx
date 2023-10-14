@@ -17,6 +17,10 @@ export function InlineMathNodeReactComponent({
 }) {
   const [tex, setTex] = React.useState(defaultTex);
 
+  useEffect(() => {
+    console.log("showToolTip: " + showToolTip);
+  }, [showToolTip]);
+
   return (
     // <Popover />
     <TippedMath

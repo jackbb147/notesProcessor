@@ -201,6 +201,7 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
         <InlineMathNodeReactComponent
           showToolTip={showTooltip}
           handleCloseToolTip={() => {
+            // debugger;
             // this.closeToolTip(_editor);
             // _editor.update(() => {
             //   const self = this.getLatest();
@@ -211,6 +212,7 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
           updateTex={(tex: string) => {
             // debugger;
             _editor.update(() => {
+              // debugger;
               const node = $getNodeByKey(this.__key);
               const self = this.getLatest();
               // debugger;
@@ -219,6 +221,8 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
               }
               let selection = self.__selection?.clone();
               if (!selection) return;
+              debugger;
+              selection.anchor.offset -= 2;
               $setSelection(selection);
               // setTimeout(() => {
               //   _editor.update(() => {
