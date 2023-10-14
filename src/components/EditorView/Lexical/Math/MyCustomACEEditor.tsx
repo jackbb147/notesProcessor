@@ -17,7 +17,7 @@ interface Delta {
 }
 
 export function MyCustomACEEditor({
-  width = "350px",
+  width = "550px",
   value,
   onChange,
   showAutoComplete,
@@ -215,7 +215,7 @@ export function MyCustomACEEditor({
           // height: "50px",
           // maxWidth: "100%",
           // minWidth: "1rem",
-          width: width,
+          // width: width,
           maxHeight: "10vh",
         }}
         placeholder={"\\text{hello world}"}

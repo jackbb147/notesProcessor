@@ -60,7 +60,7 @@ export function Popover() {
             ref={refs.setFloating}
             style={{
               ...floatingStyles,
-              border: "1px solid white",
+              // border: "1px solid white",
               padding: "10px",
               cursor: "pointer",
               color: "black",
