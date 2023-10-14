@@ -58,11 +58,12 @@ export function InlineMathPlugin() {
     editor.registerUpdateListener(() => {
       editor.getEditorState().read(() => {
         const selection = $getSelection();
-        if (!selection) debugger;
+        // if (!selection) debugger;
         console.log("SETTING SELECTION");
         if (
           $isNodeSelection(selection) ||
-          DEPRECATED_$isGridSelection(selection)
+          DEPRECATED_$isGridSelection(selection) ||
+          !selection
         ) {
           return;
         }
