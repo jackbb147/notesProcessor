@@ -134,13 +134,16 @@ export function TippedMath({ value, onChange, showTooltip, requestClose }) {
               value={value}
               showAutoComplete={value === "\\"}
               onChange={onChange}
-              requestUnmount={(val) => {
+              requestUnmount={(val, exitDirection) => {
                 // debugger;
                 setIsOpen(false);
                 //   TODO make sure the lexical cursor is restored
 
                 // debugger;
-                requestClose(val);
+                requestClose({
+                  val: val,
+                  exitDirection: exitDirection,
+                });
               }}
             />
           </div>

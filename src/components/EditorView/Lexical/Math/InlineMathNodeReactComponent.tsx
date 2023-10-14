@@ -11,7 +11,11 @@ export function InlineMathNodeReactComponent({
   updateTex,
   selected,
 }: {
-  handleCloseToolTip: () => void;
+  handleCloseToolTip: ({
+    exitDirection,
+  }: {
+    exitDirection?: "left" | "right";
+  }) => void;
   showToolTip: boolean;
   defaultTex: string;
   updateTex: (tex: string) => void;
@@ -52,7 +56,13 @@ export function InlineMathNodeReactComponent({
           setTex(tex);
         }}
         showTooltip={showToolTip}
-        requestClose={(val?: string) => {
+        requestClose={({
+          val,
+          exitDirection,
+        }: {
+          val?: string;
+          exitDirection?: "left" | "right";
+        }) => {
           // this.closeToolTip(_editor);
           // debugger;
 
@@ -62,7 +72,10 @@ export function InlineMathNodeReactComponent({
           } else {
             updateTex(tex);
           }
-          handleCloseToolTip();
+          console.log("exitDirection: " + exitDirection);
+          handleCloseToolTip({
+            exitDirection: exitDirection,
+          });
         }}
       />
     </div>

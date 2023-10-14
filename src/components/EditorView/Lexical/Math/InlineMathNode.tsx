@@ -214,8 +214,12 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
         <InlineMathNodeReactComponent
           showToolTip={showTooltip}
           selected={this.getSelected()}
-          handleCloseToolTip={() => {
+          handleCloseToolTip={({ exitDirection }) => {
             // debugger;
+            console.log(
+              "[InlineMathNode] handleCloseToolTip. Exit direction: " +
+                exitDirection,
+            );
             // this.closeToolTip(_editor);
             // _editor.update(() => {
             //   const self = this.getLatest();

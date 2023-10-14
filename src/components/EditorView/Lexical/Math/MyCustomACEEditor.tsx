@@ -259,7 +259,7 @@ export function MyCustomACEEditor({
               if (cursorPosition.column === 0 && cursorPosition.row === 0) {
                 // debugger;
                 // TODO exit
-                requestUnmount?.(editor.getValue());
+                requestUnmount?.(editor.getValue(), "left");
                 return true;
                 //
                 //
@@ -287,7 +287,7 @@ export function MyCustomACEEditor({
                 cursorPosition.row === rowCount - 1
               ) {
                 // debugger;
-                requestUnmount?.(editor.getValue());
+                requestUnmount?.(editor.getValue(), "right");
                 return true;
               }
               return false;
