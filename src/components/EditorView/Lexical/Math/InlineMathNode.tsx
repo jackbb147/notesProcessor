@@ -35,6 +35,7 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
   __showToolTip: boolean = false;
   __tex: string = String.raw`F = m\vec{a}`;
   __selection: RangeSelection | null = null;
+  __selected: boolean = false;
 
   static getType(): string {
     return "InlineMathNode";
@@ -59,6 +60,16 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
 
   isInline(): boolean {
     return true;
+  }
+
+  getSelected() {
+    const self = this.getLatest();
+    return self.__selected;
+  }
+
+  setSelected(selected: boolean) {
+    const self = this.getWritable();
+    self.__selected = selected;
   }
 
   setShowToolTip(showToolTip: boolean) {
@@ -202,6 +213,7 @@ export class InlineMathNode extends DecoratorNode<ReactNode> {
       >
         <InlineMathNodeReactComponent
           showToolTip={showTooltip}
+          selected={this.getSelected()}
           handleCloseToolTip={() => {
             // debugger;
             // this.closeToolTip(_editor);

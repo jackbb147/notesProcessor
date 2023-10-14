@@ -8,11 +8,13 @@ export function InlineMathNodeReactComponent({
   showToolTip, // ref,
   defaultTex,
   updateTex,
+  selected,
 }: {
   handleCloseToolTip: () => void;
   showToolTip: boolean;
   defaultTex: string;
   updateTex: (tex: string) => void;
+  selected?: boolean;
   // ref: Function;
 }) {
   const [tex, setTex] = React.useState(defaultTex);
@@ -20,6 +22,9 @@ export function InlineMathNodeReactComponent({
   useEffect(() => {
     console.log("showToolTip: " + showToolTip);
   }, [showToolTip]);
+  useEffect(() => {
+    console.log("[InlineMathNodeReactComponent] selected: " + selected);
+  }, [selected]);
 
   return (
     // <Popover />
