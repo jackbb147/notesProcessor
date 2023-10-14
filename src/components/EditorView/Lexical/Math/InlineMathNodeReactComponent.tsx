@@ -2,6 +2,7 @@ import { ContentContainer } from "../../ContentContainer";
 import { Popover, TippedMath } from "./TippedMath";
 import React, { useEffect } from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { useAppState } from "../../../../hooks/AppStateAndGraphAndUserhooks";
 
 export function InlineMathNodeReactComponent({
   handleCloseToolTip,
@@ -18,6 +19,7 @@ export function InlineMathNodeReactComponent({
   // ref: Function;
 }) {
   const [tex, setTex] = React.useState(defaultTex);
+  const appState = useAppState();
 
   useEffect(() => {
     // if (!showToolTip) debugger;
@@ -31,7 +33,10 @@ export function InlineMathNodeReactComponent({
     // <Popover />
     <div
       style={{
-        opacity: selected ? 0.6 : 1,
+        // opacity: selected && !showToolTip ? 0.6 : 1,
+        outline: selected
+          ? `1px solid ${appState.darkModeOn ? "white" : "black"}`
+          : "none",
       }}
     >
       <TippedMath
