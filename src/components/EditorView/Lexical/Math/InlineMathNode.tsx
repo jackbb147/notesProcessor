@@ -1,4 +1,5 @@
 import {
+  $applyNodeReplacement,
   $createRangeSelection,
   $getNodeByKey,
   $getPreviousSelection,
@@ -297,7 +298,9 @@ export function $createInlineMathNode(
   const res = new InlineMathNode(tex);
 
   if (showTooltip !== undefined) res.setShowToolTip(showTooltip);
-  return res;
+
+  return $applyNodeReplacement(res);
+  // return res;
 }
 
 export function $isInlineMathNode(

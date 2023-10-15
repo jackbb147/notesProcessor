@@ -4,6 +4,7 @@ import { MenuItem } from "./MenuItem";
 import { IconSize } from "./IconSize";
 import {
   $createParagraphNode,
+  $createTextNode,
   COMMAND_PRIORITY_EDITOR,
   createCommand,
   LexicalCommand,
@@ -57,10 +58,14 @@ export function MathBtn({ editor }: { editor: LexicalEditor | null }) {
         const node = selection?.getNodes()[0];
 
         const inlineMathNode = $createInlineMathNode(payload, true);
+        const emptyTextNode = $createTextNode("empty");
 
         if (node) {
           const parent = $getNearestBlockElementAncestorOrThrow(node);
+
           parent.append(inlineMathNode);
+          // parent.append(emptyTextNode);
+          // emptyTextNode.select();
         }
 
         return true;

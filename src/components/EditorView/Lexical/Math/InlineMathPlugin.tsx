@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   $createNodeSelection,
   $createRangeSelection,
+  $createTextNode,
   $getNodeByKey,
   $getSelection,
   $isNodeSelection,
@@ -47,6 +48,9 @@ function findAndTransformInlineMath(node: TextNode): InlineMathNode | null {
       console.log("targetNode: " + targetNode.getTextContent());
       const inlineMathNode = $createInlineMathNode(chunk[1], true);
       targetNode.replace(inlineMathNode);
+      const key = inlineMathNode.getKey();
+      const selection = $createNodeSelection();
+      selection.add(key);
       return inlineMathNode;
     }
   }
@@ -180,7 +184,16 @@ export function InlineMathPlugin() {
                 node.selectPrevious();
               } else if (existDirection === "right") {
                 //   TODO
-                node.selectNext();
+                const nextNode = node.getNextSibling();
+                console.log("nextNode: ");
+                console.dir(nextNode);
+                if (!nextNode) {
+                  const emptyTextNode = $createTextNode(" ");
+                  const parent = node.getParent();
+                  if (!parent) debugger;
+                  parent?.append(emptyTextNode);
+                  // emptyTextNode.select();
+                } else node.selectNext();
                 //   set selection to be the right of the inline math node
               }
             }
