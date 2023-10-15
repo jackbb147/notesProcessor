@@ -1,6 +1,6 @@
 import { Flex, Text, Button, TextField } from "@radix-ui/themes";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   useAppDispatch,
   useAppState,
@@ -10,12 +10,19 @@ export function SearchBar({ RootStyle }: { RootStyle?: React.CSSProperties }) {
   const appState = useAppState();
   const appDispatch = useAppDispatch();
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const [searchQuery, setSearchQuery] = React.useState<string | null>(null);
   function handleInput(x: any) {
     //     TODO
     const ref = inputRef;
-    debugger;
+    setSearchQuery(ref.current?.value ?? null);
+    // debugger;
     //   TODO
   }
+
+  useEffect(() => {
+    // debugger;
+    console.log("inputRef.current?.value: ", inputRef.current?.value);
+  }, [searchQuery]);
   return (
     <TextField.Root
       style={{
