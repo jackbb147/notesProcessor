@@ -23,6 +23,7 @@ import {
 import { DeleteButton } from "../../Buttons/DeleteButton";
 import { ToggleNotesPanelButton } from "../../Buttons/ToggleNotesPanelButton";
 import { useSwipeable } from "react-swipeable";
+import { SearchBar } from "../../SearchBar/SearchBar";
 
 const NoNotesDisplayID = "none";
 const MyComponent = (styles: any) => <div style={styles}>hello</div>;
@@ -151,7 +152,19 @@ export function NotesPanelContent({
                       </span>
                     }
                   ></Button>
-                  <DeleteButton />
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      // border: "1px solid",
+                      marginLeft: "auto",
+                      width: "80%",
+                      paddingLeft: "1rem",
+                    }}
+                  >
+                    <SearchBar />
+                    <DeleteButton />
+                  </div>
                 </>
               )}
             </>
