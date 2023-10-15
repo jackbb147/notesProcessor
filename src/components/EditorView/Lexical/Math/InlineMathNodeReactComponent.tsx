@@ -73,11 +73,11 @@ export function InlineMathNodeReactComponent({
 
           if (val !== undefined) {
             setTex(val);
-            updateTex(val);
           } else {
-            debugger;
-            updateTex(tex);
+            // debugger;
+            val = tex;
           }
+          updateTex(val);
           console.log("exitDirection: " + exitDirection);
           if (!val) setNuked(true);
           handleCloseToolTip({
