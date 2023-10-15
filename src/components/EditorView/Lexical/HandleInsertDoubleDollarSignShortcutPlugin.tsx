@@ -48,11 +48,11 @@ export function HandleInsertDoubleDollarSignShortcutPlugin() {
             first.insertAfter(doubleDollarSign);
           } else {
             //   TODO
-            debugger;
+            // debugger;
             parent.append(doubleDollarSign);
           }
           // node.insertAfter(doubleDollarSign);
-          doubleDollarSign.select(1, 1);
+          doubleDollarSign.select(1, 1); // this will make sure the caret is in between the two dollar signs.
 
           // debugger;
         });
