@@ -1,6 +1,8 @@
 import {
   $createTextNode,
   $getSelection,
+  $isRangeSelection,
+  $isTextNode,
   COMMAND_PRIORITY_CRITICAL,
   COMMAND_PRIORITY_HIGH,
   createCommand,
@@ -36,8 +38,20 @@ export function HandleInsertDoubleDollarSignShortcutPlugin() {
           console.log("parent: ");
           console.dir(parent);
           // debugger;
-          debugger;
-          node.insertAfter(doubleDollarSign);
+          // debugger;
+          if ($isTextNode(node) && $isRangeSelection(selection)) {
+            //   TODO
+            //1. split text node into two text nodes
+            const offset = selection.anchor.offset;
+            // debugger;
+            const [first, second] = node.splitText(offset);
+            //2. insert double dollar sign in between
+            first.insertAfter(doubleDollarSign);
+          } else {
+            //   TODO
+            debugger;
+          }
+          // node.insertAfter(doubleDollarSign);
 
           // parent.append(doubleDollarSign);
           // debugger;
