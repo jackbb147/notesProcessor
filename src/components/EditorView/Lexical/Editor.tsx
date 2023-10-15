@@ -47,6 +47,8 @@ import AutoLinkPlugin from "./AutoLinkPlugin";
 import { useSwipeable } from "react-swipeable";
 import { AppActionType } from "../../../reducers/AppStateReducer";
 import { useAppDispatch } from "../../../hooks/AppStateAndGraphAndUserhooks";
+import { HandleInsertDoubleDollarSignShortcutPlugin } from "./HandleInsertDoubleDollarSignShortcutPlugin";
+import { InlineMathPlugin } from "./Math/InlineMathPlugin";
 
 function RadixScrollArea({ children }: { children: React.ReactNode }) {
   const dispatch = useAppDispatch();
@@ -124,8 +126,12 @@ export function Editor({
             LinkNode,
             AutoLinkNode,
           ],
-          onError: (error) => {
-            console.log("error: ", error);
+          onError: (error, editor) => {
+            console.error("error: ", error);
+            console.trace();
+
+            console.dir(editor);
+            // debugger;
           },
           theme: Theme,
         }}
@@ -143,6 +149,7 @@ export function Editor({
           <ToolbarPlugin />
 
           <RadixScrollArea>
+            <InlineMathPlugin />
             <RichTextPlugin
               contentEditable={
                 <ContentEditable
@@ -172,6 +179,7 @@ export function Editor({
               handleSaveNote={handleBlur}
               note={note}
             />
+            <HandleInsertDoubleDollarSignShortcutPlugin />
           </RadixScrollArea>
         </div>
       </LexicalComposer>

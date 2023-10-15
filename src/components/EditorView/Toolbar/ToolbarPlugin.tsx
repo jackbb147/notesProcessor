@@ -109,7 +109,7 @@ export const ToolbarPlugin = () => {
   );
 
   const $updateToolbar = useCallback(() => {
-    console.info("update toolbar");
+    // console.info("update toolbar");
     const selection = $getSelection();
     if ($isRangeSelection(selection)) {
       const anchorNode = selection.anchor.getNode();
@@ -129,7 +129,7 @@ export const ToolbarPlugin = () => {
       const elementDOM = activeEditor.getElementByKey(elementKey);
 
       // Update text format
-      console.warn(selection.hasFormat("bold"));
+      // console.warn(selection.hasFormat("bold"));
       setIsBold(selection.hasFormat("bold"));
       setIsItalic(selection.hasFormat("italic"));
       setIsUnderline(selection.hasFormat("underline"));
