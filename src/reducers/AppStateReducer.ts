@@ -16,6 +16,7 @@ export enum AppActionType {
   setIsLoggedIn,
   setShowNoteInfoPanel,
   setShowNotesPanel,
+  setSearchResult,
 }
 
 export type AppAction =
@@ -35,7 +36,8 @@ export type AppAction =
   | { type: AppActionType.setShowLoginPage; show: boolean }
   | { type: AppActionType.setIsLoggedIn; isLoggedIn: boolean }
   | { type: AppActionType.setShowNoteInfoPanel; show: boolean }
-  | { type: AppActionType.setShowNotesPanel; show: boolean };
+  | { type: AppActionType.setShowNotesPanel; show: boolean }
+  | { type: AppActionType.setSearchResult; searchResult: string[] | null };
 
 export enum Collections {
   All,
@@ -147,6 +149,9 @@ export function AppStateReducer(draft: AppState, action: AppAction) {
     case AppActionType.setShowNotesPanel: {
       draft.showNotesPanel = action.show;
       break;
+    }
+    case AppActionType.setSearchResult: {
+      draft.searchResult = action.searchResult;
     }
   }
 }

@@ -120,12 +120,17 @@ export function useActiveCollection() {
 
   switch (appState.activeCollection) {
     case Collections.All: {
-      if (appState.searchResult !== null) {
-        debugger;
-        //   TODO
-      }
       // debugger;
-      return notes.filter((note) => !note.Deleted);
+      let res = notes.filter((note) => !note.Deleted);
+
+      if (appState.searchResult !== null) {
+        // debugger;
+        let result = appState.searchResult;
+        //   TODO
+        res = res.filter((note) => result.includes(note.Id));
+      }
+
+      return res;
     }
     case Collections.RecentlyDeleted: {
       return notes.filter((note) => note.Deleted);

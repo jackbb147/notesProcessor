@@ -1,4 +1,4 @@
-import { Flex, Text, Button, TextField } from "@radix-ui/themes";
+import { TextField } from "@radix-ui/themes";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import React, { useEffect } from "react";
 import {
@@ -6,6 +6,7 @@ import {
   useAppState,
 } from "../../hooks/AppStateAndGraphAndUserhooks";
 import { useGetNotesQuery } from "../../api/apiSlice";
+import { AppActionType } from "../../reducers/AppStateReducer";
 
 export function SearchBar({ RootStyle }: { RootStyle?: React.CSSProperties }) {
   const {
@@ -23,7 +24,9 @@ export function SearchBar({ RootStyle }: { RootStyle?: React.CSSProperties }) {
   function handleInput(x: any) {
     //     TODO
     const ref = inputRef;
-    setSearchQuery(ref.current?.value ?? null);
+    if (!ref.current) return;
+    if (!ref.current.value) setSearchQuery(null);
+    setSearchQuery(ref.current.value);
     // debugger;
     //   TODO
   }
@@ -51,6 +54,10 @@ export function SearchBar({ RootStyle }: { RootStyle?: React.CSSProperties }) {
     }
     doSearch().then((result) => {
       console.log("result: " + JSON.stringify(result));
+      appDispatch({
+        type: AppActionType.setSearchResult,
+        searchResult: result,
+      });
     });
   }, [searchQuery]);
   return (
