@@ -117,11 +117,13 @@ export function useActiveCollection() {
     // throw JSON.stringify(error, null, 2);
   }
   if (!notes) return [];
-  if (appState.searchResult.length > 0) {
-    debugger;
-  }
+
   switch (appState.activeCollection) {
     case Collections.All: {
+      if (appState.searchResult !== null) {
+        debugger;
+        //   TODO
+      }
       // debugger;
       return notes.filter((note) => !note.Deleted);
     }
@@ -142,6 +144,13 @@ export function useActiveCollection() {
         if (labels.includes(label)) {
           noteIDs.push(noteID);
         }
+      }
+
+      if (appState.searchResult !== null) {
+        // debugger;
+        //   TODO
+        let searchResult = appState.searchResult;
+        noteIDs = noteIDs.filter((id) => searchResult.includes(id));
       }
 
       // debugger;

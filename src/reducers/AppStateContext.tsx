@@ -19,7 +19,7 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
     {
       version: Version.AppState,
       activeNodeID: undefined,
-      searchResult: [],
+      searchResult: null,
       activeCollection: Collections.All,
       LabelPanelClosed: true,
       showNotesPanel: true,
