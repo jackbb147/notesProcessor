@@ -12,6 +12,8 @@ import { Mobile_SidePanel } from "../../ui/SidePanel/Mobile/Mobile_SidePanel";
 import { useActiveCollection } from "../../../hooks/useActiveCollection";
 import { ToggleLabelPanelButton } from "../../Buttons/ToggleLabelPanelButton";
 import { useSwipeable } from "react-swipeable";
+import { SearchBar } from "../../SearchBar/SearchBar";
+import { DeleteButton } from "../../Buttons/DeleteButton";
 
 function PanelContent() {
   const activeCollection = useActiveCollection();
@@ -20,7 +22,19 @@ function PanelContent() {
       collection={activeCollection}
       topBarButtons={[
         <ToggleLabelPanelButton />,
-        <AddNodeButton rootClassName={`ml-auto`} />,
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            // border: "1px solid",
+            marginLeft: "auto",
+            width: "90%",
+            paddingLeft: "1rem",
+          }}
+        >
+          <SearchBar />
+          <AddNodeButton rootClassName={`ml-auto`} />
+        </div>,
       ]}
     />
   );
