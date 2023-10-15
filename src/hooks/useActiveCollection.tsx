@@ -117,6 +117,9 @@ export function useActiveCollection() {
     // throw JSON.stringify(error, null, 2);
   }
   if (!notes) return [];
+  if (appState.searchResult.length > 0) {
+    debugger;
+  }
   switch (appState.activeCollection) {
     case Collections.All: {
       // debugger;

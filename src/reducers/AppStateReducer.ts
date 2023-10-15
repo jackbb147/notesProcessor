@@ -46,6 +46,7 @@ export enum Collections {
 export interface AppState {
   version: string;
   activeNodeID: string | undefined;
+  searchResult: string[]; // this is a list of nodeIDs that match the search query. If no search is in progress, this is empty.
   activeCollection: Collections;
   activeLabel: string | undefined;
   LabelPanelClosed: boolean;
