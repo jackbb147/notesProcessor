@@ -38,7 +38,6 @@ export function HandleInsertDoubleDollarSignShortcutPlugin() {
           console.log("parent: ");
           console.dir(parent);
           // debugger;
-          // debugger;
           if ($isTextNode(node) && $isRangeSelection(selection)) {
             //   TODO
             //1. split text node into two text nodes
@@ -50,10 +49,11 @@ export function HandleInsertDoubleDollarSignShortcutPlugin() {
           } else {
             //   TODO
             debugger;
+            parent.append(doubleDollarSign);
           }
           // node.insertAfter(doubleDollarSign);
+          doubleDollarSign.select(1, 1);
 
-          // parent.append(doubleDollarSign);
           // debugger;
         });
         return true;
