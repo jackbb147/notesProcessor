@@ -299,8 +299,8 @@ export function $createInlineMathNode(
 
   if (showTooltip !== undefined) res.setShowToolTip(showTooltip);
 
-  return $applyNodeReplacement(res);
-  // return res;
+  // return $applyNodeReplacement(res);
+  return res;
 }
 
 export function $isInlineMathNode(

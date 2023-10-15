@@ -126,8 +126,12 @@ export function Editor({
             LinkNode,
             AutoLinkNode,
           ],
-          onError: (error) => {
-            console.log("error: ", error);
+          onError: (error, editor) => {
+            console.error("error: ", error);
+            console.trace();
+
+            console.dir(editor);
+            // debugger;
           },
           theme: Theme,
         }}

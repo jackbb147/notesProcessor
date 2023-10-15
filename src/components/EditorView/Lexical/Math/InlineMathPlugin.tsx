@@ -39,6 +39,7 @@ function findAndTransformInlineMath(node: TextNode): InlineMathNode | null {
       // debugger;
       let targetNode;
       console.log("found inline math: " + chunk);
+      // debugger;
       if (i == 0) {
         [targetNode] = node.splitText(i + 3);
       } else {
@@ -47,10 +48,16 @@ function findAndTransformInlineMath(node: TextNode): InlineMathNode | null {
       // debugger;
       console.log("targetNode: " + targetNode.getTextContent());
       const inlineMathNode = $createInlineMathNode(chunk[1], true);
+      //  =================
+      const testTextNode = $createTextNode("");
+      // targetNode.replace(testTextNode);
+      //  =================
       targetNode.replace(inlineMathNode);
-      const key = inlineMathNode.getKey();
       const selection = $createNodeSelection();
-      selection.add(key);
+      // selection.add(testTextNode.getKey());
+      selection.add(inlineMathNode.getKey());
+      // selection.add(key);
+      $setSelection(selection);
       return inlineMathNode;
     }
   }
@@ -146,6 +153,8 @@ export function InlineMathPlugin() {
       InlineMathNode,
       (node) => {
         editor.update(() => {
+          const exitDirection = node.getExitDirection();
+          if (!exitDirection) return;
           if (node.getShowToolTip()) {
             const selection = $getSelection();
             if (!$isRangeSelection(selection)) return;
@@ -192,7 +201,7 @@ export function InlineMathPlugin() {
                   const parent = node.getParent();
                   if (!parent) debugger;
                   parent?.append(emptyTextNode);
-                  // emptyTextNode.select();
+                  emptyTextNode.select();
                 } else node.selectNext();
                 //   set selection to be the right of the inline math node
               }
