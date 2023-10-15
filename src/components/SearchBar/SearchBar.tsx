@@ -5,8 +5,17 @@ import {
   useAppDispatch,
   useAppState,
 } from "../../hooks/AppStateAndGraphAndUserhooks";
+import { useGetNotesQuery } from "../../api/apiSlice";
 
 export function SearchBar({ RootStyle }: { RootStyle?: React.CSSProperties }) {
+  const {
+    data: notes,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+    refetch,
+  } = useGetNotesQuery();
   const appState = useAppState();
   const appDispatch = useAppDispatch();
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -24,14 +33,24 @@ export function SearchBar({ RootStyle }: { RootStyle?: React.CSSProperties }) {
     console.log("inputRef.current?.value: ", inputRef.current?.value);
     async function doSearch(): Promise<string[]> {
       return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(searchQuery?.split("") ?? []);
-        }, 2000);
+        // TODO search the notes for the search query
+        if (!notes || !searchQuery) resolve([]);
+        else {
+          const notesWithSearchQuery = notes.filter((note) => {
+            if (!note) return false;
+            if (!searchQuery) return false;
+            return note.Content.toLowerCase().includes(searchQuery);
+          });
+          const noteIDs = notesWithSearchQuery.map((note) => note.Id);
+          resolve(noteIDs);
+        }
+        // setTimeout(() => {
+        //   resolve(searchQuery?.split("") ?? []);
+        // }, 2000);
       });
     }
-    doSearch().then((x) => {
-      // debugger;
-      alert("x: " + JSON.stringify(x));
+    doSearch().then((result) => {
+      console.log("result: " + JSON.stringify(result));
     });
   }, [searchQuery]);
   return (
