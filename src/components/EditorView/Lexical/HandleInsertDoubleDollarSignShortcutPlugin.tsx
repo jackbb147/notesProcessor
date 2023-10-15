@@ -27,13 +27,20 @@ export function HandleInsertDoubleDollarSignShortcutPlugin() {
         // debugger;
         editor.update(() => {
           //   TODO insert double dollar sign
-
           const selection = $getSelection();
           const node = selection?.getNodes()[0];
           if (!node) return false;
-          const doubleDollarSign = $createTextNode("$");
+
+          const doubleDollarSign = $createTextNode("$$");
           const parent = $getNearestBlockElementAncestorOrThrow(node);
-          parent.append(doubleDollarSign);
+          console.log("parent: ");
+          console.dir(parent);
+          // debugger;
+          debugger;
+          node.insertAfter(doubleDollarSign);
+
+          // parent.append(doubleDollarSign);
+          // debugger;
         });
         return true;
       },

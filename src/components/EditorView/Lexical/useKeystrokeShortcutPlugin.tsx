@@ -37,6 +37,7 @@ export function useKeystrokeShortcutPlugin({
       if (event.shiftKey && event.code === "Digit4") {
         // alert("Shift + 4 pressed!");
         editor.dispatchCommand(INSERT_DOUBLE_DOLLAR_COMMAND, "");
+        event.preventDefault();
         // event.preventDefault();
       }
 
