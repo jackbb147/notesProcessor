@@ -117,13 +117,30 @@ export function useActiveCollection() {
     // throw JSON.stringify(error, null, 2);
   }
   if (!notes) return [];
+
   switch (appState.activeCollection) {
     case Collections.All: {
       // debugger;
-      return notes.filter((note) => !note.Deleted);
+      let res = notes.filter((note) => !note.Deleted);
+
+      if (appState.searchResult !== null) {
+        // debugger;
+        let result = appState.searchResult;
+        //   TODO
+        res = res.filter((note) => result.includes(note.Id));
+      }
+
+      return res;
     }
     case Collections.RecentlyDeleted: {
-      return notes.filter((note) => note.Deleted);
+      let res = notes.filter((note) => note.Deleted);
+      if (appState.searchResult !== null) {
+        // debugger;
+        let result = appState.searchResult;
+        //   TODO
+        res = res.filter((note) => result.includes(note.Id));
+      }
+      return res;
     }
     case Collections.Label: {
       // TODO
@@ -139,6 +156,13 @@ export function useActiveCollection() {
         if (labels.includes(label)) {
           noteIDs.push(noteID);
         }
+      }
+
+      if (appState.searchResult !== null) {
+        // debugger;
+        //   TODO
+        let searchResult = appState.searchResult;
+        noteIDs = noteIDs.filter((id) => searchResult.includes(id));
       }
 
       // debugger;

@@ -8,6 +8,8 @@ import { Provider } from "react-redux";
 import { AppStateProvider } from "./reducers/AppStateContext";
 import { apiSlice } from "./api/apiSlice";
 import { store } from "./store";
+import "@radix-ui/themes/styles.css";
+import { Theme } from "@radix-ui/themes";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -17,11 +19,13 @@ root.render(
   // <App />,
 
   // <ApiProvider api={apiSlice}>
-  <Provider store={store}>
-    <AppStateProvider>
-      <App />
-    </AppStateProvider>
-  </Provider>,
+  <Theme>
+    <Provider store={store}>
+      <AppStateProvider>
+        <App />
+      </AppStateProvider>
+    </Provider>
+  </Theme>,
   // </React.StrictMode>,
 );
 
