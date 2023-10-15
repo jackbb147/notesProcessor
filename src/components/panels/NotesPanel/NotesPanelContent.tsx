@@ -1,5 +1,6 @@
 import style from "../../ScrollableButHiddenScrollBar.module.css";
 import React, { useContext } from "react";
+import { Desktop } from "../../../hooks/useMediaQuery";
 import {
   AppStateContext,
   AppStateDispatchContext,
@@ -63,9 +64,11 @@ function AnimatedList({ data }: { data: ReactNodeWithID[] }) {
 export function NotesPanelContent({
   collection,
   topBarButtons,
+  rootStyle,
 }: {
   collection: GraphNode[];
   topBarButtons?: React.ReactNode[];
+  rootStyle?: React.CSSProperties;
 }) {
   const state = useContext(AppStateContext);
   const dispatch = useContext(AppStateDispatchContext);
@@ -138,7 +141,13 @@ export function NotesPanelContent({
 
   return (
     <>
-      <div className={"w-full h-full flex flex-col "} {...handlers}>
+      <div
+        className={"w-full h-full flex flex-col-reverse md:flex-col"}
+        style={{
+          ...rootStyle,
+        }}
+        {...handlers}
+      >
         <div className={"top-bar h-12 flex items-center"}>
           {topBarButtons || (
             <>
