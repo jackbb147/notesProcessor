@@ -22,6 +22,17 @@ export function SearchBar({ RootStyle }: { RootStyle?: React.CSSProperties }) {
   useEffect(() => {
     // debugger;
     console.log("inputRef.current?.value: ", inputRef.current?.value);
+    async function doSearch(): Promise<string[]> {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(searchQuery?.split("") ?? []);
+        }, 2000);
+      });
+    }
+    doSearch().then((x) => {
+      // debugger;
+      alert("x: " + JSON.stringify(x));
+    });
   }, [searchQuery]);
   return (
     <TextField.Root
