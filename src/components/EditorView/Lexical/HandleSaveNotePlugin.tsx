@@ -100,7 +100,7 @@ export function HandleSaveNotePlugin({
     // debugger;
     const editorState = editor.getEditorState();
     const json = editorState.toJSON();
-    editorState.read(() => {
+    editor.update(() => {
       // debugger;
       const content = $generateHtmlFromNodes(editor, null);
       let firstLine: string = getFirstLine(json);
@@ -108,6 +108,9 @@ export function HandleSaveNotePlugin({
       console.log("content: " + content);
       // TODO somehow await this
       handleSaveNote(firstLine, content);
+      //   TODO after saving, do not lose focus!
+      console.log("focusing");
+      editor.focus();
     });
   }
 

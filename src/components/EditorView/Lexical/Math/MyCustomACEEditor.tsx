@@ -112,13 +112,31 @@ export function MyCustomACEEditor({
       const s = editor.getValue();
       switch (obj.action) {
         case "insert":
+          const Lines = editor.getSession().getLines(0, 5);
+          console.log("Lines: " + Lines);
+          console.dir(obj);
+          const LastLine = editor.getSession().getLine(obj.end.row);
+          const lastIndexOfSlash = LastLine.lastIndexOf("\\");
+          if (lastIndexOfSlash === -1) {
+            break;
+          }
+          // const chunks = LastLine.split(" ");
+          // const lastChunk = chunks.at(-1);
+
+          const lastChunk = LastLine.slice(lastIndexOfSlash + 1);
+          console.log("LastLine: " + LastLine);
+          // console.log("chunks: " + chunks);
+          console.log("lastChunk: " + lastChunk);
+          // const Line = editor.getSession().getLine(obj.)
           let lines = obj.lines;
           let char = lines[0];
-          if (lines.length === 1 && char.length === 1 && /\\/i.test(char)) {
-            setTimeout(() => {
-              editor.commands.byName.startAutocomplete.exec(editor);
-            }, 50);
-          }
+          console.log("lines: " + lines);
+          // if (lines.length === 1 && char.length === 1 && /\\/i.test(char))
+          // if (lastChunk?.at(0) == "\\" ?? false) {
+          setTimeout(() => {
+            editor.commands.byName.startAutocomplete.exec(editor);
+          }, 50);
+          // }
           break;
       }
       onChange(s); // onChange(obj.);
@@ -221,6 +239,7 @@ export function MyCustomACEEditor({
         placeholder={"\\text{hello world}"}
         // showGutter={false}
         // showPrintMargin={false}
+        // enableLiveAutocompletion={true}
         enableLiveAutocompletion={false}
         enableBasicAutocompletion={true}
         commands={[
