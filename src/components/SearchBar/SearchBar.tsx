@@ -26,7 +26,7 @@ export function SearchBar({ RootStyle }: { RootStyle?: React.CSSProperties }) {
     const ref = inputRef;
     if (!ref.current) return;
     if (!ref.current.value) setSearchQuery(null);
-    setSearchQuery(ref.current.value);
+    setSearchQuery(ref.current.value.toLowerCase());
     // debugger;
     //   TODO
   }
@@ -34,7 +34,13 @@ export function SearchBar({ RootStyle }: { RootStyle?: React.CSSProperties }) {
   useEffect(() => {
     // debugger;
     console.log("inputRef.current?.value: ", inputRef.current?.value);
-    if (!searchQuery) return;
+    if (!searchQuery) {
+      appDispatch({
+        type: AppActionType.setSearchResult,
+        searchResult: null,
+      });
+      return;
+    }
     async function doSearch(): Promise<string[]> {
       return new Promise((resolve) => {
         // TODO search the notes for the search query
