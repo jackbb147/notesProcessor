@@ -253,7 +253,7 @@ export function MyCustomACEEditor({
                 // debugger;
                 //   TODO delete the node
 
-                requestUnmount?.();
+                requestUnmount?.(""); //TODO fix this
                 return true;
               }
 

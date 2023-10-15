@@ -13,8 +13,10 @@ export function InlineMathNodeReactComponent({
 }: {
   handleCloseToolTip: ({
     exitDirection,
+    nuke, // if nuke is true, then the node will be deleted
   }: {
     exitDirection?: "left" | "right";
+    nuke?: boolean;
   }) => void;
   showToolTip: boolean;
   defaultTex: string;
@@ -23,6 +25,7 @@ export function InlineMathNodeReactComponent({
   // ref: Function;
 }) {
   const [tex, setTex] = React.useState(defaultTex);
+  const [nuked, setNuked] = React.useState(false);
   const appState = useAppState();
 
   useEffect(() => {
@@ -32,6 +35,8 @@ export function InlineMathNodeReactComponent({
   useEffect(() => {
     console.log("[InlineMathNodeReactComponent] selected: " + selected);
   }, [selected]);
+
+  if (nuked) return null;
 
   return (
     // <Popover />
@@ -66,15 +71,18 @@ export function InlineMathNodeReactComponent({
           // this.closeToolTip(_editor);
           // debugger;
 
-          if (val) {
+          if (val !== undefined) {
             setTex(val);
             updateTex(val);
           } else {
+            debugger;
             updateTex(tex);
           }
           console.log("exitDirection: " + exitDirection);
+          if (!val) setNuked(true);
           handleCloseToolTip({
             exitDirection: exitDirection ?? "right",
+            nuke: !val,
           });
         }}
       />
