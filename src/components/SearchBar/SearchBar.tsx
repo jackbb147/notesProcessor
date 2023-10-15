@@ -34,6 +34,7 @@ export function SearchBar({ RootStyle }: { RootStyle?: React.CSSProperties }) {
   useEffect(() => {
     // debugger;
     console.log("inputRef.current?.value: ", inputRef.current?.value);
+    if (!searchQuery) return;
     async function doSearch(): Promise<string[]> {
       return new Promise((resolve) => {
         // TODO search the notes for the search query
