@@ -154,7 +154,7 @@ export function InlineMathPlugin() {
       (node) => {
         editor.update(() => {
           const exitDirection = node.getExitDirection();
-          if (!exitDirection) return;
+          if (!exitDirection) return; // this is to prevent bug.
           if (node.getShowToolTip()) {
             const selection = $getSelection();
             if (!$isRangeSelection(selection)) return;
@@ -201,8 +201,8 @@ export function InlineMathPlugin() {
                   const parent = node.getParent();
                   if (!parent) debugger;
                   parent?.append(emptyTextNode);
-                  emptyTextNode.select();
-                } else node.selectNext();
+                  emptyTextNode.select(0, 0);
+                } else node.selectNext(0, 0);
                 //   set selection to be the right of the inline math node
               }
             }

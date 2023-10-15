@@ -74,7 +74,7 @@ export function InlineMathNodeReactComponent({
           }
           console.log("exitDirection: " + exitDirection);
           handleCloseToolTip({
-            exitDirection: exitDirection,
+            exitDirection: exitDirection ?? "right",
           });
         }}
       />

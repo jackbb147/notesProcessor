@@ -42,10 +42,14 @@ export function HandleInsertDoubleDollarSignShortcutPlugin() {
             //   TODO
             //1. split text node into two text nodes
             const offset = selection.anchor.offset;
-            // debugger;
             const [first, second] = node.splitText(offset);
-            //2. insert double dollar sign in between
-            first.insertAfter(doubleDollarSign);
+            if (offset > 0) {
+              //2. insert double dollar sign in between
+              first.insertAfter(doubleDollarSign);
+            } else {
+              // debugger;
+              first.insertBefore(doubleDollarSign);
+            }
           } else {
             //   TODO
             // debugger;
