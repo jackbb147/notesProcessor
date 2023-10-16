@@ -6,12 +6,13 @@
   right: 0;
 }
 
-/*@media (max-width: 768px) {*/
-/*  .App__main{*/
-/*    padding-bottom: 1.5rem;*/
-/*  }*/
+@media (max-width: 768px) {
+  .noteEditorContainer, .notesPanel_wrapper{
+    padding-bottom: 1.5rem;
+    /*display: none;*/
+  }
 
-/*}*/
+}
 
 .App-logo {
   height: 40vmin;

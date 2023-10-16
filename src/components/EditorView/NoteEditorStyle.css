@@ -5,10 +5,3 @@
     height: 100%;
     flex-grow: 1;
 }
-
-@media (max-width: 768px) {
-    .noteEditorContainer{
-        padding-bottom: 1.5rem;
-    }
-
-}
