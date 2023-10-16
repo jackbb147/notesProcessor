@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Quill/quillModules/quillStyle.css";
 
-import styles from "./NoteEditorStyle.module.css";
+import "./NoteEditorStyle.css";
 
 import { ReferenceMapProvider } from "./Tiptap/Reference/ReferenceStateContext";
 
@@ -214,7 +214,7 @@ export function NoteEditor({
 
   return (
     <div
-      className={`${styles.noteEditorContainer}`}
+      className={`noteEditorContainer`}
       style={{
         // width: "100%",
         overflow: "hidden",

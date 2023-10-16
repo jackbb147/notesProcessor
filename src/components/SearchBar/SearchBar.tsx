@@ -21,6 +21,7 @@ export function SearchBar({ RootStyle }: { RootStyle?: React.CSSProperties }) {
   const appDispatch = useAppDispatch();
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [searchQuery, setSearchQuery] = React.useState<string | null>(null);
+  const [scrollFixApplied, setScrollFixApplied] = React.useState(false);
   function handleInput(x: any) {
     //     TODO
     const ref = inputRef;
@@ -30,6 +31,26 @@ export function SearchBar({ RootStyle }: { RootStyle?: React.CSSProperties }) {
     // debugger;
     //   TODO
   }
+
+  useEffect(() => {
+    if (!inputRef.current || scrollFixApplied) return;
+    inputRef.current.onfocus = () => {
+      window.scrollTo(0, 0);
+      document.body.scrollTop = 0;
+      document.querySelectorAll(".sidePanel")?.forEach((el) => {
+        el.classList.add("noPaddingBottom");
+      });
+    };
+
+    inputRef.current.onblur = () => {
+      document.querySelectorAll(".sidePanel")?.forEach((el) => {
+        el.classList.remove("noPaddingBottom");
+      });
+    };
+    setScrollFixApplied(true);
+
+    console.log("scroll fix applied");
+  }, [inputRef.current]);
 
   useEffect(() => {
     // debugger;
