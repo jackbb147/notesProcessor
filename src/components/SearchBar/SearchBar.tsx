@@ -37,8 +37,18 @@ export function SearchBar({ RootStyle }: { RootStyle?: React.CSSProperties }) {
     inputRef.current.onfocus = () => {
       window.scrollTo(0, 0);
       document.body.scrollTop = 0;
+      document.querySelectorAll(".sidePanel")?.forEach((el) => {
+        el.classList.add("noPaddingBottom");
+      });
+    };
+
+    inputRef.current.onblur = () => {
+      document.querySelectorAll(".sidePanel")?.forEach((el) => {
+        el.classList.remove("noPaddingBottom");
+      });
     };
     setScrollFixApplied(true);
+
     console.log("scroll fix applied");
   }, [inputRef.current]);
 
