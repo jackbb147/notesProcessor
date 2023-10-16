@@ -1,0 +1,5 @@
+@media (max-width: 768px) {
+    .notesPanel_wrapper{
+        padding-bottom: 1.5rem;
+    }
+}

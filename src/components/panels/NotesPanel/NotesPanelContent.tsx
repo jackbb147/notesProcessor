@@ -1,4 +1,5 @@
 import style from "../../ScrollableButHiddenScrollBar.module.css";
+import "./notesPanel.css";
 import React, { useContext } from "react";
 import { Desktop } from "../../../hooks/useMediaQuery";
 import {
@@ -142,7 +143,9 @@ export function NotesPanelContent({
   return (
     <>
       <div
-        className={"w-full h-full flex flex-col-reverse md:flex-col"}
+        className={
+          "notesPanel_wrapper w-full h-full flex flex-col-reverse md:flex-col"
+        }
         style={{
           ...rootStyle,
         }}
