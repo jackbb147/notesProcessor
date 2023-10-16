@@ -7,7 +7,10 @@
 }
 
 @media (max-width: 768px) {
-  .noteEditorContainer, .notesPanel_wrapper{
+  /*, .notesPanel_wrapper,*/
+  .noteEditorContainer,
+  .sidePanel
+  {
     padding-bottom: 1.5rem;
     /*display: none;*/
   }
